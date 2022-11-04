@@ -1,7 +1,9 @@
 /** @type {import('next').NextConfig} */
+const { withPlaiceholder } = require("@plaiceholder/next");
+
 const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
-}
+};
 
-module.exports = nextConfig
+module.exports = withPlaiceholder(nextConfig);
