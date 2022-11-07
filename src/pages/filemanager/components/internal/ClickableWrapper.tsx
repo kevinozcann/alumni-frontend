@@ -1,0 +1,59 @@
+import React from 'react';
+import { AnyObjectWithStringKeys } from 'tsdef';
+
+import { useClickHandler, useKeyDownHandler } from './ClickableWrapper-hooks';
+
+export interface MouseClickEvent {
+  altKey: boolean;
+  ctrlKey: boolean;
+  shiftKey: boolean;
+}
+export type MouseClickEventHandler = (event: MouseClickEvent) => void;
+
+export interface KeyboardClickEvent {
+  enterKey: boolean;
+  spaceKey: boolean;
+  altKey: boolean;
+  ctrlKey: boolean;
+  shiftKey: boolean;
+}
+export type KeyboardClickEventHandler = (event: KeyboardClickEvent) => void;
+
+export interface ClickableWrapperProps {
+  children?: React.ReactNode;
+  wrapperTag: any;
+  passthroughProps?: any;
+  onSingleClick?: MouseClickEventHandler;
+  onDoubleClick?: MouseClickEventHandler;
+  onKeyboardClick?: KeyboardClickEventHandler;
+  setFocused?: (focused: boolean) => void;
+}
+
+export const ClickableWrapper = (props: ClickableWrapperProps) => {
+  const {
+    children,
+    wrapperTag: WrapperTag,
+    passthroughProps,
+    onSingleClick,
+    onDoubleClick,
+    onKeyboardClick,
+    setFocused
+  } = props;
+
+  const handleClick = useClickHandler(onSingleClick, onDoubleClick);
+  const handleKeyDown = useKeyDownHandler(onKeyboardClick);
+
+  const compProps: AnyObjectWithStringKeys = {
+    onFocus: React.useCallback(() => setFocused && setFocused(true), [setFocused]),
+    onBlur: React.useCallback(() => setFocused && setFocused(false), [setFocused])
+  };
+
+  if (onSingleClick || onDoubleClick || onKeyboardClick) {
+    compProps.onClick = handleClick;
+    compProps.onKeyDown = handleKeyDown;
+    compProps.tabIndex = 0;
+  }
+
+  const mergedProps = { ...compProps, ...passthroughProps };
+  return <WrapperTag {...mergedProps}>{children}</WrapperTag>;
+};

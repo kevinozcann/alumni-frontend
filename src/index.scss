@@ -1,0 +1,11 @@
+// 3rd-party Plugins
+// @import '~highlight.js/styles/googlecode.css';
+@import '~perfect-scrollbar/css/perfect-scrollbar.css';
+
+// Inline edit
+@import './theme/scss/inline-edit.scss';
+
+html,
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+}

@@ -1,0 +1,142 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MailItem component snapshot should render as expected 1`] = `
+<div
+  className="MuiBox-root css-l9ygfb"
+>
+  <div
+    className="MuiBox-root css-130f8nx"
+  >
+    <div
+      className="MuiBox-root css-vkm8w4"
+    >
+      <span
+        className="MuiCheckbox-root MuiCheckbox-colorPrimary MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary PrivateSwitchBase-root css-12wnr2w-MuiButtonBase-root-MuiCheckbox-root"
+        onBlur={[Function]}
+        onContextMenu={[Function]}
+        onDragLeave={[Function]}
+        onFocus={[Function]}
+        onKeyDown={[Function]}
+        onKeyUp={[Function]}
+        onMouseDown={[Function]}
+        onMouseLeave={[Function]}
+        onMouseUp={[Function]}
+        onTouchEnd={[Function]}
+        onTouchMove={[Function]}
+        onTouchStart={[Function]}
+        tabIndex={null}
+      >
+        <input
+          checked={false}
+          className="PrivateSwitchBase-input css-1m9pwf3"
+          data-indeterminate={false}
+          onChange={[Function]}
+          type="checkbox"
+        />
+        <svg
+          aria-hidden={true}
+          className="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+          data-testid="CheckBoxOutlineBlankIcon"
+          focusable="false"
+          viewBox="0 0 24 24"
+        >
+          <path
+            d="M19 5v14H5V5h14m0-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"
+          />
+        </svg>
+        <span
+          className="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+        />
+      </span>
+      <button
+        aria-label="Starred"
+        aria-labelledby={null}
+        className="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-78trlr-MuiButtonBase-root-MuiIconButton-root"
+        data-mui-internal-clone-element={true}
+        disabled={false}
+        onBlur={[Function]}
+        onClick={[Function]}
+        onContextMenu={[Function]}
+        onDragLeave={[Function]}
+        onFocus={[Function]}
+        onKeyDown={[Function]}
+        onKeyUp={[Function]}
+        onMouseDown={[Function]}
+        onMouseLeave={[Function]}
+        onMouseOver={[Function]}
+        onMouseUp={[Function]}
+        onTouchEnd={[Function]}
+        onTouchMove={[Function]}
+        onTouchStart={[Function]}
+        tabIndex={0}
+        type="button"
+      >
+        <svg
+          aria-hidden={true}
+          className="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall css-ptiqhd-MuiSvgIcon-root"
+          data-testid="StarBorderIcon"
+          focusable="false"
+          viewBox="0 0 24 24"
+        >
+          <path
+            d="m22 9.24-7.19-.62L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27 18.18 21l-1.63-7.03L22 9.24zM12 15.4l-3.76 2.27 1-4.28-3.32-2.88 4.38-.38L12 6.1l1.71 4.04 4.38.38-3.32 2.88 1 4.28L12 15.4z"
+          />
+        </svg>
+        <span
+          className="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+        />
+      </button>
+    </div>
+  </div>
+  <a
+    className="MuiBox-root css-1mswlbp"
+    href="/mail"
+    onClick={[Function]}
+    sx={
+      Object {
+        "cursor": "pointer",
+        "display": "flex",
+        "flexGrow": 1,
+        "minWidth": "1px",
+        "textDecoration": "none",
+      }
+    }
+  >
+    <div
+      className="MuiAvatar-root MuiAvatar-circular css-2k1ilz-MuiAvatar-root"
+    >
+      <img
+        alt="Şimşek Mert"
+        className="MuiAvatar-img css-1pqm26d-MuiAvatar-img"
+        src="https://fs-demo.smartclass.tech/files/userfiles/simsek/mteacher.jpg"
+      />
+    </div>
+    <div
+      className="MuiBox-root css-1tkjsiq"
+    >
+      <div
+        className="MuiTypography-root MuiTypography-body1 css-oat79r-MuiTypography-root"
+      >
+        Şimşek Mert
+      </div>
+      <p
+        className="MuiTypography-root MuiTypography-body2 css-og44s1-MuiTypography-root"
+      >
+        testing
+      </p>
+      <div
+        className="MuiBox-root css-13tqxrv"
+      >
+        <p
+          className="MuiTypography-root MuiTypography-body2 css-143aoc4-MuiTypography-root"
+        />
+      </div>
+      <span
+        className="MuiTypography-root MuiTypography-caption MuiTypography-noWrap css-z0slbs-MuiTypography-root"
+      >
+        Fri, Jan 14, 2022 5:56 AM
+      </span>
+    </div>
+  </a>
+</div>
+`;

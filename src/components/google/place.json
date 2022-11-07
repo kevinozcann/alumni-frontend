@@ -1,0 +1,63 @@
+[
+  {
+    "address_components": [
+      {
+        "long_name": "3333",
+        "short_name": "3333",
+        "types": ["street_number"]
+      },
+      {
+        "long_name": "University Boulevard West",
+        "short_name": "University Blvd W",
+        "types": ["route"]
+      },
+      {
+        "long_name": "Kensington",
+        "short_name": "Kensington",
+        "types": ["locality", "political"]
+      },
+      {
+        "long_name": "Montgomery County",
+        "short_name": "Montgomery County",
+        "types": ["administrative_area_level_2", "political"]
+      },
+      {
+        "long_name": "Maryland",
+        "short_name": "MD",
+        "types": ["administrative_area_level_1", "political"]
+      },
+      {
+        "long_name": "United States",
+        "short_name": "US",
+        "types": ["country", "political"]
+      },
+      {
+        "long_name": "20895",
+        "short_name": "20895",
+        "types": ["postal_code"]
+      }
+    ],
+    "formatted_address": "3333 University Blvd W, Kensington, MD 20895, USA",
+    "geometry": {
+      "bounds": {
+        "south": 39.0361017,
+        "west": -77.0676613,
+        "north": 39.0363074,
+        "east": -77.066405
+      },
+      "location": {
+        "lat": 39.0361735,
+        "lng": -77.0671046
+      },
+      "location_type": "ROOFTOP",
+      "viewport": {
+        "south": 39.03485556970849,
+        "west": -77.0683821302915,
+        "north": 39.03755353029149,
+        "east": -77.06568416970849
+      }
+    },
+    "place_id": "ChIJScREOubOt4kRlr3aG6-e4m8",
+    "types": ["premise"]
+  }
+]

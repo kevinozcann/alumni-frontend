@@ -1,0 +1,29 @@
+/* these make sure it can work in any text element */
+.inline-text_copy--active {
+  font: inherit;
+  color: inherit;
+  text-align: inherit;
+  padding: 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+
+  &:after {
+    font-family: 'Font Awesome 5 Duotone';
+    content: '\10f4ae';
+    margin: 0px 0px 0px 8px;
+  }
+}
+.inline-text_input--active {
+  font: inherit;
+  color: inherit;
+  text-align: inherit;
+  padding: 0;
+  background: none;
+  border: none;
+}
+
+.inline-text_copy--hidden,
+.inline-text_input--hidden {
+  display: none;
+}
