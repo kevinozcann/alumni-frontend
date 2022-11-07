@@ -29,7 +29,7 @@ const AuthSchoost = (props: TAuthSchoostProps) => {
   const { activeSchool } = props;
   const theme = useTheme();
   const intl = useIntl();
-  const schoostTheme = schoostThemes[getRandomInt(7)];
+  const schoostTheme = schoostThemes[getRandomInt(2)];
   const today = new Date().getFullYear();
   const typographyColor =
     theme.palette.mode === 'light' ? theme.palette.background.paper : theme.palette.text.primary;

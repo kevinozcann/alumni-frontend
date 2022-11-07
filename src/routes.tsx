@@ -4,6 +4,7 @@ import loadable, { lazy } from '@loadable/component';
 import { Loadable, LoadableScreen } from 'layout';
 
 import accountRoutes from 'pages/account/routes';
+import apiRoutes from 'pages/api/routes';
 import adminRoutes from 'pages/admin/routes';
 import authRoutes from 'pages/auth/routes';
 import classesRoutes from 'pages/classes/routes';
@@ -49,6 +50,7 @@ const routes = [
     element: <FileManager />
   },
   accountRoutes,
+  apiRoutes,
   adminRoutes,
   classesRoutes,
   configRoutes,
