@@ -31,8 +31,6 @@ const ConfirmDialog = loadable(() => import('components/ConfirmDialog'));
 
 const BUCKET_NAME = 'schoost-files';
 const BUCKET_REGION = 'eu-central-1';
-// const ACCESS_KEY_ID = 'AKIAZPEKLUSX7ZQGVWEP';
-// const SECRET_ACCESS_KEY = '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';
 const COGNITO_IDENTITY_POOL_ID = 'eu-central-1:d48d9f93-54af-457e-a9ad-784bb8468b51';
 
 const s3Client = new S3Client({
