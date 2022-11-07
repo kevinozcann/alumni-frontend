@@ -31,7 +31,7 @@ const connector = connect(mapStateToProps, mapDispatchToProps);
 type PropsFromRedux = ConnectedProps<typeof connector>;
 type TImpersonateBarProps = PropsFromRedux;
 
-const ImpersonateBar: React.FC<TImpersonateBarProps> = (props) => {
+const ImpersonateBar = (props: TImpersonateBarProps) => {
   const { lang, user, impersonateUser, phase, setPhase, cancelImpersonate } = props;
   const [cancelInProgress, setCancelInProgress] = React.useState<boolean>(false);
   const intl = useIntl();

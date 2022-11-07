@@ -23,10 +23,8 @@ export const Page = (props: IPageProps) => {
   return (
     <React.Fragment>
       <Helmet>
-        <title>{`${title} > Schoost by SmartClass`}</title>
+        <title>{`${title} > Alumnist by SmartClass`}</title>
         <link rel='preconnect' href={`${globalApiUrl}`} />
-        <link rel='preconnect' href={`${backendBaseUrl}`} />
-        <link rel='preconnect' href='https://schst.in' />
       </Helmet>
       <Box
         sx={{
