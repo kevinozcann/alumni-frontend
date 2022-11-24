@@ -4,7 +4,6 @@ import { Helmet } from 'react-helmet-async';
 import { useRoutes } from 'react-router-dom';
 import { ThemeProvider, StyledEngineProvider } from '@mui/material/styles';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-// import DateAdapter from '@mui/lab/AdapterDateFns';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { useClearCacheCtx } from 'react-clear-cache';
 import arLocale from 'date-fns/locale/ar-SA';

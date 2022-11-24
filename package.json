@@ -1,5 +1,5 @@
 {
-  "name": "@smartclass/schoost-ui",
+  "name": "@smartclass/alumni",
   "version": "5.1.571",
   "private": true,
   "homepage": "",
@@ -67,7 +67,7 @@
     "apexcharts": "3.17.0",
     "autosuggest-highlight": "^3.2.0",
     "aws-amplify": "^3.4.0",
-    "aws-typescript-wrapper": "^1.1.8",
+    "aws-typescript-wrapper": "1.1.13",
     "axios": "0.21.1",
     "bitbucket": "^2.7.0",
     "clipboard-copy": "3.1.0",
