@@ -10,7 +10,8 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import useTranslation from 'hooks/useTranslation';
-import { authActions, authErrorSelector, authPhaseSelector } from 'store/auth';
+import { authActions, authErrorSelector, authPhaseSelector, authUserSelector } from 'store/auth';
+import { useNavigate } from 'react-router';
 
 type FormValues = {
   email: string;
@@ -22,9 +23,11 @@ type FormValues = {
 
 const Registration = () => {
   const intl = useTranslation();
+  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   // Selectors
+  const user = useSelector(authUserSelector);
   const phase = useSelector(authPhaseSelector);
   const error = useSelector(authErrorSelector);
 
@@ -65,6 +68,14 @@ const Registration = () => {
       )
     );
   };
+
+  React.useEffect(() => {
+    if (user.authenticationFlowType === 'USER_SRP_AUTH') {
+      setTimeout(() => {
+        navigate('/auth/verify');
+      }, 5000);
+    }
+  }, [user]);
 
   React.useEffect(() => {
     dispatch(authActions.setPhase(null, null));

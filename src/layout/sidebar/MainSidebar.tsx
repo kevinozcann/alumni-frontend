@@ -64,14 +64,6 @@ const mapStateToProps = (state: RootState) => ({
   activeStudent: userActiveStudentSelector(state)
 });
 const mapDispatchToProps = (dispatch: AppDispatch) => ({
-  updateFrequentMenus: (
-    lang: TLang,
-    userId: string,
-    frequentMenus: IFrequentMenu[],
-    menuGlobalId: number,
-    menuUrl: string
-  ) =>
-    dispatch(authActions.updateFrequentMenus(lang, userId, frequentMenus, menuGlobalId, menuUrl)),
   updateUserMenus: (lang: TLang, user: IUser, school: ISchool) =>
     dispatch(userActions.updateUserMenus(lang, user, school)),
   updateActiveMenu: (menu: IMenu) => dispatch(userActions.updateActiveMenu(menu)),
@@ -100,7 +92,6 @@ const MainSidebar = (props: MainSidebarProps) => {
     activeStudent,
     userPhase,
     getParentStudents,
-    updateFrequentMenus,
     updateUserMenus,
     updateActiveStudent,
     updateActiveMenu,
@@ -118,7 +109,6 @@ const MainSidebar = (props: MainSidebarProps) => {
     (menu: IMenu) => {
       if ((!menu.children || (menu.children && menu.children.length === 0)) && menu.url) {
         onMobileClose();
-        updateFrequentMenus(lang, user.uuid, user.frequentMenus, menu.globalId, location.pathname);
       }
     },
     [lang, user, location]

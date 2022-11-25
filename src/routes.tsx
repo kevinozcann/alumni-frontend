@@ -31,7 +31,7 @@ const Login = LoadableScreen(lazy(() => import('pages/auth/Login')));
 const Logout = LoadableScreen(lazy(() => import('pages/auth/Logout')));
 const ForgotPassword = LoadableScreen(lazy(() => import('pages/auth/ForgotPassword')));
 const Registration = LoadableScreen(lazy(() => import('pages/auth/Registration')));
-const VerifyEmail = LoadableScreen(lazy(() => import('pages/auth/VerifyEmail')));
+const Verify = LoadableScreen(lazy(() => import('pages/auth/Verify')));
 const ResetPassword = LoadableScreen(lazy(() => import('pages/auth/ResetPassword')));
 const FileManager = Loadable(lazy(() => import('pages/filemanager/FileManager')));
 
@@ -93,8 +93,8 @@ const routes = [
         element: <Registration />
       },
       {
-        path: 'verify-email',
-        element: <VerifyEmail />
+        path: 'verify',
+        element: <Verify />
       },
       {
         path: '401',

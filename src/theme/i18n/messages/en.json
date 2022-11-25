@@ -590,7 +590,7 @@
   "place_of_birth": "Place of Birth",
   "register": "Register",
   "register.create_or_join_school": "You may either create your own school or join to an existing school as teacher or parent or student.",
-  "register.email_sent": "Email has been sent successfully. Please, verify your email address using the link that was just sent to your email address. The registration will continue after verification.",
+  "register.email_sent": "Email has been sent successfully. Please, check your email address using the code that was just sent to your email address. The registration will continue after verification.",
   "register.email_verified": "Your email address has been verified. Please, fill out the form to finish your registration.",
   "register.email_verified_not": "Your email address cannot be verified. Please try again!",
   "register.email_verifying": "Your email address is being verified. Please wait...",

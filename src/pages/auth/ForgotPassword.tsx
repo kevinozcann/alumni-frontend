@@ -27,8 +27,6 @@ const mapStateToProps = (state: RootState) => ({
   authError: authErrorSelector(state)
 });
 const mapDispatchToProps = (dispatch: AppDispatch) => ({
-  sendUserPasswordLink: (email: string, lang: TLang) =>
-    dispatch(authActions.sendUserPasswordLink(email, lang)),
   setPhase: (phase: string) => dispatch(authActions.setPhase(phase, null))
 });
 const connector = connect(mapStateToProps, mapDispatchToProps);
@@ -41,7 +39,7 @@ interface IFormValues {
 }
 
 const ForgotPassword: React.FC<TForgotPasswordProps> = (props) => {
-  const { lang, authPhase, authError, sendUserPasswordLink, setPhase } = props;
+  const { lang, authPhase, authError, setPhase } = props;
   const [alert, setAlert] = React.useState<string>(null);
   const intl = useIntl();
 
@@ -74,7 +72,7 @@ const ForgotPassword: React.FC<TForgotPasswordProps> = (props) => {
 
   const submitForm = (values: IFormValues) => {
     setSubmitting(true);
-    sendUserPasswordLink(values.email, lang);
+    // sendUserPasswordLink(values.email, lang);
   };
 
   React.useEffect(() => {

@@ -13,21 +13,9 @@ import { ISchool } from 'pages/organization/organization-types';
 import { JWT_EXPIRES_IN, JWT_SECRET, sign } from 'utils/jwt';
 import { TLang, TLinkedAccount } from 'utils/shared-types';
 
-import {
-  apiBaseUrl,
-  backendBaseUrl,
-  FACEBOOK_USERS_URL,
-  FREQUENT_MENUS_API_URL,
-  GOOGLE_USERS_URL,
-  REGISTER_EMAIL_API_URL,
-  RESET_PASSWORD_URL,
-  updateApiUrl,
-  USERS_API_URL,
-  USER_LOGIN_URL,
-  VERIFY_EMAIL_URL
-} from 'store/ApiUrls';
+import { updateApiUrl, USERS_API_URL, USER_LOGIN_URL, VERIFY_EMAIL_URL } from 'store/ApiUrls';
 import { IAction } from 'store/store';
-import { actionTypes as userActionTypes, getUserSchools } from 'store/user';
+import { getUserSchools } from 'store/user';
 
 import awsconfig from '../aws-exports';
 
@@ -232,7 +220,22 @@ export const reducer = persistReducer(
       }
       case actionTypes.AUTH_UPDATE_USER: {
         const { user } = action.payload;
-        return { ...state, user };
+        const currentState = { ...state };
+        const currentUser = currentState.user;
+
+        return {
+          ...state,
+          user: {
+            ...currentUser,
+            username: user.username,
+            session: user.session,
+            client: user.client,
+            signInUserSession: user.signInUserSession,
+            authenticationFlowType: user.authenticationFlowType,
+            keyPrefix: user.keyPrefix,
+            userDataKey: user.userDataKey
+          }
+        };
       }
       case actionTypes.AUTH_ACCOUNTS_IMPERSONATE_UPDATE: {
         const { impersonateUser } = action.payload;
@@ -281,18 +284,6 @@ export const authActions = {
     type: actionTypes.AUTH_LOGIN,
     payload: { lang, email, pwd }
   }),
-  accountLink: (
-    user: IUser,
-    accountType: TLinkedAccount,
-    accountResponse: any
-  ): IAction<Partial<TActionAllState>> => ({
-    type: actionTypes.AUTH_ACCOUNT_LINK,
-    payload: { user, accountType, accountResponse }
-  }),
-  accountUnlink: (user: IUser, accountType: TLinkedAccount): IAction<Partial<TActionAllState>> => ({
-    type: actionTypes.AUTH_ACCOUNT_UNLINK,
-    payload: { user, accountType }
-  }),
   authToken: (
     lang: TLang,
     userId: string,
@@ -301,22 +292,6 @@ export const authActions = {
   ): IAction<Partial<TActionAllState>> => ({
     type: actionTypes.AUTH_TOKEN,
     payload: { lang, userId, authToken, accessToken }
-  }),
-  impersonate: (
-    lang: TLang,
-    currentUser: IUser,
-    impersonateUser: IUser
-  ): IAction<Partial<TActionAllState>> => ({
-    type: actionTypes.AUTH_IMPERSONATE,
-    payload: { lang, currentUser, impersonateUser }
-  }),
-  cancelImpersonate: (
-    lang: TLang,
-    currentUser: IUser,
-    impersonateUser: IUser
-  ): IAction<Partial<TActionAllState>> => ({
-    type: actionTypes.AUTH_IMPERSONATE_CANCEL,
-    payload: { lang, currentUser, impersonateUser }
   }),
   register: (
     email: string,
@@ -343,27 +318,9 @@ export const authActions = {
     type: actionTypes.AUTH_USER_REQUESTED,
     payload: { lang, userId, updateAll, tempToken }
   }),
-  updateFrequentMenus: (
-    lang: TLang,
-    userId: string,
-    frequentMenus: IFrequentMenu[],
-    menuGlobalId: number,
-    menuUrl?: string
-  ): IAction<Partial<TActionAllState>> => ({
-    type: actionTypes.UPDATE_FREQUENT_MENUS,
-    payload: { lang, userId, frequentMenus, menuGlobalId, menuUrl }
-  }),
-  removeFrequentMenu: (menuId: number, user: IUser): IAction<Partial<TActionAllState>> => ({
-    type: actionTypes.REMOVE_FREQUENT_MENU,
-    payload: { menuId, user }
-  }),
   updateUserInfo: (userId: string, user: IUser): IAction<Partial<TActionAllState>> => ({
     type: actionTypes.UPDATE_USER_INFO,
     payload: { userId, user }
-  }),
-  sendUserPasswordLink: (email: string, lang: TLang): IAction<Partial<TActionAllState>> => ({
-    type: actionTypes.SEND_USER_PASSWORD_LINK,
-    payload: { email, lang }
   }),
   updateUserData: (lang: TLang, user: IUser): IAction<Partial<TActionAllState>> => ({
     type: actionTypes.AUTH_USER_UPDATE_DATA,
@@ -419,97 +376,6 @@ export function* saga() {
   );
 
   yield takeLatest(
-    actionTypes.AUTH_IMPERSONATE,
-    function* impersonateSaga({ payload }: IAction<Partial<TActionAllState>>) {
-      yield put(authActions.setPhase('impersonating', null));
-
-      // Get user profile
-      yield put(authActions.setPhase('impersonate-user-getting', null));
-      const { lang, currentUser, impersonateUser } = payload;
-      const { data: user } = yield axios.get(`${USERS_API_URL}/${impersonateUser.uuid}`, {
-        headers: {
-          Authorization: `Bearer ${impersonateUser.accessToken}`
-        }
-      });
-
-      if (typeof user === 'undefined') {
-        yield put(authActions.setPhase('impersonate-error', 'An error occurred!'));
-        return;
-      }
-
-      yield put({
-        type: actionTypes.AUTH_UPDATE_USER,
-        payload: { user }
-      });
-
-      // Get user related data such as schools, menus, etc
-      yield put(authActions.setPhase('impersonate-processing', null));
-      yield call(getUserData, lang, user);
-
-      const jwtAccessToken = sign({ userId: user.uuid }, JWT_SECRET, {
-        expiresIn: JWT_EXPIRES_IN
-      });
-
-      yield put({
-        type: actionTypes.AUTH_TOKEN_SAVE_WITH_USER,
-        payload: { authToken: user.accessToken, accessToken: jwtAccessToken }
-      });
-
-      // Update impersonate with the actual user
-      yield put(authActions.setPhase('impersonate-swaping', null));
-      yield put({
-        type: actionTypes.AUTH_IMPERSONATE_SAVE,
-        payload: { user: currentUser }
-      });
-
-      // Send feedback as successful
-      yield put(authActions.setPhase('impersonate-successful', null));
-    }
-  );
-
-  yield takeLatest(
-    actionTypes.AUTH_IMPERSONATE_CANCEL,
-    function* impersonateSaga({ payload }: IAction<Partial<TActionAllState>>) {
-      yield put(authActions.setPhase('impersonate-cancelling', null));
-
-      const { lang, currentUser: tempUser, impersonateUser: user } = payload;
-
-      // Get user related data such as schools, menus, etc
-      yield call(getUserData, lang, user);
-
-      const jwtAccessToken = sign({ userId: user.uuid }, JWT_SECRET, {
-        expiresIn: JWT_EXPIRES_IN
-      });
-
-      yield put({
-        type: actionTypes.AUTH_TOKEN_SAVE_WITH_USER,
-        payload: { authToken: user.accessToken, accessToken: jwtAccessToken }
-      });
-
-      // Update impersonate accounts
-      yield put(authActions.setPhase('impersonate-accounts-updating', null));
-      yield put({
-        type: actionTypes.AUTH_ACCOUNTS_IMPERSONATE_UPDATE,
-        payload: { impersonateUser: tempUser }
-      });
-
-      // Update the actual user
-      yield put({
-        type: actionTypes.AUTH_UPDATE_USER,
-        payload: { user }
-      });
-
-      yield put({
-        type: userActionTypes.USER_UPDATE_ACTIVE_STUDENT,
-        payload: { activeStudent: null }
-      });
-
-      // Send feedback as successful
-      yield put(authActions.setPhase('impersonate-cancel-successful', null));
-    }
-  );
-
-  yield takeLatest(
     actionTypes.AUTH_REGISTER,
     function* registerSaga({ payload }: IAction<Partial<TActionAllState>>) {
       yield put(authActions.setPhase('adding', null));
@@ -526,7 +392,12 @@ export function* saga() {
           }
         });
 
-        console.log(user);
+        // Update user info
+        yield put({
+          type: actionTypes.AUTH_UPDATE_USER,
+          payload: { user }
+        });
+
         yield put(authActions.setPhase('success', null));
       } catch (error) {
         console.log('error', error);

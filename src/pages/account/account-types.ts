@@ -6,6 +6,11 @@ export interface IUser {
   accessToken: string;
   adClassCode?: string;
   adStdCode?: string;
+  authenticationFlowType?: string;
+  client?: {
+    endpoint: string;
+    fetchOptions: any;
+  };
   createdAt?: string;
   email?: string;
   expiresAt?: string;
@@ -17,6 +22,7 @@ export interface IUser {
   googleUser?: string;
   id: number;
   isMe: boolean;
+  keyPrefix?: string;
   lastName: string;
   ldapUid?: string;
   likes?: string[];
@@ -27,11 +33,15 @@ export interface IUser {
   newspaper?: string;
   picture?: string;
   roles?: string[];
+  signInUserSession: any;
   schoolId: number;
   school: Partial<ISchool>;
   schools: ISchool[];
+  session: any;
   stdIds?: string[];
   superAdmin?: string;
+  userDataKey?: string;
+  username?: string;
   userType: IUserType;
   userTypeTitle: string;
   userZone: TUserZone;

@@ -7,7 +7,7 @@ const AuthPage = loadable(() => import('./AuthPage'));
 
 const Login = Loadable(lazy(() => import('./Login')));
 const Registration = Loadable(lazy(() => import('./Registration')));
-const Impersonate = Loadable(lazy(() => import('./Impersonate')));
+const Verify = Loadable(lazy(() => import('./Verify')));
 const Logout = Loadable(lazy(() => import('./Logout')));
 
 const routes = {
@@ -23,16 +23,16 @@ const routes = {
       element: <Login />
     },
     {
-      path: 'impersonate',
-      element: <Impersonate />
-    },
-    {
       path: 'login',
       element: <Login />
     },
     {
       path: 'registration',
       element: <Registration />
+    },
+    {
+      path: 'verify',
+      element: <Verify />
     },
     {
       path: 'logout',

@@ -32,7 +32,7 @@ type TFormValues = {
   confirmPassword: string;
 };
 
-const VerifyEmail = () => {
+const Verify = () => {
   const intl = useTranslation();
   const dispatch = useDispatch();
   const location = useLocation();
@@ -355,4 +355,4 @@ const VerifyEmail = () => {
   );
 };
 
-export default VerifyEmail;
+export default Verify;

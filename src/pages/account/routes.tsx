@@ -7,8 +7,6 @@ const AuthGuard = loadable(() => import('components/guard/AuthGuard'));
 const MainLayout = loadable(() => import('layout/MainLayout'));
 
 const Account = Loadable(lazy(() => import('./Account')));
-// @TODO delete this later once menu is updated
-const Impersonate = LoadableScreen(lazy(() => import('pages/auth/Impersonate')));
 
 const routes = {
   path: 'account',
@@ -21,10 +19,6 @@ const routes = {
     {
       path: '',
       element: <Account />
-    },
-    {
-      path: 'impersonate',
-      element: <Impersonate />
     },
     {
       path: ':section',

@@ -52,13 +52,7 @@ const mapDispatchToProps = (dispatch: AppDispatch) => ({
   searchMenus: (flatMenus: IFlatMenu[], searchKey: string) =>
     dispatch(searchActions.searchMenus(flatMenus, searchKey)),
   searchUsers: (lang: TLang, userId: string, searchKey: string) =>
-    dispatch(searchActions.searchUsers(lang, userId, searchKey)),
-  updateFrequentMenus: (
-    lang: TLang,
-    userId: string,
-    frequentMenus: IFrequentMenu[],
-    menuId: number
-  ) => dispatch(authActions.updateFrequentMenus(lang, userId, frequentMenus, menuId))
+    dispatch(searchActions.searchUsers(lang, userId, searchKey))
 });
 const connector = connect(mapStateToProps, mapDispatchToProps);
 type PropsFromRedux = ConnectedProps<typeof connector>;
@@ -77,9 +71,8 @@ const ContentSearch: React.FC<TContentSearchProps> = (props) => {
     userResults,
     menuResults,
     searchPhase,
-    searchMenus,
+    searchMenus
     // searchUsers,
-    updateFrequentMenus
   } = props;
   const [searchKey, setSearchKey] = React.useState<string>(searchKeyCache);
   const [open, setOpen] = React.useState<boolean>(false);
@@ -109,10 +102,6 @@ const ContentSearch: React.FC<TContentSearchProps> = (props) => {
   const handleFrequentMenuClick = React.useCallback(
     (menu: IFrequentMenu) => {
       if (menu?.menu?.url) {
-        if (updateFrequentMenus) {
-          updateFrequentMenus(lang, user.uuid, user.frequentMenus, menu?.menuId);
-        }
-
         navigate(menu.menu.url);
       }
     },
@@ -257,9 +246,6 @@ const ContentSearch: React.FC<TContentSearchProps> = (props) => {
                     component={RouterLink}
                     to={menu.url}
                     variant='subtitle2'
-                    onClick={() =>
-                      updateFrequentMenus(lang, user.uuid, user.frequentMenus, menu?.globalId)
-                    }
                   >
                     {menu.title}
                   </Link>
