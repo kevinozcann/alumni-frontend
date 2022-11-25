@@ -1,11 +1,10 @@
-import React from 'react';
-// import { useSelector } from 'react-redux';
-import Amplify, { Auth } from 'aws-amplify';
-import { awsAmplifyConfig } from '../config';
-// import { RootState } from 'store/store';
+import { Amplify, Auth } from 'aws-amplify';
 import { IUser } from 'pages/account/account-types';
+import React from 'react';
 
-Amplify.configure(awsAmplifyConfig);
+import awsconfig from '../aws-exports';
+
+Amplify.configure(awsconfig);
 
 interface IAuthState {
   isInitialized: boolean;
@@ -58,6 +57,7 @@ type TVerifyCodeAction = {
 type TResendCodeAction = {
   type: 'RESEND_CODE';
 };
+
 type TPasswordRecoveryAction = {
   type: 'PASSWORD_RECOVERY';
 };
@@ -129,7 +129,7 @@ const AuthContext = React.createContext<IAuthContextValue>({
   passwordReset: () => Promise.resolve()
 });
 
-export const AuthProvider: React.FC<IAuthProviderProps> = (props) => {
+export const AuthProvider = (props: IAuthProviderProps) => {
   const { children } = props;
   const [state, dispatch] = React.useReducer(reducer, initialState);
   // const { user } = useSelector((state: RootState) => state.auth);
@@ -192,6 +192,7 @@ export const AuthProvider: React.FC<IAuthProviderProps> = (props) => {
 
   const logout = async (): Promise<void> => {
     await Auth.signOut();
+
     dispatch({
       type: 'LOGOUT'
     });
@@ -203,6 +204,7 @@ export const AuthProvider: React.FC<IAuthProviderProps> = (props) => {
       password,
       attributes: { email }
     });
+
     dispatch({
       type: 'REGISTER'
     });
@@ -210,6 +212,7 @@ export const AuthProvider: React.FC<IAuthProviderProps> = (props) => {
 
   const verifyCode = async (username: string, code: string): Promise<void> => {
     await Auth.confirmSignUp(username, code);
+
     dispatch({
       type: 'VERIFY_CODE'
     });
@@ -217,6 +220,7 @@ export const AuthProvider: React.FC<IAuthProviderProps> = (props) => {
 
   const resendCode = async (username: string): Promise<void> => {
     await Auth.resendSignUp(username);
+
     dispatch({
       type: 'RESEND_CODE'
     });

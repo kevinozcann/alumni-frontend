@@ -32,7 +32,6 @@ import {
 
 const Feed = loadable(() => import('pages/feeds/Feed'));
 const About = loadable(() => import('./profile/About'));
-const LinkedAccounts = loadable(() => import('./profile/LinkedAccounts'));
 
 const mapStateToProps = (state: RootState) => ({
   lang: i18nLangSelector(state),
@@ -151,9 +150,6 @@ const AccountHome: React.FC<TAccountHomeProps> = (props) => {
             ) : (
               ''
             )}
-            <Grid item xs={12}>
-              <LinkedAccounts />
-            </Grid>
           </Grid>
         </Grid>
       </Grid>

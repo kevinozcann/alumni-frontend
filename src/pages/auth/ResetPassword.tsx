@@ -31,7 +31,10 @@ const mapDispatchToProps = (dispatch: AppDispatch) => ({
     email: string,
     user: TUserPassword,
     resetId: string
-  ) => dispatch(authActions.changeUserPassword(lang, userId, email, user, resetId))
+    // ) => dispatch(authActions.changeUserPassword(lang, userId, email, user, resetId))
+  ) => {
+    console.log('change this');
+  }
 });
 const connector = connect(mapStateToProps, mapDispatchToProps);
 type PropsFromRedux = ConnectedProps<typeof connector>;

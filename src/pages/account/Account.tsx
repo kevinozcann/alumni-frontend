@@ -58,8 +58,6 @@ const mapStateToProps = (state: RootState) => ({
   user: authUserSelector(state)
 });
 const mapDispatchToProps = (dispatch: AppDispatch) => ({
-  changeUserPassword: (lang: TLang, userId: string, email: string, user: TUserPassword) =>
-    dispatch(authActions.changeUserPassword(lang, userId, email, user)),
   updateUserInfo: (userId: string, user: IUser) =>
     dispatch(authActions.updateUserInfo(userId, user))
 });
@@ -68,8 +66,7 @@ type PropsFromRedux = ConnectedProps<typeof connector>;
 type TAccountProps = PropsFromRedux;
 
 const Account = (props: TAccountProps) => {
-  const { lang, user, schools, activeSchool, phase, error, updateUserInfo, changeUserPassword } =
-    props;
+  const { lang, user, schools, activeSchool, phase, error, updateUserInfo } = props;
   const { section } = useParams();
   const [activePage, setActivePage] = React.useState<string>(section);
   const [pageTitle, setPageTitle] = React.useState<string>(getPageTitle(section));
@@ -255,7 +252,7 @@ const Account = (props: TAccountProps) => {
             {activePage === 'photos' && (
               <Images lang={lang} user={user} phase={phase} updateUserInfo={updateUserInfo} />
             )}
-            {activePage === 'security' && (
+            {/* {activePage === 'security' && (
               <ChangePassword
                 title='account.security'
                 description='account.security.description'
@@ -266,7 +263,7 @@ const Account = (props: TAccountProps) => {
                 error={error}
                 changeUserPassword={changeUserPassword}
               />
-            )}
+            )} */}
           </Grid>
         </Grid>
       </Grid>

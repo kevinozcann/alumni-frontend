@@ -1,13 +1,12 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { useIntl } from 'react-intl';
 import loadable from '@loadable/component';
 import { Box, Card, CardContent, Divider, Typography } from '@mui/material';
 
 import ForgotPassword from 'components/links/ForgotPassword';
 
-const LoginJWT = loadable(() => import('./LoginJWT'));
-const LoginFacebook = loadable(() => import('./LoginFacebook'));
-const LoginGoogle = loadable(() => import('./LoginGoogle'));
+const LoginAmplify = loadable(() => import('./LoginAmplify'));
 
 export const Login = () => {
   const intl = useIntl();
@@ -30,20 +29,16 @@ export const Login = () => {
           </Box>
 
           <Box sx={{ flexGrow: 1, mt: 2 }}>
-            <LoginJWT />
+            <LoginAmplify />
           </Box>
 
           <Divider sx={{ my: 3 }} />
 
-          <Box sx={{ flexGrow: 1 }}>
-            <LoginFacebook />
+          <Box sx={{ flexGrow: 1, textAlign: 'center' }}>
+            <Typography color='textSecondary' sx={{ mx: 1 }}>
+              No account yet? <Link to='/auth/registration'>Sign Up!</Link>
+            </Typography>
           </Box>
-
-          <Box sx={{ flexGrow: 1, marginTop: 2 }}>
-            <LoginGoogle />
-          </Box>
-
-          <Divider sx={{ my: 3 }} />
 
           <Box sx={{ flexGrow: 1, textAlign: 'center' }}>
             <ForgotPassword />

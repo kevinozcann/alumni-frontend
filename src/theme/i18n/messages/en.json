@@ -783,6 +783,7 @@
   "user.lastname": "Last Name",
   "user.name": "Name",
   "user.number_of_users": "Number of Users",
+  "user.phone_number": "Phone Number",
   "user.type": "User Type",
   "user.types": "User Types",
   "user.update": "Update",

@@ -1,37 +1,28 @@
-import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { Link, Outlet } from 'react-router-dom';
-import {
-  Backdrop,
-  Box,
-  CircularProgress,
-  Container,
-  Typography,
-  useMediaQuery,
-  useTheme
-} from '@mui/material';
 import loadable from '@loadable/component';
+import { Backdrop, Box, CircularProgress, Container, useMediaQuery, useTheme } from '@mui/material';
+import React from 'react';
 import { Helmet } from 'react-helmet-async';
+import { useDispatch, useSelector } from 'react-redux';
+import { Outlet } from 'react-router-dom';
 
 import useSettings from 'hooks/useSettings';
 import { i18nActions, i18nLangSelector, i18nLanguagesSelector } from 'store/i18n';
 import { userActions, userActiveSchoolSelector } from 'store/user';
-import { TLang } from 'utils/shared-types';
 import gtm from 'utils/gtm';
+import { TLang } from 'utils/shared-types';
 
-import AuthSchoost from './AuthSchoost';
 import Languages from './Languages';
 
 const Legal = loadable(() => import('layout/Legal'));
 const CookiesNotification = loadable(() => import('components/CookiesNotification'));
-const schoostTitle = 'Schoost by SmartClass: School Operating System';
+const appTitle = 'Alumnix';
 
 const AuthPage = () => {
   const theme = useTheme();
   const dispatch = useDispatch();
   const { settings } = useSettings();
   const desktopDevice = useMediaQuery(theme.breakpoints.up('sm'));
-  const [title, setTitle] = React.useState<string>(schoostTitle);
+  const [title, setTitle] = React.useState<string>(appTitle);
 
   // Selectors
   const lang = useSelector(i18nLangSelector);
@@ -48,7 +39,7 @@ const AuthPage = () => {
 
   React.useEffect(() => {
     if (activeSchool) {
-      setTitle(`${activeSchool.title} - ${schoostTitle}`);
+      setTitle(`${activeSchool.title} - ${appTitle}`);
     }
   }, [activeSchool]);
 
@@ -66,12 +57,12 @@ const AuthPage = () => {
         <title>{title}</title>
         <link rel='icon' type='image/png' href={activeSchool?.config?.favicon} sizes='16x16' />
       </Helmet>
-      <Backdrop
+      {/* <Backdrop
         sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
         open={activeSchool ? false : true}
       >
         <CircularProgress color='inherit' />
-      </Backdrop>
+      </Backdrop> */}
       <Box
         sx={{
           backgroundColor: 'background.default',
@@ -108,8 +99,6 @@ const AuthPage = () => {
                     flex: '1 0 auto'
                   }}
                 >
-                  {desktopDevice && <AuthSchoost activeSchool={activeSchool} />}
-
                   <Box
                     sx={{
                       display: 'flex',
@@ -121,23 +110,6 @@ const AuthPage = () => {
                       p: 3
                     }}
                   >
-                    <Box
-                      sx={{
-                        display: 'flex',
-                        flexDirection: 'row',
-                        flex: 'none',
-                        justifyContent: 'flex-end',
-                        mt: 2
-                      }}
-                    >
-                      <Typography variant='subtitle2' color='textSecondary' sx={{ mx: 1 }}>
-                        {/* No account yet? */}
-                      </Typography>
-                      <Link to='/auth/registration'>
-                        {/* <Typography variant='subtitle2'>Sign Up!</Typography> */}
-                      </Link>
-                    </Box>
-
                     <Container maxWidth='sm' sx={{ height: '100%' }}>
                       <Box
                         sx={{
