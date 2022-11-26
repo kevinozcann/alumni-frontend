@@ -1,15 +1,18 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import { Navigate } from 'react-router-dom';
-import useAuth from '../../hooks/useAuth';
+
+import { authUserSelector } from 'store/auth';
 
 interface GuestGuardProps {
   children: React.ReactNode;
 }
 
-const GuestGuard: React.FC<GuestGuardProps> = ({ children }) => {
-  const { isAuthenticated } = useAuth();
+const GuestGuard = ({ children }: GuestGuardProps) => {
+  // Selectors
+  const user = useSelector(authUserSelector);
 
-  if (isAuthenticated) {
+  if (user.accessToken) {
     return <Navigate to='/account/home' />;
   }
 

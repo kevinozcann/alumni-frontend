@@ -1,6 +1,10 @@
-import React from 'react';
-import { connect, ConnectedProps } from 'react-redux';
-import { useLocation } from 'react-router-dom';
+import {
+  faArrowCircleLeft,
+  faBomb,
+  faFileSearch,
+  faSync
+} from '@fortawesome/pro-duotone-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   Box,
   Button,
@@ -13,96 +17,48 @@ import {
   ListSubheader,
   Typography
 } from '@mui/material';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-  faArrowCircleLeft,
-  faBomb,
-  faFileSearch,
-  faSync
-} from '@fortawesome/pro-duotone-svg-icons';
-
+import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useLocation } from 'react-router-dom';
 import 'utils/fontAwesome';
 
+import useTranslation from 'hooks/useTranslation';
 import Footer from 'layout/Footer';
 import Scrollbar from 'layout/Scrollbar';
-import { AppDispatch, RootState } from 'store/store';
-import { authActions, authUserSelector } from 'store/auth';
+import { IMenu } from 'pages/admin/menus/menu-types';
+import { authUserSelector } from 'store/auth';
+import { i18nLangSelector } from 'store/i18n';
 import {
   userActions,
   userActiveMenuSelector,
   userActiveSchoolSelector,
-  userActiveStudentSelector,
   userMenusSelector,
   userPhaseSelector
 } from 'store/user';
-import { i18nLangSelector } from 'store/i18n';
-import useTranslation from 'hooks/useTranslation';
-import { TLang } from 'utils/shared-types';
-import StudentsPopover from 'components/StudentsPopover';
-import { IFrequentMenu, IMenu } from 'pages/admin/menus/menu-types';
-import { IStudent } from 'pages/students/_store/types';
-import {
-  parentStudentsActions,
-  parentStudentsPhaseSelector,
-  parentStudentsSelector
-} from 'pages/students/parent/_store/students';
-import { ISchool } from 'pages/organization/organization-types';
-import { IUser } from 'pages/account/account-types';
-
-import MainNavItem from './MainNavItem';
 import ActiveMenuItems from './ActiveMenuItems';
+import MainNavItem from './MainNavItem';
 
-const mapStateToProps = (state: RootState) => ({
-  lang: i18nLangSelector(state),
-  user: authUserSelector(state),
-  menus: userMenusSelector(state),
-  activeSchool: userActiveSchoolSelector(state),
-  activeMenu: userActiveMenuSelector(state),
-  userPhase: userPhaseSelector(state),
-  parentStudents: parentStudentsSelector(state),
-  parentStudentsPhase: parentStudentsPhaseSelector(state),
-  activeStudent: userActiveStudentSelector(state)
-});
-const mapDispatchToProps = (dispatch: AppDispatch) => ({
-  updateUserMenus: (lang: TLang, user: IUser, school: ISchool) =>
-    dispatch(userActions.updateUserMenus(lang, user, school)),
-  updateActiveMenu: (menu: IMenu) => dispatch(userActions.updateActiveMenu(menu)),
-  getParentStudents: (lang: TLang, userId: string, parentName: string) =>
-    dispatch(parentStudentsActions.pullParentStudents(lang, userId, parentName)),
-  updateActiveStudent: (student: IStudent) => dispatch(userActions.updateActiveStudent(student))
-});
-const connector = connect(mapStateToProps, mapDispatchToProps);
-
-type PropsFromRedux = ConnectedProps<typeof connector>;
-
-type MainSidebarProps = PropsFromRedux & {
+type MainSidebarProps = {
   onMobileClose: () => void;
   openMobile: boolean;
 };
 
 const MainSidebar = (props: MainSidebarProps) => {
-  const {
-    lang,
-    user,
-    menus,
-    activeSchool,
-    activeMenu,
-    parentStudents,
-    parentStudentsPhase,
-    activeStudent,
-    userPhase,
-    getParentStudents,
-    updateUserMenus,
-    updateActiveStudent,
-    updateActiveMenu,
-    onMobileClose,
-    openMobile
-  } = props;
+  const { onMobileClose, openMobile } = props;
   const location = useLocation();
   const intl = useTranslation();
+  const dispatch = useDispatch();
+
+  // Selectors
+  const user = useSelector(authUserSelector);
+  const userPhase = useSelector(userPhaseSelector);
+  const activeSchool = useSelector(userActiveSchoolSelector);
+  const lang = useSelector(i18nLangSelector);
+  const menus = useSelector(userMenusSelector);
+  const activeMenu = useSelector(userActiveMenuSelector);
 
   const handleMainMenuClick = React.useCallback((menu: IMenu) => {
-    updateActiveMenu(menu);
+    dispatch(userActions.updateActiveMenu(menu));
   }, []);
 
   const handleMenuClick = React.useCallback(
@@ -115,15 +71,8 @@ const MainSidebar = (props: MainSidebarProps) => {
   );
 
   const handleBackButtonClick = () => {
-    updateActiveMenu(null);
+    dispatch(userActions.updateActiveMenu(null));
   };
-
-  // Pull students for the parent
-  React.useEffect(() => {
-    if (user?.userType.id === 9 && parentStudents?.length === 0) {
-      getParentStudents(lang, user.uuid, user.fullName);
-    }
-  }, [lang, user]);
 
   React.useEffect(() => {
     if (openMobile && onMobileClose) {
@@ -139,25 +88,6 @@ const MainSidebar = (props: MainSidebarProps) => {
         height: '100%'
       }}
     >
-      {user?.userType?.id === 9 && (
-        <Box
-          sx={{
-            backgroundColor: 'background.default',
-            position: 'sticky',
-            top: 0,
-            zIndex: 1
-          }}
-        >
-          <StudentsPopover
-            parentStudents={parentStudents}
-            activeStudent={activeStudent}
-            parentStudentsPhase={parentStudentsPhase}
-            changeStudent={updateActiveStudent}
-          />
-          <Divider />
-        </Box>
-      )}
-
       <Scrollbar options={{ suppressScrollX: true }}>
         {(menus?.length > 0 && (
           <Box
@@ -241,7 +171,9 @@ const MainSidebar = (props: MainSidebarProps) => {
                 <Typography variant='body1' sx={{ mt: 1 }}>
                   {intl.translate({ id: 'menus.not_loaded' })}
                 </Typography>
-                <Button onClick={() => updateUserMenus(lang, user, activeSchool)}>
+                <Button
+                  onClick={() => dispatch(userActions.updateUserMenus(lang, user, activeSchool))}
+                >
                   {intl.translate({ id: 'app.try_again' })}
                 </Button>
               </>
@@ -316,4 +248,4 @@ const MainSidebar = (props: MainSidebarProps) => {
   );
 };
 
-export default connector(MainSidebar);
+export default MainSidebar;

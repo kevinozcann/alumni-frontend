@@ -1,8 +1,12 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { useIntl } from 'react-intl';
 import loadable from '@loadable/component';
-import { Box, Card, CardContent, Divider, Typography } from '@mui/material';
+import Box from '@mui/material/Box';
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import Divider from '@mui/material/Divider';
+import Typography from '@mui/material/Typography';
+import React from 'react';
+import { useIntl } from 'react-intl';
+import { Link } from 'react-router-dom';
 
 import ForgotPassword from 'components/links/ForgotPassword';
 

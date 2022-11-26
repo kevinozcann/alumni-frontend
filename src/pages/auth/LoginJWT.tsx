@@ -69,7 +69,7 @@ export const LoginJWT = () => {
 
   const submitForm = (values: FormValues) => {
     // Start login
-    dispatch(authActions.login(lang, values.email, values.password));
+    dispatch(authActions.login(values.email, values.password));
   };
 
   React.useEffect(() => {

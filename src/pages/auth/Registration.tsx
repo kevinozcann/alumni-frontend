@@ -1,23 +1,31 @@
 import { faSpinner } from '@fortawesome/pro-duotone-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import Visibility from '@mui/icons-material/Visibility';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import Alert from '@mui/material/Alert';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
+import IconButton from '@mui/material/IconButton';
+import InputAdornment from '@mui/material/InputAdornment';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
-import { useFormik } from 'formik';
+import { prepareDataForValidation, useFormik, validateYupSchema, yupToFormErrors } from 'formik';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router';
+import * as Yup from 'yup';
+import zxcvbn, { ZXCVBNResult } from 'zxcvbn';
 
 import useTranslation from 'hooks/useTranslation';
 import { authActions, authErrorSelector, authPhaseSelector, authUserSelector } from 'store/auth';
-import { useNavigate } from 'react-router';
+import { basicList, PasswordMeterColor } from 'utils/Helpers';
 
 type FormValues = {
   email: string;
   password: string;
+  confirmPassword: string;
   name: string;
-  lastName: string;
+  lastname: string;
   phoneNumber: string;
 };
 
@@ -25,36 +33,99 @@ const Registration = () => {
   const intl = useTranslation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [showPassword, setShowPassword] = React.useState({
+    password: false,
+    confirmPassword: false
+  });
+  const [passwordStrength, setPasswordStrength] = React.useState<number>();
+  const [passwordWarning, setPasswordWarning] = React.useState<string>();
+  const [passwordSuggestion, setPasswordSuggestion] = React.useState<string[]>();
 
   // Selectors
   const user = useSelector(authUserSelector);
-  const phase = useSelector(authPhaseSelector);
-  const error = useSelector(authErrorSelector);
+  const authPhase = useSelector(authPhaseSelector);
+  const authError = useSelector(authErrorSelector);
 
+  const transName = intl.translate({ id: 'user.name' });
+  const transLastname = intl.translate({ id: 'user.lastname' });
   const transEmail = intl.translate({ id: 'email.email' });
+  const requiredTranslation = intl.formatMessage({ id: 'app.required' });
+  const matchTranslation = intl.formatMessage({ id: 'account.password.should_match' });
+  const strengthTranslation = intl.formatMessage({ id: 'account.password.criteria' });
 
-  const { handleSubmit, handleChange, values, errors, touched } = useFormik({
-    initialValues: {
-      email: '',
-      password: '',
-      name: '',
-      lastName: '',
-      phoneNumber: ''
-    },
-    validate: (values: FormValues) => validateForm(values),
-    onSubmit: (values: FormValues) => submitForm(values)
+  const formSchema = Yup.object().shape({
+    password: Yup.string()
+      .required(requiredTranslation)
+      .matches(
+        /^(?=.*?[A-Z])(?=(.*[a-z]){1,})(?=(.*[\d]){1,})(?=(.*[\W]){1,})(?!.*\s).{8,}$/,
+        strengthTranslation
+      ),
+    confirmPassword: Yup.string()
+      .required(requiredTranslation)
+      .oneOf([Yup.ref('password'), null], matchTranslation)
   });
 
-  const validateForm = (values: Record<string, unknown>) => {
+  const { handleSubmit, handleChange, values, errors, touched, isSubmitting, setSubmitting } =
+    useFormik({
+      initialValues: {
+        email: '',
+        password: '',
+        confirmPassword: '',
+        name: '',
+        lastname: '',
+        phoneNumber: ''
+      },
+      validate: (values: FormValues) => validateForm(values),
+      onSubmit: (values: FormValues) => submitForm(values)
+    });
+
+  const validateForm = (values: Record<string, string>) => {
     const errors: { [key: string]: any } = {};
 
-    if (!values.email) {
+    if (!values.name) {
+      errors.name = intl.translate({ id: 'app.cannot_be_empty_w_name' }, { name: transName });
+      return errors;
+    } else if (!values.lastname) {
+      errors.lastname = intl.translate(
+        { id: 'app.cannot_be_empty_w_name' },
+        { name: transLastname }
+      );
+      return errors;
+    } else if (!values.email) {
       errors.email = intl.translate({ id: 'app.cannot_be_empty_w_name' }, { name: transEmail });
+      return errors;
     } else if (!/\S+@\S+\.\S+/.test(`${values.email}`)) {
       errors.email = intl.translate({ id: 'login.invalid_email' });
+      return errors;
     }
 
-    return errors;
+    const formValues = prepareDataForValidation(values);
+    const validate = validateYupSchema(formValues, formSchema);
+
+    // Password guesser
+    const passwordGuesser: ZXCVBNResult = zxcvbn(values.password);
+
+    setPasswordStrength(passwordGuesser?.score);
+    if (passwordGuesser?.feedback) {
+      setPasswordWarning(passwordGuesser.feedback.warning);
+      setPasswordSuggestion(passwordGuesser.feedback.suggestions);
+    }
+    return validate.then(
+      (_response) => {
+        return {};
+      },
+      (error) => {
+        return yupToFormErrors(error);
+      }
+    );
+  };
+
+  const handleClickShowPassword = (elt: any) => () => {
+    setShowPassword({ ...showPassword, [elt]: !showPassword[elt] });
+  };
+
+  const handleMouseDownPassword = (event: React.MouseEvent) => {
+    event.preventDefault();
   };
 
   const submitForm = (values: FormValues) => {
@@ -63,14 +134,20 @@ const Registration = () => {
         values.email,
         values.password,
         values.name,
-        values.lastName,
+        values.lastname,
         values.phoneNumber
       )
     );
   };
 
   React.useEffect(() => {
-    if (user.authenticationFlowType === 'USER_SRP_AUTH') {
+    if (authError) {
+      setSubmitting(false);
+    }
+  }, [authError, authPhase]);
+
+  React.useEffect(() => {
+    if (user && !user.userConfirmed) {
       setTimeout(() => {
         navigate('/auth/verify');
       }, 5000);
@@ -84,13 +161,14 @@ const Registration = () => {
   return (
     <Box sx={{ width: 350 }}>
       <Typography sx={{ mb: 2 }} variant='body1' color='textPrimary'>
-        {intl.translate({ id: 'register.input_email' })}
+        {intl.translate({ id: 'register.fill_form' })}
       </Typography>
 
       <form className='form' noValidate={true} autoComplete='off' onSubmit={handleSubmit}>
         <TextField
           autoFocus
           fullWidth
+          disabled={isSubmitting}
           name='name'
           label={intl.translate({ id: 'user.name' })}
           margin='normal'
@@ -103,24 +181,25 @@ const Registration = () => {
         />
 
         <TextField
-          autoFocus
           fullWidth
-          name='lastName'
+          autoComplete='off'
+          disabled={isSubmitting}
+          name='lastname'
           label={intl.translate({ id: 'user.lastname' })}
           margin='normal'
           variant='outlined'
           placeholder={intl.translate({ id: 'user.lastname' })}
           onChange={handleChange}
-          value={values.lastName}
-          error={Boolean(touched.lastName && errors.lastName)}
-          helperText={touched.lastName && errors.lastName}
+          value={values.lastname}
+          error={Boolean(touched.lastname && errors.lastname)}
+          helperText={touched.lastname && errors.lastname}
         />
 
         <TextField
-          autoFocus
           fullWidth
           type='email'
           name='email'
+          disabled={isSubmitting}
           autoComplete='username'
           label={intl.translate({ id: 'email.email' })}
           margin='normal'
@@ -133,9 +212,9 @@ const Registration = () => {
         />
 
         <TextField
-          autoFocus
           fullWidth
           name='phoneNumber'
+          disabled={isSubmitting}
           label={intl.translate({ id: 'user.phone_number' })}
           margin='normal'
           variant='outlined'
@@ -147,29 +226,102 @@ const Registration = () => {
         />
 
         <TextField
-          autoFocus
+          className={`${errors.password ? 'is-invalid' : isSubmitting ? 'is-valid' : ''}`}
+          disabled={isSubmitting}
+          helperText={errors.password ? errors.password : ''}
+          error={!!errors.password}
           fullWidth
-          type='password'
-          name='password'
-          autoComplete='username'
-          label={intl.translate({ id: 'account.password' })}
+          id='password'
+          label={intl.formatMessage({ id: 'account.password.new' })}
           margin='normal'
-          variant='outlined'
-          placeholder={intl.translate({ id: 'account.password' })}
           onChange={handleChange}
           value={values.password}
-          error={Boolean(touched.password && errors.password)}
-          helperText={touched.password && errors.password}
+          variant='outlined'
+          autoComplete='new-password'
+          type={showPassword.password ? 'text' : 'password'}
+          InputProps={{
+            endAdornment: (
+              <InputAdornment position='end'>
+                <IconButton
+                  tabIndex={-1}
+                  aria-label='toggle password visibility'
+                  onClick={handleClickShowPassword('password')}
+                  onMouseDown={handleMouseDownPassword}
+                  size='large'
+                >
+                  {showPassword.password ? <Visibility /> : <VisibilityOff />}
+                </IconButton>
+              </InputAdornment>
+            )
+          }}
+        />
+        <Box
+          sx={{
+            mb: 1,
+            background: (passwordStrength && PasswordMeterColor(passwordStrength)) || 'transparent',
+            borderRadius: '5px',
+            boxSizing: 'border-box',
+            display: (passwordStrength && 'block') || 'none',
+            height: '5px',
+            left: 0,
+            position: 'relative',
+            top: '1px',
+            right: '0',
+            transition: 'width 300ms ease-out',
+            width: `${(passwordStrength + 1) * 20}%` ?? '0'
+          }}
+        />
+        {/* strength={passwordStrength} */}
+        {passwordWarning && (
+          <Alert sx={{ whiteSpace: 'normal' }} className='mb-1' severity='warning'>
+            {passwordWarning}
+          </Alert>
+        )}
+        {passwordSuggestion?.length > 0 && (
+          <Alert sx={{ whiteSpace: 'normal' }} severity='info'>
+            {basicList(passwordSuggestion)}
+          </Alert>
+        )}
+
+        <TextField
+          className={`${errors.confirmPassword ? 'is-invalid' : isSubmitting ? 'is-valid' : ''}`}
+          disabled={isSubmitting}
+          helperText={errors.confirmPassword ? errors.confirmPassword : ''}
+          error={!!errors.confirmPassword}
+          fullWidth
+          id='confirmPassword'
+          label={intl.formatMessage({ id: 'account.password.again' })}
+          margin='normal'
+          onChange={handleChange}
+          value={values.confirmPassword}
+          variant='outlined'
+          autoComplete='new-password'
+          type={showPassword.confirmPassword ? 'text' : 'password'}
+          InputProps={{
+            endAdornment: (
+              <InputAdornment position='end'>
+                <IconButton
+                  tabIndex={-1}
+                  aria-label='toggle password visibility'
+                  onClick={handleClickShowPassword('confirmPassword')}
+                  onMouseDown={handleMouseDownPassword}
+                  size='large'
+                >
+                  {showPassword.confirmPassword ? <Visibility /> : <VisibilityOff />}
+                </IconButton>
+              </InputAdornment>
+            )
+          }}
         />
 
-        {(error && (
+        {(authError && (
           <Box sx={{ mt: 2 }}>
             <Alert variant='outlined' severity='error'>
-              {error?.message}
+              {authError?.message}
             </Alert>
           </Box>
         )) ||
-          (phase === 'success' && (
+          (authPhase === 'success' && (
             <Box sx={{ mt: 2 }}>
               <Alert variant='outlined' severity='success'>
                 {intl.translate({ id: 'register.email_sent' })}
@@ -184,9 +336,10 @@ const Registration = () => {
             size='large'
             type='submit'
             variant='contained'
-            disabled={phase?.includes('ing')}
+            disabled={authPhase?.includes('ing')}
             startIcon={
-              (phase?.includes('ing') && <FontAwesomeIcon icon={faSpinner} spin={true} />) || null
+              (authPhase?.includes('ing') && <FontAwesomeIcon icon={faSpinner} spin={true} />) ||
+              null
             }
           >
             {intl.translate({ id: 'register' })}

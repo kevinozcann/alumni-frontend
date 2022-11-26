@@ -1,5 +1,5 @@
 import React from 'react';
-import { connect, ConnectedProps } from 'react-redux';
+import { connect, ConnectedProps, useDispatch, useSelector } from 'react-redux';
 import {
   Box,
   IconButton,
@@ -9,34 +9,24 @@ import {
   Popover,
   Typography
 } from '@mui/material';
-import { AppDispatch, RootState } from '../../store/store';
-import {
-  defaultLanguages,
-  i18nActions,
-  i18nLangSelector,
-  i18nLanguagesSelector
-} from '../../store/i18n';
-import { toAbsoluteUrl } from '../../utils/AssetsHelpers';
-import { ILanguage, TLang } from '../../utils/shared-types';
 
-const mapStateToProps = (state: RootState) => ({
-  lang: i18nLangSelector(state),
-  languages: i18nLanguagesSelector(state),
-  defaultLanguages: defaultLanguages
-});
-const mapDispatchToProps = (dispatch: AppDispatch) => ({
-  setLanguage: (lang: TLang) => dispatch(i18nActions.setLanguage(lang))
-});
-const connector = connect(mapStateToProps, mapDispatchToProps);
-type PropsFromRedux = ConnectedProps<typeof connector>;
-type LanguagePopoverParam = PropsFromRedux;
+import { AppDispatch, RootState } from 'store/store';
+import { defaultLanguages, i18nActions, i18nLangSelector, i18nLanguagesSelector } from 'store/i18n';
+import { toAbsoluteUrl } from 'utils/AssetsHelpers';
+import { ILanguage, TLang } from 'utils/shared-types';
 
-const LanguagePopover = (props: LanguagePopoverParam) => {
-  const { lang, languages, defaultLanguages, setLanguage } = props;
+const LanguagePopover = () => {
+  const dispatch = useDispatch();
   const [open, setOpen] = React.useState<boolean>(false);
   const anchorRef = React.useRef<HTMLButtonElement | null>(null);
 
-  const currentLanguage = defaultLanguages.find((l) => l.shortCode === lang);
+  // Selectors
+  const lang = useSelector(i18nLangSelector);
+  const languages = useSelector(i18nLanguagesSelector);
+
+  const currentLanguage = defaultLanguages.find(
+    (l) => l.shortCode === lang || l.shortCode === 'en'
+  );
 
   const handleOpen = (): void => {
     setOpen(true);
@@ -47,7 +37,7 @@ const LanguagePopover = (props: LanguagePopoverParam) => {
   };
 
   const handleChangeLanguage = (language: TLang): void => {
-    setLanguage(language);
+    dispatch(i18nActions.setLanguage(language));
     setOpen(false);
 
     setTimeout(() => {
@@ -127,4 +117,4 @@ const LanguagePopover = (props: LanguagePopoverParam) => {
   );
 };
 
-export default connector(LanguagePopover);
+export default LanguagePopover;

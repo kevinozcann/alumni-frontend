@@ -1,6 +1,8 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import { Navigate, useLocation } from 'react-router-dom';
-import useAuth from '../../hooks/useAuth';
+
+import { authUserSelector } from 'store/auth';
 
 interface AuthGuardProps {
   children: React.ReactNode;
@@ -8,11 +10,13 @@ interface AuthGuardProps {
 
 const AuthGuard = (props: AuthGuardProps) => {
   const { children } = props;
-  const auth = useAuth();
   const location = useLocation();
   const [requestedLocation, setRequestedLocation] = React.useState(null);
 
-  if (!auth.isAuthenticated) {
+  // Selectors
+  const user = useSelector(authUserSelector);
+
+  if (!user.accessToken) {
     if (location?.pathname !== requestedLocation) {
       setRequestedLocation(location?.pathname);
     }

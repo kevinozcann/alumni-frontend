@@ -23,7 +23,7 @@ type TAboutProps = {
   user: IUser;
   activeSchool: ISchool;
 };
-const About: React.FC<TAboutProps> = (props) => {
+const About = (props: TAboutProps) => {
   const { user, activeSchool } = props;
 
   return (
@@ -59,15 +59,6 @@ const About: React.FC<TAboutProps> = (props) => {
                 <ListItemText
                   disableTypography
                   primary={
-                    <Typography variant='body2' color='textPrimary'>
-                      {user.userType.title}
-                      {/*<FormattedMessage id={user.userType.title} />*/}
-                      {/* <Link variant='subtitle2' color='textPrimary' href='#'>
-                        {activeSchool.title}
-                      </Link> */}
-                    </Typography>
-                  }
-                  secondary={
                     <Typography variant='caption' color='textSecondary'>
                       {activeSchool?.title || ''}
                     </Typography>

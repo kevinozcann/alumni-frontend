@@ -46,7 +46,7 @@ type TActionAllState = IAuthState & {
   password?: string;
   email?: string;
   name?: string;
-  lastName?: string;
+  lastname?: string;
   phoneNumber?: string;
   lang?: TLang;
   menuId?: number;
@@ -219,22 +219,13 @@ export const reducer = persistReducer(
         return { ...state, authToken: null, accessToken: null, phase: null, error: null };
       }
       case actionTypes.AUTH_UPDATE_USER: {
-        const { user } = action.payload;
         const currentState = { ...state };
         const currentUser = currentState.user;
+        const updatedUser = Object.assign({}, currentUser, action.payload);
 
         return {
           ...state,
-          user: {
-            ...currentUser,
-            username: user.username,
-            session: user.session,
-            client: user.client,
-            signInUserSession: user.signInUserSession,
-            authenticationFlowType: user.authenticationFlowType,
-            keyPrefix: user.keyPrefix,
-            userDataKey: user.userDataKey
-          }
+          user: updatedUser
         };
       }
       case actionTypes.AUTH_ACCOUNTS_IMPERSONATE_UPDATE: {
@@ -280,9 +271,9 @@ export const reducer = persistReducer(
 );
 
 export const authActions = {
-  login: (lang: TLang, email: string, pwd: string): IAction<Partial<TActionAllState>> => ({
+  login: (email: string, password: string): IAction<Partial<TActionAllState>> => ({
     type: actionTypes.AUTH_LOGIN,
-    payload: { lang, email, pwd }
+    payload: { email, password }
   }),
   authToken: (
     lang: TLang,
@@ -297,15 +288,15 @@ export const authActions = {
     email: string,
     password: string,
     name: string,
-    lastName: string,
+    lastname: string,
     phoneNumber: string
   ): IAction<Partial<TActionAllState>> => ({
     type: actionTypes.AUTH_REGISTER,
-    payload: { email, password, name, lastName, phoneNumber }
+    payload: { email, password, name, lastname, phoneNumber }
   }),
-  verify: (lang: TLang, email: string, code: string): IAction<Partial<TActionAllState>> => ({
+  verify: (email: string, code: string): IAction<Partial<TActionAllState>> => ({
     type: actionTypes.AUTH_VERIFY,
-    payload: { lang, email, code }
+    payload: { email, code }
   }),
   logout: (): IAction<Partial<TActionAllState>> => ({ type: actionTypes.AUTH_LOGOUT }),
   hardLogout: (): IAction<Partial<TActionAllState>> => ({ type: PURGE }),
@@ -340,24 +331,30 @@ export function* saga() {
   yield takeLatest(
     actionTypes.AUTH_LOGIN,
     function* loginSaga({ payload }: IAction<Partial<TActionAllState>>) {
-      yield put(authActions.setPhase('credentials-validating', null));
+      yield put(authActions.setPhase('validating', null));
 
-      const { lang, email, pwd } = payload;
-      const userLoginUrl = updateApiUrl(USER_LOGIN_URL, { lang: lang });
-      const response = yield axios.post(userLoginUrl, { email, pwd });
+      const { email, password } = payload;
 
-      if (response.status !== 200) {
-        yield put(authActions.setPhase('login-error', response.data.error || response.data.title));
-        return;
+      try {
+        const user = yield Auth.signIn(email, password);
+
+        // Update user info
+        yield put({
+          type: actionTypes.AUTH_UPDATE_USER,
+          payload: {
+            accessToken: user.signInUserSession.accessToken.jwtToken,
+            refreshToken: user.signInUserSession.refreshToken.token,
+            signInUserSession: user.signInUserSession,
+            attributes: user.attributes,
+            preferredMFA: user.preferredMFA
+          }
+        });
+
+        yield put(authActions.setPhase('success', null));
+      } catch (error) {
+        console.log('error', error);
+        yield put(authActions.setPhase('error', error));
       }
-
-      const {
-        data: { userId, accessToken }
-      } = response;
-
-      const jwtAccessToken = sign({ userId: userId }, JWT_SECRET, { expiresIn: JWT_EXPIRES_IN });
-
-      yield put(authActions.authToken(lang, userId, accessToken, jwtAccessToken));
     }
   );
 
@@ -380,22 +377,29 @@ export function* saga() {
     function* registerSaga({ payload }: IAction<Partial<TActionAllState>>) {
       yield put(authActions.setPhase('adding', null));
 
-      const { email, password, name, lastName, phoneNumber } = payload;
+      const { email, password, name, lastname, phoneNumber } = payload;
 
       try {
-        const { user } = yield Auth.signUp({
+        const { user, userConfirmed, userSub } = yield Auth.signUp({
           username: email,
           password,
-          attributes: { email, name, family_name: lastName, phone_number: phoneNumber },
-          autoSignIn: {
-            enabled: true
-          }
+          attributes: { email, name, family_name: lastname, phone_number: phoneNumber }
         });
 
         // Update user info
         yield put({
           type: actionTypes.AUTH_UPDATE_USER,
-          payload: { user }
+          payload: {
+            userSub: userSub,
+            userConfirmed: userConfirmed,
+            username: user.username,
+            session: user.session,
+            client: user.client,
+            signInUserSession: user.signInUserSession,
+            authenticationFlowType: user.authenticationFlowType,
+            keyPrefix: user.keyPrefix,
+            userDataKey: user.userDataKey
+          }
         });
 
         yield put(authActions.setPhase('success', null));
@@ -411,26 +415,27 @@ export function* saga() {
     function* registerSaga({ payload }: IAction<Partial<TActionAllState>>) {
       yield put(authActions.setPhase('verifying', null));
 
-      const { lang, email, code } = payload;
+      const { email, code } = payload;
 
-      // Verify the email address
-      const verifyEmailUrl = updateApiUrl(VERIFY_EMAIL_URL, {
-        lang
-      });
-      const { status, data } = yield axios.post(`${verifyEmailUrl}`, {
-        emailAddress: email,
-        verifyCode: code
-      });
+      try {
+        const response = yield Auth.confirmSignUp(email, code);
 
-      if (status !== 200) {
-        yield put(authActions.setPhase('error', 'An error occurred!'));
-        return;
-      }
+        if (response === 'SUCCESS') {
+          // Update user info
+          yield put({
+            type: actionTypes.AUTH_UPDATE_USER,
+            payload: {
+              userConfirmed: true
+            }
+          });
 
-      if (data?.error) {
-        yield put(authActions.setPhase('error', data.error));
-      } else {
-        yield put(authActions.setPhase('verified', null));
+          yield put(authActions.setPhase('success', null));
+        } else {
+          yield put(authActions.setPhase('error', 'An error occurred!'));
+        }
+      } catch (error) {
+        console.log('error', error);
+        yield put(authActions.setPhase('error', error));
       }
     }
   );

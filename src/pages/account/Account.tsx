@@ -1,13 +1,10 @@
-import React from 'react';
-import loadable from '@loadable/component';
-import { connect, ConnectedProps } from 'react-redux';
-import { useNavigate, useParams } from 'react-router-dom';
-import { useIntl } from 'react-intl';
+import { faEdit, faHome, faImage, faLock } from '@fortawesome/pro-duotone-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHome, faEdit, faImage, faLock } from '@fortawesome/pro-duotone-svg-icons';
+import loadable from '@loadable/component';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
 import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
 import CardMedia from '@mui/material/CardMedia';
@@ -15,30 +12,22 @@ import Grid from '@mui/material/Grid';
 import IconButton from '@mui/material/IconButton';
 import MenuItem from '@mui/material/MenuItem';
 import Skeleton from '@mui/material/Skeleton';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
+import React from 'react';
+import { useIntl } from 'react-intl';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate, useParams } from 'react-router-dom';
 
-import Page from 'layout/Page';
-import { AppDispatch, RootState } from 'store/store';
-import {
-  authUserSelector,
-  authActions,
-  authPhaseSelector,
-  authErrorSelector,
-  TUserPassword
-} from 'store/auth';
-import { userActiveSchoolSelector, userSchoolsSelector } from 'store/user';
-import { i18nLangSelector } from 'store/i18n';
 import { useSubheader } from 'contexts/SubheaderContext';
-import StyledMenu from 'utils/StyledMenu';
-import { TLang } from 'utils/shared-types';
+import Page from 'layout/Page';
+import { authErrorSelector, authPhaseSelector, authUserSelector } from 'store/auth';
+import { i18nLangSelector } from 'store/i18n';
+import { userActiveSchoolSelector, userSchoolsSelector } from 'store/user';
 import { toAbsoluteUrl } from 'utils/AssetsHelpers';
-
-import { IUser } from './account-types';
+import StyledMenu from 'utils/StyledMenu';
 
 const AccountHome = loadable(() => import('./AccountHome'));
 const General = loadable(() => import('./edit/General'));
 const Images = loadable(() => import('./edit/Images'));
-const ChangePassword = loadable(() => import('./edit/ChangePassword'));
 
 const getPageTitle = (page: string) =>
   page === 'update'
@@ -49,32 +38,24 @@ const getPageTitle = (page: string) =>
     ? 'account.security'
     : 'account.home';
 
-const mapStateToProps = (state: RootState) => ({
-  activeSchool: userActiveSchoolSelector(state),
-  error: authErrorSelector(state),
-  lang: i18nLangSelector(state),
-  phase: authPhaseSelector(state),
-  schools: userSchoolsSelector(state),
-  user: authUserSelector(state)
-});
-const mapDispatchToProps = (dispatch: AppDispatch) => ({
-  updateUserInfo: (userId: string, user: IUser) =>
-    dispatch(authActions.updateUserInfo(userId, user))
-});
-const connector = connect(mapStateToProps, mapDispatchToProps);
-type PropsFromRedux = ConnectedProps<typeof connector>;
-type TAccountProps = PropsFromRedux;
-
-const Account = (props: TAccountProps) => {
-  const { lang, user, schools, activeSchool, phase, error, updateUserInfo } = props;
+const Account = () => {
   const { section } = useParams();
+  const intl = useIntl();
+  const subheader = useSubheader();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [activePage, setActivePage] = React.useState<string>(section);
   const [pageTitle, setPageTitle] = React.useState<string>(getPageTitle(section));
   const [anchorHomeMenuEl, setAnchorHomeMenuEl] = React.useState<HTMLElement>(null);
   const [showWallpaper, setShowWallpaper] = React.useState<boolean>(false);
-  const subheader = useSubheader();
-  const intl = useIntl();
-  const navigate = useNavigate();
+
+  // Selectors
+  const user = useSelector(authUserSelector);
+  const activeSchool = useSelector(userActiveSchoolSelector);
+  const error = useSelector(authErrorSelector);
+  const lang = useSelector(i18nLangSelector);
+  const phase = useSelector(authPhaseSelector);
+  const schools = useSelector(userSchoolsSelector);
 
   const wallpaper = user?.wallpaper || toAbsoluteUrl('/media/users/cover.jpeg');
   const profileImg = user?.picture || toAbsoluteUrl('/media/users/default.jpg');
@@ -114,31 +95,6 @@ const Account = (props: TAccountProps) => {
     }
     subheader.setBreadcrumbs(breadcrumbs);
   }, [activePage]);
-
-  // Add service desk widget
-  React.useEffect(() => {
-    const jhdScriptElt = document.createElement('script');
-    function jiraHelpdesk(jhdScript: HTMLScriptElement, callback: () => void) {
-      jhdScript.type = 'text/javascript';
-      jhdScript.setAttribute('data-jsd-embedded', null);
-      jhdScript.setAttribute('data-key', '07f11a01-10d5-4205-9cb5-adbcfda822c0');
-      jhdScript.setAttribute('data-base-url', 'https://jsd-widget.atlassian.com');
-      jhdScript.src = 'https://jsd-widget.atlassian.com/assets/embed.js';
-      jhdScript.onload = function () {
-        callback();
-      };
-
-      document.getElementsByTagName('head')[0].appendChild(jhdScript);
-    }
-
-    if (user.userType.loginType === 'admin' || user.userType.loginType === 'manager') {
-      jiraHelpdesk(jhdScriptElt, function () {
-        const DOMContentLoaded_event = document.createEvent('Event');
-        DOMContentLoaded_event.initEvent('DOMContentLoaded', true, true);
-        window.document.dispatchEvent(DOMContentLoaded_event);
-      });
-    }
-  }, []);
 
   return (
     <Page title={intl.formatMessage({ id: 'account.myaccount' })}>
@@ -246,12 +202,21 @@ const Account = (props: TAccountProps) => {
             {(activePage === 'home' || activePage === 'post') && (
               <AccountHome user={user} schools={schools} activeSchool={activeSchool} />
             )}
-            {activePage === 'update' && (
-              <General user={user} phase={phase} updateUserInfo={updateUserInfo} />
-            )}
-            {activePage === 'photos' && (
-              <Images lang={lang} user={user} phase={phase} updateUserInfo={updateUserInfo} />
-            )}
+            {/* {activePage === 'update' && (
+              <General
+                user={user}
+                phase={phase}
+                updateUserInfo={() => dispatch(authActions.updateUserInfo(user.userId, user))}
+              />
+            )} */}
+            {/* {activePage === 'photos' && (
+              <Images
+                lang={lang}
+                user={user}
+                phase={phase}
+                updateUserInfo={dispatch(authActions.updateUserInfo(userId, user))}
+              />
+            )} */}
             {/* {activePage === 'security' && (
               <ChangePassword
                 title='account.security'
@@ -271,4 +236,4 @@ const Account = (props: TAccountProps) => {
   );
 };
 
-export default connector(Account);
+export default Account;

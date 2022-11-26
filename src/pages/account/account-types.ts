@@ -6,6 +6,7 @@ export interface IUser {
   accessToken: string;
   adClassCode?: string;
   adStdCode?: string;
+  attributes: any;
   authenticationFlowType?: string;
   client?: {
     endpoint: string;
@@ -32,6 +33,8 @@ export interface IUser {
   name: string;
   newspaper?: string;
   picture?: string;
+  preferredMFA: string;
+  refreshToken?: string;
   roles?: string[];
   signInUserSession: any;
   schoolId: number;
@@ -40,8 +43,10 @@ export interface IUser {
   session: any;
   stdIds?: string[];
   superAdmin?: string;
+  userConfirmed?: boolean;
   userDataKey?: string;
   username?: string;
+  userSub?: string;
   userType: IUserType;
   userTypeTitle: string;
   userZone: TUserZone;

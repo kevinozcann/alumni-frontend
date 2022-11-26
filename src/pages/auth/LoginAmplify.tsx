@@ -1,65 +1,40 @@
-import React from 'react';
-import { useNavigate } from 'react-router';
-import { connect, ConnectedProps } from 'react-redux';
 import { Alert, Box, Button, TextField, Typography } from '@mui/material';
 import { useFormik } from 'formik';
+import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router';
 
-import {
-  authActions,
-  authPhaseSelector,
-  authErrorSelector,
-  authUserSelector,
-  authAccessTokenSelector,
-  loginPhases
-} from 'store/auth';
-import { i18nLangSelector } from 'store/i18n';
-import { AppDispatch, RootState } from 'store/store';
-import useAuth from 'hooks/useAuth';
 import useTranslation from 'hooks/useTranslation';
-import { TLang } from 'utils/shared-types';
-
-const mapStateToProps = (state: RootState) => ({
-  user: authUserSelector(state),
-  accessToken: authAccessTokenSelector(state),
-  lang: i18nLangSelector(state),
-  phase: authPhaseSelector(state),
-  error: authErrorSelector(state)
-});
-const mapDispatchToProps = (dispatch: AppDispatch) => ({
-  userLogin(lang: TLang, email: string, pwd: string) {
-    dispatch(authActions.login(lang, email, pwd));
-  },
-  setPhase(phase: loginPhases, error: string) {
-    dispatch(authActions.setPhase(phase, error));
-  }
-});
-const connector = connect(mapStateToProps, mapDispatchToProps);
-type PropsFromRedux = ConnectedProps<typeof connector>;
-type TLoginJWTProps = PropsFromRedux;
+import { authActions, authErrorSelector, authPhaseSelector, authUserSelector } from 'store/auth';
 
 type FormValues = {
   email: string;
   password: string;
 };
 
-export const LoginJWT = (props: TLoginJWTProps) => {
-  const { user, accessToken, lang, phase, error, userLogin, setPhase } = props;
-  const [showAlert, setShowAlert] = React.useState(false);
-  const { login } = useAuth();
+export const LoginAmplify = () => {
   const intl = useTranslation();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const [showAlert, setShowAlert] = React.useState(false);
+
+  // Selectors
+  const user = useSelector(authUserSelector);
+  const authPhase = useSelector(authPhaseSelector);
+  const authError = useSelector(authErrorSelector);
 
   const transEmail = intl.translate({ id: 'user.email_address' });
   const transPassword = intl.translate({ id: 'account.password' });
 
-  const { handleSubmit, handleChange, values, errors, touched, isSubmitting } = useFormik({
-    initialValues: {
-      email: '',
-      password: ''
-    },
-    validate: (values: FormValues) => validateForm(values),
-    onSubmit: (values: FormValues) => submitForm(values)
-  });
+  const { handleSubmit, handleChange, values, errors, touched, isSubmitting, setSubmitting } =
+    useFormik({
+      initialValues: {
+        email: '',
+        password: ''
+      },
+      validate: (values: FormValues) => validateForm(values),
+      onSubmit: (values: FormValues) => submitForm(values)
+    });
 
   const validateForm = (values: Record<string, unknown>) => {
     const errors: { [key: string]: any } = {};
@@ -83,28 +58,26 @@ export const LoginJWT = (props: TLoginJWTProps) => {
   };
 
   const submitForm = (values: FormValues) => {
-    // Start login
-    userLogin(lang, values.email, values.password);
+    dispatch(authActions.login(values.email, values.password));
   };
 
   React.useEffect(() => {
-    setPhase(null, null);
-  }, [setPhase]);
+    if (authError) {
+      setSubmitting(false);
+    }
+  }, [authError, authPhase]);
 
   React.useEffect(() => {
-    setShowAlert(error ? true : false);
-  }, [error]);
-
-  React.useEffect(() => {
-    if (accessToken && user && phase === 'login-successful') {
-      // Login the user to the context
-      login(accessToken, user);
-
+    if (user && authPhase === 'success') {
       setTimeout(() => {
         navigate('/account/home');
       }, 500);
     }
-  }, [accessToken, user, phase]);
+  }, [user, authPhase]);
+
+  React.useEffect(() => {
+    dispatch(authActions.setPhase(null, null));
+  }, []);
 
   return (
     <Box>
@@ -142,15 +115,15 @@ export const LoginJWT = (props: TLoginJWTProps) => {
           helperText={touched.password && errors.password}
         />
 
-        {showAlert && (
+        {authError && (
           <Box sx={{ mt: 2 }}>
             <Alert
               variant='outlined'
               severity='error'
               closeText={intl.translate({ id: 'app.close' })}
-              onClose={() => setShowAlert(false)}
+              onClose={() => dispatch(authActions.setPhase(null, null))}
             >
-              {error}
+              {authError}
             </Alert>
           </Box>
         )}
@@ -162,11 +135,10 @@ export const LoginJWT = (props: TLoginJWTProps) => {
             size='large'
             type='submit'
             variant='contained'
-            disabled={isSubmitting && !error}
+            disabled={isSubmitting && !authError}
           >
-            {(phase === 'credentials-validating' && intl.translate({ id: 'login.validating' })) ||
-              (phase === 'userinfo-pulling' && intl.translate({ id: 'login.pulling' })) ||
-              (phase === 'login-successful' && intl.translate({ id: 'login.successful' })) ||
+            {(authPhase === 'validating' && intl.translate({ id: 'login.validating' })) ||
+              (authPhase === 'success' && intl.translate({ id: 'login.successful' })) ||
               intl.translate({ id: 'login.login' })}
           </Button>
         </Box>
@@ -175,4 +147,4 @@ export const LoginJWT = (props: TLoginJWTProps) => {
   );
 };
 
-export default connector(LoginJWT);
+export default LoginAmplify;

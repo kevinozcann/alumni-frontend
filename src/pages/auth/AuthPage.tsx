@@ -44,10 +44,6 @@ const AuthPage = () => {
   }, [activeSchool]);
 
   React.useEffect(() => {
-    dispatch(userActions.pullConfigurationSchool());
-  }, []);
-
-  React.useEffect(() => {
     gtm.push({ event: 'page_view' });
   }, []);
 
