@@ -12,14 +12,18 @@ export interface IMenu {
   type: TMenuType;
   position: number;
   isActive: boolean;
+  isFlex: true;
+  isEssential: true;
+  isProfessional: true;
+  isEnterprise: true;
   isAdmin: boolean;
   iconPrefix?: IconPrefix;
   icon?: IconName;
   starred?: boolean;
   translated?: boolean;
-  parent?: string | null;
+  parent?: IMenu;
   school?: string;
-  children?: IMenu[] | null;
+  children?: IMenu[];
 }
 
 export type TMenuList = {

@@ -1,5 +1,5 @@
 import { ISchool } from 'pages/organization/organization-types';
-import { IFrequentMenu } from '../admin/menus/menu-types';
+import { IFrequentMenu } from '../admin/menu-types';
 
 export type TUserZone = 'headquarters' | 'campus' | 'school' | 'teacher' | 'parent' | 'student';
 export interface IUser {

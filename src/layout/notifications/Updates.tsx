@@ -60,7 +60,7 @@ const Updates = (props: TUpdatesProps) => {
           )}
 
           <List disablePadding>
-            {updates.map((update) => {
+            {updates?.map((update) => {
               return (
                 <React.Fragment key={update.id}>
                   <ListItem>

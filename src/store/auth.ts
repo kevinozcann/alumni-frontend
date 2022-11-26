@@ -8,12 +8,11 @@ import { call, put, takeLatest } from 'redux-saga/effects';
 import { createSelector } from 'reselect';
 
 import { IUser } from 'pages/account/account-types';
-import { IFrequentMenu } from 'pages/admin/menus/menu-types';
+import { IFrequentMenu } from 'pages/admin/menu-types';
 import { ISchool } from 'pages/organization/organization-types';
-import { JWT_EXPIRES_IN, JWT_SECRET, sign } from 'utils/jwt';
 import { TLang, TLinkedAccount } from 'utils/shared-types';
 
-import { updateApiUrl, USERS_API_URL, USER_LOGIN_URL, VERIFY_EMAIL_URL } from 'store/ApiUrls';
+import { USERS_API_URL } from 'store/ApiUrls';
 import { IAction } from 'store/store';
 import { getUserSchools } from 'store/user';
 
@@ -29,13 +28,6 @@ export type TUserPassword = {
 export type TExtendedUser = IUser & TUserPassword;
 interface IAuthState {
   user?: IUser;
-  accounts?: {
-    logins?: IUser[];
-    impersonates?: IUser[];
-  };
-  impersonate?: IUser;
-  accessToken?: string;
-  authToken?: string;
   phase?: string;
   error?: string;
 }
@@ -129,13 +121,6 @@ export const actionTypes = {
 
 const initialAuthState: IAuthState = {
   user: null,
-  accounts: {
-    logins: null,
-    impersonates: null
-  },
-  impersonate: null,
-  authToken: null,
-  accessToken: null,
   phase: null,
   error: null
 };
@@ -199,24 +184,8 @@ export const reducer = persistReducer(
       case actionTypes.AUTH_LOGIN: {
         return { user: null };
       }
-      case actionTypes.AUTH_TOKEN_SAVE: {
-        const { authToken, accessToken } = action.payload;
-        return { ...state, authToken, accessToken, user: null };
-      }
-      case actionTypes.AUTH_TOKEN_SAVE_WITH_USER: {
-        const { authToken, accessToken } = action.payload;
-        return { ...state, authToken, accessToken };
-      }
-      case actionTypes.AUTH_IMPERSONATE_SAVE: {
-        const { user } = action.payload;
-        return { ...state, impersonate: user };
-      }
-      case actionTypes.AUTH_REGISTER: {
-        const { authToken } = action.payload;
-        return { ...state, authToken, user: null };
-      }
       case actionTypes.AUTH_LOGOUT: {
-        return { ...state, authToken: null, accessToken: null, phase: null, error: null };
+        return { ...state, user: null, phase: null, error: null };
       }
       case actionTypes.AUTH_UPDATE_USER: {
         const currentState = { ...state };
@@ -227,38 +196,6 @@ export const reducer = persistReducer(
           ...state,
           user: updatedUser
         };
-      }
-      case actionTypes.AUTH_ACCOUNTS_IMPERSONATE_UPDATE: {
-        const { impersonateUser } = action.payload;
-        const currentState = { ...state };
-        const currentAccounts = currentState.accounts;
-        const currentImpersonates = currentAccounts?.impersonates;
-
-        if (currentImpersonates) {
-          const currentIndex = currentImpersonates.findIndex((e) => e.id === impersonateUser.id);
-          if (currentIndex > -1) {
-            // Remove the existing element in order to put it onto the top
-            currentImpersonates.splice(currentIndex, 1);
-          }
-
-          return {
-            ...state,
-            accounts: {
-              logins: currentAccounts?.logins,
-              impersonates: [impersonateUser, ...currentImpersonates]
-            },
-            impersonate: null
-          };
-        } else {
-          return {
-            ...state,
-            accounts: {
-              logins: currentAccounts?.logins,
-              impersonates: [impersonateUser]
-            },
-            impersonate: null
-          };
-        }
       }
       case actionTypes.SET_LOGIN_PHASE: {
         const { phase, error } = action.payload;
@@ -274,15 +211,6 @@ export const authActions = {
   login: (email: string, password: string): IAction<Partial<TActionAllState>> => ({
     type: actionTypes.AUTH_LOGIN,
     payload: { email, password }
-  }),
-  authToken: (
-    lang: TLang,
-    userId: string,
-    authToken: string,
-    accessToken: string
-  ): IAction<Partial<TActionAllState>> => ({
-    type: actionTypes.AUTH_TOKEN,
-    payload: { lang, userId, authToken, accessToken }
   }),
   register: (
     email: string,

@@ -14,13 +14,12 @@ import MenuItem from '@mui/material/MenuItem';
 import Skeleton from '@mui/material/Skeleton';
 import React from 'react';
 import { useIntl } from 'react-intl';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import { useSubheader } from 'contexts/SubheaderContext';
 import Page from 'layout/Page';
-import { authErrorSelector, authPhaseSelector, authUserSelector } from 'store/auth';
-import { i18nLangSelector } from 'store/i18n';
+import { authUserSelector } from 'store/auth';
 import { userActiveSchoolSelector, userSchoolsSelector } from 'store/user';
 import { toAbsoluteUrl } from 'utils/AssetsHelpers';
 import StyledMenu from 'utils/StyledMenu';
@@ -42,7 +41,7 @@ const Account = () => {
   const { section } = useParams();
   const intl = useIntl();
   const subheader = useSubheader();
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   const navigate = useNavigate();
   const [activePage, setActivePage] = React.useState<string>(section);
   const [pageTitle, setPageTitle] = React.useState<string>(getPageTitle(section));
@@ -52,13 +51,14 @@ const Account = () => {
   // Selectors
   const user = useSelector(authUserSelector);
   const activeSchool = useSelector(userActiveSchoolSelector);
-  const error = useSelector(authErrorSelector);
-  const lang = useSelector(i18nLangSelector);
-  const phase = useSelector(authPhaseSelector);
+  // const error = useSelector(authErrorSelector);
+  // const lang = useSelector(i18nLangSelector);
+  // const phase = useSelector(authPhaseSelector);
   const schools = useSelector(userSchoolsSelector);
 
-  const wallpaper = user?.wallpaper || toAbsoluteUrl('/media/users/cover.jpeg');
-  const profileImg = user?.picture || toAbsoluteUrl('/media/users/default.jpg');
+  const userAttributes = user.attributes;
+  const wallpaper = userAttributes?.wallpaper || toAbsoluteUrl('/media/users/cover.jpeg');
+  const profileImg = userAttributes?.picture || toAbsoluteUrl('/media/users/default.jpg');
 
   const handleHomeMenuElClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorHomeMenuEl(event.currentTarget);

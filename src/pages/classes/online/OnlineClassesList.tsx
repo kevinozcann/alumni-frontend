@@ -21,7 +21,7 @@ import ConfirmDialog from 'components/ConfirmDialog';
 import SplitButton from 'components/SplitButton';
 import { TActionType } from 'utils/shared-types';
 import { ISchool, ISeason } from 'pages/organization/organization-types';
-import { IBreadcrumb } from 'pages/admin/menus/menu-types';
+import { IBreadcrumb } from 'pages/admin/menu-types';
 
 import { onlineClassesActions, onlineClassesDataSelector } from './_store/onlineClasses';
 import OnlineClassForm from './OnlineClassForm';

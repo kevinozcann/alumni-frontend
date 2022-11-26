@@ -34,7 +34,7 @@ import ConfirmDialog from 'components/ConfirmDialog';
 import RowActions from 'components/table/RowActions';
 import Filter from 'components/filter/Filter';
 import { ISchool } from 'pages/organization/organization-types';
-import { IBreadcrumb } from 'pages/admin/menus/menu-types';
+import { IBreadcrumb } from 'pages/admin/menu-types';
 
 import { personnelActions, personnelDataSelector } from './_store/personnel';
 import PersonnelForm from './PersonnelForm';

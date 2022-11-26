@@ -4,7 +4,7 @@ import { useIntl } from 'react-intl';
 import { Box, Breadcrumbs, Grid, Link, Typography } from '@mui/material';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-import { IBreadcrumb } from 'pages/admin/menus/menu-types';
+import { IBreadcrumb } from 'pages/admin/menu-types';
 
 type TBreadcrumbsProps = {
   breadcrumbs: IBreadcrumb[];

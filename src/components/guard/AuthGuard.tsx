@@ -16,7 +16,8 @@ const AuthGuard = (props: AuthGuardProps) => {
   // Selectors
   const user = useSelector(authUserSelector);
 
-  if (!user.accessToken) {
+  console.log('user', user);
+  if (!user || !user.accessToken) {
     if (location?.pathname !== requestedLocation) {
       setRequestedLocation(location?.pathname);
     }

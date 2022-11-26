@@ -11,7 +11,6 @@ import { userActions } from 'store/user';
 import { TLang } from 'utils/shared-types';
 import { IFilter } from 'components/filter/Filter';
 import { IUser } from 'pages/account/account-types';
-import { menuActions } from 'pages/admin/menus/_store/menus';
 
 import { ISchool } from '../organization-types';
 import { TSchoolFormValues } from '../add/AddSchool';
@@ -343,16 +342,6 @@ export function* saga() {
 
       // Update organization schools
       yield put(schoolActions.pullSchoolInfo(values.parentSchoolId));
-
-      // Add global menus for the school
-      yield put(menuActions.syncMenus(lang, newSchoolId, values.schoolType));
-
-      // If school then add teacher, parent and student menus
-      if (values.schoolType === 'school') {
-        yield put(menuActions.syncMenus(lang, newSchoolId, 'teacher'));
-        yield put(menuActions.syncMenus(lang, newSchoolId, 'parent'));
-        yield put(menuActions.syncMenus(lang, newSchoolId, 'student'));
-      }
 
       // Update user schools
       // @TODO check this if we can refactor

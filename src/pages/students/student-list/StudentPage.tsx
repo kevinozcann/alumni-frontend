@@ -21,7 +21,7 @@ import Page from 'layout/Page';
 import { AppDispatch, RootState } from 'store/store';
 import { studentsActions, studentsPhaseSelector, studentInfoSelector } from './_store/students';
 import { useSubheader } from 'contexts/SubheaderContext';
-import { IBreadcrumb } from 'pages/admin/menus/menu-types';
+import { IBreadcrumb } from 'pages/admin/menu-types';
 import { i18nLangSelector } from 'store/i18n';
 import studentPageTabs from './student-page-tabs';
 import { IPageTab } from 'utils/shared-types';

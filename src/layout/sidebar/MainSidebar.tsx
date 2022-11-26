@@ -25,18 +25,18 @@ import 'utils/fontAwesome';
 import useTranslation from 'hooks/useTranslation';
 import Footer from 'layout/Footer';
 import Scrollbar from 'layout/Scrollbar';
-import { IMenu } from 'pages/admin/menus/menu-types';
+import { IMenu } from 'pages/admin/menu-types';
 import { authUserSelector } from 'store/auth';
 import { i18nLangSelector } from 'store/i18n';
 import {
   userActions,
   userActiveMenuSelector,
   userActiveSchoolSelector,
-  userMenusSelector,
   userPhaseSelector
 } from 'store/user';
 import ActiveMenuItems from './ActiveMenuItems';
 import MainNavItem from './MainNavItem';
+import menus from 'data/menu';
 
 type MainSidebarProps = {
   onMobileClose: () => void;
@@ -54,7 +54,6 @@ const MainSidebar = (props: MainSidebarProps) => {
   const userPhase = useSelector(userPhaseSelector);
   const activeSchool = useSelector(userActiveSchoolSelector);
   const lang = useSelector(i18nLangSelector);
-  const menus = useSelector(userMenusSelector);
   const activeMenu = useSelector(userActiveMenuSelector);
 
   const handleMainMenuClick = React.useCallback((menu: IMenu) => {

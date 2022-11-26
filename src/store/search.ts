@@ -8,7 +8,7 @@ import { IAction } from './store';
 import { SEARCH_URL, updateApiUrl } from './ApiUrls';
 import { TLang } from '../utils/shared-types';
 import { IUser } from '../pages/account/account-types';
-import { IFlatMenu } from '../pages/admin/menus/menu-types';
+import { IFlatMenu } from '../pages/admin/menu-types';
 
 interface IStudent {
   name: string;

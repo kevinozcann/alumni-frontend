@@ -1,6 +1,5 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useIntl } from 'react-intl';
+import { faInbox, faSlidersH, faUser, faUserSecret } from '@fortawesome/pro-duotone-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   Avatar,
   Box,
@@ -13,14 +12,16 @@ import {
   Popover,
   Typography
 } from '@mui/material';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faInbox, faSlidersH, faUser, faUserSecret } from '@fortawesome/pro-duotone-svg-icons';
+import React from 'react';
+import { useIntl } from 'react-intl';
+import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
-import useAuth from 'hooks/useAuth';
-import useSettings from 'hooks/useSettings';
 import { ILayoutSettings } from 'contexts/SettingsContext';
+import useSettings from 'hooks/useSettings';
 import SettingsDrawer from 'layout/SettingsDrawer';
 import { IUser } from 'pages/account/account-types';
+import { authUserSelector } from 'store/auth';
 
 const getValues = (settings: ILayoutSettings) => ({
   compact: settings.compact,
@@ -35,16 +36,21 @@ type TAccountPopoverProps = {
   impersonateUser: IUser;
 };
 
-const AccountPopover: React.FC<TAccountPopoverProps> = (props) => {
+const AccountPopover = (props: TAccountPopoverProps) => {
   const { impersonateUser } = props;
-  const anchorRef = React.useRef<HTMLButtonElement | null>(null);
-  const navigate = useNavigate();
   const intl = useIntl();
-  const { user } = useAuth();
-  const [open, setOpen] = React.useState<boolean>(false);
+  const navigate = useNavigate();
   const { settings, saveSettings } = useSettings();
+
+  const [open, setOpen] = React.useState<boolean>(false);
   const [settingsOpen, setSettingsOpen] = React.useState<boolean>(false);
   const [settingsValues, setSettingsValues] = React.useState(getValues(settings));
+  const anchorRef = React.useRef<HTMLButtonElement | null>(null);
+
+  // Selectors
+  const user = useSelector(authUserSelector);
+
+  const userAttributes = user.attributes;
 
   const handleSettingsOpen = (): void => {
     setSettingsOpen(true);
@@ -121,14 +127,10 @@ const AccountPopover: React.FC<TAccountPopoverProps> = (props) => {
       >
         <Box sx={{ p: 2 }}>
           <Typography color='textPrimary' variant='subtitle2'>
-            {user?.fullName}
+            {`${userAttributes?.name} ${userAttributes.family_name}`}
           </Typography>
           <Typography color='textSecondary' variant='subtitle2'>
-            {user?.email}
-          </Typography>
-          <Typography color='textSecondary' variant='subtitle2'>
-            {user?.userType?.title}
-            {/*<FormattedMessage id={user?.userType?.title} />*/}
+            {userAttributes?.email}
           </Typography>
         </Box>
         <Divider />
@@ -173,26 +175,6 @@ const AccountPopover: React.FC<TAccountPopoverProps> = (props) => {
               }
             />
           </MenuItem>
-
-          {/* 1 is admin and 18 is IT manager */}
-          {[1, 18].includes(user?.userType.id) && !impersonateUser && (
-            <React.Fragment>
-              <Divider />
-
-              <MenuItem onClick={() => handleClick('/account/impersonate')}>
-                <ListItemIcon sx={{ minWidth: 'auto', width: 12, marginRight: 2 }}>
-                  <FontAwesomeIcon icon={faUserSecret} />
-                </ListItemIcon>
-                <ListItemText
-                  primary={
-                    <Typography color='textPrimary' variant='subtitle2'>
-                      {intl.formatMessage({ id: 'account.impersonate' })}
-                    </Typography>
-                  }
-                />
-              </MenuItem>
-            </React.Fragment>
-          )}
 
           <Divider />
 

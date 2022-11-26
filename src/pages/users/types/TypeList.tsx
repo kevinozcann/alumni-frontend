@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { connect, ConnectedProps } from 'react-redux';
 import { useNavigate, useParams } from 'react-router';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -62,7 +62,7 @@ const TypeList = (props: TUserTypesProps) => {
       headerAlign: 'center',
       align: 'center',
       renderCell: (params: GridValueGetterParams) =>
-        params.row.isActive == '1' ? (
+        params.row.isActive === '1' ? (
           <FontAwesomeIcon size='lg' color='green' icon={faCheckCircle} />
         ) : (
           <FontAwesomeIcon size='lg' color='red' icon={faTimesCircle} />
@@ -75,7 +75,7 @@ const TypeList = (props: TUserTypesProps) => {
       headerAlign: 'center',
       align: 'center',
       renderCell: (params: GridValueGetterParams) =>
-        params.row.isEditable == '1' ? (
+        params.row.isEditable === '1' ? (
           <RowActions
             params={params}
             onEditClick={() => navigate(`/users/types/${params.row.id}/edit`)}
@@ -87,10 +87,10 @@ const TypeList = (props: TUserTypesProps) => {
     }
   ];
 
-  const handleCloseConfirm = () => {
+  const handleCloseConfirm = useCallback(() => {
     navigate('/users/types');
     setShowConfirmDialog(false);
-  };
+  }, [navigate]);
 
   const handleDeleteConfirm = () => {
     deleteUserType(parseInt(id));
@@ -98,7 +98,7 @@ const TypeList = (props: TUserTypesProps) => {
 
   React.useEffect(() => {
     pullUserTypes();
-  }, []);
+  }, [pullUserTypes]);
 
   React.useEffect(() => {
     setShowConfirmDialog(id && action === 'delete' ? true : false);
@@ -108,13 +108,13 @@ const TypeList = (props: TUserTypesProps) => {
     if (isDeleted === -1 && showConfirmDialog) {
       handleCloseConfirm();
     }
-  }, [id, action, phase, userTypes, showConfirmDialog, setShowConfirmDialog]);
+  }, [id, action, phase, userTypes, showConfirmDialog, setShowConfirmDialog, handleCloseConfirm]);
 
   React.useEffect(() => {
     const breadcrumbs = [];
     breadcrumbs.push({ title: 'user.types', url: '/users/types' });
     subheader.setBreadcrumbs(breadcrumbs);
-  }, []);
+  }, [subheader]);
 
   return (
     <Page title={pageTitle}>

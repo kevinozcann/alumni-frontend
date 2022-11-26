@@ -8,28 +8,26 @@ import trLocale from 'date-fns/locale/tr';
 import React from 'react';
 import { useClearCacheCtx } from 'react-clear-cache';
 import { Helmet } from 'react-helmet-async';
-import { connect, ConnectedProps, useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useRoutes } from 'react-router-dom';
 
 import RTL from 'components/RTL';
 import SplashScreen from 'components/SplashScreen';
 import UpdateVersion from 'components/UpdateVersion';
+import { gtmConfig } from 'config';
 import { FileManagerProvider } from 'contexts/FMModalContext';
 import { SnackbarProvider } from 'contexts/SnackbarContext';
 import useScrollReset from 'hooks/useScrollReset';
 import useSettings from 'hooks/useSettings';
 import GlobalStyles from 'layout/GlobalStyles';
+import { schoolSelector } from 'pages/organization/_store/school';
+import routes from 'routes';
 import { authUserSelector } from 'store/auth';
 import { i18nActions, i18nLangSelector } from 'store/i18n';
-import { AppDispatch, RootState } from 'store/store';
-import { userActiveSchoolSelector } from 'store/user';
 import { LocaleProvider } from 'theme/i18n/LocaleProvider';
 import { createCustomTheme } from 'theme/index';
 import gtm from 'utils/gtm';
 import { TLang } from 'utils/shared-types';
-import { gtmConfig } from './config';
-import routes from './routes';
-import { schoolSelector } from 'pages/organization/_store/school';
 
 const localeMap = {
   ar: arLocale,
@@ -81,7 +79,7 @@ const App = () => {
     <StyledEngineProvider injectFirst>
       <ThemeProvider theme={theme}>
         <RTL direction={settings.direction}>
-          <LocaleProvider lang={lang} activeSchool={activeSchool}>
+          <LocaleProvider lang={lang}>
             <LocalizationProvider dateAdapter={AdapterDateFns} locale={localeMap[lang] || enLocale}>
               <FileManagerProvider>
                 <SnackbarProvider>
@@ -90,7 +88,7 @@ const App = () => {
                   />
                   <GlobalStyles />
                   {isLatestVersion ? (
-                    user.accessToken ? (
+                    user?.accessToken ? (
                       content
                     ) : (
                       <SplashScreen />

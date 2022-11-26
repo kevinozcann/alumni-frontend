@@ -2,7 +2,6 @@ import React from 'react';
 import loadable from '@loadable/component';
 
 import databasesRoutes from './databases/routes';
-import menusRoutes from './menus/routes';
 
 const AdminGuard = loadable(() => import('components/guard/AdminGuard'));
 const MainLayout = loadable(() => import('layout/MainLayout'));
@@ -14,7 +13,7 @@ const routes = {
       <MainLayout />
     </AdminGuard>
   ),
-  children: [databasesRoutes, menusRoutes]
+  children: [databasesRoutes]
 };
 
 export default routes;

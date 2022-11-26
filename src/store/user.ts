@@ -7,7 +7,7 @@ import { IAction } from 'store/store';
 import { TLang } from 'utils/shared-types';
 import { ISchool, ISeason } from 'pages/organization/organization-types';
 import { IPersonal, IUser } from 'pages/account/account-types';
-import { IMenu, TMenuType } from 'pages/admin/menus/menu-types';
+import { IMenu, TMenuType } from 'pages/admin/menu-types';
 import { IStudent } from 'pages/students/_store/types';
 import { getFlatSchools } from 'utils';
 import { userSagas as saga } from './sagas';

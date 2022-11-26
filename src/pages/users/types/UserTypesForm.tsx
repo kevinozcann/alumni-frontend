@@ -1,43 +1,37 @@
-import { connect, ConnectedProps } from 'react-redux';
-import React from 'react';
-import { useParams } from 'react-router';
+import Box from '@mui/material/Box';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Grid from '@mui/material/Grid';
+import MenuItem from '@mui/material/MenuItem';
+import Switch from '@mui/material/Switch';
+import TextField from '@mui/material/TextField';
 import { useFormik } from 'formik';
-import { Box, Grid, TextField, FormControlLabel, Switch, MenuItem } from '@mui/material';
+import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useParams } from 'react-router';
 
-import { AppDispatch, RootState } from 'store/store';
 import useSnackbar from 'hooks/useSnackbar';
 import useTranslation from 'hooks/useTranslation';
 import { SaveButton } from 'utils/ActionLinks';
 import { TActionType } from 'utils/shared-types';
-
-import { userTypesSelector, userTypesPhaseSelector, userTypesActions } from './_store/user-types';
 import { IUserType } from './user-types-type';
+import { userTypesActions, userTypesPhaseSelector, userTypesSelector } from './_store/user-types';
 
-const mapStateToProps = (state: RootState) => ({
-  userTypes: userTypesSelector(state),
-  phase: userTypesPhaseSelector(state)
-});
-const mapDispatchToProps = (dispatch: AppDispatch) => ({
-  addUserType: (userTypeInfo: Partial<IUserType>) =>
-    dispatch(userTypesActions.addUserType(userTypeInfo)),
-  updateUserType: (userTypeInfo: Partial<IUserType>) =>
-    dispatch(userTypesActions.updateUserType(userTypeInfo))
-});
-
-const connector = connect(mapStateToProps, mapDispatchToProps);
-type PropsFromRedux = ConnectedProps<typeof connector>;
-type TFormProps = PropsFromRedux & {
+type TFormProps = {
   actionType: TActionType;
   sideForm?: boolean;
   handleClose?: any;
 };
 
 const UserTypesForm = (props: TFormProps) => {
-  const { actionType, sideForm, userTypes, phase, handleClose, addUserType, updateUserType } =
-    props;
+  const { actionType, sideForm, handleClose } = props;
   const { id } = useParams();
   const intl = useTranslation();
+  const dispatch = useDispatch();
   const { showSnackbar } = useSnackbar();
+
+  // Selectors
+  const userTypes = useSelector(userTypesSelector);
+  const userTypePhase = useSelector(userTypesPhaseSelector);
 
   const maxValueTypeOrder = Math.max(...userTypes.map((val) => val.typeOrder), 0) + 1;
 
@@ -89,21 +83,21 @@ const UserTypesForm = (props: TFormProps) => {
       setSubmitting(true);
 
       if (actionType === 'add') {
-        addUserType(values);
+        dispatch(userTypesActions.addUserType(values));
       } else {
-        updateUserType(values);
+        dispatch(userTypesActions.updateUserType(values));
       }
     }
   };
 
   React.useEffect(() => {
     setStatus('notSubmitted');
-  }, []);
+  }, [setStatus]);
 
   React.useEffect(() => {
     setSubmitting(false);
 
-    if (status === 'submitted' && phase === 'success') {
+    if (status === 'submitted' && userTypePhase === 'success') {
       showSnackbar({
         message: intl.translate({ id: 'app.saved' }),
         open: true
@@ -115,7 +109,7 @@ const UserTypesForm = (props: TFormProps) => {
         }, 500);
       }
     }
-  }, [status, phase, setSubmitting, handleClose]);
+  }, [intl, showSnackbar, sideForm, status, userTypePhase, setSubmitting, handleClose]);
 
   return (
     <Box sx={{ display: 'flex' }}>
@@ -198,4 +192,4 @@ const UserTypesForm = (props: TFormProps) => {
   );
 };
 
-export default connector(UserTypesForm);
+export default UserTypesForm;

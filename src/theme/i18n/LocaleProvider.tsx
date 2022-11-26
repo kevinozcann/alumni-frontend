@@ -5,57 +5,28 @@ import { IntlProvider } from 'react-intl';
 // import '@formatjs/intl-relativetimeformat/dist/locale-data/tr';
 
 import { TLang } from 'utils/shared-types';
-import { ISchool } from 'pages/organization/organization-types';
-
+import arMessages from './messages/ar.json';
+import deMessages from './messages/de.json';
 import enMessages from './messages/en.json';
-
-// const formats = {
-//   number: {
-//     TRY: {
-//       style: 'currency',
-//       currency: 'TRY'
-//     },
-//     USD: {
-//       style: 'currency',
-//       currency: 'USD'
-//     }
-//   }
-// };
+import esMessages from './messages/es.json';
+import trMessages from './messages/tr.json';
 
 export type IntlMessageID = keyof typeof enMessages;
 
 type TLocaleProviderProps = {
   lang: TLang;
-  activeSchool: ISchool;
   children: React.ReactNode;
 };
 
 export const LocaleProvider = (props: TLocaleProviderProps) => {
-  const { lang, activeSchool, children } = props;
-  let messages = enMessages;
+  const { lang, children } = props;
 
-  React.useEffect(() => {
-    if (lang) {
-      import(`./messages/${lang}.json`)
-        .then((module) => (messages = Object.assign(messages, module.default)))
-        .then(() => {
-          // Country overrides
-          if (activeSchool?.config?.countryId?.toLowerCase() === 'tr') {
-            import(`./overrides/country/tr/${lang}.json`)
-              .then((module) => (messages = Object.assign(messages, module.default)))
-              .catch(() => null);
-          }
-
-          // Institution Type overrides
-          if (activeSchool?.config?.institutionType?.toLowerCase() === 'academy') {
-            import(`./overrides/type/academy/${lang}.json`)
-              .then((module) => (messages = Object.assign(messages, module.default)))
-              .catch(() => null);
-          }
-        })
-        .catch(() => null);
-    }
-  }, [activeSchool, lang]);
+  const messages =
+    (lang === 'ar' && arMessages) ||
+    (lang === 'de' && deMessages) ||
+    (lang === 'es' && esMessages) ||
+    (lang === 'tr' && trMessages) ||
+    enMessages;
 
   return (
     // <IntlProvider locale={lang} defaultLocale='en' messages={messages} formats={formats}>

@@ -158,7 +158,7 @@ export function* saga() {
 
       const { userPersonal, school, user } = payload;
 
-      if (user.userType.id == 6) {
+      if (user.userType.id === 6) {
         const response = yield axios.get(
           `${CLASS_TEACHERS_URL}.json?school=${school.id}&teacher=${userPersonal.id}`
         );

@@ -3,7 +3,7 @@ import { useIntl } from 'react-intl';
 import { Box, ListItemButton, ListItemIcon, ListItemText } from '@mui/material';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-import { IMenu } from 'pages/admin/menus/menu-types';
+import { IMenu } from 'pages/admin/menu-types';
 
 type TMainNavItem = {
   menu: IMenu;

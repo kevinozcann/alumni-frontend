@@ -1,4 +1,4 @@
-import { TMenuType } from '../pages/admin/menus/menu-types';
+import { TMenuType } from '../pages/admin/menu-types';
 import { generateApiLegacyUrl } from '../utils/Helpers';
 import { TLang } from '../utils/shared-types';
 

@@ -9,13 +9,11 @@ import { saga as staticSagas, reducer as staticReducer } from './static';
 import { saga as recentUpdatesSagas, reducer as recentUpdatesReducer } from './recentUpdates';
 import { saga as userSagas, reducer as userReducer } from './user';
 
-import { menusReducer, menusSagas } from 'pages/admin/menus/_store';
 import { databaseReducer, databaseSagas } from 'pages/admin/databases/_store';
 import { classesReducer, classesSagas } from 'pages/classes/_store';
 import { developerReducer, developerSagas } from 'pages/developer/_store';
 import { feedsReducer, feedsSagas } from 'pages/feeds/_store';
 import { filemanagerReducer } from 'pages/filemanager/redux/reducers';
-import { globalReducer, globalSagas } from 'pages/global';
 import { mailReducer, mailSagas } from 'pages/mail/_store';
 import { organizationReducer, organizationSagas } from 'pages/organization/_store';
 import { personnelReducer, personnelSagas } from 'pages/personnel/_store';
@@ -36,10 +34,8 @@ export const rootReducer = combineReducers({
   developer: developerReducer,
   feeds: feedsReducer,
   filemanager: filemanagerReducer,
-  global: globalReducer,
   i18n: i18nReducer,
   mails: mailReducer,
-  menus: menusReducer,
   organization: organizationReducer,
   personnel: personnelReducer,
   recentUpdates: recentUpdatesReducer,
@@ -71,9 +67,7 @@ export function* rootSaga() {
     databaseSagas,
     developerSagas,
     feedsSagas,
-    globalSagas,
     mailSagas,
-    menusSagas,
     organizationSagas,
     personnelSagas,
     schoolSagas,

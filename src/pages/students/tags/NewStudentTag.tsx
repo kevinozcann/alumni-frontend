@@ -7,7 +7,7 @@ import useTranslation from 'hooks/useTranslation';
 import { useSubheader } from 'contexts/SubheaderContext';
 
 import StudentTagsForm from './StudentTagsForm';
-import { IBreadcrumb } from 'pages/admin/menus/menu-types';
+import { IBreadcrumb } from 'pages/admin/menu-types';
 
 const NewStudentTag = () => {
   const intl = useTranslation();

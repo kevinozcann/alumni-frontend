@@ -5,7 +5,7 @@ import { Box, Card, CardContent, CardHeader, Divider } from '@mui/material';
 import { Page } from 'layout/Page';
 import { useSubheader } from 'contexts/SubheaderContext';
 import useTranslation from 'hooks/useTranslation';
-import { IBreadcrumb } from 'pages/admin/menus/menu-types';
+import { IBreadcrumb } from 'pages/admin/menu-types';
 import UserTypesForm from 'pages/users/types/UserTypesForm';
 
 const NewUserType = () => {
@@ -21,7 +21,7 @@ const NewUserType = () => {
     breadcrumbs.push({ title: 'user.types', url: '/users/types' });
     breadcrumbs.push({ title: pageNewTitle, url: '/users/types/new', original: true });
     subheader.setBreadcrumbs(breadcrumbs);
-  }, []);
+  }, [pageNewTitle, subheader]);
 
   return (
     <Page title={`${pageNewTitle}`}>

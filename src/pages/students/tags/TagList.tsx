@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { connect, ConnectedProps } from 'react-redux';
 import { useNavigate, useParams } from 'react-router';
 import {
@@ -88,14 +88,14 @@ const TagList: React.FC<TStudentTagsProps> = (props) => {
     deleteStudentTag(parseInt(id));
   };
 
-  const handleCloseConfirm = () => {
+  const handleCloseConfirm = useCallback(() => {
     navigate('/student/tags');
     setShowConfirmDialog(false);
-  };
+  }, [navigate]);
 
   React.useEffect(() => {
     pullStudentTags(activeSchool);
-  }, [activeSchool]);
+  }, [activeSchool, pullStudentTags]);
 
   React.useEffect(() => {
     setShowConfirmDialog(id && action === 'delete' ? true : false);
@@ -105,13 +105,13 @@ const TagList: React.FC<TStudentTagsProps> = (props) => {
     if (isDeleted === -1 && showConfirmDialog) {
       handleCloseConfirm();
     }
-  }, [id, action, phase, studentTags, showConfirmDialog, setShowConfirmDialog]);
+  }, [id, action, phase, studentTags, showConfirmDialog, setShowConfirmDialog, handleCloseConfirm]);
 
   React.useEffect(() => {
     const breadcrumbs = [];
     breadcrumbs.push({ title: 'student.tags', url: '/student/tags' });
     subheader.setBreadcrumbs(breadcrumbs);
-  }, []);
+  }, [subheader]);
 
   return (
     <Page title={transStudentTags}>

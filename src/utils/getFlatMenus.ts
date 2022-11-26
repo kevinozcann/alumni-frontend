@@ -1,5 +1,5 @@
 import { IntlShape } from 'react-intl';
-import { IFlatMenu, IMenu } from '../pages/admin/menus/menu-types';
+import { IFlatMenu, IMenu } from '../pages/admin/menu-types';
 
 const getFlatMenus = (intl: IntlShape, menus: IMenu[]) => {
   const flatMenus: IFlatMenu[] = [];

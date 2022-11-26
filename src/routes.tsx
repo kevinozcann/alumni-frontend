@@ -11,7 +11,6 @@ import classesRoutes from 'pages/classes/routes';
 import configRoutes from 'pages/config/routes';
 import developerRoutes from 'pages/developer/routes';
 import feedsRoutes from 'pages/feeds/routes';
-import globalRoutes from 'pages/global/routes';
 import mailRoutes from 'pages/mail/routes';
 import organizationRoutes from 'pages/organization/routes';
 import personnelRoutes from 'pages/personnel/routes';
@@ -56,7 +55,6 @@ const routes = [
   configRoutes,
   developerRoutes,
   feedsRoutes,
-  globalRoutes,
   mailRoutes,
   organizationRoutes,
   personnelRoutes,

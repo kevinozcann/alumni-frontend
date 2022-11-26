@@ -36,7 +36,7 @@ import { TLang } from 'utils/shared-types';
 import UserAvatar from 'components/UserAvatar';
 import SearchForm from 'components/SearchForm';
 import { IUser } from 'pages/account/account-types';
-import { IFlatMenu, IFrequentMenu } from 'pages/admin/menus/menu-types';
+import { IFlatMenu, IFrequentMenu } from 'pages/admin/menu-types';
 import Scrollbar from 'layout/Scrollbar';
 
 const mapStateToProps = (state: RootState) => ({

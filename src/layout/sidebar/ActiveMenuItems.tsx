@@ -12,7 +12,7 @@ import {
 } from '@mui/material';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-import { IMenu } from 'pages/admin/menus/menu-types';
+import { IMenu } from 'pages/admin/menu-types';
 import { faCircle } from '@fortawesome/pro-duotone-svg-icons';
 
 type TNavItemProps = {
@@ -34,7 +34,7 @@ const ActiveMenuItems = (props: TNavItemProps) => {
         </ListSubheader>
       }
     >
-      {activeMenu.children.map((item: IMenu) => {
+      {activeMenu?.children?.map((item: IMenu) => {
         const { children } = item;
 
         return (
