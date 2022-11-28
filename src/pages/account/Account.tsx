@@ -57,8 +57,8 @@ const Account = () => {
   const schools = useSelector(userSchoolsSelector);
 
   const userAttributes = user.attributes;
-  const wallpaper = userAttributes?.wallpaper || toAbsoluteUrl('/media/users/cover.jpeg');
-  const profileImg = userAttributes?.picture || toAbsoluteUrl('/media/users/default.jpg');
+  const wallpaper = userAttributes['custom:wallpaper'] || toAbsoluteUrl('/media/users/cover.jpeg');
+  const profileImg = userAttributes['custom:picture'] || toAbsoluteUrl('/media/users/default.jpg');
 
   const handleHomeMenuElClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorHomeMenuEl(event.currentTarget);
@@ -117,8 +117,8 @@ const Account = () => {
               )}
               <CardHeader
                 avatar={<Avatar alt='username' src={profileImg} />}
-                title={user?.fullName}
-                subheader={user?.email}
+                title={`${userAttributes?.name} ${userAttributes?.family_name}`}
+                subheader={userAttributes?.email}
                 action={
                   <React.Fragment>
                     <Box sx={{ mt: 1, display: { xs: 'none', md: 'block' } }}>
@@ -202,21 +202,8 @@ const Account = () => {
             {(activePage === 'home' || activePage === 'post') && (
               <AccountHome user={user} schools={schools} activeSchool={activeSchool} />
             )}
-            {/* {activePage === 'update' && (
-              <General
-                user={user}
-                phase={phase}
-                updateUserInfo={() => dispatch(authActions.updateUserInfo(user.userId, user))}
-              />
-            )} */}
-            {/* {activePage === 'photos' && (
-              <Images
-                lang={lang}
-                user={user}
-                phase={phase}
-                updateUserInfo={dispatch(authActions.updateUserInfo(userId, user))}
-              />
-            )} */}
+            {activePage === 'update' && <General />}
+            {activePage === 'photos' && <Images />}
             {/* {activePage === 'security' && (
               <ChangePassword
                 title='account.security'

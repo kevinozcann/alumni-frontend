@@ -22,10 +22,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import 'utils/fontAwesome';
 
+import menus, { IMenu } from 'data/menu';
 import useTranslation from 'hooks/useTranslation';
 import Footer from 'layout/Footer';
 import Scrollbar from 'layout/Scrollbar';
-import { IMenu } from 'pages/admin/menu-types';
 import { authUserSelector } from 'store/auth';
 import { i18nLangSelector } from 'store/i18n';
 import {
@@ -36,7 +36,6 @@ import {
 } from 'store/user';
 import ActiveMenuItems from './ActiveMenuItems';
 import MainNavItem from './MainNavItem';
-import menus from 'data/menu';
 
 type MainSidebarProps = {
   onMobileClose: () => void;

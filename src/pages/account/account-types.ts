@@ -1,12 +1,23 @@
 import { ISchool } from 'pages/organization/organization-types';
-import { IFrequentMenu } from '../admin/menu-types';
 
 export type TUserZone = 'headquarters' | 'campus' | 'school' | 'teacher' | 'parent' | 'student';
+
+export interface IUserAttributes {
+  sub: string;
+  email_verified: boolean;
+  name: string;
+  phone_number_verified: boolean;
+  phone_number: string;
+  family_name: string;
+  email: string;
+  'custom:wallpaper': string;
+  'custom:picture': string;
+}
 export interface IUser {
   accessToken: string;
   adClassCode?: string;
   adStdCode?: string;
-  attributes: any;
+  attributes: IUserAttributes;
   authenticationFlowType?: string;
   client?: {
     endpoint: string;
@@ -18,7 +29,6 @@ export interface IUser {
   facebookUser?: string;
   feeds?: string[];
   firebaseId?: string;
-  frequentMenus?: IFrequentMenu[];
   fullName: string;
   googleUser?: string;
   id: number;

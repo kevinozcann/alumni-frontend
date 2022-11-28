@@ -85,8 +85,8 @@ const SchoolsPopover = (props: TSchoolsPopoverParams) => {
     try {
       const flatSchools = getFlatSchools(schools);
       setAllSchools(flatSchools);
-    } catch {
-      dispatch(authActions.hardLogout());
+    } catch (e) {
+      console.log(e);
     }
   }, [schools]);
 

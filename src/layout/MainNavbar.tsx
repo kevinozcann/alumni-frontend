@@ -7,7 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars } from '@fortawesome/pro-duotone-svg-icons';
 
 import { RootState } from 'store/store';
-import { authFrequentMenusSelector, authImpersonateSelector } from 'store/auth';
+import { authImpersonateSelector } from 'store/auth';
 import { userActiveSchoolSelector } from 'store/user';
 
 const ContentSearch = loadable(() => import('./search/ContentSearch'));
@@ -16,7 +16,6 @@ const NotificationsPopover = loadable(() => import('./notifications/Notification
 const AccountPopover = loadable(() => import('./account/AccountPopover'));
 
 const mapStateToProps = (state: RootState) => ({
-  frequentMenus: authFrequentMenusSelector(state),
   activeSchool: userActiveSchoolSelector(state),
   impersonateUser: authImpersonateSelector(state)
 });
@@ -27,7 +26,7 @@ type TMainNavbarProps = PropsFromRedux & {
 };
 
 const MainNavbar: React.FC<TMainNavbarProps> = (props) => {
-  const { frequentMenus, activeSchool, impersonateUser, onSidebarMobileOpen } = props;
+  const { activeSchool, impersonateUser, onSidebarMobileOpen } = props;
   const theme = useTheme();
 
   return (
@@ -71,7 +70,7 @@ const MainNavbar: React.FC<TMainNavbarProps> = (props) => {
           }}
         />
         <Box sx={{ ml: 1 }}>
-          <ContentSearch frequentMenus={frequentMenus} />
+          <ContentSearch />
         </Box>
         <Box sx={{ ml: 1 }}>
           <NotificationsPopover />

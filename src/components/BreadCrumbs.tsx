@@ -4,7 +4,11 @@ import { useIntl } from 'react-intl';
 import { Box, Breadcrumbs, Grid, Link, Typography } from '@mui/material';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-import { IBreadcrumb } from 'pages/admin/menu-types';
+export interface IBreadcrumb {
+  url: string;
+  title: string;
+  original?: boolean;
+}
 
 type TBreadcrumbsProps = {
   breadcrumbs: IBreadcrumb[];
@@ -20,14 +24,6 @@ const BreadCrumbs = (props: TBreadcrumbsProps) => {
     <Grid container justifyContent='space-between' spacing={3}>
       <Grid item>
         <Box sx={{ display: 'flex' }}>
-          {title && (
-            <>
-              <Typography variant='h1' sx={{ color: 'primary.main' }}>
-                {title.original ? title.title : intl.formatMessage({ id: title.title })}
-              </Typography>
-              <Box sx={{ width: 16 }} />
-            </>
-          )}
           <Breadcrumbs
             aria-label='breadcrumb'
             separator={<FontAwesomeIcon icon={['fad', 'angle-right']} color='primary.main' />}

@@ -18,7 +18,7 @@ const Logout = () => {
   }, []);
 
   React.useEffect(() => {
-    if (!user.accessToken) {
+    if (!user || !user?.accessToken) {
       navigate('/auth/login');
     }
   }, [user]);

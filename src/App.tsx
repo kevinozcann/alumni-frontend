@@ -22,7 +22,7 @@ import useSettings from 'hooks/useSettings';
 import GlobalStyles from 'layout/GlobalStyles';
 import { schoolSelector } from 'pages/organization/_store/school';
 import routes from 'routes';
-import { authUserSelector } from 'store/auth';
+import { authSelector } from 'store/auth';
 import { i18nActions, i18nLangSelector } from 'store/i18n';
 import { LocaleProvider } from 'theme/i18n/LocaleProvider';
 import { createCustomTheme } from 'theme/index';
@@ -43,14 +43,14 @@ const App = () => {
   const { settings } = useSettings();
 
   // Selectors
-  const user = useSelector(authUserSelector);
-  const lang = useSelector(i18nLangSelector);
+  const auth = useSelector(authSelector);
+  const lang = useSelector(i18nLangSelector) || 'en';
   const activeSchool = useSelector(schoolSelector);
 
   useScrollReset();
 
   React.useEffect(() => {
-    if (activeSchool && !lang) {
+    if (activeSchool) {
       dispatch(i18nActions.setLanguage(activeSchool?.config?.language as TLang) || 'en');
 
       setTimeout(() => {
@@ -80,22 +80,17 @@ const App = () => {
       <ThemeProvider theme={theme}>
         <RTL direction={settings.direction}>
           <LocaleProvider lang={lang}>
-            <LocalizationProvider dateAdapter={AdapterDateFns} locale={localeMap[lang] || enLocale}>
+            <LocalizationProvider
+              dateAdapter={AdapterDateFns}
+              adapterLocale={localeMap[lang] || enLocale}
+            >
               <FileManagerProvider>
                 <SnackbarProvider>
                   <Helmet
                     htmlAttributes={{ lang: lang || activeSchool?.config?.language || 'en' }}
                   />
                   <GlobalStyles />
-                  {isLatestVersion ? (
-                    user?.accessToken ? (
-                      content
-                    ) : (
-                      <SplashScreen />
-                    )
-                  ) : (
-                    <UpdateVersion />
-                  )}
+                  {isLatestVersion ? auth ? content : <SplashScreen /> : <UpdateVersion />}
                 </SnackbarProvider>
               </FileManagerProvider>
             </LocalizationProvider>

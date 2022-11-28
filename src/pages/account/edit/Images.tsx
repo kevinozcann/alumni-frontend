@@ -1,7 +1,3 @@
-import React from 'react';
-import axios from 'axios';
-import useSWR from 'swr';
-import { useFormik } from 'formik';
 import Button from '@mui/material/Button';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
@@ -13,39 +9,37 @@ import FormHelperText from '@mui/material/FormHelperText';
 import Grid from '@mui/material/Grid';
 import InputAdornment from '@mui/material/InputAdornment';
 import InputLabel from '@mui/material/InputLabel';
+import { useFormik } from 'formik';
+import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
-import { updateApiUrl, FILEMANAGER_USER_URL } from 'store/ApiUrls';
-import useTranslation from 'hooks/useTranslation';
-import useSnackbar from 'hooks/useSnackbar';
 import useFileManager from 'hooks/useFileManager';
-import { TLang } from 'utils/shared-types';
-import { IUser } from 'pages/account/account-types';
+import useSnackbar from 'hooks/useSnackbar';
+import useTranslation from 'hooks/useTranslation';
+import { IUserAttributes } from 'pages/account/account-types';
+import { authActions, authPhaseSelector, authUserSelector } from 'store/auth';
 
-const fetcher = async (url: string) => {
-  const response = await axios.get(url);
-  return response.data;
-};
-
-interface IImagesProps {
-  lang: TLang;
-  user: IUser;
-  phase: string;
-  updateUserInfo: (userId: string, user: Partial<IUser>) => void;
-}
 interface IFormValues {
   picture: string;
   wallpaper: string;
 }
 
-const Images: React.FC<IImagesProps> = ({ lang, user, phase, updateUserInfo }) => {
+const Images = () => {
   const intl = useTranslation();
+  const dispatch = useDispatch();
   const { showFileManager } = useFileManager();
   const { showSnackbar } = useSnackbar();
 
+  const user = useSelector(authUserSelector);
+  const phase = useSelector(authPhaseSelector);
+
+  const userAttributes: IUserAttributes = user.attributes;
+
   const formInitialValues: IFormValues = {
-    picture: user.picture,
-    wallpaper: user.wallpaper
+    picture: userAttributes['custom:picture'],
+    wallpaper: userAttributes['custom:wallpaper']
   };
+
   const {
     handleSubmit,
     handleChange,
@@ -62,14 +56,6 @@ const Images: React.FC<IImagesProps> = ({ lang, user, phase, updateUserInfo }) =
     validate: (values) => validateForm(values),
     onSubmit: (values) => submitForm(values)
   });
-  const { data: pictureFMLink } = useSWR(
-    updateApiUrl(FILEMANAGER_USER_URL, { lang: lang, userId: user.uuid }) + '/picture',
-    fetcher
-  );
-  const { data: wallpaperFMLink } = useSWR(
-    updateApiUrl(FILEMANAGER_USER_URL, { lang: lang, userId: user.uuid }) + '/wallpaper',
-    fetcher
-  );
 
   const validateForm = (values: Partial<IFormValues>) => {
     const errors = {};
@@ -87,9 +73,9 @@ const Images: React.FC<IImagesProps> = ({ lang, user, phase, updateUserInfo }) =
   const submitForm = React.useCallback(
     (values) => {
       setStatus('submitted');
-      updateUserInfo(user.uuid, values);
+      dispatch(authActions.updateUserInfo(values));
     },
-    [user.uuid, setStatus, updateUserInfo]
+    [setStatus]
   );
 
   const handleSelectCallback = (fieldId: string, fieldValue: any) => {
@@ -105,8 +91,7 @@ const Images: React.FC<IImagesProps> = ({ lang, user, phase, updateUserInfo }) =
   }, [values, initialValues, submitForm]);
 
   React.useEffect(() => {
-    console.log(phase);
-    if (phase === 'userinfo-pull-successful') {
+    if (phase === 'success') {
       console.log(phase);
       setSubmitting(false);
 
@@ -141,13 +126,13 @@ const Images: React.FC<IImagesProps> = ({ lang, user, phase, updateUserInfo }) =
                         <Button
                           color='primary'
                           disabled={isSubmitting ? true : false}
-                          onClick={() =>
-                            showFileManager({
-                              iframeSrc: pictureFMLink,
-                              isOpen: true,
-                              selectCallback: handleSelectCallback
-                            })
-                          }
+                          // onClick={() =>
+                          //   showFileManager({
+                          //     iframeSrc: pictureFMLink,
+                          //     isOpen: true,
+                          //     selectCallback: handleSelectCallback
+                          //   })
+                          // }
                         >
                           {intl.formatMessage({ id: user.picture ? 'app.change' : 'app.add' })}
                         </Button>
@@ -173,13 +158,13 @@ const Images: React.FC<IImagesProps> = ({ lang, user, phase, updateUserInfo }) =
                         <Button
                           color='primary'
                           disabled={isSubmitting ? true : false}
-                          onClick={() =>
-                            showFileManager({
-                              iframeSrc: wallpaperFMLink,
-                              isOpen: true,
-                              selectCallback: handleSelectCallback
-                            })
-                          }
+                          // onClick={() =>
+                          //   showFileManager({
+                          //     iframeSrc: wallpaperFMLink,
+                          //     isOpen: true,
+                          //     selectCallback: handleSelectCallback
+                          //   })
+                          // }
                         >
                           {intl.formatMessage({ id: user.wallpaper ? 'app.change' : 'app.add' })}
                         </Button>

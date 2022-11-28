@@ -21,7 +21,6 @@ import ViewSeasons from 'pages/organization/view/ViewSeasons';
 
 const SchoostDialog = loadable(() => import('components/SchoostDialog'));
 const GradingTerms = loadable(() => import('pages/organization/edit/GradingTerms'));
-const AddSeason = Loadable(lazy(() => import('pages/organization/add/AddSeason')));
 const DefaultSeason = Loadable(lazy(() => import('pages/organization/edit/DefaultSeason')));
 const CopySeasonData = Loadable(lazy(() => import('pages/organization/edit/CopySeasonData')));
 const GradingTermForm = Loadable(lazy(() => import('pages/organization/add/GradingTermForm')));
@@ -126,23 +125,6 @@ const Seasons = () => {
       <Box sx={{ height: '24px' }} />
 
       {type === 'school' && config.institutionType === 'k12' && <GradingTerms />}
-
-      {/* Add/Edit Season */}
-      {(action === 'new' || action === 'edit') && (
-        <SchoostDialog
-          width={300}
-          title={
-            action === 'new'
-              ? intl.translate({ id: 'app.add.something' }, { something: transSeason })
-              : intl.translate({ id: 'app.edit.something' }, { something: transSeason })
-          }
-          isOpen={action === 'new' || action === 'edit'}
-          dividers={true}
-          handleClose={handleDialogClose}
-        >
-          <AddSeason handleClose={handleDialogClose} />
-        </SchoostDialog>
-      )}
 
       {/* Season Delete Confirm */}
       {action === 'delete' && (

@@ -26,7 +26,6 @@ import { userMenusSelector } from 'store/user';
 import {
   searchActions,
   searchKeySelector,
-  searchMenusSelector,
   searchPhaseSelector,
   searchUsersSelector
 } from 'store/search';
@@ -36,7 +35,6 @@ import { TLang } from 'utils/shared-types';
 import UserAvatar from 'components/UserAvatar';
 import SearchForm from 'components/SearchForm';
 import { IUser } from 'pages/account/account-types';
-import { IFlatMenu, IFrequentMenu } from 'pages/admin/menu-types';
 import Scrollbar from 'layout/Scrollbar';
 
 const mapStateToProps = (state: RootState) => ({
@@ -45,35 +43,19 @@ const mapStateToProps = (state: RootState) => ({
   menus: userMenusSelector(state),
   searchKeyCache: searchKeySelector(state),
   userResults: searchUsersSelector(state),
-  menuResults: searchMenusSelector(state),
   searchPhase: searchPhaseSelector(state)
 });
 const mapDispatchToProps = (dispatch: AppDispatch) => ({
-  searchMenus: (flatMenus: IFlatMenu[], searchKey: string) =>
-    dispatch(searchActions.searchMenus(flatMenus, searchKey)),
   searchUsers: (lang: TLang, userId: string, searchKey: string) =>
     dispatch(searchActions.searchUsers(lang, userId, searchKey))
 });
 const connector = connect(mapStateToProps, mapDispatchToProps);
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
-type TContentSearchProps = PropsFromRedux & {
-  frequentMenus: IFrequentMenu[];
-};
+type TContentSearchProps = PropsFromRedux;
 
 const ContentSearch: React.FC<TContentSearchProps> = (props) => {
-  const {
-    lang,
-    user,
-    menus,
-    searchKeyCache,
-    frequentMenus,
-    userResults,
-    menuResults,
-    searchPhase,
-    searchMenus
-    // searchUsers,
-  } = props;
+  const { lang, user, menus, searchKeyCache, userResults, searchPhase } = props;
   const [searchKey, setSearchKey] = React.useState<string>(searchKeyCache);
   const [open, setOpen] = React.useState<boolean>(false);
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
@@ -89,7 +71,6 @@ const ContentSearch: React.FC<TContentSearchProps> = (props) => {
 
     // Search for menus
     const flatMenus = getFlatMenus(intl, menus);
-    searchMenus(flatMenus, searchKey);
 
     // Search for users
     // searchUsers(lang, user.uuid, searchKey);
@@ -98,15 +79,6 @@ const ContentSearch: React.FC<TContentSearchProps> = (props) => {
   const handleSearchClick = (): void => {
     search();
   };
-
-  const handleFrequentMenuClick = React.useCallback(
-    (menu: IFrequentMenu) => {
-      if (menu?.menu?.url) {
-        navigate(menu.menu.url);
-      }
-    },
-    [lang, user, navigate]
-  );
 
   React.useEffect(() => {
     if (searchKey && (searchKey.length > 3 || enter)) {
@@ -161,54 +133,6 @@ const ContentSearch: React.FC<TContentSearchProps> = (props) => {
               handleSearchClick={handleSearchClick}
             />
 
-            {frequentMenus?.length > 0 && (
-              <Box
-                sx={{
-                  width: {
-                    xs: '100%',
-                    md: 'calc(100% - 132px)'
-                  }
-                }}
-              >
-                <Scrollbar options={{ suppressScrollY: true }}>
-                  <Box
-                    sx={{
-                      my: 2,
-                      display: 'flex',
-                      '&>button:not(:first-of-type)': { mx: 1 }
-                    }}
-                  >
-                    {frequentMenus?.map((menu: IFrequentMenu) => {
-                      if (!menu || !menu.menu) {
-                        return;
-                      }
-
-                      return (
-                        <Button
-                          key={menu.id}
-                          sx={{
-                            textTransform: 'none',
-                            width: 'auto',
-                            minWidth: 'auto',
-                            whiteSpace: 'nowrap'
-                          }}
-                          aria-label={intl.formatMessage({ id: menu.menu?.title || 'menu.menu' })}
-                          size='small'
-                          color='inherit'
-                          startIcon={<FontAwesomeIcon icon={['fad', menu.menu?.icon || 'star']} />}
-                          onClick={() => handleFrequentMenuClick(menu)}
-                        >
-                          <Typography variant='caption'>
-                            {intl.formatMessage({ id: menu.menu?.title || 'menu.menu' })}
-                          </Typography>
-                        </Button>
-                      );
-                    })}
-                  </Box>
-                </Scrollbar>
-              </Box>
-            )}
-
             <Box sx={{ mt: 2, height: '100%' }}>
               <Box sx={{ mb: 2 }}>
                 <Stack direction='row'>
@@ -220,37 +144,6 @@ const ContentSearch: React.FC<TContentSearchProps> = (props) => {
                   {isLoading && <CircularProgress sx={{ mx: 2 }} size={24} />}
                 </Stack>
               </Box>
-
-              {!menuResults && !userResults && (
-                <Typography variant='caption'>
-                  {intl.formatMessage({ id: 'app.no_data_available' })}
-                </Typography>
-              )}
-
-              {menuResults?.map((menu: IFlatMenu) => (
-                <Box key={menu.id} sx={{ mb: 1 }}>
-                  <Chip
-                    sx={{ mr: 1, mb: 0.5, height: '18px' }}
-                    label={intl.formatMessage({ id: 'menu.menu' })}
-                    size='small'
-                    color='primary'
-                    clickable={false}
-                    variant='outlined'
-                  />
-                  <FontAwesomeIcon
-                    icon={[menu?.iconPrefix || 'fad', menu?.icon || 'list']}
-                    style={{ width: '20px', marginRight: '5px' }}
-                  />
-                  <Link
-                    color='textSecondary'
-                    component={RouterLink}
-                    to={menu.url}
-                    variant='subtitle2'
-                  >
-                    {menu.title}
-                  </Link>
-                </Box>
-              ))}
 
               {userResults?.map((user: IUser) => (
                 <Box key={user.uuid} sx={{ mb: 1, display: 'flex', alignItems: 'center' }}>

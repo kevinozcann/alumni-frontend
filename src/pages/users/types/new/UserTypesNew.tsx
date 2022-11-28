@@ -5,7 +5,7 @@ import { Box, Card, CardContent, CardHeader, Divider } from '@mui/material';
 import { Page } from 'layout/Page';
 import { useSubheader } from 'contexts/SubheaderContext';
 import useTranslation from 'hooks/useTranslation';
-import { IBreadcrumb } from 'pages/admin/menu-types';
+import { IBreadcrumb } from 'components/BreadCrumbs';
 import UserTypesForm from 'pages/users/types/UserTypesForm';
 
 const NewUserType = () => {

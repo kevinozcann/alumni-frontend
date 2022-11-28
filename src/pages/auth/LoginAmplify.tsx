@@ -79,6 +79,7 @@ export const LoginAmplify = () => {
     dispatch(authActions.setPhase(null, null));
   }, []);
 
+  console.log(authError);
   return (
     <Box>
       <Typography sx={{ mb: 2 }} variant='body1'>
@@ -123,7 +124,11 @@ export const LoginAmplify = () => {
               closeText={intl.translate({ id: 'app.close' })}
               onClose={() => dispatch(authActions.setPhase(null, null))}
             >
-              {authError}
+              {typeof authError === 'object'
+                ? authError.hasOwnProperty('code')
+                  ? authError.code
+                  : ''
+                : authError}
             </Alert>
           </Box>
         )}

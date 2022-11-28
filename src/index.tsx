@@ -1,24 +1,23 @@
-import '@fortawesome/fontawesome-pro/css/fontawesome.css';
 import '@fortawesome/fontawesome-pro/css/duotone.css';
+import '@fortawesome/fontawesome-pro/css/fontawesome.css';
 import 'react-perfect-scrollbar/dist/css/styles.css';
 import 'react-quill/dist/quill.snow.css';
 import './index.scss';
 
-import React, { StrictMode } from 'react';
-import { render } from 'react-dom';
-import { HelmetProvider } from 'react-helmet-async';
-import { BrowserRouter } from 'react-router-dom';
-import { Provider as ReduxProvider } from 'react-redux';
-import { PersistGate } from 'redux-persist/integration/react';
 import StyledEngineProvider from '@mui/material/StyledEngineProvider';
 import axios from 'axios';
+import { StrictMode } from 'react';
 import { ClearCacheProvider } from 'react-clear-cache';
+import { render } from 'react-dom';
+import { HelmetProvider } from 'react-helmet-async';
+import { Provider as ReduxProvider } from 'react-redux';
+import { BrowserRouter } from 'react-router-dom';
+import { PersistGate } from 'redux-persist/integration/react';
 
+import { SettingsProvider } from 'contexts/SettingsContext';
+import { SubheaderProvider } from 'contexts/SubheaderContext';
 import setupAxios from 'store';
 import store, { persistor } from 'store/store';
-import { SubheaderProvider } from 'contexts/SubheaderContext';
-import { SettingsProvider } from 'contexts/SettingsContext';
-import { AuthProvider } from 'contexts/JWTAuthContext';
 
 import reportWebVitals from './reportWebVitals';
 import * as serviceWorker from './serviceWorker';
@@ -38,11 +37,9 @@ const FullApp = () => (
             <SettingsProvider>
               <BrowserRouter>
                 <PersistGate persistor={persistor}>
-                  <AuthProvider>
-                    <SubheaderProvider>
-                      <App />
-                    </SubheaderProvider>
-                  </AuthProvider>
+                  <SubheaderProvider>
+                    <App />
+                  </SubheaderProvider>
                 </PersistGate>
               </BrowserRouter>
             </SettingsProvider>

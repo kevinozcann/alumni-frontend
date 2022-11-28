@@ -1,5 +1,4 @@
-import { IMenu } from 'pages/admin/menu-types';
-
+import { IconName, IconPrefix } from '@fortawesome/pro-duotone-svg-icons';
 const menus: IMenu[] = [
   {
     id: 602,
@@ -8,7 +7,6 @@ const menus: IMenu[] = [
     icon: 'user-circle',
     url: '/account/home',
     appUrl: '/',
-    type: 'parent',
     position: 0,
     isActive: true,
     isFlex: true,
@@ -25,7 +23,6 @@ const menus: IMenu[] = [
         icon: 'user-circle',
         url: '/account/home',
         appUrl: '',
-        type: 'parent',
         position: 0,
         isActive: true,
         isFlex: true,
@@ -41,7 +38,6 @@ const menus: IMenu[] = [
         icon: 'inbox',
         url: '/mail/inbox',
         appUrl: '',
-        type: 'parent',
         position: 1,
         isActive: true,
         isFlex: true,
@@ -57,7 +53,6 @@ const menus: IMenu[] = [
         icon: 'folder-open',
         url: '/smartclass/documents',
         appUrl: 'documents',
-        type: 'parent',
         position: 2,
         isActive: true,
         isFlex: true,
@@ -73,7 +68,6 @@ const menus: IMenu[] = [
         icon: 'calendar-check',
         url: '/smartclass/myAppointments',
         appUrl: '',
-        type: 'parent',
         position: 3,
         isActive: true,
         isFlex: true,
@@ -89,7 +83,6 @@ const menus: IMenu[] = [
         icon: 'bell',
         url: '/smartclass/myAnnouncements',
         appUrl: '',
-        type: 'parent',
         position: 4,
         isActive: true,
         isFlex: true,
@@ -105,7 +98,6 @@ const menus: IMenu[] = [
         icon: 'folder',
         url: '/smartclass/googleDrive',
         appUrl: '',
-        type: 'parent',
         position: 6,
         isActive: false,
         isFlex: true,
@@ -121,7 +113,6 @@ const menus: IMenu[] = [
         icon: 'calendar',
         url: '/smartclass/googleCalendar',
         appUrl: '',
-        type: 'parent',
         position: 7,
         isActive: false,
         isFlex: true,
@@ -137,7 +128,6 @@ const menus: IMenu[] = [
         icon: 'envelope',
         url: '/smartclass/myAccounts',
         appUrl: '',
-        type: 'parent',
         position: 8,
         isActive: false,
         isFlex: true,
@@ -153,7 +143,6 @@ const menus: IMenu[] = [
         icon: 'folder-open',
         url: '/smartclass/mydocuments',
         appUrl: '',
-        type: 'parent',
         position: 9,
         isActive: false,
         isFlex: true,
@@ -171,7 +160,6 @@ const menus: IMenu[] = [
     icon: 'chalkboard',
     url: '',
     appUrl: '/',
-    type: 'parent',
     position: 1,
     isActive: true,
     isFlex: true,
@@ -188,7 +176,6 @@ const menus: IMenu[] = [
         icon: 'book',
         url: '/smartclass/classes',
         appUrl: 'classes',
-        type: 'parent',
         position: 0,
         isActive: true,
         isFlex: true,
@@ -204,7 +191,6 @@ const menus: IMenu[] = [
         icon: 'calendar',
         url: '/smartclass/appointments',
         appUrl: '',
-        type: 'parent',
         position: 1,
         isActive: true,
         isFlex: true,
@@ -220,7 +206,6 @@ const menus: IMenu[] = [
         icon: 'tachometer',
         url: '/smartclass/performanceSurveys',
         appUrl: '',
-        type: 'parent',
         position: 2,
         isActive: false,
         isFlex: true,
@@ -236,7 +221,6 @@ const menus: IMenu[] = [
         icon: 'utensils',
         url: '/smartclass/foodLists',
         appUrl: '',
-        type: 'parent',
         position: 3,
         isActive: true,
         isFlex: true,
@@ -252,7 +236,6 @@ const menus: IMenu[] = [
         icon: 'user-circle',
         url: '/smartclass/meetings',
         appUrl: '',
-        type: 'parent',
         position: 4,
         isActive: true,
         isFlex: true,
@@ -268,7 +251,6 @@ const menus: IMenu[] = [
         icon: 'shopping-cart',
         url: '/store',
         appUrl: '',
-        type: 'parent',
         position: 5,
         isActive: true,
         isFlex: true,
@@ -284,7 +266,6 @@ const menus: IMenu[] = [
         icon: 'calendar',
         url: '/smartclass/studyAppointment',
         appUrl: '',
-        type: 'parent',
         position: 6,
         isActive: false,
         isFlex: true,
@@ -300,7 +281,6 @@ const menus: IMenu[] = [
         icon: 'calendar',
         url: '/smartclass/appointments',
         appUrl: '',
-        type: 'parent',
         position: 7,
         isActive: false,
         isFlex: true,
@@ -316,7 +296,6 @@ const menus: IMenu[] = [
         icon: 'calendar',
         url: '/smartclass/scholarshipAppointments',
         appUrl: '',
-        type: 'parent',
         position: 8,
         isActive: false,
         isFlex: true,
@@ -332,7 +311,6 @@ const menus: IMenu[] = [
         icon: 'calendar',
         url: '/smartclass/scholarshipAppointments',
         appUrl: '',
-        type: 'parent',
         position: 9,
         isActive: false,
         isFlex: true,
@@ -348,7 +326,6 @@ const menus: IMenu[] = [
         icon: 'user-circle',
         url: '/smartclass/parentForms',
         appUrl: '',
-        type: 'parent',
         position: 10,
         isActive: true,
         isFlex: true,
@@ -364,7 +341,6 @@ const menus: IMenu[] = [
         icon: 'ticket',
         url: '/smartclass/activityLists',
         appUrl: '',
-        type: 'parent',
         position: 11,
         isActive: true,
         isFlex: true,
@@ -376,5 +352,25 @@ const menus: IMenu[] = [
     ]
   }
 ];
-
+export interface IMenu {
+  id: number;
+  globalId?: number;
+  title: string;
+  url: string;
+  appUrl: string;
+  position: number;
+  isActive: boolean;
+  isFlex: true;
+  isEssential: true;
+  isProfessional: true;
+  isEnterprise: true;
+  isAdmin: boolean;
+  iconPrefix?: IconPrefix;
+  icon?: IconName;
+  starred?: boolean;
+  translated?: boolean;
+  parent?: IMenu;
+  school?: string;
+  children?: IMenu[];
+}
 export default menus;

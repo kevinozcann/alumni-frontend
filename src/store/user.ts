@@ -1,17 +1,16 @@
+import objectPath from 'object-path';
 import { persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import { createSelector } from 'reselect';
-import objectPath from 'object-path';
 
-import { IAction } from 'store/store';
-import { TLang } from 'utils/shared-types';
-import { ISchool, ISeason } from 'pages/organization/organization-types';
+import { IMenu } from 'data/menu';
 import { IPersonal, IUser } from 'pages/account/account-types';
-import { IMenu, TMenuType } from 'pages/admin/menu-types';
+import { ISchool, ISeason } from 'pages/organization/organization-types';
 import { IStudent } from 'pages/students/_store/types';
+import { IAction } from 'store/store';
 import { getFlatSchools } from 'utils';
-import { userSagas as saga } from './sagas';
-import { getUserSchools } from './sagas';
+import { TLang } from 'utils/shared-types';
+import { getUserSchools, userSagas as saga } from './sagas';
 
 interface IUserState {
   activeSchool?: ISchool;
@@ -22,7 +21,6 @@ interface IUserState {
   school?: ISchool;
   personal?: IPersonal;
   menus?: IMenu;
-  menuType?: TMenuType;
   phase?: string;
   error?: string;
 }

@@ -1,43 +1,45 @@
-import React from 'react';
-import { useFormik } from 'formik';
-import { useIntl } from 'react-intl';
 import {
-  Snackbar,
-  Slide,
-  Grid,
-  TextField,
   Card,
+  CardActions,
+  CardContent,
   CardHeader,
   Divider,
-  CardContent,
-  CardActions
+  Grid,
+  Slide,
+  Snackbar,
+  TextField
 } from '@mui/material';
+import { useFormik } from 'formik';
+import React from 'react';
+import { useIntl } from 'react-intl';
+import { useDispatch, useSelector } from 'react-redux';
 
 // import { loginPhases } from 'store/auth';
+import { IUserAttributes } from 'pages/account/account-types';
+import { authActions, authPhaseSelector, authUserSelector } from 'store/auth';
 import { SaveButton } from 'utils/ActionLinks';
-import { IUser } from 'pages/account/account-types';
 
-interface IGeneralProps {
-  user: IUser;
-  phase: string;
-  updateUserInfo: (userId: string, user: Partial<IUser>) => void;
-}
 interface IFormValues {
   name: string;
   lastName: string;
-  email: string;
 }
 
-const General = ({ user, phase, updateUserInfo }: IGeneralProps) => {
+const General = () => {
+  const intl = useIntl();
+  const dispatch = useDispatch();
   const [openSnackbar, setOpenSnackbar] = React.useState<boolean>(false);
   const [snackbarMessage, setSnackbarMessage] = React.useState<string>('');
-  const intl = useIntl();
+
+  const user = useSelector(authUserSelector);
+  const phase = useSelector(authPhaseSelector);
+
+  const userAttributes: IUserAttributes = user.attributes;
 
   const formInitialValues: IFormValues = {
-    name: user.name,
-    lastName: user.lastName,
-    email: user.email
+    name: userAttributes.name,
+    lastName: userAttributes.family_name
   };
+
   const {
     handleSubmit,
     handleChange,
@@ -55,11 +57,7 @@ const General = ({ user, phase, updateUserInfo }: IGeneralProps) => {
 
   const validateForm = (values: Partial<IFormValues>) => {
     const errors = {};
-    const nonEmptyFields = ['name', 'lastName', 'email'];
-
-    if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)) {
-      errors['email'] = intl.formatMessage({ id: 'error.invalid_input' });
-    }
+    const nonEmptyFields = ['name', 'lastName'];
 
     nonEmptyFields.forEach((field) => {
       if (!values[field]) {
@@ -72,7 +70,7 @@ const General = ({ user, phase, updateUserInfo }: IGeneralProps) => {
 
   const submitForm = (values: IFormValues) => {
     setStatus('submitted');
-    updateUserInfo(user.uuid, values);
+    dispatch(authActions.updateUserInfo(values));
   };
 
   React.useEffect(() => {
@@ -80,7 +78,7 @@ const General = ({ user, phase, updateUserInfo }: IGeneralProps) => {
   }, [setStatus]);
 
   React.useEffect(() => {
-    if (phase === 'userinfo-pull-successful') {
+    if (phase === 'success') {
       setSubmitting(false);
 
       if (status === 'submitted') {
@@ -88,7 +86,6 @@ const General = ({ user, phase, updateUserInfo }: IGeneralProps) => {
         setOpenSnackbar(true);
       }
     }
-    // eslint-disable-next-line
   }, [phase]);
 
   return (
@@ -100,7 +97,7 @@ const General = ({ user, phase, updateUserInfo }: IGeneralProps) => {
         <form className='form' noValidate={true} autoComplete='off' onSubmit={handleSubmit}>
           <CardContent>
             <Grid container spacing={2}>
-              <Grid item xs={12}>
+              <Grid item xs={12} md={6}>
                 <TextField
                   className=''
                   disabled={true}
@@ -108,8 +105,21 @@ const General = ({ user, phase, updateUserInfo }: IGeneralProps) => {
                   id='uuid'
                   label={intl.formatMessage({ id: 'user.user_id' })}
                   margin='normal'
-                  value={user.uuid}
-                  variant='outlined'
+                  value={userAttributes.sub}
+                  variant='filled'
+                />
+              </Grid>
+
+              <Grid item xs={12} md={6}>
+                <TextField
+                  className=''
+                  disabled={true}
+                  fullWidth={true}
+                  id='email'
+                  label={intl.formatMessage({ id: 'email.email' })}
+                  margin='normal'
+                  value={userAttributes.email}
+                  variant='filled'
                 />
               </Grid>
 
@@ -141,22 +151,6 @@ const General = ({ user, phase, updateUserInfo }: IGeneralProps) => {
                   margin='normal'
                   onChange={handleChange}
                   value={values.lastName}
-                  variant='outlined'
-                />
-              </Grid>
-
-              <Grid item xs={12} md={6}>
-                <TextField
-                  className={`${errors.email ? 'is-invalid' : isSubmitting ? 'is-valid' : ''}`}
-                  disabled={isSubmitting ? true : false}
-                  helperText={errors.email ? errors.email : ''}
-                  error={!!errors.email}
-                  fullWidth={true}
-                  id='email'
-                  label={intl.formatMessage({ id: 'user.email_address' })}
-                  margin='normal'
-                  onChange={handleChange}
-                  value={values.email}
                   variant='outlined'
                 />
               </Grid>

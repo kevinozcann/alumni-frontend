@@ -1,9 +1,9 @@
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Box, ListItemButton, ListItemIcon, ListItemText } from '@mui/material';
 import React from 'react';
 import { useIntl } from 'react-intl';
-import { Box, ListItemButton, ListItemIcon, ListItemText } from '@mui/material';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-import { IMenu } from 'pages/admin/menu-types';
+import { IMenu } from 'data/menu';
 
 type TMainNavItem = {
   menu: IMenu;

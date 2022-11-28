@@ -9,7 +9,6 @@ import { saga as staticSagas, reducer as staticReducer } from './static';
 import { saga as recentUpdatesSagas, reducer as recentUpdatesReducer } from './recentUpdates';
 import { saga as userSagas, reducer as userReducer } from './user';
 
-import { databaseReducer, databaseSagas } from 'pages/admin/databases/_store';
 import { classesReducer, classesSagas } from 'pages/classes/_store';
 import { developerReducer, developerSagas } from 'pages/developer/_store';
 import { feedsReducer, feedsSagas } from 'pages/feeds/_store';
@@ -30,7 +29,6 @@ export const rootReducer = combineReducers({
   auth: authReducer,
   classes: classesReducer,
   config: configReducer,
-  database: databaseReducer,
   developer: developerReducer,
   feeds: feedsReducer,
   filemanager: filemanagerReducer,
@@ -64,7 +62,6 @@ export function* rootSaga() {
   ];
   const allSagas = mainSagas.concat(
     classesSagas,
-    databaseSagas,
     developerSagas,
     feedsSagas,
     mailSagas,

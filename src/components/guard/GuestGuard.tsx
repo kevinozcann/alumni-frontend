@@ -12,11 +12,11 @@ const GuestGuard = ({ children }: GuestGuardProps) => {
   // Selectors
   const user = useSelector(authUserSelector);
 
-  if (user.accessToken) {
+  if (user && user.accessToken) {
     return <Navigate to='/account/home' />;
   }
 
-  return <React.Fragment>{children}</React.Fragment>;
+  return <>{children}</>;
 };
 
 export default GuestGuard;

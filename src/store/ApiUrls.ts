@@ -1,6 +1,5 @@
-import { TMenuType } from '../pages/admin/menu-types';
-import { generateApiLegacyUrl } from '../utils/Helpers';
-import { TLang } from '../utils/shared-types';
+import { generateApiLegacyUrl } from 'utils/Helpers';
+import { TLang } from 'utils/shared-types';
 
 // Global Api Url
 export const globalApiUrl = 'https://api.schoost.com';
@@ -97,7 +96,6 @@ interface IUpdateUrlOptions {
   userId?: string;
   schoolId?: number;
   period?: string;
-  menuType?: TMenuType;
   context?: string;
 }
 

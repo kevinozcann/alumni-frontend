@@ -16,7 +16,7 @@
 
 # misc
 /src/theme/i18n/legacy/*.json
-/.DS_Store
+.DS_Store
 /.env
 /.env.*
 /npm-debug.log*

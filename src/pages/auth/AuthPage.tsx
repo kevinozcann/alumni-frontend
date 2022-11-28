@@ -31,10 +31,6 @@ const AuthPage = () => {
 
   const handleChangeLanguage = (language: TLang): void => {
     dispatch(i18nActions.setLanguage(language));
-
-    setTimeout(() => {
-      window?.location.reload();
-    }, 100);
   };
 
   React.useEffect(() => {

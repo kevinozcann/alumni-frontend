@@ -8,7 +8,6 @@ import { IAction } from './store';
 import { SEARCH_URL, updateApiUrl } from './ApiUrls';
 import { TLang } from '../utils/shared-types';
 import { IUser } from '../pages/account/account-types';
-import { IFlatMenu } from '../pages/admin/menu-types';
 
 interface IStudent {
   name: string;
@@ -22,7 +21,6 @@ interface IPersonnel {
 }
 interface ISearchState {
   users: IUser[];
-  menus: IFlatMenu[];
   students: IStudent[];
   personnel: IPersonnel[];
   searchKey: string;
@@ -34,7 +32,6 @@ interface IParentSearchState {
 type TActionAllState = ISearchState & {
   lang?: TLang;
   userId?: string;
-  flatMenus?: IFlatMenu[];
   userTypes?: string;
   getKey?: boolean;
 };
@@ -78,10 +75,6 @@ export const searchUsersSelector = createSelector(
   (state: IParentSearchState) => objectPath.get(state, ['search', 'users']),
   (users: IUser[]) => users
 );
-export const searchMenusSelector = createSelector(
-  (state: IParentSearchState) => objectPath.get(state, ['search', 'menus']),
-  (menus: IFlatMenu[]) => menus
-);
 export const searchStudentsSelector = createSelector(
   (state: IParentSearchState) => objectPath.get(state, ['search', 'students']),
   (students: IStudent[]) => students
@@ -110,10 +103,6 @@ export const reducer = persistReducer(
       case searchActionTypes.UPDATE_USERS: {
         const { users } = action.payload;
         return { ...state, users };
-      }
-      case searchActionTypes.UPDATE_MENUS: {
-        const { menus, searchKey } = action.payload;
-        return { ...state, menus, searchKey };
       }
       case searchActionTypes.UPDATE_STUDENTS: {
         const { students } = action.payload;
@@ -146,14 +135,6 @@ export const searchActions = {
   }),
   setUsers: (payload: any): IAction<Partial<TActionAllState>> => ({
     type: searchActionTypes.SET_USERS,
-    payload: payload
-  }),
-  searchMenus: (flatMenus: IFlatMenu[], searchKey: string): IAction<Partial<TActionAllState>> => ({
-    type: searchActionTypes.SEARCH_MENUS,
-    payload: { flatMenus, searchKey }
-  }),
-  setMenus: (payload: any): IAction<Partial<TActionAllState>> => ({
-    type: searchActionTypes.SET_MENUS,
     payload: payload
   }),
   searchStudents: (
@@ -226,39 +207,6 @@ export function* saga() {
       yield put({
         type: searchActionTypes.UPDATE_PHASE,
         payload: { phase: searchActionPhases.USERS_SEARCHING_SUCCESSFUL }
-      });
-    }
-  );
-
-  yield throttle(
-    1500,
-    searchActionTypes.SEARCH_MENUS,
-    function* searchMenusSaga({ payload }: IAction<Partial<TActionAllState>>) {
-      yield put(searchActions.setMenus(payload));
-    }
-  );
-
-  yield takeLatest(
-    searchActionTypes.SET_MENUS,
-    function* setMenusSaga({ payload }: IAction<Partial<TActionAllState>>) {
-      yield put({
-        type: searchActionTypes.UPDATE_PHASE,
-        payload: { phase: searchActionPhases.MENUS_SEARCHING }
-      });
-
-      const { flatMenus, searchKey } = payload;
-
-      const menuResults = flatMenus.filter(
-        (menu) => menu?.title?.toLowerCase().includes(searchKey.toLowerCase()) && menu?.url !== ''
-      );
-
-      yield put({
-        type: searchActionTypes.UPDATE_MENUS,
-        payload: { menus: menuResults, searchKey: searchKey }
-      });
-      yield put({
-        type: searchActionTypes.UPDATE_PHASE,
-        payload: { phase: searchActionPhases.MENUS_SEARCHING_SUCCESSFUL }
       });
     }
   );

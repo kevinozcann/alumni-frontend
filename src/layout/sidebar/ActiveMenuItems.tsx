@@ -1,6 +1,5 @@
-import React from 'react';
-import { Link as RouterLink } from 'react-router-dom';
-import { useIntl } from 'react-intl';
+import { faCircle } from '@fortawesome/pro-duotone-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   Box,
   Collapse,
@@ -10,10 +9,11 @@ import {
   ListItemText,
   ListSubheader
 } from '@mui/material';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import React from 'react';
+import { useIntl } from 'react-intl';
+import { Link as RouterLink } from 'react-router-dom';
 
-import { IMenu } from 'pages/admin/menu-types';
-import { faCircle } from '@fortawesome/pro-duotone-svg-icons';
+import { IMenu } from 'data/menu';
 
 type TNavItemProps = {
   activeMenu: IMenu;

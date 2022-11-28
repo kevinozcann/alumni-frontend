@@ -32,7 +32,7 @@ import ConfirmDialog from 'components/ConfirmDialog';
 import RowActions from 'components/table/RowActions';
 import Filter from 'components/filter/Filter';
 import { ISchool } from 'pages/organization/organization-types';
-import { IBreadcrumb } from 'pages/admin/menu-types';
+import { IBreadcrumb } from 'components/BreadCrumbs';
 
 import { classesActions, classesDataSelector } from './_store/classes';
 import ClassForm from './ClassForm';

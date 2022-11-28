@@ -5,7 +5,7 @@ import { Box, Card, CardContent, CardHeader, Divider } from '@mui/material';
 import { Page } from 'layout/Page';
 import useTranslation from 'hooks/useTranslation';
 import { useSubheader } from 'contexts/SubheaderContext';
-import { IBreadcrumb } from 'pages/admin/menu-types';
+import { IBreadcrumb } from 'components/BreadCrumbs';
 
 import ClassTypesForm from './OnlineClassForm';
 

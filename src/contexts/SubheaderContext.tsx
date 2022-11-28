@@ -1,5 +1,6 @@
 import React from 'react';
-import { IBreadcrumb } from '../pages/admin/menu-types';
+
+import { IBreadcrumb } from 'components/BreadCrumbs';
 
 interface SubheaderContextValueProps {
   breadcrumbs?: IBreadcrumb[];

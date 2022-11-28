@@ -1,8 +1,9 @@
 import { IntlShape } from 'react-intl';
-import { IFlatMenu, IMenu } from '../pages/admin/menu-types';
+
+import { IMenu } from 'data/menu';
 
 const getFlatMenus = (intl: IntlShape, menus: IMenu[]) => {
-  const flatMenus: IFlatMenu[] = [];
+  const flatMenus: any = [];
 
   if (menus) {
     menus.forEach((menu) => {

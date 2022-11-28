@@ -1,18 +1,15 @@
 import { Amplify, Auth } from 'aws-amplify';
-import axios from 'axios';
 import objectPath from 'object-path';
 import { GoogleLoginResponse } from 'react-google-login';
-import { persistReducer, PURGE } from 'redux-persist';
+import { persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import { call, put, takeLatest } from 'redux-saga/effects';
 import { createSelector } from 'reselect';
 
 import { IUser } from 'pages/account/account-types';
-import { IFrequentMenu } from 'pages/admin/menu-types';
 import { ISchool } from 'pages/organization/organization-types';
 import { TLang, TLinkedAccount } from 'utils/shared-types';
 
-import { USERS_API_URL } from 'store/ApiUrls';
 import { IAction } from 'store/store';
 import { getUserSchools } from 'store/user';
 
@@ -44,13 +41,13 @@ type TActionAllState = IAuthState & {
   menuId?: number;
   menuGlobalId?: number;
   menuUrl?: string;
-  frequentMenus?: IFrequentMenu[];
   pwd?: string;
   resetId?: string;
   school?: ISchool;
   schoolId?: number;
   updateAll?: boolean;
-  userId?: string;
+  userSub?: string;
+  userData?: Partial<IUser>;
   accountType?: TLinkedAccount;
   googleResponse?: GoogleLoginResponse;
   accountResponse?: any;
@@ -149,10 +146,6 @@ export const authUserIdSelector = createSelector(
   (state: IParentAuthState) => objectPath.get(state, ['auth', 'user', 'uuid']),
   (uuid: string) => uuid
 );
-export const authFrequentMenusSelector = createSelector(
-  (state: IParentAuthState) => objectPath.get(state, ['auth', 'user', 'frequentMenus']),
-  (frequentMenus: IFrequentMenu[]) => frequentMenus
-);
 export const authPhaseSelector = createSelector(
   (state: IParentAuthState) => objectPath.get(state, ['auth', 'phase']),
   (authPhase: string) => authPhase
@@ -188,9 +181,20 @@ export const reducer = persistReducer(
         return { ...state, user: null, phase: null, error: null };
       }
       case actionTypes.AUTH_UPDATE_USER: {
-        const currentState = { ...state };
-        const currentUser = currentState.user;
-        const updatedUser = Object.assign({}, currentUser, action.payload);
+        const { payload } = action;
+        const { user } = { ...state };
+
+        console.log('payload', payload);
+        if (payload.hasOwnProperty('attributes')) {
+          const updatedAttributes = Object.assign(
+            {},
+            user?.attributes || {},
+            payload['attributes']
+          );
+          payload['attributes'] = updatedAttributes;
+        }
+
+        const updatedUser = Object.assign({}, user, payload);
 
         return {
           ...state,
@@ -227,23 +231,9 @@ export const authActions = {
     payload: { email, code }
   }),
   logout: (): IAction<Partial<TActionAllState>> => ({ type: actionTypes.AUTH_LOGOUT }),
-  hardLogout: (): IAction<Partial<TActionAllState>> => ({ type: PURGE }),
-  requestUser: (
-    lang: TLang,
-    userId: string,
-    updateAll: boolean,
-    tempToken: string | null
-  ): IAction<Partial<TActionAllState>> => ({
-    type: actionTypes.AUTH_USER_REQUESTED,
-    payload: { lang, userId, updateAll, tempToken }
-  }),
-  updateUserInfo: (userId: string, user: IUser): IAction<Partial<TActionAllState>> => ({
+  updateUserInfo: (userData: Partial<IUser>): IAction<Partial<TActionAllState>> => ({
     type: actionTypes.UPDATE_USER_INFO,
-    payload: { userId, user }
-  }),
-  updateUserData: (lang: TLang, user: IUser): IAction<Partial<TActionAllState>> => ({
-    type: actionTypes.AUTH_USER_UPDATE_DATA,
-    payload: { lang, user }
+    payload: { userData }
   }),
   setPhase: (phase: string, error: string): IAction<Partial<TActionAllState>> => ({
     type: actionTypes.SET_LOGIN_PHASE,
@@ -265,6 +255,8 @@ export function* saga() {
 
       try {
         const user = yield Auth.signIn(email, password);
+
+        console.log('user', user);
 
         // Update user info
         yield put({
@@ -289,14 +281,14 @@ export function* saga() {
   yield takeLatest(
     actionTypes.AUTH_TOKEN,
     function* tokenSaga({ payload }: IAction<Partial<TActionAllState>>) {
-      const { lang, userId } = payload;
+      const { lang, userSub } = payload;
 
       yield put({
         type: actionTypes.AUTH_TOKEN_SAVE,
         payload
       });
       yield put(authActions.setPhase('userinfo-pulling', null));
-      yield put(authActions.requestUser(lang, userId, true, null));
+      // yield put(authActions.requestUser(lang, userId, true, null));
     }
   );
 
@@ -369,62 +361,52 @@ export function* saga() {
   );
 
   yield takeLatest(
-    actionTypes.AUTH_USER_REQUESTED,
-    function* userRequestedSaga({ payload }: IAction<Partial<TActionAllState>>) {
-      const { lang, userId, updateAll } = payload;
-
-      // Get user profile
-      const { data: user } = yield axios.get(`${USERS_API_URL}/${userId}`);
-
-      if (typeof user === 'undefined') {
-        yield put(authActions.setPhase('error', 'An error occurred!'));
-        return;
-      }
-
-      // Save user info once we get user related data
-      yield put({
-        type: actionTypes.AUTH_UPDATE_USER,
-        payload: { user }
-      });
-
-      if (updateAll) {
-        // Get user related data such as schools, menus, etc
-        yield call(getUserData, lang, user);
-
-        // Set login successful
-        yield put(authActions.setPhase('login-successful', null));
-      }
-    }
-  );
-
-  yield takeLatest(
-    actionTypes.AUTH_USER_UPDATE_DATA,
-    function* updateUserDataSaga({ payload }: IAction<Partial<TActionAllState>>) {
-      const { lang, user } = payload;
-
-      yield call(getUserData, lang, user);
-    }
-  );
-
-  yield takeLatest(
     actionTypes.UPDATE_USER_INFO,
     function* updateUserSaga({ payload }: IAction<Partial<TActionAllState>>) {
-      yield put(authActions.setPhase('updating-userinfo', null));
+      yield put(authActions.setPhase('updating', null));
 
-      const { userId, user } = payload;
-      const { data: userInfo } = yield axios.patch(`${USERS_API_URL}/${userId}`, user);
+      const { userData } = payload;
 
-      if (typeof userInfo === 'undefined') {
-        yield put(authActions.setPhase('updating-userinfo-error', 'An error occurred!'));
+      const user = yield Auth.currentAuthenticatedUser();
+      try {
+        const result = yield Auth.updateUserAttributes(user, {
+          name: userData.name,
+          family_name: userData.lastName
+        });
 
-        return;
+        if (result === 'SUCCESS') {
+          yield put({
+            type: actionTypes.AUTH_UPDATE_USER,
+            payload: {
+              attributes: {
+                name: userData.name,
+                family_name: userData.lastName
+              }
+            }
+          });
+        } else {
+          yield put(authActions.setPhase('error', 'An error occurred!'));
+        }
+
+        yield put(authActions.setPhase('success', null));
+      } catch (error) {
+        console.log('error', error);
+        yield put(authActions.setPhase('error', error));
       }
 
-      yield put(authActions.setPhase('userinfo-pull-successful', null));
-      yield put({
-        type: actionTypes.AUTH_UPDATE_USER,
-        payload: { user: userInfo }
-      });
+      // const { data: userInfo } = yield axios.patch(`${USERS_API_URL}/${userId}`, user);
+
+      // if (typeof userInfo === 'undefined') {
+      //   yield put(authActions.setPhase('updating-userinfo-error', 'An error occurred!'));
+
+      //   return;
+      // }
+
+      // yield put(authActions.setPhase('userinfo-pull-successful', null));
+      // yield put({
+      //   type: actionTypes.AUTH_UPDATE_USER,
+      //   payload: { user: userInfo }
+      // });
     }
   );
 
