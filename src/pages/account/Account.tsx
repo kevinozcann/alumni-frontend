@@ -51,7 +51,12 @@ const Account = () => {
   const navigate = useNavigate();
   const [activePage, setActivePage] = React.useState<string>(section);
   const [pageTitle, setPageTitle] = React.useState<string>(getPageTitle(section));
-  const [profileImg, setProfileImg] = React.useState<string>('');
+  const [profileImg, setProfileImg] = React.useState<string>(
+    toAbsoluteUrl('/media/users/default.jpg')
+  );
+  const [wallpaperImg, setWallpaperImg] = React.useState<string>(
+    toAbsoluteUrl('/media/users/cover.jpeg')
+  );
   const [anchorHomeMenuEl, setAnchorHomeMenuEl] = React.useState<HTMLElement>(null);
   const [showWallpaper, setShowWallpaper] = React.useState<boolean>(false);
 
@@ -64,7 +69,6 @@ const Account = () => {
   const schools = useSelector(userSchoolsSelector);
 
   const userAttributes = user.attributes;
-  const wallpaper = userAttributes['custom:wallpaper'] || toAbsoluteUrl('/media/users/cover.jpeg');
 
   const handleHomeMenuElClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorHomeMenuEl(event.currentTarget);
@@ -92,13 +96,15 @@ const Account = () => {
   }, []);
 
   React.useEffect(() => {
-    const setPicture = async () => {
+    const setUserImages = async () => {
       const picture = await getS3File(userAttributes['custom:picture']);
+      const wallpaper = await getS3File(userAttributes['custom:wallpaper']);
 
       setProfileImg(picture);
+      setWallpaperImg(wallpaper);
     };
 
-    setPicture();
+    setUserImages();
   }, [userAttributes]);
 
   React.useEffect(() => {
@@ -125,7 +131,7 @@ const Account = () => {
                   height={300}
                   sx={{ height: 300 }}
                   component='img'
-                  image={wallpaper}
+                  image={wallpaperImg}
                   title='user wallpaper'
                   alt='user wallpaper'
                 />

@@ -26,23 +26,27 @@ Amplify.configure(awsconfig);
 
 interface IFormValues {
   picture: string;
+  pictureObject?: any;
   wallpaper: string;
+  wallpaperObject?: any;
 }
 
 const Images = () => {
   const intl = useTranslation();
   const dispatch = useDispatch();
-  const { showFileManager } = useFileManager();
+  const [activeField, setActiveField] = React.useState<string>();
   const { showSnackbar } = useSnackbar();
 
   const user = useSelector(authUserSelector);
-  const phase = useSelector(authPhaseSelector);
+  const authPhase = useSelector(authPhaseSelector);
 
   const userAttributes: IUserAttributes = user.attributes;
 
   const formInitialValues: IFormValues = {
     picture: userAttributes['custom:picture'],
-    wallpaper: userAttributes['custom:wallpaper']
+    pictureObject: null,
+    wallpaper: userAttributes['custom:wallpaper'],
+    wallpaperObject: null
   };
 
   const {
@@ -78,40 +82,56 @@ const Images = () => {
   const submitForm = React.useCallback(
     async (values: IFormValues) => {
       setStatus('submitted');
-      try {
-        const upload = await Storage.put(values.picture['name'], values.picture, {
-          level: 'private'
-        });
 
-        dispatch(
-          authActions.updateUserInfo({
-            attributes: {
-              'custom:picture': upload.key
-            }
-          })
-        );
-      } catch (error) {
-        console.log('Error uploading file: ', error);
+      if (activeField === 'picture') {
+        try {
+          const upload = await Storage.put(values.pictureObject['name'], values.pictureObject, {
+            level: 'private'
+          });
+
+          dispatch(
+            authActions.updateUserInfo({
+              attributes: {
+                'custom:picture': upload.key
+              }
+            })
+          );
+        } catch (error) {
+          console.log('Error uploading file: ', error);
+        }
+      } else if (activeField === 'wallpaper') {
+        try {
+          const upload = await Storage.put(values.wallpaperObject['name'], values.wallpaperObject, {
+            level: 'private'
+          });
+
+          dispatch(
+            authActions.updateUserInfo({
+              attributes: {
+                'custom:wallpaper': upload.key
+              }
+            })
+          );
+        } catch (error) {
+          console.log('Error uploading file: ', error);
+        }
       }
     },
-    [setStatus]
+    [activeField, setStatus]
   );
-
-  const handleSelectCallback = (fieldId: string, fieldValue: any) => {
-    setFieldValue(fieldId, fieldValue);
-    setStatus('notSubmitted');
-  };
 
   // Auto save the form
   React.useEffect(() => {
-    if (values !== initialValues) {
+    if (
+      values.pictureObject !== initialValues.pictureObject ||
+      values.wallpaperObject !== initialValues.wallpaperObject
+    ) {
       submitForm(values);
     }
-  }, [values, initialValues, submitForm]);
+  }, [values, initialValues]);
 
   React.useEffect(() => {
-    if (phase === 'success') {
-      console.log(phase);
+    if (authPhase === 'success') {
       setSubmitting(false);
 
       if (status === 'submitted') {
@@ -121,7 +141,7 @@ const Images = () => {
         });
       }
     }
-  }, [status, phase]);
+  }, [status, authPhase]);
 
   return (
     <React.Fragment>
@@ -137,25 +157,35 @@ const Images = () => {
                   <InputLabel htmlFor='picture'>{intl.translate({ id: 'logo.photo' })}</InputLabel>
                   <FilledInput
                     id='picture'
-                    type='file'
                     readOnly
-                    onChange={(event) => {
-                      setFieldValue('picture', (event.target as HTMLInputElement).files[0]);
-                    }}
+                    value={values.picture}
                     endAdornment={
                       <InputAdornment position='end'>
                         <Button
                           color='primary'
                           disabled={isSubmitting ? true : false}
-                          // onClick={() =>
-                          //   showFileManager({
-                          //     iframeSrc: pictureFMLink,
-                          //     isOpen: true,
-                          //     selectCallback: handleSelectCallback
-                          //   })
-                          // }
+                          component='label'
                         >
-                          {intl.formatMessage({ id: user.picture ? 'app.change' : 'app.add' })}
+                          <input
+                            style={{ display: 'none' }}
+                            accept='image/*'
+                            id='pictureObject'
+                            type='file'
+                            onChange={(event) => {
+                              setActiveField('picture');
+                              setFieldValue(
+                                'picture',
+                                (event.target as HTMLInputElement).files[0].name
+                              );
+                              setFieldValue(
+                                'pictureObject',
+                                (event.target as HTMLInputElement).files[0]
+                              );
+                            }}
+                          />
+                          {intl.formatMessage({
+                            id: userAttributes['custom:picture'] ? 'app.change' : 'app.add'
+                          })}
                         </Button>
                       </InputAdornment>
                     }
@@ -179,15 +209,28 @@ const Images = () => {
                         <Button
                           color='primary'
                           disabled={isSubmitting ? true : false}
-                          // onClick={() =>
-                          //   showFileManager({
-                          //     iframeSrc: wallpaperFMLink,
-                          //     isOpen: true,
-                          //     selectCallback: handleSelectCallback
-                          //   })
-                          // }
+                          component='label'
                         >
-                          {intl.formatMessage({ id: user.wallpaper ? 'app.change' : 'app.add' })}
+                          <input
+                            style={{ display: 'none' }}
+                            accept='image/*'
+                            id='wallpaperObject'
+                            type='file'
+                            onChange={(event) => {
+                              setActiveField('wallpaper');
+                              setFieldValue(
+                                'wallpaper',
+                                (event.target as HTMLInputElement).files[0].name
+                              );
+                              setFieldValue(
+                                'wallpaperObject',
+                                (event.target as HTMLInputElement).files[0]
+                              );
+                            }}
+                          />
+                          {intl.formatMessage({
+                            id: userAttributes['custom:wallpaper'] ? 'app.change' : 'app.add'
+                          })}
                         </Button>
                       </InputAdornment>
                     }
