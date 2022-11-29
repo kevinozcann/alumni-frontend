@@ -1,0 +1,14 @@
+{
+  "resourceName": "storage",
+  "policyUUID": "369fef97",
+  "bucketName": "alumnifrontendc31bcc10a2af445eaf3b30b36768d018",
+  "storageAccess": "auth",
+  "guestAccess": [],
+  "authAccess": [
+    "CREATE_AND_UPDATE",
+    "READ",
+    "DELETE"
+  ],
+  "triggerFunction": "S3Trigger73b92967",
+  "groupAccess": {}
+}
