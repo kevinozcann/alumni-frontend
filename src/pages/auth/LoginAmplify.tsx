@@ -29,8 +29,8 @@ export const LoginAmplify = () => {
   const { handleSubmit, handleChange, values, errors, touched, isSubmitting, setSubmitting } =
     useFormik({
       initialValues: {
-        email: '',
-        password: ''
+        email: 'simsek97@gmail.com',
+        password: '!234%QwerT'
       },
       validate: (values: FormValues) => validateForm(values),
       onSubmit: (values: FormValues) => submitForm(values)

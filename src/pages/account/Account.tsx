@@ -1,3 +1,4 @@
+import { Amplify, Storage } from 'aws-amplify';
 import { faEdit, faHome, faImage, faLock } from '@fortawesome/pro-duotone-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import loadable from '@loadable/component';
@@ -23,6 +24,11 @@ import { authUserSelector } from 'store/auth';
 import { userActiveSchoolSelector, userSchoolsSelector } from 'store/user';
 import { toAbsoluteUrl } from 'utils/AssetsHelpers';
 import StyledMenu from 'utils/StyledMenu';
+import { getS3File } from 'utils/amplifyUtils';
+
+import awsconfig from 'aws-exports';
+
+Amplify.configure(awsconfig);
 
 const AccountHome = loadable(() => import('./AccountHome'));
 const General = loadable(() => import('./edit/General'));
@@ -45,6 +51,7 @@ const Account = () => {
   const navigate = useNavigate();
   const [activePage, setActivePage] = React.useState<string>(section);
   const [pageTitle, setPageTitle] = React.useState<string>(getPageTitle(section));
+  const [profileImg, setProfileImg] = React.useState<string>('');
   const [anchorHomeMenuEl, setAnchorHomeMenuEl] = React.useState<HTMLElement>(null);
   const [showWallpaper, setShowWallpaper] = React.useState<boolean>(false);
 
@@ -58,11 +65,11 @@ const Account = () => {
 
   const userAttributes = user.attributes;
   const wallpaper = userAttributes['custom:wallpaper'] || toAbsoluteUrl('/media/users/cover.jpeg');
-  const profileImg = userAttributes['custom:picture'] || toAbsoluteUrl('/media/users/default.jpg');
 
   const handleHomeMenuElClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorHomeMenuEl(event.currentTarget);
   };
+
   const handleHomeMenuClose = () => {
     setAnchorHomeMenuEl(null);
   };
@@ -83,6 +90,16 @@ const Account = () => {
       setShowWallpaper(true);
     }, 500);
   }, []);
+
+  React.useEffect(() => {
+    const setPicture = async () => {
+      const picture = await getS3File(userAttributes['custom:picture']);
+
+      setProfileImg(picture);
+    };
+
+    setPicture();
+  }, [userAttributes]);
 
   React.useEffect(() => {
     const breadcrumbs = [];

@@ -13,9 +13,20 @@ import { TLang, TLinkedAccount } from 'utils/shared-types';
 import { IAction } from 'store/store';
 import { getUserSchools } from 'store/user';
 
-import awsconfig from '../aws-exports';
+import awsconfig from 'aws-exports';
 
 Amplify.configure(awsconfig);
+
+const attributesList = [
+  'name',
+  'family_name',
+  'email',
+  'email_verified',
+  'phone_number',
+  'phone_number_verified',
+  'custom:picture',
+  'custom:wallpaper'
+];
 
 export type TUserPassword = {
   currentPassword: string;
@@ -303,7 +314,14 @@ export function* saga() {
         const { user, userConfirmed, userSub } = yield Auth.signUp({
           username: email,
           password,
-          attributes: { email, name, family_name: lastname, phone_number: phoneNumber }
+          attributes: {
+            email,
+            name,
+            family_name: lastname,
+            phone_number: phoneNumber,
+            'custom:picture': '',
+            'custom:wallpaper': ''
+          }
         });
 
         // Update user info
@@ -368,30 +386,36 @@ export function* saga() {
       const { userData } = payload;
 
       const user = yield Auth.currentAuthenticatedUser();
-      try {
-        const result = yield Auth.updateUserAttributes(user, {
-          name: userData.name,
-          family_name: userData.lastName
-        });
 
-        if (result === 'SUCCESS') {
-          yield put({
-            type: actionTypes.AUTH_UPDATE_USER,
-            payload: {
-              attributes: {
-                name: userData.name,
-                family_name: userData.lastName
-              }
+      if (userData.hasOwnProperty('attributes')) {
+        try {
+          const attributes = userData['attributes'];
+          const updateAttributes = {};
+
+          attributesList.forEach((attribute) => {
+            if (attributes.hasOwnProperty(attribute)) {
+              updateAttributes[attribute] = attributes[attribute];
             }
           });
-        } else {
-          yield put(authActions.setPhase('error', 'An error occurred!'));
-        }
 
-        yield put(authActions.setPhase('success', null));
-      } catch (error) {
-        console.log('error', error);
-        yield put(authActions.setPhase('error', error));
+          const result = yield Auth.updateUserAttributes(user, updateAttributes);
+
+          if (result === 'SUCCESS') {
+            yield put({
+              type: actionTypes.AUTH_UPDATE_USER,
+              payload: {
+                attributes: updateAttributes
+              }
+            });
+          } else {
+            yield put(authActions.setPhase('error', 'An error occurred!'));
+          }
+
+          yield put(authActions.setPhase('success', null));
+        } catch (error) {
+          console.log('error', error);
+          yield put(authActions.setPhase('error', error));
+        }
       }
 
       // const { data: userInfo } = yield axios.patch(`${USERS_API_URL}/${userId}`, user);

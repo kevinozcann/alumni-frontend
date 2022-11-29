@@ -1,6 +1,6 @@
 {
   "auth": {
-    "alumnifrontend": {
+    "alumnifrontend88c8d6e7": {
       "service": "Cognito",
       "providerPlugin": "awscloudformation",
       "dependsOn": [],
@@ -11,19 +11,11 @@
           "EMAIL"
         ],
         "signupAttributes": [
-          "EMAIL",
-          "PHONE_NUMBER",
-          "NAME",
-          "FAMILY_NAME"
+          "EMAIL"
         ],
         "passwordProtectionSettings": {
           "passwordPolicyMinLength": 8,
-          "passwordPolicyCharacters": [
-            "REQUIRES_LOWERCASE",
-            "REQUIRES_NUMBERS",
-            "REQUIRES_SYMBOLS",
-            "REQUIRES_UPPERCASE"
-          ]
+          "passwordPolicyCharacters": []
         },
         "mfaConfiguration": "OFF",
         "mfaTypes": [

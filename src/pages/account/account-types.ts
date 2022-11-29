@@ -3,15 +3,15 @@ import { ISchool } from 'pages/organization/organization-types';
 export type TUserZone = 'headquarters' | 'campus' | 'school' | 'teacher' | 'parent' | 'student';
 
 export interface IUserAttributes {
-  sub: string;
-  email_verified: boolean;
-  name: string;
-  phone_number_verified: boolean;
-  phone_number: string;
-  family_name: string;
-  email: string;
-  'custom:wallpaper': string;
-  'custom:picture': string;
+  sub?: string;
+  email_verified?: boolean;
+  name?: string;
+  phone_number_verified?: boolean;
+  phone_number?: string;
+  family_name?: string;
+  email?: string;
+  'custom:wallpaper'?: string;
+  'custom:picture'?: string;
 }
 export interface IUser {
   accessToken: string;

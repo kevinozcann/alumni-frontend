@@ -1,3 +1,4 @@
+import { Amplify, Storage } from 'aws-amplify';
 import Button from '@mui/material/Button';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
@@ -18,6 +19,10 @@ import useSnackbar from 'hooks/useSnackbar';
 import useTranslation from 'hooks/useTranslation';
 import { IUserAttributes } from 'pages/account/account-types';
 import { authActions, authPhaseSelector, authUserSelector } from 'store/auth';
+
+import awsconfig from 'aws-exports';
+
+Amplify.configure(awsconfig);
 
 interface IFormValues {
   picture: string;
@@ -71,9 +76,23 @@ const Images = () => {
   };
 
   const submitForm = React.useCallback(
-    (values) => {
+    async (values: IFormValues) => {
       setStatus('submitted');
-      dispatch(authActions.updateUserInfo(values));
+      try {
+        const upload = await Storage.put(values.picture['name'], values.picture, {
+          level: 'private'
+        });
+
+        dispatch(
+          authActions.updateUserInfo({
+            attributes: {
+              'custom:picture': upload.key
+            }
+          })
+        );
+      } catch (error) {
+        console.log('Error uploading file: ', error);
+      }
     },
     [setStatus]
   );
@@ -118,9 +137,11 @@ const Images = () => {
                   <InputLabel htmlFor='picture'>{intl.translate({ id: 'logo.photo' })}</InputLabel>
                   <FilledInput
                     id='picture'
+                    type='file'
                     readOnly
-                    value={values.picture}
-                    onChange={handleChange}
+                    onChange={(event) => {
+                      setFieldValue('picture', (event.target as HTMLInputElement).files[0]);
+                    }}
                     endAdornment={
                       <InputAdornment position='end'>
                         <Button

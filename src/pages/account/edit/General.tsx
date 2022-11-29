@@ -70,7 +70,14 @@ const General = () => {
 
   const submitForm = (values: IFormValues) => {
     setStatus('submitted');
-    dispatch(authActions.updateUserInfo(values));
+    dispatch(
+      authActions.updateUserInfo({
+        attributes: {
+          name: values.name,
+          family_name: values.lastName
+        }
+      })
+    );
   };
 
   React.useEffect(() => {
