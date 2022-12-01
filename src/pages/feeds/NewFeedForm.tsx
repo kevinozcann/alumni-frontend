@@ -1,5 +1,5 @@
 import React from 'react';
-import { connect, ConnectedProps } from 'react-redux';
+import { connect, ConnectedProps, useSelector } from 'react-redux';
 import useSWR from 'swr';
 import { useFormik } from 'formik';
 import {
@@ -20,7 +20,8 @@ import {
   Grid
 } from '@mui/material';
 import { grey } from '@mui/material/colors';
-import { Lock, ExpandMore, MoreVert, AddPhotoAlternate, Photo } from '@mui/icons-material';
+import { ExpandMore, MoreVert, AddPhotoAlternate, Photo } from '@mui/icons-material';
+import PublicIcon from '@mui/icons-material/Public';
 
 import { FILEMANAGER_USER_URL, updateApiUrl } from 'store/ApiUrls';
 import { AppDispatch, RootState } from 'store/store';
@@ -58,9 +59,12 @@ type NewFeedFormProps = PropsFromRedux & {
 };
 
 const NewFeedForm: React.FC<NewFeedFormProps> = (props) => {
-  const { actionType, addFeed, phase, lang, user, handleClose, saveFeed, updateAddFeed } = props;
+  const { actionType, addFeed, phase, lang, handleClose, saveFeed, updateAddFeed } = props;
   const intl = useTranslation();
   const { showFileManager } = useFileManager();
+
+  const user = useSelector(authUserSelector);
+  const userAttributes = user.attributes;
 
   const transPhoto = intl.translate({ id: 'feed.photo' });
   const transDoc = intl.translate({ id: 'feed.doc' });
@@ -185,16 +189,16 @@ const NewFeedForm: React.FC<NewFeedFormProps> = (props) => {
       <Card elevation={0}>
         <CardHeader
           sx={{ padding: 1 }}
-          avatar={<Avatar alt='username' src={user.picture} />}
-          title={`${user.fullName}`}
+          avatar={<Avatar alt='username' src={userAttributes.pictureUrl} />}
+          title={`${userAttributes.name} ${userAttributes.family_name}`}
           subheader={
             <Chip
-              label={intl.translate({ id: 'feed.only_me' })}
+              label={intl.translate({ id: 'feed.public' })}
               variant='outlined'
               size='small'
               deleteIcon={<ExpandMore />}
               onDelete={() => console.log('click')}
-              avatar={<Lock fontSize='small' />}
+              avatar={<PublicIcon fontSize='small' />}
             />
           }
           action={
@@ -250,7 +254,10 @@ const NewFeedForm: React.FC<NewFeedFormProps> = (props) => {
             autoFocus={true}
             fullWidth={true}
             id='content'
-            label={intl.translate({ id: 'feed.whats_in_your_mind.name' }, { name: user.name })}
+            label={intl.translate(
+              { id: 'feed.whats_in_your_mind.name' },
+              { name: userAttributes.name }
+            )}
             margin='normal'
             size='small'
             value={values.content}

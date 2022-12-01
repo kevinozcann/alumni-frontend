@@ -1,4 +1,3 @@
-import { Amplify, Storage } from 'aws-amplify';
 import { faEdit, faHome, faImage, faLock } from '@fortawesome/pro-duotone-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import loadable from '@loadable/component';
@@ -13,6 +12,7 @@ import Grid from '@mui/material/Grid';
 import IconButton from '@mui/material/IconButton';
 import MenuItem from '@mui/material/MenuItem';
 import Skeleton from '@mui/material/Skeleton';
+import { Amplify } from 'aws-amplify';
 import React from 'react';
 import { useIntl } from 'react-intl';
 import { useSelector } from 'react-redux';
@@ -22,9 +22,9 @@ import { useSubheader } from 'contexts/SubheaderContext';
 import Page from 'layout/Page';
 import { authUserSelector } from 'store/auth';
 import { userActiveSchoolSelector, userSchoolsSelector } from 'store/user';
+import { getS3File } from 'utils/amplifyUtils';
 import { toAbsoluteUrl } from 'utils/AssetsHelpers';
 import StyledMenu from 'utils/StyledMenu';
-import { getS3File } from 'utils/amplifyUtils';
 
 import awsconfig from 'aws-exports';
 
@@ -33,6 +33,7 @@ Amplify.configure(awsconfig);
 const AccountHome = loadable(() => import('./AccountHome'));
 const General = loadable(() => import('./edit/General'));
 const Images = loadable(() => import('./edit/Images'));
+const ChangePassword = loadable(() => import('./edit/ChangePassword'));
 
 const getPageTitle = (page: string) =>
   page === 'update'
@@ -51,21 +52,12 @@ const Account = () => {
   const navigate = useNavigate();
   const [activePage, setActivePage] = React.useState<string>(section);
   const [pageTitle, setPageTitle] = React.useState<string>(getPageTitle(section));
-  const [profileImg, setProfileImg] = React.useState<string>(
-    toAbsoluteUrl('/media/users/default.jpg')
-  );
-  const [wallpaperImg, setWallpaperImg] = React.useState<string>(
-    toAbsoluteUrl('/media/users/cover.jpeg')
-  );
   const [anchorHomeMenuEl, setAnchorHomeMenuEl] = React.useState<HTMLElement>(null);
   const [showWallpaper, setShowWallpaper] = React.useState<boolean>(false);
 
   // Selectors
   const user = useSelector(authUserSelector);
   const activeSchool = useSelector(userActiveSchoolSelector);
-  // const error = useSelector(authErrorSelector);
-  // const lang = useSelector(i18nLangSelector);
-  // const phase = useSelector(authPhaseSelector);
   const schools = useSelector(userSchoolsSelector);
 
   const userAttributes = user.attributes;
@@ -96,18 +88,6 @@ const Account = () => {
   }, []);
 
   React.useEffect(() => {
-    const setUserImages = async () => {
-      const picture = await getS3File(userAttributes['custom:picture']);
-      const wallpaper = await getS3File(userAttributes['custom:wallpaper']);
-
-      setProfileImg(picture);
-      setWallpaperImg(wallpaper);
-    };
-
-    setUserImages();
-  }, [userAttributes]);
-
-  React.useEffect(() => {
     const breadcrumbs = [];
     breadcrumbs.push({ title: 'account.myaccount', url: '/account' });
     if (pageTitle) {
@@ -131,7 +111,7 @@ const Account = () => {
                   height={300}
                   sx={{ height: 300 }}
                   component='img'
-                  image={wallpaperImg}
+                  image={userAttributes.wallpaperUrl}
                   title='user wallpaper'
                   alt='user wallpaper'
                 />
@@ -139,7 +119,7 @@ const Account = () => {
                 <Skeleton variant='rectangular' height={300} width='100%' sx={{ height: 300 }} />
               )}
               <CardHeader
-                avatar={<Avatar alt='username' src={profileImg} />}
+                avatar={<Avatar alt='username' src={userAttributes.pictureUrl} />}
                 title={`${userAttributes?.name} ${userAttributes?.family_name}`}
                 subheader={userAttributes?.email}
                 action={
@@ -222,23 +202,10 @@ const Account = () => {
 
         <Grid container spacing={3}>
           <Grid item xs={12}>
-            {(activePage === 'home' || activePage === 'post') && (
-              <AccountHome user={user} schools={schools} activeSchool={activeSchool} />
-            )}
+            {(activePage === 'home' || activePage === 'post') && <AccountHome />}
             {activePage === 'update' && <General />}
             {activePage === 'photos' && <Images />}
-            {/* {activePage === 'security' && (
-              <ChangePassword
-                title='account.security'
-                description='account.security.description'
-                showCurrentPassword={true}
-                lang={lang}
-                user={user}
-                phase={phase}
-                error={error}
-                changeUserPassword={changeUserPassword}
-              />
-            )} */}
+            {activePage === 'security' && <ChangePassword showCurrentPassword={true} />}
           </Grid>
         </Grid>
       </Grid>

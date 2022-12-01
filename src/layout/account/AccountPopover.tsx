@@ -1,4 +1,3 @@
-import { Amplify, Storage } from 'aws-amplify';
 import { faInbox, faSlidersH, faUser } from '@fortawesome/pro-duotone-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
@@ -13,6 +12,7 @@ import {
   Popover,
   Typography
 } from '@mui/material';
+import { Amplify } from 'aws-amplify';
 import React from 'react';
 import { useIntl } from 'react-intl';
 import { useSelector } from 'react-redux';
@@ -23,7 +23,6 @@ import useSettings from 'hooks/useSettings';
 import SettingsDrawer from 'layout/SettingsDrawer';
 import { IUser } from 'pages/account/account-types';
 import { authUserSelector } from 'store/auth';
-import { getS3File } from 'utils/amplifyUtils';
 
 import awsconfig from 'aws-exports';
 
@@ -49,7 +48,6 @@ const AccountPopover = (props: TAccountPopoverProps) => {
   const { settings, saveSettings } = useSettings();
 
   const [open, setOpen] = React.useState<boolean>(false);
-  const [profileImg, setProfileImg] = React.useState<string>('');
   const [settingsOpen, setSettingsOpen] = React.useState<boolean>(false);
   const [settingsValues, setSettingsValues] = React.useState(getValues(settings));
   const anchorRef = React.useRef<HTMLButtonElement | null>(null);
@@ -95,16 +93,6 @@ const AccountPopover = (props: TAccountPopoverProps) => {
   };
 
   React.useEffect(() => {
-    const setPicture = async () => {
-      const picture = await getS3File(userAttributes['custom:picture']);
-
-      setProfileImg(picture);
-    };
-
-    setPicture();
-  }, [userAttributes]);
-
-  React.useEffect(() => {
     setSettingsValues(getValues(settings));
   }, [settings]);
 
@@ -121,7 +109,7 @@ const AccountPopover = (props: TAccountPopoverProps) => {
       >
         <Avatar
           alt='user'
-          src={profileImg}
+          src={userAttributes.pictureUrl}
           sx={{
             height: 32,
             width: 32

@@ -5,11 +5,15 @@ import { createSelector } from 'reselect';
 import objectPath from 'object-path';
 import axios from 'axios';
 import produce from 'immer';
-import { COMMENTS_API_URL, FEEDS_API_URL, LIKES_API_URL } from '../../../store/ApiUrls';
-import { IFeed } from '../feed-types';
-import { IAction } from '../../../store/store';
-import { IUser } from '../../account/account-types';
-import { TLang, TActionType } from '../../../utils/shared-types';
+import { API, graphqlOperation } from 'aws-amplify';
+
+import { COMMENTS_API_URL, FEEDS_API_URL, LIKES_API_URL } from 'store/ApiUrls';
+import { IFeed } from 'pages/feeds/feed-types';
+import { IAction } from 'store/store';
+import { IUser } from 'pages/account/account-types';
+import { TLang, TActionType } from 'utils/shared-types';
+import { listPosts } from 'graphql/queries';
+import { createPost } from 'graphql/mutations';
 
 export interface IExtendedFeed extends IFeed {
   commentId?: number;
@@ -21,7 +25,9 @@ interface IFeedsState {
   all: IFeed[];
   add: IFeed;
   edit: IFeed;
+  nextToken: string;
   phase: string;
+  error?: string;
 }
 interface IParentFeedsState {
   feeds: IFeedsState;
@@ -54,7 +60,9 @@ const initialState: IFeedsState = {
   all: null,
   add: null,
   edit: null,
-  phase: null
+  nextToken: null,
+  phase: null,
+  error: null
 };
 
 export const feedsOwnedSelector = createSelector(
@@ -77,8 +85,8 @@ export const reducer = persistReducer(
   (state: IFeedsState = initialState, action: IAction<TActionAllState>): IFeedsState => {
     switch (action.type) {
       case feedActionTypes.FEEDS_UPDATE: {
-        const { feeds } = action.payload;
-        return { ...state, owned: feeds };
+        const { feeds, nextToken } = action.payload;
+        return { ...state, owned: feeds, nextToken };
       }
       case feedActionTypes.FEED_UPDATE: {
         const { feed } = action.payload;
@@ -107,8 +115,8 @@ export const reducer = persistReducer(
         });
       }
       case feedActionTypes.FEEDS_PHASE: {
-        const { phase } = action.payload;
-        return { ...state, phase };
+        const { phase, error } = action.payload;
+        return { ...state, phase, error };
       }
       default:
         return state;
@@ -125,10 +133,10 @@ export const feedActions = {
     type: feedActionTypes.FEED_PULL,
     payload: { id }
   }),
-  updateFeeds: (feeds: IFeed[]) => ({
-    type: feedActionTypes.FEEDS_UPDATE,
-    payload: { feeds }
-  }),
+  // updateFeeds: (feeds: IFeed[]) => ({
+  //   type: feedActionTypes.FEEDS_UPDATE,
+  //   payload: { feeds }
+  // }),
   saveFeeds: (
     lang: TLang,
     user: IUser,
@@ -146,10 +154,10 @@ export const feedActions = {
     type: feedActionTypes.FEED_SAVE,
     payload: { user, feed, actionType }
   }),
-  updateFeed: (feed: Partial<IExtendedFeed>): IAction<Partial<TActionAllState>> => ({
-    type: feedActionTypes.FEED_UPDATE,
-    payload: { feed }
-  }),
+  // updateFeed: (feed: Partial<IExtendedFeed>): IAction<Partial<TActionAllState>> => ({
+  //   type: feedActionTypes.FEED_UPDATE,
+  //   payload: { feed }
+  // }),
   removeFeed: (feed: IFeed): IAction<Partial<TActionAllState>> => ({
     type: feedActionTypes.FEED_REMOVE,
     payload: { feed }
@@ -158,9 +166,9 @@ export const feedActions = {
     type: feedActionTypes.ADD_FEED_UPDATE,
     payload: { feed }
   }),
-  setPhase: (phase: string): IAction<Partial<TActionAllState>> => ({
+  setPhase: (phase: string, error?: string): IAction<Partial<TActionAllState>> => ({
     type: feedActionTypes.FEEDS_PHASE,
-    payload: { phase }
+    payload: { phase, error }
   })
 };
 
@@ -171,18 +179,26 @@ export function* saga() {
       yield put(feedActions.setPhase('loading'));
 
       const { user, page } = payload;
-      const response = yield axios.get(
-        `${FEEDS_API_URL}.json?poster=${user.id}&order%5BpostedAt%5D=desc&page=${page}`
-      );
 
-      if (response.status !== 200) {
-        yield put(feedActions.setPhase('error'));
-        return;
+      try {
+        const { data } = yield API.graphql({ query: listPosts });
+
+        if (data) {
+          const posts = data.listPosts.items;
+          const nextToken = data.listPosts.nextToken;
+
+          console.log(posts);
+          yield put({
+            type: feedActionTypes.FEEDS_UPDATE,
+            payload: { feeds: posts, nextToken }
+          });
+          yield put(feedActions.setPhase('success'));
+        } else {
+          yield put(feedActions.setPhase('error', 'Error occurred!'));
+        }
+      } catch (error) {
+        yield put(feedActions.setPhase('error', error));
       }
-
-      yield put(feedActions.updateFeeds(response.data));
-      // yield put(feedActions.updateAddFeed(null));
-      yield put(feedActions.setPhase('success'));
     }
   );
 
@@ -199,7 +215,7 @@ export function* saga() {
         return;
       }
 
-      yield put(feedActions.updateFeed(data));
+      // yield put(feedActions.updateFeed(data));
       yield put(feedActions.setPhase('success'));
     }
   );
@@ -209,31 +225,43 @@ export function* saga() {
     function* feedSaveSaga({ payload }: IAction<Partial<TActionAllState>>) {
       const { user, feed, actionType } = payload;
 
+      console.log('feed', feed);
+
       if (actionType === 'add') {
         yield put(feedActions.setPhase('adding'));
 
-        // Add poster for feed
-        const { status, data } = yield axios.post(`${FEEDS_API_URL}`, {
-          commentsOn: feed.commentsOn,
-          content: feed.content,
-          coverPicture: feed.coverPicture,
-          feedType: feed.feedType,
-          files: feed.files,
-          poster: user['@id'],
-          related: feed.related,
-          shortText: feed.shortText,
-          tags: feed.tags,
-          title: feed.title,
-          url: feed.url
-        });
+        try {
+          const { data } = yield API.graphql({
+            query: createPost,
+            variables: { input: { title: feed.title } }
+          });
 
-        if (status !== 201) {
-          yield put(feedActions.setPhase('error'));
-          return;
+          if (data) {
+            yield put({
+              type: feedActionTypes.FEED_UPDATE,
+              payload: { feed: data.createPost }
+            });
+            yield put(feedActions.setPhase('success'));
+          } else {
+            yield put(feedActions.setPhase('error', 'Error occurred!'));
+          }
+        } catch (error) {
+          yield put(feedActions.setPhase('error', error));
         }
 
-        yield put(feedActions.updateFeed(data));
-        // yield put(feedActions.updateAddFeed(null));
+        // const { status, data } = yield axios.post(`${FEEDS_API_URL}`, {
+        //   commentsOn: feed.commentsOn,
+        //   content: feed.content,
+        //   coverPicture: feed.coverPicture,
+        //   feedType: feed.feedType,
+        //   files: feed.files,
+        //   poster: user['@id'],
+        //   related: feed.related,
+        //   shortText: feed.shortText,
+        //   tags: feed.tags,
+        //   title: feed.title,
+        //   url: feed.url
+        // });
       } else if (actionType === 'delete') {
         yield put(feedActions.setPhase('deleting'));
 

@@ -58,16 +58,7 @@ const ResetPassword = (props: TResetPasswordProps) => {
 
   return (
     <React.Fragment>
-      <ChangePassword
-        title='login.reset_password'
-        showCurrentPassword={false}
-        resetId={resetId}
-        lang={lang}
-        user={user}
-        phase={authPhase}
-        error={authError}
-        changeUserPassword={changeUserPassword}
-      />
+      <ChangePassword showCurrentPassword={false} resetId={resetId} />
 
       <Divider sx={{ my: 1 }} />
 

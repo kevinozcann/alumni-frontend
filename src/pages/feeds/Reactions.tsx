@@ -40,7 +40,7 @@ const Reactions: React.FC<TReactionsProps> = (props) => {
     const isMe = likes ? likes.filter((like) => like.createdBy.isMe) : null;
 
     setCount(total);
-    setLiked(isMe.length > 0);
+    setLiked(isMe?.length > 0);
     // eslint-disable-next-line
   }, [likes]);
 

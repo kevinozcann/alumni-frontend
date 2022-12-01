@@ -1,61 +1,42 @@
-import React from 'react';
-import { useFormik, prepareDataForValidation, validateYupSchema, yupToFormErrors } from 'formik';
-import { useIntl } from 'react-intl';
-import {
-  Grid,
-  TextField,
-  InputAdornment,
-  IconButton,
-  Alert,
-  CardActions,
-  CardContent,
-  Divider,
-  CardHeader,
-  Card,
-  Box
-} from '@mui/material';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
+import { prepareDataForValidation, useFormik, validateYupSchema, yupToFormErrors } from 'formik';
+import React from 'react';
+import { useIntl } from 'react-intl';
+import { useDispatch, useSelector } from 'react-redux';
 import * as Yup from 'yup';
 import zxcvbn, { ZXCVBNResult } from 'zxcvbn';
 
-import { TUserPassword } from 'store/auth';
 import useSnackbar from 'hooks/useSnackbar';
+import {
+  authActions,
+  authErrorSelector,
+  authPhaseSelector,
+  authUserSelector,
+  TUserPassword
+} from 'store/auth';
 import { SaveButton } from 'utils/ActionLinks';
 import { basicList, PasswordMeterColor } from 'utils/Helpers';
-import { TLang } from 'utils/shared-types';
-import { IUser } from 'pages/account/account-types';
+import Card from '@mui/material/Card';
+import CardHeader from '@mui/material/CardHeader';
+import Divider from '@mui/material/Divider';
+import Alert from '@mui/material/Alert';
+import CardContent from '@mui/material/CardContent';
+import Grid from '@mui/material/Grid';
+import TextField from '@mui/material/TextField';
+import InputAdornment from '@mui/material/InputAdornment';
+import IconButton from '@mui/material/IconButton';
+import Box from '@mui/material/Box';
+import CardActions from '@mui/material/CardActions';
 
 interface ISecurityProps {
-  title?: string;
-  description?: string;
   showCurrentPassword?: boolean;
   resetId?: string;
-  lang: TLang;
-  user: IUser;
-  phase: string;
-  error: string;
-  changeUserPassword: (
-    lang: TLang,
-    userId: string,
-    email: string,
-    user: TUserPassword,
-    resetId: string
-  ) => void;
 }
 
-const ChangePassword = ({
-  title,
-  description,
-  showCurrentPassword,
-  resetId,
-  lang,
-  user,
-  phase,
-  error,
-  changeUserPassword
-}: ISecurityProps) => {
+const ChangePassword = ({ showCurrentPassword, resetId }: ISecurityProps) => {
   const intl = useIntl();
+  const dispatch = useDispatch();
   const { showSnackbar } = useSnackbar();
   const [passwordStrength, setPasswordStrength] = React.useState<number>();
   const [passwordWarning, setPasswordWarning] = React.useState<string>();
@@ -65,9 +46,15 @@ const ChangePassword = ({
     newPassword: false
   });
 
+  // Selectors
+  const user = useSelector(authUserSelector);
+  const authError = useSelector(authErrorSelector);
+  const authPhase = useSelector(authPhaseSelector);
+
   const requiredTranslation = intl.formatMessage({ id: 'app.required' });
   const matchTranslation = intl.formatMessage({ id: 'account.password.should_match' });
   const strengthTranslation = intl.formatMessage({ id: 'account.password.criteria' });
+
   const formSchema = Yup.object().shape({
     currentPassword: showCurrentPassword && Yup.string().required(requiredTranslation),
     newPassword: Yup.string()
@@ -140,17 +127,17 @@ const ChangePassword = ({
 
   const submitForm = (values: TUserPassword) => {
     setStatus('submitted');
-    changeUserPassword(lang, user?.uuid || '', user?.email || '', values, resetId);
+    dispatch(authActions.changePassword(values));
   };
 
   React.useEffect(() => {
-    if (phase === 'login-error' && status === 'submitted') {
+    if (authPhase === 'login-authError' && status === 'submitted') {
       setSubmitting(false);
 
       const loginError =
-        (error === 'Invalid credentials.' && 'login.reset_password.password_wrong') ||
-        (error === 'Geçersiz kimlik bilgileri.' && 'login.reset_password.password_wrong') ||
-        error;
+        (authError === 'Invalid credentials.' && 'login.reset_password.password_wrong') ||
+        (authError === 'Geçersiz kimlik bilgileri.' && 'login.reset_password.password_wrong') ||
+        authError;
 
       showSnackbar({
         message: intl.formatMessage({ id: loginError }),
@@ -158,16 +145,16 @@ const ChangePassword = ({
       });
     }
 
-    if (phase === 'reset-error' && status === 'submitted') {
+    if (authPhase === 'reset-error' && status === 'submitted') {
       setSubmitting(false);
 
       showSnackbar({
-        message: intl.formatMessage({ id: error }),
+        message: intl.formatMessage({ id: authError }),
         open: true
       });
     }
 
-    if (phase === 'userinfo-pull-successful') {
+    if (authPhase === 'userinfo-pull-successful') {
       setSubmitting(false);
 
       if (status === 'submitted') {
@@ -177,19 +164,17 @@ const ChangePassword = ({
         });
       }
     }
-  }, [phase]);
+  }, [authPhase]);
 
   return (
     <React.Fragment>
       <Card sx={{ maxWidth: (resetId && 400) || '100%' }}>
-        <CardHeader title={intl.formatMessage({ id: title || 'account.security' })} />
+        <CardHeader title={intl.formatMessage({ id: 'account.security' })} />
         <Divider />
 
-        {description && (
-          <Alert style={{ borderRadius: 0 }} icon={false} severity='info'>
-            {intl.formatMessage({ id: description })}
-          </Alert>
-        )}
+        <Alert style={{ borderRadius: 0 }} icon={false} severity='info'>
+          {intl.formatMessage({ id: 'account.security.description' })}
+        </Alert>
 
         <form className='form' noValidate={true} autoComplete='off' onSubmit={handleSubmit}>
           <CardContent>
@@ -323,7 +308,7 @@ const ChangePassword = ({
               </Grid>
               {/* New password again end */}
 
-              {phase === 'reset-error' && status === 'submitted' && (
+              {authPhase === 'reset-error' && status === 'submitted' && (
                 <Grid item xs={12}>
                   <Alert sx={{ whiteSpace: 'normal', maxWidth: 'inherit' }} severity='error'>
                     {intl.formatMessage({ id: 'login.reset_password.link_not_found' })}

@@ -3,7 +3,7 @@ import objectPath from 'object-path';
 import { GoogleLoginResponse } from 'react-google-login';
 import { persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
-import { call, put, takeLatest } from 'redux-saga/effects';
+import { call, put, delay, takeLatest, fork } from 'redux-saga/effects';
 import { createSelector } from 'reselect';
 
 import { IUser } from 'pages/account/account-types';
@@ -11,7 +11,7 @@ import { ISchool } from 'pages/organization/organization-types';
 import { TLang, TLinkedAccount } from 'utils/shared-types';
 
 import { IAction } from 'store/store';
-import { getUserSchools } from 'store/user';
+import { getUserImages } from './sagas/user/getUserImages';
 
 import awsconfig from 'aws-exports';
 
@@ -57,6 +57,7 @@ type TActionAllState = IAuthState & {
   school?: ISchool;
   schoolId?: number;
   updateAll?: boolean;
+  userPassword?: TUserPassword;
   userSub?: string;
   userData?: Partial<IUser>;
   accountType?: TLinkedAccount;
@@ -241,6 +242,10 @@ export const authActions = {
     type: actionTypes.AUTH_VERIFY,
     payload: { email, code }
   }),
+  changePassword: (userPassword: TUserPassword): IAction<Partial<TActionAllState>> => ({
+    type: actionTypes.UPDATE_USER_PASSWORD,
+    payload: { userPassword }
+  }),
   logout: (): IAction<Partial<TActionAllState>> => ({ type: actionTypes.AUTH_LOGOUT }),
   updateUserInfo: (userData: Partial<IUser>): IAction<Partial<TActionAllState>> => ({
     type: actionTypes.UPDATE_USER_INFO,
@@ -251,10 +256,6 @@ export const authActions = {
     payload: { phase, error }
   })
 };
-
-function* getUserData(lang: TLang, user: IUser) {
-  yield call(getUserSchools, lang, user);
-}
 
 export function* saga() {
   yield takeLatest(
@@ -267,9 +268,6 @@ export function* saga() {
       try {
         const user = yield Auth.signIn(email, password);
 
-        console.log('user', user);
-
-        // Update user info
         yield put({
           type: actionTypes.AUTH_UPDATE_USER,
           payload: {
@@ -280,6 +278,8 @@ export function* saga() {
             preferredMFA: user.preferredMFA
           }
         });
+
+        yield call(getUserImages);
 
         yield put(authActions.setPhase('success', null));
       } catch (error) {
@@ -417,98 +417,39 @@ export function* saga() {
           yield put(authActions.setPhase('error', error));
         }
       }
-
-      // const { data: userInfo } = yield axios.patch(`${USERS_API_URL}/${userId}`, user);
-
-      // if (typeof userInfo === 'undefined') {
-      //   yield put(authActions.setPhase('updating-userinfo-error', 'An error occurred!'));
-
-      //   return;
-      // }
-
-      // yield put(authActions.setPhase('userinfo-pull-successful', null));
-      // yield put({
-      //   type: actionTypes.AUTH_UPDATE_USER,
-      //   payload: { user: userInfo }
-      // });
     }
   );
 
-  // yield takeLatest(
-  //   actionTypes.UPDATE_USER_PASSWORD,
-  //   function* updateUserPasswordSaga({ payload }: IAction<Partial<TActionAllState>>) {
-  //     yield put(authActions.setPhase('updating-userinfo', null));
+  yield takeLatest(
+    actionTypes.UPDATE_USER_PASSWORD,
+    function* updateUserPasswordSaga({ payload }: IAction<Partial<TActionAllState>>) {
+      yield put(authActions.setPhase('updating', null));
 
-  //     const {
-  //       lang,
-  //       userId,
-  //       email,
-  //       userPassword: { currentPassword, newPassword, confirmPassword },
-  //       resetId
-  //     } = payload;
+      const {
+        userPassword: { currentPassword, newPassword, confirmPassword }
+      } = payload;
 
-  //     if (newPassword !== confirmPassword) {
-  //       yield put(authActions.setPhase('login-error', 'login.reset_password.password_no_match'));
-  //       return;
-  //     }
+      if (newPassword !== confirmPassword) {
+        yield put(authActions.setPhase('error', 'login.reset_password.password_no_match'));
+        return;
+      }
 
-  //     if (resetId) {
-  //       // Check if the reset id is valid
-  //       const resetCheckUrl = updateApiUrl(RESET_PASSWORD_URL + '/' + resetId, { lang });
-  //       const response = yield axios.post(resetCheckUrl, { userId, email, newPassword });
+      const user = yield Auth.currentAuthenticatedUser();
 
-  //       if (response.status !== 200) {
-  //         yield put(authActions.setPhase('reset-error', response.data.error || response.title));
-  //         return;
-  //       }
+      try {
+        const response = yield Auth.changePassword(user, currentPassword, newPassword);
 
-  //       if (response.data.error) {
-  //         yield put(authActions.setPhase('reset-error', response.data.error));
-  //         return;
-  //       }
-
-  //       const changeResponse = yield axios.patch(
-  //         `${USERS_API_URL}/${response.data.userId || userId}`,
-  //         {
-  //           password: newPassword
-  //         },
-  //         {
-  //           headers: {
-  //             Authorization: 'Bearer ' + response.data.token
-  //           }
-  //         }
-  //       );
-
-  //       if (changeResponse.status !== 200) {
-  //         yield put(
-  //           authActions.setPhase('login-error', changeResponse.data.error || changeResponse.title)
-  //         );
-  //         return;
-  //       }
-  //     } else {
-  //       // Check existing password by login url if not reset
-  //       const userLoginUrl = updateApiUrl(USER_LOGIN_URL, { lang });
-  //       const response = yield axios.post(userLoginUrl, { email, pwd: currentPassword });
-
-  //       if (response.status !== 200) {
-  //         yield put(authActions.setPhase('login-error', response.data.error || response.title));
-  //         return;
-  //       }
-
-  //       const changeResponse = yield axios.patch(`${USERS_API_URL}/${userId}`, {
-  //         password: newPassword
-  //       });
-
-  //       if (changeResponse.status !== 200) {
-  //         yield put(
-  //           authActions.setPhase('login-error', changeResponse.data.error || changeResponse.title)
-  //         );
-  //         return;
-  //       }
-  //     }
-
-  //     yield put(authActions.setPhase('userinfo-pull-successful', null));
-  //     yield put(authActions.logout());
-  //   }
-  // );
+        if (response === 'SUCCESS') {
+          yield put(authActions.setPhase('success', null));
+          yield delay(3000);
+          yield put(authActions.logout());
+        } else {
+          yield put(authActions.setPhase('error', 'An error occurred!'));
+        }
+      } catch (error) {
+        console.log('error', error);
+        yield put(authActions.setPhase('error', error));
+      }
+    }
+  );
 }

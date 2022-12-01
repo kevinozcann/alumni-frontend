@@ -10,8 +10,10 @@ export interface IUserAttributes {
   phone_number?: string;
   family_name?: string;
   email?: string;
-  'custom:wallpaper'?: string;
+  pictureUrl?: string;
   'custom:picture'?: string;
+  wallpaperUrl?: string;
+  'custom:wallpaper'?: string;
 }
 export interface IUser {
   accessToken: string;
