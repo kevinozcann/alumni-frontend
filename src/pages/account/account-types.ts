@@ -29,7 +29,7 @@ export interface IUser {
   email?: string;
   expiresAt?: string;
   facebookUser?: string;
-  feeds?: string[];
+  posts?: string[];
   firebaseId?: string;
   fullName: string;
   googleUser?: string;

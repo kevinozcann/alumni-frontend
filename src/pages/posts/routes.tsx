@@ -5,10 +5,10 @@ import { Loadable } from 'layout';
 const AuthGuard = loadable(() => import('components/guard/AuthGuard'));
 const MainLayout = loadable(() => import('layout/MainLayout'));
 
-const Feed = Loadable(lazy(() => import('./Feed')));
+const Post = Loadable(lazy(() => import('./Post')));
 
 const routes = {
-  path: 'feeds',
+  path: 'posts',
   element: (
     <AuthGuard>
       <MainLayout />
@@ -17,11 +17,11 @@ const routes = {
   children: [
     {
       path: '',
-      element: <Feed />
+      element: <Post />
     },
     {
       path: 'new',
-      element: <Feed />
+      element: <Post />
     }
   ]
 };

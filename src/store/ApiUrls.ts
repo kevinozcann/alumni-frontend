@@ -31,7 +31,7 @@ export const DASHBOARD_ENROLLMENT_OVERVIEW_URL =
 export const DASHBOARD_HELPDESK_INCIDENTS_URL =
   localeBaseUrl + '/dashboard/{schoolId}/helpdesk/incidents';
 export const DASHBOARD_SCHOOL_USAGE_STATS_URL = localeBaseUrl + '/dashboard/school-usage/stats';
-export const FEEDS_LANG_API_URL = localeBaseUrl + '/feeds';
+export const FEEDS_LANG_API_URL = localeBaseUrl + '/posts';
 export const FILEMANAGER_USER_URL = localeBaseUrl + '/filemanager/users/{userId}';
 export const FILEMANAGER_SCHOOL_URL = localeBaseUrl + '/filemanager/schools/{schoolId}';
 export const RESET_PASSWORD_URL = localeBaseUrl + '/reset-password';
@@ -61,7 +61,7 @@ export const COMMENTS_API_URL = apiBaseUrl + '/comments';
 export const CONFIGURATIONS_API_URL = apiBaseUrl + '/configurations';
 export const DATABASES_API_URL = apiBaseUrl + '/season_databases';
 export const FREQUENT_MENUS_API_URL = apiBaseUrl + '/frequent_menus';
-export const FEEDS_API_URL = apiBaseUrl + '/feeds';
+export const FEEDS_API_URL = apiBaseUrl + '/posts';
 export const FACEBOOK_USERS_URL = apiBaseUrl + '/facebook_users';
 export const FILES_API_URL = apiBaseUrl + '/files';
 export const INCOME_EXPENSE_API_URL = apiBaseUrl + '/income_expenses';

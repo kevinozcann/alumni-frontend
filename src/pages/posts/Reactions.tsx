@@ -3,24 +3,24 @@ import { Box, IconButton, Tooltip, Typography, colors } from '@mui/material';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import { IUser } from '../account/account-types';
-import { IFeed } from './feed-types';
+import { IPost } from './post-types';
 import { TActionType } from '../../utils/shared-types';
 // import ShareIcon from '@mui/icons-material/Share';
 
 type TReactionsProps = {
   user: IUser;
-  feed: IFeed;
-  handleSaveFeed: (user: IUser, feed: IFeed, actionType: TActionType) => void;
+  post: IPost;
+  handleSaveFeed: (user: IUser, post: IPost, actionType: TActionType) => void;
 };
 
 const Reactions: React.FC<TReactionsProps> = (props) => {
-  const { user, feed, handleSaveFeed } = props;
+  const { user, post, handleSaveFeed } = props;
   const [isLiked, setLiked] = React.useState<boolean>(false);
   const [count, setCount] = React.useState<number>(0);
-  const { likes } = feed;
+  const { likes } = post;
 
   const handleSave = (actionType: TActionType) => {
-    handleSaveFeed(user, feed, actionType);
+    handleSaveFeed(user, post, actionType);
   };
 
   const handleLike = () => {

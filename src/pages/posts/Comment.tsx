@@ -9,19 +9,19 @@ import ConfirmDialog from 'components/ConfirmDialog';
 import { TActionType } from 'utils/shared-types';
 import { IUser } from 'pages/account/account-types';
 
-import { IFeed, IFeedComment } from './feed-types';
-import { IExtendedFeed } from './_store/feeds';
+import { IPost, IPostComment } from './post-types';
+import { IExtendedPost } from './_store/posts';
 
 interface TCommentProps {
   user: IUser;
-  feed: IFeed;
+  post: IPost;
   phase: string;
-  comment: IFeedComment;
-  handleSaveFeed: (user: IUser, feed: Partial<IExtendedFeed>, actionType: TActionType) => void;
+  comment: IPostComment;
+  handleSaveFeed: (user: IUser, post: Partial<IExtendedPost>, actionType: TActionType) => void;
 }
 
 const Comment = (props: TCommentProps) => {
-  const { user, feed, phase, comment, handleSaveFeed } = props;
+  const { user, post, phase, comment, handleSaveFeed } = props;
   const [showConfirmDialog, setShowConfirmDialog] = React.useState(false);
   const [userComment, setUserComment] = React.useState(comment.comment);
   const intl = useTranslation();
@@ -39,7 +39,7 @@ const Comment = (props: TCommentProps) => {
   };
 
   const handleDeleteConfirm = () => {
-    handleSaveFeed(user, { feedId: feed.id, commentId: comment.id }, 'delete-comment');
+    handleSaveFeed(user, { feedId: post.id, commentId: comment.id }, 'delete-comment');
   };
 
   const handleCloseConfirm = () => {

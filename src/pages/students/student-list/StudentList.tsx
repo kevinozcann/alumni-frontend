@@ -69,7 +69,7 @@ const StudentList: React.FC<TStudentsProps> = (props) => {
   const columns: GridColDef[] = [
     {
       field: 'photo',
-      headerName: intl.translate({ id: 'feed.photo' }),
+      headerName: intl.translate({ id: 'post.photo' }),
       flex: 1,
       headerAlign: 'center',
       align: 'center',

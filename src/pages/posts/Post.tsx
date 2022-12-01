@@ -31,8 +31,8 @@ import { IFile, TActionType } from 'utils/shared-types';
 import { useDispatch, useSelector } from 'react-redux';
 import { authUserSelector } from 'store/auth';
 import { i18nLangSelector } from 'store/i18n';
-import { IFeed } from './feed-types';
-import { feedActions, feedsPhaseSelector } from './_store/feeds';
+import { IPost } from './post-types';
+import { postActions, postsPhaseSelector } from './_store/posts';
 
 const Moment = loadable.lib(() => import('moment'));
 
@@ -46,11 +46,11 @@ const Comment = loadable(() => import('./Comment'));
 const CommentAdd = loadable(() => import('./CommentAdd'));
 
 type FeedProps = {
-  feed: IFeed;
+  post: IPost;
 };
 
-const Feed = (props: FeedProps) => {
-  const { feed } = props;
+const Post = (props: FeedProps) => {
+  const { post } = props;
   const intl = useIntl();
   const dispatch = useDispatch();
   const [selectedFile, setSelectedFile] = React.useState<IFile>(null);
@@ -63,14 +63,14 @@ const Feed = (props: FeedProps) => {
 
   const user = useSelector(authUserSelector);
   const lang = useSelector(i18nLangSelector);
-  const feedsPhase = useSelector(feedsPhaseSelector);
+  const postsPhase = useSelector(postsPhaseSelector);
 
-  const isMe = feed?.poster?.isMe;
-  const images = feed.files?.filter((file) => file.mimeType.includes('image/'));
-  const files = feed.files?.filter((file) => !file.mimeType.includes('image/'));
+  const isMe = post?.poster?.isMe;
+  const images = post.files?.filter((file) => file.mimeType.includes('image/'));
+  const files = post.files?.filter((file) => !file.mimeType.includes('image/'));
 
-  const handleSaveFeed = React.useCallback((user, feed: IFeed, actionType: TActionType) => {
-    dispatch(feedActions.saveFeed(user, feed, actionType));
+  const handleSaveFeed = React.useCallback((user, post: IPost, actionType: TActionType) => {
+    dispatch(postActions.savePost(user, post, actionType));
   }, []);
 
   const handleActionsClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -88,7 +88,7 @@ const Feed = (props: FeedProps) => {
   };
 
   const handleDeleteConfirm = () => {
-    handleSaveFeed(user, feed, 'delete');
+    handleSaveFeed(user, post, 'delete');
   };
 
   const handleCloseConfirm = () => {
@@ -100,8 +100,8 @@ const Feed = (props: FeedProps) => {
       <Card>
         <CardHeader
           avatar={
-            <Avatar alt='user avatar' src={feed?.poster?.picture}>
-              {getInitials(feed?.poster?.fullName)}
+            <Avatar alt='user avatar' src={post?.poster?.picture}>
+              {getInitials(post?.poster?.fullName)}
             </Avatar>
           }
           disableTypography
@@ -112,13 +112,13 @@ const Feed = (props: FeedProps) => {
                 <Moment>
                   {({ default: moment }) => {
                     moment.locale(lang);
-                    return moment(feed.postedAt).fromNow();
+                    return moment(post.postedAt).fromNow();
                   }}
                 </Moment>
               </Typography>
             </Box>
           }
-          title={<Typography color='textPrimary'>{feed?.poster?.fullName}</Typography>}
+          title={<Typography color='textPrimary'>{post?.poster?.fullName}</Typography>}
           action={
             (isMe && (
               <React.Fragment>
@@ -149,39 +149,39 @@ const Feed = (props: FeedProps) => {
         />
 
         <Box sx={{ paddingX: 3, paddingBottom: 2 }}>
-          {feed?.title && (
+          {post?.title && (
             <Typography variant='subtitle1' color='textPrimary'>
-              {feed.title}
+              {post.title}
             </Typography>
           )}
 
-          {feed?.shortText && (
+          {post?.shortText && (
             <Typography variant='body1' color='textSecondary'>
-              {feed?.shortText}
+              {post?.shortText}
             </Typography>
           )}
 
-          {feed?.coverPicture && (
+          {post?.coverPicture && (
             <Box sx={{ marginY: 1 }}>
-              <CardActionArea ref={ref} onClick={() => setSelectedImage(feed?.coverPicture)}>
+              <CardActionArea ref={ref} onClick={() => setSelectedImage(post?.coverPicture)}>
                 {(inView && (
                   <CardMedia
                     sx={{ height: 250, maxHeight: 250, backgroundPosition: 'top' }}
                     width='100%'
                     height='100%'
                     component='img'
-                    image={feed?.coverPicture}
-                    title={feed?.coverPicture}
-                    alt={feed?.coverPicture}
+                    image={post?.coverPicture}
+                    title={post?.coverPicture}
+                    alt={post?.coverPicture}
                   />
                 )) || <Skeleton sx={{ height: 250, maxHeight: 250 }} />}
               </CardActionArea>
             </Box>
           )}
 
-          {feed?.content && (
+          {post?.content && (
             <Typography variant='body2' color='textPrimary' component='div'>
-              <div dangerouslySetInnerHTML={createMarkup(feed?.content)} />
+              <div dangerouslySetInnerHTML={createMarkup(post?.content)} />
             </Typography>
           )}
 
@@ -240,21 +240,21 @@ const Feed = (props: FeedProps) => {
           )}
 
           <Box sx={{ marginTop: 2 }}>
-            <Reactions user={user} feed={feed} handleSaveFeed={handleSaveFeed} />
+            <Reactions user={user} post={post} handleSaveFeed={handleSaveFeed} />
           </Box>
 
-          {feed?.comments?.length > 0 && (
+          {post?.comments?.length > 0 && (
             <>
               <Box sx={{ marginY: 2 }}>
                 <Divider />
               </Box>
 
-              {feed?.comments?.map((comment) => (
+              {post?.comments?.map((comment) => (
                 <Comment
                   key={comment.id}
                   user={user}
-                  feed={feed}
-                  phase={feedsPhase}
+                  post={post}
+                  phase={postsPhase}
                   comment={comment}
                   handleSaveFeed={handleSaveFeed}
                 />
@@ -264,7 +264,7 @@ const Feed = (props: FeedProps) => {
 
           <Divider sx={{ marginBottom: 1 }} />
 
-          <CommentAdd user={user} feed={feed} handleSaveFeed={handleSaveFeed} />
+          <CommentAdd user={user} post={post} handleSaveFeed={handleSaveFeed} />
         </Box>
       </Card>
 
@@ -282,10 +282,10 @@ const Feed = (props: FeedProps) => {
         handleClose={handleCloseConfirm}
         handleConfirm={handleDeleteConfirm}
         isOpen={showConfirmDialog}
-        phase={feedsPhase}
+        phase={postsPhase}
       />
     </React.Fragment>
   );
 };
 
-export default Feed;
+export default Post;

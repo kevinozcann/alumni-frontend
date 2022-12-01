@@ -11,7 +11,7 @@ import { saga as userSagas, reducer as userReducer } from './user';
 
 import { classesReducer, classesSagas } from 'pages/classes/_store';
 import { developerReducer, developerSagas } from 'pages/developer/_store';
-import { feedsReducer, feedsSagas } from 'pages/feeds/_store';
+import { postsReducer, postsSagas } from 'pages/posts/_store';
 import { filemanagerReducer } from 'pages/filemanager/redux/reducers';
 import { mailReducer, mailSagas } from 'pages/mail/_store';
 import { organizationReducer, organizationSagas } from 'pages/organization/_store';
@@ -30,7 +30,7 @@ export const rootReducer = combineReducers({
   classes: classesReducer,
   config: configReducer,
   developer: developerReducer,
-  feeds: feedsReducer,
+  posts: postsReducer,
   filemanager: filemanagerReducer,
   i18n: i18nReducer,
   mails: mailReducer,
@@ -63,7 +63,7 @@ export function* rootSaga() {
   const allSagas = mainSagas.concat(
     classesSagas,
     developerSagas,
-    feedsSagas,
+    postsSagas,
     mailSagas,
     organizationSagas,
     personnelSagas,

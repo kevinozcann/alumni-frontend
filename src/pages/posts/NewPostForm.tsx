@@ -37,19 +37,19 @@ import fetcher from 'utils/fetcher';
 
 import { IUser } from 'pages/account/account-types';
 
-import { IFeed } from './feed-types';
-import { feedsAddSelector, feedActions, feedsPhaseSelector } from './_store/feeds';
+import { IPost } from './post-types';
+import { postsAddSelector, postActions, postsPhaseSelector } from './_store/posts';
 
 const mapStateToProps = (state: RootState) => ({
-  addFeed: feedsAddSelector(state),
-  phase: feedsPhaseSelector(state),
+  addFeed: postsAddSelector(state),
+  phase: postsPhaseSelector(state),
   lang: i18nLangSelector(state),
   user: authUserSelector(state)
 });
 const mapDispatchToProps = (dispatch: AppDispatch) => ({
-  saveFeed: (user: IUser, feed: Partial<IFeed>, actionType: TActionType) =>
-    dispatch(feedActions.saveFeed(user, feed, actionType)),
-  updateAddFeed: (feed: Partial<IFeed>) => dispatch(feedActions.updateAddFeed(feed))
+  savePost: (user: IUser, post: Partial<IPost>, actionType: TActionType) =>
+    dispatch(postActions.savePost(user, post, actionType)),
+  updateAddPost: (post: Partial<IPost>) => dispatch(postActions.updateAddPost(post))
 });
 const connector = connect(mapStateToProps, mapDispatchToProps);
 type PropsFromRedux = ConnectedProps<typeof connector>;
@@ -59,15 +59,15 @@ type NewFeedFormProps = PropsFromRedux & {
 };
 
 const NewFeedForm: React.FC<NewFeedFormProps> = (props) => {
-  const { actionType, addFeed, phase, lang, handleClose, saveFeed, updateAddFeed } = props;
+  const { actionType, addFeed, phase, lang, handleClose, savePost, updateAddPost } = props;
   const intl = useTranslation();
   const { showFileManager } = useFileManager();
 
   const user = useSelector(authUserSelector);
   const userAttributes = user.attributes;
 
-  const transPhoto = intl.translate({ id: 'feed.photo' });
-  const transDoc = intl.translate({ id: 'feed.doc' });
+  const transPhoto = intl.translate({ id: 'post.photo' });
+  const transDoc = intl.translate({ id: 'post.doc' });
 
   const { data: coverPictureFMLink } = useSWR(
     updateApiUrl(FILEMANAGER_USER_URL, { lang: lang, userId: user.uuid }) + '/coverPicture',
@@ -92,7 +92,7 @@ const NewFeedForm: React.FC<NewFeedFormProps> = (props) => {
     }
   );
 
-  const formValues: IFeed = {
+  const formValues: IPost = {
     commentsOn: true,
     content: addFeed ? addFeed.content : '',
     coverPicture: addFeed ? addFeed.coverPicture : '',
@@ -120,7 +120,7 @@ const NewFeedForm: React.FC<NewFeedFormProps> = (props) => {
     onSubmit: (values) => submitForm(values)
   });
 
-  const validateForm = (values: Partial<IFeed>) => {
+  const validateForm = (values: Partial<IPost>) => {
     const errors = {};
     const nonEmptyFields = ['content'];
 
@@ -158,10 +158,10 @@ const NewFeedForm: React.FC<NewFeedFormProps> = (props) => {
     setFieldValue('files', files);
   };
 
-  const submitForm = (values: Partial<IFeed>) => {
+  const submitForm = (values: Partial<IPost>) => {
     if (values !== initialValues || addFeed) {
       setStatus('submitted');
-      saveFeed(user, values, actionType);
+      savePost(user, values, actionType);
     }
   };
 
@@ -180,7 +180,7 @@ const NewFeedForm: React.FC<NewFeedFormProps> = (props) => {
   // Auto save as draft
   React.useEffect(() => {
     if (values !== initialValues) {
-      updateAddFeed(values);
+      updateAddPost(values);
     }
   }, [initialValues, values]);
 
@@ -193,7 +193,7 @@ const NewFeedForm: React.FC<NewFeedFormProps> = (props) => {
           title={`${userAttributes.name} ${userAttributes.family_name}`}
           subheader={
             <Chip
-              label={intl.translate({ id: 'feed.public' })}
+              label={intl.translate({ id: 'post.public' })}
               variant='outlined'
               size='small'
               deleteIcon={<ExpandMore />}
@@ -255,7 +255,7 @@ const NewFeedForm: React.FC<NewFeedFormProps> = (props) => {
             fullWidth={true}
             id='content'
             label={intl.translate(
-              { id: 'feed.whats_in_your_mind.name' },
+              { id: 'post.whats_in_your_mind.name' },
               { name: userAttributes.name }
             )}
             margin='normal'

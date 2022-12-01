@@ -10,11 +10,11 @@ import { RootState } from 'store/store';
 import useTranslation from 'hooks/useTranslation';
 import SchoostDialog from 'components/SchoostDialog';
 
-import { feedsPhaseSelector } from './_store/feeds';
-import AddFeedForm from './NewFeedForm';
+import { postsPhaseSelector } from './_store/posts';
+import AddFeedForm from './NewPostForm';
 
 const mapStateToProps = (state: RootState) => ({
-  feedsPhase: feedsPhaseSelector(state),
+  postsPhase: postsPhaseSelector(state),
   user: authUserSelector(state)
 });
 const connector = connect(mapStateToProps, null);
@@ -24,7 +24,7 @@ type TNewFeedProps = PropsFromRedux & {
 };
 
 const NewFeed = (props: TNewFeedProps) => {
-  const { feedsPhase, handleClose, user } = props;
+  const { postsPhase, handleClose, user } = props;
   const { action } = useParams();
   const [showDialog, setDialog] = React.useState<boolean>(action === 'share');
   const navigate = useNavigate();
@@ -69,7 +69,7 @@ const NewFeed = (props: TNewFeedProps) => {
                 fullWidth
                 onClick={handleAddClick}
                 placeholder={intl.translate(
-                  { id: 'feed.whats_in_your_mind.name' },
+                  { id: 'post.whats_in_your_mind.name' },
                   { name: user.name }
                 )}
               />
@@ -86,7 +86,7 @@ const NewFeed = (props: TNewFeedProps) => {
         dividers={true}
         handleClose={handleCloseDialog}
         isOpen={showDialog}
-        phase={feedsPhase}
+        phase={postsPhase}
         title={intl.translate({ id: 'app.share' })}
         width={450}
       >

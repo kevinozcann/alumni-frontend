@@ -8,17 +8,17 @@ import useTranslation from 'hooks/useTranslation';
 import { TActionType } from 'utils/shared-types';
 import { IUser } from 'pages/account/account-types';
 
-import { IExtendedFeed } from './_store/feeds';
-import { IFeed } from './feed-types';
+import { IExtendedPost } from './_store/posts';
+import { IPost } from './post-types';
 
 type TCommentAddProps = {
   user: IUser;
-  feed: IFeed;
-  handleSaveFeed: (user: IUser, feed: Partial<IExtendedFeed>, actionType: TActionType) => void;
+  post: IPost;
+  handleSaveFeed: (user: IUser, post: Partial<IExtendedPost>, actionType: TActionType) => void;
 };
 
 const CommentAdd = (props: TCommentAddProps) => {
-  const { user, feed, handleSaveFeed } = props;
+  const { user, post, handleSaveFeed } = props;
   const [value, setValue] = React.useState<string>('');
   const enter = useKeyPress('Enter');
   const intl = useTranslation();
@@ -29,7 +29,7 @@ const CommentAdd = (props: TCommentAddProps) => {
   };
 
   const handleSave = () => {
-    handleSaveFeed(user, { feedId: feed.id, comment: value }, 'add-comment');
+    handleSaveFeed(user, { feedId: post.id, comment: value }, 'add-comment');
   };
 
   // const handleAttach = () => {

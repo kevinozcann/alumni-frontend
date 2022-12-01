@@ -1,7 +1,7 @@
 import { IUser } from '../account/account-types';
 import { IFile } from '../../utils/shared-types';
 
-export interface IFeedComment {
+export interface IPostComment {
   id?: number;
   comment?: string;
   createdAt?: Date;
@@ -12,8 +12,8 @@ export interface IFeedLike {
   createdAt?: Date;
   createdBy?: IUser;
 }
-export interface IFeed {
-  comments?: IFeedComment[];
+export interface IPost {
+  comments?: IPostComment[];
   commentsOn?: boolean;
   content?: string;
   coverPicture?: string;

@@ -4,13 +4,13 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router';
 
-import { IFeed } from 'pages/feeds/feed-types';
-import NewFeed from 'pages/feeds/NewFeed';
-import { feedActions, feedsOwnedSelector, feedsPhaseSelector } from 'pages/feeds/_store/feeds';
+import { IPost } from 'pages/posts/post-types';
+import NewPost from 'pages/posts/NewPost';
+import { postActions, postsOwnedSelector, postsPhaseSelector } from 'pages/posts/_store/posts';
 
 import { authUserSelector } from 'store/auth';
 
-const Feed = loadable(() => import('pages/feeds/Feed'));
+const Post = loadable(() => import('pages/posts/Post'));
 const About = loadable(() => import('./profile/About'));
 
 const AccountHome = () => {
@@ -19,15 +19,15 @@ const AccountHome = () => {
   const [page] = React.useState(1);
 
   const user = useSelector(authUserSelector);
-  const feedsOwned = useSelector(feedsOwnedSelector);
-  const feedsPhase = useSelector(feedsPhaseSelector);
+  const postsOwned = useSelector(postsOwnedSelector);
+  const postsPhase = useSelector(postsPhaseSelector);
 
   const handleCloseDialog = () => {
     navigate('/account/home');
   };
 
   React.useEffect(() => {
-    dispatch(feedActions.pullFeeds(user, page));
+    dispatch(postActions.pullPosts(user, page));
 
     return () => null;
   }, [user, page]);
@@ -36,12 +36,12 @@ const AccountHome = () => {
     <Box>
       <Grid container spacing={3}>
         <Grid item xs={12} md={8}>
-          <NewFeed handleClose={handleCloseDialog} />
+          <NewPost handleClose={handleCloseDialog} />
 
-          {(feedsPhase !== 'loading' &&
-            feedsOwned?.map((feed: IFeed) => (
-              <Box mt={3} key={feed.id}>
-                <Feed feed={feed} />
+          {(postsPhase !== 'loading' &&
+            postsOwned?.map((post: IPost) => (
+              <Box mt={3} key={post.id}>
+                <Post post={post} />
               </Box>
             ))) || (
             <Card sx={{ marginTop: 3 }}>
