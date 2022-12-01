@@ -15,11 +15,13 @@ export const getPost = /* GraphQL */ `
           createdAt
           updatedAt
           postCommentsId
+          owner
         }
         nextToken
       }
       createdAt
       updatedAt
+      owner
     }
   }
 `;
@@ -39,6 +41,7 @@ export const listPosts = /* GraphQL */ `
         }
         createdAt
         updatedAt
+        owner
       }
       nextToken
     }
@@ -57,11 +60,13 @@ export const getComment = /* GraphQL */ `
         }
         createdAt
         updatedAt
+        owner
       }
       content
       createdAt
       updatedAt
       postCommentsId
+      owner
     }
   }
 `;
@@ -80,11 +85,13 @@ export const listComments = /* GraphQL */ `
           content
           createdAt
           updatedAt
+          owner
         }
         content
         createdAt
         updatedAt
         postCommentsId
+        owner
       }
       nextToken
     }

@@ -18,11 +18,13 @@ export const createPost = /* GraphQL */ `
           createdAt
           updatedAt
           postCommentsId
+          owner
         }
         nextToken
       }
       createdAt
       updatedAt
+      owner
     }
   }
 `;
@@ -42,11 +44,13 @@ export const updatePost = /* GraphQL */ `
           createdAt
           updatedAt
           postCommentsId
+          owner
         }
         nextToken
       }
       createdAt
       updatedAt
+      owner
     }
   }
 `;
@@ -66,11 +70,13 @@ export const deletePost = /* GraphQL */ `
           createdAt
           updatedAt
           postCommentsId
+          owner
         }
         nextToken
       }
       createdAt
       updatedAt
+      owner
     }
   }
 `;
@@ -90,11 +96,13 @@ export const createComment = /* GraphQL */ `
         }
         createdAt
         updatedAt
+        owner
       }
       content
       createdAt
       updatedAt
       postCommentsId
+      owner
     }
   }
 `;
@@ -114,11 +122,13 @@ export const updateComment = /* GraphQL */ `
         }
         createdAt
         updatedAt
+        owner
       }
       content
       createdAt
       updatedAt
       postCommentsId
+      owner
     }
   }
 `;
@@ -138,11 +148,13 @@ export const deleteComment = /* GraphQL */ `
         }
         createdAt
         updatedAt
+        owner
       }
       content
       createdAt
       updatedAt
       postCommentsId
+      owner
     }
   }
 `;
