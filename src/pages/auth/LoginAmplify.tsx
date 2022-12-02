@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router';
 
 import useTranslation from 'hooks/useTranslation';
 import { authActions, authErrorSelector, authPhaseSelector, authUserSelector } from 'store/auth';
+import { isLocalhost } from 'utils/Helpers';
 
 type FormValues = {
   email: string;
@@ -29,8 +30,8 @@ export const LoginAmplify = () => {
   const { handleSubmit, handleChange, values, errors, touched, isSubmitting, setSubmitting } =
     useFormik({
       initialValues: {
-        email: 'simsek97@gmail.com',
-        password: '!234%QwerT'
+        email: isLocalhost ? process.env.REACT_APP_DEV_USERNAME : '',
+        password: isLocalhost ? process.env.REACT_APP_DEV_PASSWORD : ''
       },
       validate: (values: FormValues) => validateForm(values),
       onSubmit: (values: FormValues) => submitForm(values)
@@ -79,7 +80,6 @@ export const LoginAmplify = () => {
     dispatch(authActions.setPhase(null, null));
   }, []);
 
-  console.log(authError);
   return (
     <Box>
       <Typography sx={{ mb: 2 }} variant='body1'>

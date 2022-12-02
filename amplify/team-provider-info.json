@@ -21,6 +21,12 @@
           "deploymentBucketName": "amplify-amplify86d682d74d534-staging-210516-deployment",
           "s3Key": "amplify-builds/S3Trigger73b92967-6a67777663454e556e63-build.zip"
         }
+      },
+      "storage": {
+        "storage": {}
+      },
+      "api": {
+        "alumnifrontend": {}
       }
     }
   }
