@@ -5,7 +5,7 @@ import { Loadable } from 'layout';
 const AuthGuard = loadable(() => import('components/guard/AuthGuard'));
 const MainLayout = loadable(() => import('layout/MainLayout'));
 
-const VCloud = Loadable(lazy(() => import('./index')));
+// const Partner = Loadable(lazy(() => import('./index')));
 
 const routes = {
   path: 'sso',
@@ -13,13 +13,13 @@ const routes = {
     <AuthGuard>
       <MainLayout />
     </AuthGuard>
-  ),
-  children: [
-    {
-      path: 'vcloud',
-      element: <VCloud />
-    }
-  ]
+  )
+  // children: [
+  //   {
+  //     path: 'partner',
+  //     element: <Partner />
+  //   }
+  // ]
 };
 
 export default routes;

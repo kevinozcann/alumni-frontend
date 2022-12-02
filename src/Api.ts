@@ -158,6 +158,51 @@ export type ModelCommentFilterInput = {
   postCommentsId?: ModelIDInput | null,
 };
 
+export type ModelSubscriptionPostFilterInput = {
+  id?: ModelSubscriptionIDInput | null,
+  title?: ModelSubscriptionStringInput | null,
+  content?: ModelSubscriptionStringInput | null,
+  and?: Array< ModelSubscriptionPostFilterInput | null > | null,
+  or?: Array< ModelSubscriptionPostFilterInput | null > | null,
+};
+
+export type ModelSubscriptionIDInput = {
+  ne?: string | null,
+  eq?: string | null,
+  le?: string | null,
+  lt?: string | null,
+  ge?: string | null,
+  gt?: string | null,
+  contains?: string | null,
+  notContains?: string | null,
+  between?: Array< string | null > | null,
+  beginsWith?: string | null,
+  in?: Array< string | null > | null,
+  notIn?: Array< string | null > | null,
+};
+
+export type ModelSubscriptionStringInput = {
+  ne?: string | null,
+  eq?: string | null,
+  le?: string | null,
+  lt?: string | null,
+  ge?: string | null,
+  gt?: string | null,
+  contains?: string | null,
+  notContains?: string | null,
+  between?: Array< string | null > | null,
+  beginsWith?: string | null,
+  in?: Array< string | null > | null,
+  notIn?: Array< string | null > | null,
+};
+
+export type ModelSubscriptionCommentFilterInput = {
+  id?: ModelSubscriptionIDInput | null,
+  content?: ModelSubscriptionStringInput | null,
+  and?: Array< ModelSubscriptionCommentFilterInput | null > | null,
+  or?: Array< ModelSubscriptionCommentFilterInput | null > | null,
+};
+
 export type CreatePostMutationVariables = {
   input: CreatePostInput,
   condition?: ModelPostConditionInput | null,
@@ -454,6 +499,7 @@ export type ListCommentsQuery = {
 };
 
 export type OnCreatePostSubscriptionVariables = {
+  filter?: ModelSubscriptionPostFilterInput | null,
   owner?: string | null,
 };
 
@@ -483,6 +529,7 @@ export type OnCreatePostSubscription = {
 };
 
 export type OnUpdatePostSubscriptionVariables = {
+  filter?: ModelSubscriptionPostFilterInput | null,
   owner?: string | null,
 };
 
@@ -512,6 +559,7 @@ export type OnUpdatePostSubscription = {
 };
 
 export type OnDeletePostSubscriptionVariables = {
+  filter?: ModelSubscriptionPostFilterInput | null,
   owner?: string | null,
 };
 
@@ -541,6 +589,7 @@ export type OnDeletePostSubscription = {
 };
 
 export type OnCreateCommentSubscriptionVariables = {
+  filter?: ModelSubscriptionCommentFilterInput | null,
   owner?: string | null,
 };
 
@@ -570,6 +619,7 @@ export type OnCreateCommentSubscription = {
 };
 
 export type OnUpdateCommentSubscriptionVariables = {
+  filter?: ModelSubscriptionCommentFilterInput | null,
   owner?: string | null,
 };
 
@@ -599,6 +649,7 @@ export type OnUpdateCommentSubscription = {
 };
 
 export type OnDeleteCommentSubscriptionVariables = {
+  filter?: ModelSubscriptionCommentFilterInput | null,
   owner?: string | null,
 };
 

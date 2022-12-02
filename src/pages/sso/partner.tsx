@@ -11,7 +11,7 @@ import { authUserSelector } from 'store/auth';
 import { useSubheader } from 'contexts/SubheaderContext';
 import useTranslation from 'hooks/useTranslation';
 
-const clientId = 'xncinfumkd4ya234';
+const clientId = 'xyz';
 
 const mapStateToProps = (state: RootState) => ({
   user: authUserSelector(state)
@@ -20,7 +20,7 @@ const connector = connect(mapStateToProps);
 type PropsFromRedux = ConnectedProps<typeof connector>;
 type TVCloudProps = PropsFromRedux;
 
-const VCloudSSO = (props: TVCloudProps) => {
+const PartnerSSO = (props: TVCloudProps) => {
   const { user } = props;
   const { settings } = useSettings();
   const navigate = useNavigate();
@@ -32,22 +32,16 @@ const VCloudSSO = (props: TVCloudProps) => {
   const isStudent = user.userType.loginType === 'student';
 
   React.useEffect(() => {
-    const breadcrumbs = [];
-    breadcrumbs.push({ title: 'partner.vcloud', url: '/vcloud' });
-    subheader.setBreadcrumbs(breadcrumbs);
-  }, []);
-
-  React.useEffect(() => {
     const jwtSign = async () => {
-      const secretKey = new TextEncoder().encode('2FsscC1f75BcJ7gVJdZ6mEEeRP8=');
+      const secretKey = new TextEncoder().encode('abc');
 
       const jwtToken = await new jose.SignJWT({
-        'urn:sebitcloud:claim': true,
+        'urn:partner:claim': true,
         uniqKey: user.uuid
       })
         .setProtectedHeader({ alg: 'HS256' })
-        .setIssuer('urn:sebitcloud:issuer')
-        .setAudience('urn:sebitcloud:audience')
+        .setIssuer('urn:partner:issuer')
+        .setAudience('urn:partner:audience')
         .setIssuedAt()
         .setExpirationTime('2h')
         .sign(secretKey);
@@ -62,7 +56,7 @@ const VCloudSSO = (props: TVCloudProps) => {
 
   React.useEffect(() => {
     if (isStudent && token !== '' && ssoUrl === '') {
-      setSsoUrl(`https://www.sebitvcloud.com/login/sso?client_id=${clientId}&token=${token}`);
+      setSsoUrl(`partner-url?client_id=${clientId}&token=${token}`);
     }
   }, [token]);
 
@@ -94,14 +88,14 @@ const VCloudSSO = (props: TVCloudProps) => {
           )) ||
             (token && (
               <Alert severity='success'>
-                {intl.translate({ id: 'partner.connected' }, { name: 'VCloud' })}{' '}
+                {intl.translate({ id: 'partner.connected' }, { name: 'Partner' })}{' '}
                 <a href={ssoUrl} target='_blank' rel='noreferrer'>
                   VCloud
                 </a>
               </Alert>
             )) || (
               <Alert severity='info'>
-                {intl.translate({ id: 'partner.connecting' }, { name: 'VCloud' })}
+                {intl.translate({ id: 'partner.connecting' }, { name: 'Partner' })}
               </Alert>
             )}
         </Box>
@@ -110,4 +104,4 @@ const VCloudSSO = (props: TVCloudProps) => {
   );
 };
 
-export default connector(VCloudSSO);
+export default connector(PartnerSSO);

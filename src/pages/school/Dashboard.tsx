@@ -16,8 +16,6 @@ const BasicStats = loadable(() => import('pages/school/widgets/BasicStats'));
 const QuickLinks = loadable(() => import('pages/school/widgets/QuickLinks'));
 const SchoolUsageChart = loadable(() => import('pages/school/widgets/SchoolUsageChart'));
 const EnrollmentChart = loadable(() => import('pages/school/widgets/EnrollmentChart'));
-const EnrollmentOverview = loadable(() => import('pages/school/widgets/EnrollmentOverview'));
-const DailySchedule = loadable(() => import('pages/school/widgets/DailySchedule'));
 
 type TDashboardProps = {
   userType: IUserType;
@@ -62,22 +60,6 @@ const Dashboard: React.FC<TDashboardProps> = (props) => {
             <EnrollmentChart
               fallback={<Skeleton variant='rectangular' width='100%' height='100%' />}
             />
-          </Grid>
-
-          <Grid item xs={12}>
-            <DailySchedule
-              fallback={<Skeleton variant='rectangular' width='100%' height='100%' />}
-            />
-          </Grid>
-
-          <Grid item xs={12}>
-            <EnrollmentOverview
-              fallback={<Skeleton variant='rectangular' width='100%' height='100%' />}
-            />
-          </Grid>
-
-          <Grid item xs={12} md={6} lg={4}>
-            {/* <HelpDesk className='card-stretch gutter-b' /> */}
           </Grid>
         </Grid>
       </Box>

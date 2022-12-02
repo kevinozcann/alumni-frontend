@@ -5,7 +5,6 @@ import { Box, Container } from '@mui/material';
 import { backendBaseUrl, globalApiUrl } from 'store/ApiUrls';
 import useSettings from 'hooks/useSettings';
 import gtm from 'utils/gtm';
-import Help from 'pages/help/Help';
 
 interface IPageProps {
   title: string;
@@ -41,7 +40,6 @@ export const Page = (props: IPageProps) => {
             }}
           >
             {props.children}
-            <Help />
           </Box>
         </Container>
       </Box>

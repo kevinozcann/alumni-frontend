@@ -1,6 +1,4 @@
-import { IGuardian } from 'pages/guardians/_store/types';
 import { ISchool } from 'pages/organization/organization-types';
-import { IPerson } from 'pages/personnel/_store/types';
 
 export interface IStudentBatch {
   id?: number;
@@ -34,10 +32,7 @@ export interface IStudent {
   formerSchool?: string;
   batchId?: number; // we will remove this
   courseId?: number; // we will remove this
-  guardians?: IGuardian[];
   batchNames?: string;
   courseNames?: string;
-  guide?: IPerson;
-  advisor?: IPerson;
   studentCourses?: IStudentCourses[];
 }

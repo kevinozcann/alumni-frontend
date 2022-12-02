@@ -1,2 +1,2 @@
-import VCLoudSSO from './vcloud';
-export default VCLoudSSO;
+import PartnerSSO from './partner';
+export default PartnerSSO;

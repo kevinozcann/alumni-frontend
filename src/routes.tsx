@@ -4,22 +4,15 @@ import loadable, { lazy } from '@loadable/component';
 import { Loadable, LoadableScreen } from 'layout';
 
 import accountRoutes from 'pages/account/routes';
-import apiRoutes from 'pages/api/routes';
 import authRoutes from 'pages/auth/routes';
-import classesRoutes from 'pages/classes/routes';
 import configRoutes from 'pages/config/routes';
 import developerRoutes from 'pages/developer/routes';
 import feedsRoutes from 'pages/posts/routes';
 import mailRoutes from 'pages/mail/routes';
 import organizationRoutes from 'pages/organization/routes';
-import personnelRoutes from 'pages/personnel/routes';
 import schoolRoutes from 'pages/school/routes';
-import smartclassRoutes from 'pages/smartclass/routes';
-import storeRoutes from 'pages/store/routes';
 import studentsRoutes from 'pages/students/routes';
 import usersRoutes from 'pages/users/routes';
-import accountCodeRoutes from 'pages/account-codes/routes';
-import IncomeExpenseRoutes from 'pages/income-expense/routes';
 import SSORoutes from 'pages/sso/routes';
 
 const GuestGuard = loadable(() => import('components/guard/GuestGuard'));
@@ -48,21 +41,14 @@ const routes = [
     element: <FileManager />
   },
   accountRoutes,
-  apiRoutes,
-  classesRoutes,
   configRoutes,
   developerRoutes,
   feedsRoutes,
   mailRoutes,
   organizationRoutes,
-  personnelRoutes,
   schoolRoutes,
-  smartclassRoutes,
-  storeRoutes,
   studentsRoutes,
   usersRoutes,
-  accountCodeRoutes,
-  IncomeExpenseRoutes,
   SSORoutes,
   {
     path: '*',

@@ -29,28 +29,6 @@ const Schoolinfo = (props: TSchoolinfoProps) => {
                   </Card>
                 </Grid>
               ))}
-
-            {studentInfo.guide && (
-              <Grid item xs={12} md={12}>
-                <Card>
-                  <CardHeader
-                    title={intl.formatMessage({ id: 'guidance.guidance_counselor' })}
-                    subheader={studentInfo.guide.name}
-                  />
-                </Card>
-              </Grid>
-            )}
-
-            {studentInfo.advisor && (
-              <Grid item xs={12} md={12}>
-                <Card>
-                  <CardHeader
-                    title={intl.formatMessage({ id: 'advisor_teacher' })}
-                    subheader={studentInfo.advisor.name}
-                  />
-                </Card>
-              </Grid>
-            )}
           </Grid>
         </CardContent>
       </Card>
