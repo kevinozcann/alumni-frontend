@@ -3,7 +3,7 @@ import objectPath from 'object-path';
 import { GoogleLoginResponse } from 'react-google-login';
 import { persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
-import { call, put, delay, takeLatest, fork } from 'redux-saga/effects';
+import { call, delay, put, takeLatest } from 'redux-saga/effects';
 import { createSelector } from 'reselect';
 
 import { IUser } from 'pages/account/account-types';
@@ -292,8 +292,6 @@ export function* saga() {
   yield takeLatest(
     actionTypes.AUTH_TOKEN,
     function* tokenSaga({ payload }: IAction<Partial<TActionAllState>>) {
-      const { lang, userSub } = payload;
-
       yield put({
         type: actionTypes.AUTH_TOKEN_SAVE,
         payload

@@ -6,11 +6,13 @@ export type CreatePostInput = {
   id?: string | null,
   title?: string | null,
   content: string,
+  ownerAttributes: Array< string | null >,
 };
 
 export type ModelPostConditionInput = {
   title?: ModelStringInput | null,
   content?: ModelStringInput | null,
+  ownerAttributes?: ModelStringInput | null,
   and?: Array< ModelPostConditionInput | null > | null,
   or?: Array< ModelPostConditionInput | null > | null,
   not?: ModelPostConditionInput | null,
@@ -61,6 +63,7 @@ export type Post = {
   id: string,
   title?: string | null,
   content: string,
+  ownerAttributes: Array< string | null >,
   comments?: ModelCommentConnection | null,
   createdAt: string,
   updatedAt: string,
@@ -88,6 +91,7 @@ export type UpdatePostInput = {
   id: string,
   title?: string | null,
   content?: string | null,
+  ownerAttributes?: Array< string | null > | null,
 };
 
 export type DeletePostInput = {
@@ -138,6 +142,7 @@ export type ModelPostFilterInput = {
   id?: ModelIDInput | null,
   title?: ModelStringInput | null,
   content?: ModelStringInput | null,
+  ownerAttributes?: ModelStringInput | null,
   and?: Array< ModelPostFilterInput | null > | null,
   or?: Array< ModelPostFilterInput | null > | null,
   not?: ModelPostFilterInput | null,
@@ -162,6 +167,7 @@ export type ModelSubscriptionPostFilterInput = {
   id?: ModelSubscriptionIDInput | null,
   title?: ModelSubscriptionStringInput | null,
   content?: ModelSubscriptionStringInput | null,
+  ownerAttributes?: ModelSubscriptionStringInput | null,
   and?: Array< ModelSubscriptionPostFilterInput | null > | null,
   or?: Array< ModelSubscriptionPostFilterInput | null > | null,
 };
@@ -214,6 +220,7 @@ export type CreatePostMutation = {
     id: string,
     title?: string | null,
     content: string,
+    ownerAttributes: Array< string | null >,
     comments?:  {
       __typename: "ModelCommentConnection",
       items:  Array< {
@@ -244,6 +251,7 @@ export type UpdatePostMutation = {
     id: string,
     title?: string | null,
     content: string,
+    ownerAttributes: Array< string | null >,
     comments?:  {
       __typename: "ModelCommentConnection",
       items:  Array< {
@@ -274,6 +282,7 @@ export type DeletePostMutation = {
     id: string,
     title?: string | null,
     content: string,
+    ownerAttributes: Array< string | null >,
     comments?:  {
       __typename: "ModelCommentConnection",
       items:  Array< {
@@ -307,6 +316,7 @@ export type CreateCommentMutation = {
       id: string,
       title?: string | null,
       content: string,
+      ownerAttributes: Array< string | null >,
       comments?:  {
         __typename: "ModelCommentConnection",
         nextToken?: string | null,
@@ -337,6 +347,7 @@ export type UpdateCommentMutation = {
       id: string,
       title?: string | null,
       content: string,
+      ownerAttributes: Array< string | null >,
       comments?:  {
         __typename: "ModelCommentConnection",
         nextToken?: string | null,
@@ -367,6 +378,7 @@ export type DeleteCommentMutation = {
       id: string,
       title?: string | null,
       content: string,
+      ownerAttributes: Array< string | null >,
       comments?:  {
         __typename: "ModelCommentConnection",
         nextToken?: string | null,
@@ -393,6 +405,7 @@ export type GetPostQuery = {
     id: string,
     title?: string | null,
     content: string,
+    ownerAttributes: Array< string | null >,
     comments?:  {
       __typename: "ModelCommentConnection",
       items:  Array< {
@@ -426,6 +439,7 @@ export type ListPostsQuery = {
       id: string,
       title?: string | null,
       content: string,
+      ownerAttributes: Array< string | null >,
       comments?:  {
         __typename: "ModelCommentConnection",
         nextToken?: string | null,
@@ -451,6 +465,7 @@ export type GetCommentQuery = {
       id: string,
       title?: string | null,
       content: string,
+      ownerAttributes: Array< string | null >,
       comments?:  {
         __typename: "ModelCommentConnection",
         nextToken?: string | null,
@@ -484,6 +499,7 @@ export type ListCommentsQuery = {
         id: string,
         title?: string | null,
         content: string,
+        ownerAttributes: Array< string | null >,
         createdAt: string,
         updatedAt: string,
         owner?: string | null,
@@ -509,6 +525,7 @@ export type OnCreatePostSubscription = {
     id: string,
     title?: string | null,
     content: string,
+    ownerAttributes: Array< string | null >,
     comments?:  {
       __typename: "ModelCommentConnection",
       items:  Array< {
@@ -539,6 +556,7 @@ export type OnUpdatePostSubscription = {
     id: string,
     title?: string | null,
     content: string,
+    ownerAttributes: Array< string | null >,
     comments?:  {
       __typename: "ModelCommentConnection",
       items:  Array< {
@@ -569,6 +587,7 @@ export type OnDeletePostSubscription = {
     id: string,
     title?: string | null,
     content: string,
+    ownerAttributes: Array< string | null >,
     comments?:  {
       __typename: "ModelCommentConnection",
       items:  Array< {
@@ -602,6 +621,7 @@ export type OnCreateCommentSubscription = {
       id: string,
       title?: string | null,
       content: string,
+      ownerAttributes: Array< string | null >,
       comments?:  {
         __typename: "ModelCommentConnection",
         nextToken?: string | null,
@@ -632,6 +652,7 @@ export type OnUpdateCommentSubscription = {
       id: string,
       title?: string | null,
       content: string,
+      ownerAttributes: Array< string | null >,
       comments?:  {
         __typename: "ModelCommentConnection",
         nextToken?: string | null,
@@ -662,6 +683,7 @@ export type OnDeleteCommentSubscription = {
       id: string,
       title?: string | null,
       content: string,
+      ownerAttributes: Array< string | null >,
       comments?:  {
         __typename: "ModelCommentConnection",
         nextToken?: string | null,

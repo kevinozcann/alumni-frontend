@@ -1,4 +1,4 @@
-import { API } from 'aws-amplify';
+import { API, Auth } from 'aws-amplify';
 import produce from 'immer';
 import objectPath from 'object-path';
 import { persistReducer } from 'redux-persist';
@@ -179,7 +179,10 @@ export function* saga() {
       const { user, page } = payload;
 
       try {
-        const { data } = yield API.graphql({ query: listPosts });
+        const { data } = yield API.graphql({
+          query: listPosts,
+          authMode: 'AMAZON_COGNITO_USER_POOLS'
+        });
 
         if (data) {
           const posts = data.listPosts.items;
@@ -223,15 +226,21 @@ export function* saga() {
     function* feedSave({ payload }: IAction<Partial<TActionAllState>>) {
       const { user, post, actionType } = payload;
 
-      console.log('post', post);
-
       if (actionType === 'add') {
         yield put(postActions.setPhase('adding'));
+
+        // const user = yield Auth.currentAuthenticatedUser();
 
         try {
           const { data } = yield API.graphql({
             query: createPost,
-            variables: { input: { title: post.title, content: post.content } }
+            variables: {
+              input: {
+                title: post.title,
+                content: post.content
+              }
+            },
+            authMode: 'AMAZON_COGNITO_USER_POOLS'
           });
 
           if (data) {

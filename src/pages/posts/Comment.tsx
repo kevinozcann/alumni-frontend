@@ -26,7 +26,7 @@ const Comment = (props: TCommentProps) => {
   const [userComment, setUserComment] = React.useState(comment.comment);
   const intl = useTranslation();
 
-  const isMe = comment.createdBy.isMe;
+  const isMe = comment.owner.isMe;
 
   const handleCommentUpdate = (text: string) => {
     setUserComment(text);
@@ -48,7 +48,7 @@ const Comment = (props: TCommentProps) => {
 
   return (
     <Box sx={{ display: 'flex', marginBottom: 1 }}>
-      <Avatar alt='User' src={comment.createdBy.picture} />
+      <Avatar alt='User' src={comment.owner.picture} />
       <Box
         sx={{
           backgroundColor: 'background.default',
@@ -59,7 +59,7 @@ const Comment = (props: TCommentProps) => {
         }}
       >
         <Box sx={{ display: 'flex', alignItems: 'center', mb: 0.5 }}>
-          <Typography color='textPrimary'>{comment.createdBy.fullName}</Typography>
+          <Typography color='textPrimary'>{comment.owner.fullName}</Typography>
           <Box flexGrow={1} />
           <Typography color='textSecondary' variant='caption'>
             {moment(comment.createdAt).fromNow()}

@@ -11,6 +11,7 @@ export const createPost = /* GraphQL */ `
       id
       title
       content
+      ownerAttributes
       comments {
         items {
           id
@@ -37,6 +38,7 @@ export const updatePost = /* GraphQL */ `
       id
       title
       content
+      ownerAttributes
       comments {
         items {
           id
@@ -63,6 +65,7 @@ export const deletePost = /* GraphQL */ `
       id
       title
       content
+      ownerAttributes
       comments {
         items {
           id
@@ -91,6 +94,7 @@ export const createComment = /* GraphQL */ `
         id
         title
         content
+        ownerAttributes
         comments {
           nextToken
         }
@@ -117,6 +121,7 @@ export const updateComment = /* GraphQL */ `
         id
         title
         content
+        ownerAttributes
         comments {
           nextToken
         }
@@ -143,6 +148,7 @@ export const deleteComment = /* GraphQL */ `
         id
         title
         content
+        ownerAttributes
         comments {
           nextToken
         }

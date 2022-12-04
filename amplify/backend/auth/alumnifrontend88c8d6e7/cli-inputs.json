@@ -2,7 +2,7 @@
   "version": "1",
   "cognitoConfig": {
     "identityPoolName": "alumnifrontend88c8d6e7_identitypool_88c8d6e7",
-    "allowUnauthenticatedIdentities": false,
+    "allowUnauthenticatedIdentities": true,
     "resourceNameTruncated": "alumni88c8d6e7",
     "userPoolName": "alumnifrontend88c8d6e7_userpool_88c8d6e7",
     "autoVerifiedAttributes": [
@@ -26,24 +26,62 @@
     "userpoolClientGenerateSecret": false,
     "userpoolClientRefreshTokenValidity": 30,
     "userpoolClientWriteAttributes": [
+      "family_name",
+      "name",
+      "phone_number",
+      "picture",
+      "profile",
       "email"
     ],
     "userpoolClientReadAttributes": [
-      "email"
+      "email",
+      "family_name",
+      "name",
+      "phone_number",
+      "picture",
+      "profile"
     ],
     "userpoolClientLambdaRole": "alumni88c8d6e7_userpoolclient_lambda_role",
     "userpoolClientSetAttributes": false,
     "sharedId": "88c8d6e7",
     "resourceName": "alumnifrontend88c8d6e7",
     "authSelections": "identityPoolAndUserPool",
-    "useDefault": "default",
+    "useDefault": "manual",
     "usernameAttributes": [
       "email"
     ],
     "triggers": {},
-    "userPoolGroupList": [],
+    "userPoolGroupList": [
+      "User",
+      "Admin"
+    ],
     "serviceName": "Cognito",
     "usernameCaseSensitive": false,
-    "useEnabledMfas": true
+    "useEnabledMfas": true,
+    "authRoleArn": {
+      "Fn::GetAtt": [
+        "AuthRole",
+        "Arn"
+      ]
+    },
+    "unauthRoleArn": {
+      "Fn::GetAtt": [
+        "UnauthRole",
+        "Arn"
+      ]
+    },
+    "breakCircularDependency": true,
+    "dependsOn": [],
+    "thirdPartyAuth": false,
+    "userPoolGroups": true,
+    "adminQueries": true,
+    "hostedUI": false,
+    "adminQueryGroup": "User",
+    "authProviders": [],
+    "parentStack": {
+      "Ref": "AWS::StackId"
+    },
+    "permissions": [],
+    "verificationBucketName": "alumnifrontend88c8d6e7verificationbucket"
   }
-} 
+}

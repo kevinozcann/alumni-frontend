@@ -65,7 +65,7 @@ const Post = (props: FeedProps) => {
   const lang = useSelector(i18nLangSelector);
   const postsPhase = useSelector(postsPhaseSelector);
 
-  const isMe = post?.poster?.isMe;
+  const isMe = post?.owner?.isMe;
   const images = post.files?.filter((file) => file.mimeType.includes('image/'));
   const files = post.files?.filter((file) => !file.mimeType.includes('image/'));
 
@@ -100,8 +100,8 @@ const Post = (props: FeedProps) => {
       <Card>
         <CardHeader
           avatar={
-            <Avatar alt='user avatar' src={post?.poster?.picture}>
-              {getInitials(post?.poster?.fullName)}
+            <Avatar alt='user avatar' src={post?.owner?.picture}>
+              {getInitials(post?.owner?.fullName)}
             </Avatar>
           }
           disableTypography
@@ -112,13 +112,17 @@ const Post = (props: FeedProps) => {
                 <Moment>
                   {({ default: moment }) => {
                     moment.locale(lang);
-                    return moment(post.postedAt).fromNow();
+                    return moment(post.createdAt).fromNow();
                   }}
                 </Moment>
               </Typography>
             </Box>
           }
-          title={<Typography color='textPrimary'>{post?.poster?.fullName}</Typography>}
+          // title={
+          //   <Typography color='textPrimary'>
+          //     `{post?.owner?.name} {post?.owner?.}`
+          //   </Typography>
+          // }
           action={
             (isMe && (
               <React.Fragment>

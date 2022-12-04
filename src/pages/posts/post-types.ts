@@ -1,11 +1,11 @@
-import { IUser } from '../account/account-types';
-import { IFile } from '../../utils/shared-types';
+import { IUser } from 'pages/account/account-types';
+import { IFile } from 'utils/shared-types';
 
 export interface IPostComment {
   id?: number;
   comment?: string;
+  owner?: IUser;
   createdAt?: Date;
-  createdBy?: IUser;
 }
 export interface IFeedLike {
   id?: number;
@@ -13,19 +13,19 @@ export interface IFeedLike {
   createdBy?: IUser;
 }
 export interface IPost {
+  id?: number;
+  feedType?: 'post' | string;
+  title?: string;
+  shortText?: string;
+  content?: string;
+  url?: string;
+  files?: IFile[];
+  likes?: IFeedLike[];
+  coverPicture?: string;
   comments?: IPostComment[];
   commentsOn?: boolean;
-  content?: string;
-  coverPicture?: string;
-  feedType?: 'post' | string;
-  files?: IFile[];
-  id?: number;
-  likes?: IFeedLike[];
-  postedAt?: Date;
-  poster?: IUser;
   related?: string[];
-  shortText?: string;
   tags?: string[];
-  title?: string;
-  url?: string;
+  owner?: IUser;
+  createdAt?: Date;
 }
