@@ -2,6 +2,114 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
+export const onCreateUser = /* GraphQL */ `
+  subscription OnCreateUser($filter: ModelSubscriptionUserFilterInput) {
+    onCreateUser(filter: $filter) {
+      id
+      name
+      family_name
+      picture
+      posts {
+        items {
+          id
+          title
+          content
+          createdAt
+          updatedAt
+          userPostsId
+          owner
+        }
+        nextToken
+      }
+      comments {
+        items {
+          id
+          content
+          createdAt
+          updatedAt
+          userCommentsId
+          postCommentsId
+          owner
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onUpdateUser = /* GraphQL */ `
+  subscription OnUpdateUser($filter: ModelSubscriptionUserFilterInput) {
+    onUpdateUser(filter: $filter) {
+      id
+      name
+      family_name
+      picture
+      posts {
+        items {
+          id
+          title
+          content
+          createdAt
+          updatedAt
+          userPostsId
+          owner
+        }
+        nextToken
+      }
+      comments {
+        items {
+          id
+          content
+          createdAt
+          updatedAt
+          userCommentsId
+          postCommentsId
+          owner
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onDeleteUser = /* GraphQL */ `
+  subscription OnDeleteUser($filter: ModelSubscriptionUserFilterInput) {
+    onDeleteUser(filter: $filter) {
+      id
+      name
+      family_name
+      picture
+      posts {
+        items {
+          id
+          title
+          content
+          createdAt
+          updatedAt
+          userPostsId
+          owner
+        }
+        nextToken
+      }
+      comments {
+        items {
+          id
+          content
+          createdAt
+          updatedAt
+          userCommentsId
+          postCommentsId
+          owner
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
 export const onCreatePost = /* GraphQL */ `
   subscription OnCreatePost(
     $filter: ModelSubscriptionPostFilterInput
@@ -11,13 +119,27 @@ export const onCreatePost = /* GraphQL */ `
       id
       title
       content
-      ownerAttributes
+      user {
+        id
+        name
+        family_name
+        picture
+        posts {
+          nextToken
+        }
+        comments {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
       comments {
         items {
           id
           content
           createdAt
           updatedAt
+          userCommentsId
           postCommentsId
           owner
         }
@@ -25,6 +147,7 @@ export const onCreatePost = /* GraphQL */ `
       }
       createdAt
       updatedAt
+      userPostsId
       owner
     }
   }
@@ -38,13 +161,27 @@ export const onUpdatePost = /* GraphQL */ `
       id
       title
       content
-      ownerAttributes
+      user {
+        id
+        name
+        family_name
+        picture
+        posts {
+          nextToken
+        }
+        comments {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
       comments {
         items {
           id
           content
           createdAt
           updatedAt
+          userCommentsId
           postCommentsId
           owner
         }
@@ -52,6 +189,7 @@ export const onUpdatePost = /* GraphQL */ `
       }
       createdAt
       updatedAt
+      userPostsId
       owner
     }
   }
@@ -65,13 +203,27 @@ export const onDeletePost = /* GraphQL */ `
       id
       title
       content
-      ownerAttributes
+      user {
+        id
+        name
+        family_name
+        picture
+        posts {
+          nextToken
+        }
+        comments {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
       comments {
         items {
           id
           content
           createdAt
           updatedAt
+          userCommentsId
           postCommentsId
           owner
         }
@@ -79,6 +231,7 @@ export const onDeletePost = /* GraphQL */ `
       }
       createdAt
       updatedAt
+      userPostsId
       owner
     }
   }
@@ -94,17 +247,40 @@ export const onCreateComment = /* GraphQL */ `
         id
         title
         content
-        ownerAttributes
+        user {
+          id
+          name
+          family_name
+          picture
+          createdAt
+          updatedAt
+        }
         comments {
           nextToken
         }
         createdAt
         updatedAt
+        userPostsId
         owner
+      }
+      user {
+        id
+        name
+        family_name
+        picture
+        posts {
+          nextToken
+        }
+        comments {
+          nextToken
+        }
+        createdAt
+        updatedAt
       }
       content
       createdAt
       updatedAt
+      userCommentsId
       postCommentsId
       owner
     }
@@ -121,17 +297,40 @@ export const onUpdateComment = /* GraphQL */ `
         id
         title
         content
-        ownerAttributes
+        user {
+          id
+          name
+          family_name
+          picture
+          createdAt
+          updatedAt
+        }
         comments {
           nextToken
         }
         createdAt
         updatedAt
+        userPostsId
         owner
+      }
+      user {
+        id
+        name
+        family_name
+        picture
+        posts {
+          nextToken
+        }
+        comments {
+          nextToken
+        }
+        createdAt
+        updatedAt
       }
       content
       createdAt
       updatedAt
+      userCommentsId
       postCommentsId
       owner
     }
@@ -148,17 +347,40 @@ export const onDeleteComment = /* GraphQL */ `
         id
         title
         content
-        ownerAttributes
+        user {
+          id
+          name
+          family_name
+          picture
+          createdAt
+          updatedAt
+        }
         comments {
           nextToken
         }
         createdAt
         updatedAt
+        userPostsId
         owner
+      }
+      user {
+        id
+        name
+        family_name
+        picture
+        posts {
+          nextToken
+        }
+        comments {
+          nextToken
+        }
+        createdAt
+        updatedAt
       }
       content
       createdAt
       updatedAt
+      userCommentsId
       postCommentsId
       owner
     }

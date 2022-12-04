@@ -2,6 +2,123 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
+export const createUser = /* GraphQL */ `
+  mutation CreateUser(
+    $input: CreateUserInput!
+    $condition: ModelUserConditionInput
+  ) {
+    createUser(input: $input, condition: $condition) {
+      id
+      name
+      family_name
+      picture
+      posts {
+        items {
+          id
+          title
+          content
+          createdAt
+          updatedAt
+          userPostsId
+          owner
+        }
+        nextToken
+      }
+      comments {
+        items {
+          id
+          content
+          createdAt
+          updatedAt
+          userCommentsId
+          postCommentsId
+          owner
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const updateUser = /* GraphQL */ `
+  mutation UpdateUser(
+    $input: UpdateUserInput!
+    $condition: ModelUserConditionInput
+  ) {
+    updateUser(input: $input, condition: $condition) {
+      id
+      name
+      family_name
+      picture
+      posts {
+        items {
+          id
+          title
+          content
+          createdAt
+          updatedAt
+          userPostsId
+          owner
+        }
+        nextToken
+      }
+      comments {
+        items {
+          id
+          content
+          createdAt
+          updatedAt
+          userCommentsId
+          postCommentsId
+          owner
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const deleteUser = /* GraphQL */ `
+  mutation DeleteUser(
+    $input: DeleteUserInput!
+    $condition: ModelUserConditionInput
+  ) {
+    deleteUser(input: $input, condition: $condition) {
+      id
+      name
+      family_name
+      picture
+      posts {
+        items {
+          id
+          title
+          content
+          createdAt
+          updatedAt
+          userPostsId
+          owner
+        }
+        nextToken
+      }
+      comments {
+        items {
+          id
+          content
+          createdAt
+          updatedAt
+          userCommentsId
+          postCommentsId
+          owner
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
 export const createPost = /* GraphQL */ `
   mutation CreatePost(
     $input: CreatePostInput!
@@ -11,13 +128,27 @@ export const createPost = /* GraphQL */ `
       id
       title
       content
-      ownerAttributes
+      user {
+        id
+        name
+        family_name
+        picture
+        posts {
+          nextToken
+        }
+        comments {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
       comments {
         items {
           id
           content
           createdAt
           updatedAt
+          userCommentsId
           postCommentsId
           owner
         }
@@ -25,6 +156,7 @@ export const createPost = /* GraphQL */ `
       }
       createdAt
       updatedAt
+      userPostsId
       owner
     }
   }
@@ -38,13 +170,27 @@ export const updatePost = /* GraphQL */ `
       id
       title
       content
-      ownerAttributes
+      user {
+        id
+        name
+        family_name
+        picture
+        posts {
+          nextToken
+        }
+        comments {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
       comments {
         items {
           id
           content
           createdAt
           updatedAt
+          userCommentsId
           postCommentsId
           owner
         }
@@ -52,6 +198,7 @@ export const updatePost = /* GraphQL */ `
       }
       createdAt
       updatedAt
+      userPostsId
       owner
     }
   }
@@ -65,13 +212,27 @@ export const deletePost = /* GraphQL */ `
       id
       title
       content
-      ownerAttributes
+      user {
+        id
+        name
+        family_name
+        picture
+        posts {
+          nextToken
+        }
+        comments {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
       comments {
         items {
           id
           content
           createdAt
           updatedAt
+          userCommentsId
           postCommentsId
           owner
         }
@@ -79,6 +240,7 @@ export const deletePost = /* GraphQL */ `
       }
       createdAt
       updatedAt
+      userPostsId
       owner
     }
   }
@@ -94,17 +256,40 @@ export const createComment = /* GraphQL */ `
         id
         title
         content
-        ownerAttributes
+        user {
+          id
+          name
+          family_name
+          picture
+          createdAt
+          updatedAt
+        }
         comments {
           nextToken
         }
         createdAt
         updatedAt
+        userPostsId
         owner
+      }
+      user {
+        id
+        name
+        family_name
+        picture
+        posts {
+          nextToken
+        }
+        comments {
+          nextToken
+        }
+        createdAt
+        updatedAt
       }
       content
       createdAt
       updatedAt
+      userCommentsId
       postCommentsId
       owner
     }
@@ -121,17 +306,40 @@ export const updateComment = /* GraphQL */ `
         id
         title
         content
-        ownerAttributes
+        user {
+          id
+          name
+          family_name
+          picture
+          createdAt
+          updatedAt
+        }
         comments {
           nextToken
         }
         createdAt
         updatedAt
+        userPostsId
         owner
+      }
+      user {
+        id
+        name
+        family_name
+        picture
+        posts {
+          nextToken
+        }
+        comments {
+          nextToken
+        }
+        createdAt
+        updatedAt
       }
       content
       createdAt
       updatedAt
+      userCommentsId
       postCommentsId
       owner
     }
@@ -148,17 +356,40 @@ export const deleteComment = /* GraphQL */ `
         id
         title
         content
-        ownerAttributes
+        user {
+          id
+          name
+          family_name
+          picture
+          createdAt
+          updatedAt
+        }
         comments {
           nextToken
         }
         createdAt
         updatedAt
+        userPostsId
         owner
+      }
+      user {
+        id
+        name
+        family_name
+        picture
+        posts {
+          nextToken
+        }
+        comments {
+          nextToken
+        }
+        createdAt
+        updatedAt
       }
       content
       createdAt
       updatedAt
+      userCommentsId
       postCommentsId
       owner
     }
