@@ -26,6 +26,22 @@
         "AdminQueriesa1643cb4": {
           "deploymentBucketName": "amplify-amplify86d682d74d534-staging-210516-deployment",
           "s3Key": "amplify-builds/AdminQueriesa1643cb4-5233736c656445727138-build.zip"
+        },
+        "alumnifrontend88c8d6e7PostAuthentication": {
+          "deploymentBucketName": "amplify-amplify86d682d74d534-staging-210516-deployment",
+          "s3Key": "amplify-builds/alumnifrontend88c8d6e7PostAuthentication-706a6e7732334b6a5851-build.zip"
+        },
+        "alumnifrontend88c8d6e7PostConfirmation": {
+          "deploymentBucketName": "amplify-amplify86d682d74d534-staging-210516-deployment",
+          "s3Key": "amplify-builds/alumnifrontend88c8d6e7PostConfirmation-676a7233793969477a68-build.zip"
+        },
+        "alumnifrontend88c8d6e7PreAuthentication": {
+          "deploymentBucketName": "amplify-amplify86d682d74d534-staging-210516-deployment",
+          "s3Key": "amplify-builds/alumnifrontend88c8d6e7PreAuthentication-783962314e4a4c4d4234-build.zip"
+        },
+        "alumnifrontend88c8d6e7PreSignup": {
+          "deploymentBucketName": "amplify-amplify86d682d74d534-staging-210516-deployment",
+          "s3Key": "amplify-builds/alumnifrontend88c8d6e7PreSignup-59744a513138737a6e2b-build.zip"
         }
       },
       "storage": {

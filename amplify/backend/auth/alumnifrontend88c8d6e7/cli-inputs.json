@@ -50,7 +50,20 @@
     "usernameAttributes": [
       "email"
     ],
-    "triggers": {},
+    "triggers": {
+      "PostAuthentication": [
+        "custom"
+      ],
+      "PostConfirmation": [
+        "custom"
+      ],
+      "PreAuthentication": [
+        "custom"
+      ],
+      "PreSignup": [
+        "custom"
+      ]
+    },
     "userPoolGroupList": [
       "User",
       "Admin"
@@ -71,7 +84,44 @@
       ]
     },
     "breakCircularDependency": true,
-    "dependsOn": [],
+    "dependsOn": [
+      {
+        "category": "function",
+        "resourceName": "alumnifrontend88c8d6e7PostAuthentication",
+        "triggerProvider": "Cognito",
+        "attributes": [
+          "Arn",
+          "Name"
+        ]
+      },
+      {
+        "category": "function",
+        "resourceName": "alumnifrontend88c8d6e7PostConfirmation",
+        "triggerProvider": "Cognito",
+        "attributes": [
+          "Arn",
+          "Name"
+        ]
+      },
+      {
+        "category": "function",
+        "resourceName": "alumnifrontend88c8d6e7PreAuthentication",
+        "triggerProvider": "Cognito",
+        "attributes": [
+          "Arn",
+          "Name"
+        ]
+      },
+      {
+        "category": "function",
+        "resourceName": "alumnifrontend88c8d6e7PreSignup",
+        "triggerProvider": "Cognito",
+        "attributes": [
+          "Arn",
+          "Name"
+        ]
+      }
+    ],
     "thirdPartyAuth": false,
     "userPoolGroups": true,
     "adminQueries": true,
@@ -82,6 +132,7 @@
       "Ref": "AWS::StackId"
     },
     "permissions": [],
-    "verificationBucketName": "alumnifrontend88c8d6e7verificationbucket"
+    "verificationBucketName": "alumnifrontend88c8d6e7verificationbucket",
+    "authTriggerConnections": "[\n  {\n    \"triggerType\": \"PostAuthentication\",\n    \"lambdaFunctionName\": \"alumnifrontend88c8d6e7PostAuthentication\"\n  },\n  {\n    \"triggerType\": \"PostConfirmation\",\n    \"lambdaFunctionName\": \"alumnifrontend88c8d6e7PostConfirmation\"\n  },\n  {\n    \"triggerType\": \"PreAuthentication\",\n    \"lambdaFunctionName\": \"alumnifrontend88c8d6e7PreAuthentication\"\n  },\n  {\n    \"triggerType\": \"PreSignUp\",\n    \"lambdaFunctionName\": \"alumnifrontend88c8d6e7PreSignup\"\n  }\n]"
   }
 }
