@@ -5,15 +5,14 @@
   "main": "index.js",
   "license": "Apache-2.0",
   "type": "module",
-  "scripts": {
-    "amplify:alumnifrontend88c8d6e7PostConfirmation": "cd amplify/backend/function/alumnifrontend88c8d6e7PostConfirmation && tsc -p ./tsconfig.json && cd -"
-  },
   "dependencies": {
     "aws-typescript-wrapper": "1.1.17",
     "axios": "latest"
   },
   "devDependencies": {
     "@types/aws-lambda": "^8.10.92",
+    "@types/node": "^18.11.13",
+    "aws-lambda": "1.0.7",
     "typescript": "^4.9.4"
   }
 }

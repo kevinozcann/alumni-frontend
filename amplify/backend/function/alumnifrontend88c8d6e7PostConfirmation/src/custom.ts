@@ -1,9 +1,10 @@
+import { Callback, Context, Handler } from 'aws-lambda';
 import * as ATW from 'aws-typescript-wrapper';
 
 /**
  * @type {import('@types/aws-lambda').APIGatewayProxyHandler}
  */
-exports.handler = async (event: any, context: any) => {
+exports.handler = async (event: any, context: Context, callback: Callback<string>) => {
   console.log(event);
 
   const environment = process.env.ENV;
