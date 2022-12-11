@@ -14,6 +14,7 @@ export const getUser = /* GraphQL */ `
           id
           title
           content
+          type
           createdAt
           updatedAt
           userPostsId
@@ -156,6 +157,7 @@ export const getPost = /* GraphQL */ `
         }
         nextToken
       }
+      type
       createdAt
       updatedAt
       userPostsId
@@ -185,6 +187,49 @@ export const listPosts = /* GraphQL */ `
         comments {
           nextToken
         }
+        type
+        createdAt
+        updatedAt
+        userPostsId
+        owner
+      }
+      nextToken
+    }
+  }
+`;
+export const postsByDate = /* GraphQL */ `
+  query PostsByDate(
+    $type: String!
+    $createdAt: ModelStringKeyConditionInput
+    $sortDirection: ModelSortDirection
+    $filter: ModelPostFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    postsByDate(
+      type: $type
+      createdAt: $createdAt
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        title
+        content
+        user {
+          id
+          name
+          family_name
+          picture
+          createdAt
+          updatedAt
+        }
+        comments {
+          nextToken
+        }
+        type
         createdAt
         updatedAt
         userPostsId
@@ -213,6 +258,7 @@ export const getComment = /* GraphQL */ `
         comments {
           nextToken
         }
+        type
         createdAt
         updatedAt
         userPostsId
@@ -254,6 +300,7 @@ export const listComments = /* GraphQL */ `
           id
           title
           content
+          type
           createdAt
           updatedAt
           userPostsId
