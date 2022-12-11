@@ -12,5 +12,7 @@
     "paths": {
       "src": ["."]
     }
-  }
+  },
+  "include": ["."],
+  "exclude": ["**/*.test.*", "**/__mocks__/*", "**/__tests__/*"]
 }
