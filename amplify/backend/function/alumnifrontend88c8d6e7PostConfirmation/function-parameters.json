@@ -13,5 +13,12 @@
   "triggerEventPath": "PostConfirmation.event.json",
   "roleName": "alumnifrontend88c8d6e7PostConfirmation",
   "skipEdit": true,
-  "enableCors": false
+  "enableCors": false,
+  "permissions": {
+    "api": {
+      "alumnifrontend": [
+        "Mutation"
+      ]
+    }
+  }
 }

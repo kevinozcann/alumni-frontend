@@ -9,7 +9,7 @@ exports.handler = async (event, context) => {
 
   const environment = process.env.ENV;
   const region = process.env.REGION;
-  const apiGraphQLAPIIdOutput = process.env.API_MYPROJECT_GRAPHQLAPIIDOUTPUT;
+  const apiGraphQLAPIIdOutput = process.env.API_ALUMNIFRONTEND_GRAPHQLAPIIDOUTPUT;
   const userTableName = `User-${apiGraphQLAPIIdOutput}-${environment}`;
 
   console.log('Region: ', region);
