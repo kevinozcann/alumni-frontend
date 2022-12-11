@@ -1,6 +1,6 @@
 [
   {
-    "Action": ["dynamodb:PutItem"],
-    "Resource": ["arn:aws:dynamodb:*:*:table/*-${env}"]
+    "Action": [],
+    "Resource": []
   }
 ]

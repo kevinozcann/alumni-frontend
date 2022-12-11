@@ -35,11 +35,9 @@ exports.handler = async (event, context) => {
       console.log('Error', err);
     }
 
-    console.log('Success: Everything executed correctly');
     context.done(null, event);
   } else {
-    // Nothing to do, the user's email ID is unknown
-    console.log('Error: Nothing was written to DDB');
+    console.log('Sub does not exist!');
     context.done(null, event);
   }
 
