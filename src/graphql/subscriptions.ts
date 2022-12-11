@@ -110,6 +110,87 @@ export const onDeleteUser = /* GraphQL */ `
     }
   }
 `;
+export const onCreatePerson = /* GraphQL */ `
+  subscription OnCreatePerson($filter: ModelSubscriptionPersonFilterInput) {
+    onCreatePerson(filter: $filter) {
+      id
+      ssn_number
+      school_number
+      name
+      second_name
+      last_name
+      birth_date
+      gender
+      student_picture
+      occupation
+      graduation_period
+      graduation_status
+      education_status
+      marital_status
+      phone_number
+      email
+      linkedin_url
+      twitter_url
+      facebook_url
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onUpdatePerson = /* GraphQL */ `
+  subscription OnUpdatePerson($filter: ModelSubscriptionPersonFilterInput) {
+    onUpdatePerson(filter: $filter) {
+      id
+      ssn_number
+      school_number
+      name
+      second_name
+      last_name
+      birth_date
+      gender
+      student_picture
+      occupation
+      graduation_period
+      graduation_status
+      education_status
+      marital_status
+      phone_number
+      email
+      linkedin_url
+      twitter_url
+      facebook_url
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onDeletePerson = /* GraphQL */ `
+  subscription OnDeletePerson($filter: ModelSubscriptionPersonFilterInput) {
+    onDeletePerson(filter: $filter) {
+      id
+      ssn_number
+      school_number
+      name
+      second_name
+      last_name
+      birth_date
+      gender
+      student_picture
+      occupation
+      graduation_period
+      graduation_status
+      education_status
+      marital_status
+      phone_number
+      email
+      linkedin_url
+      twitter_url
+      facebook_url
+      createdAt
+      updatedAt
+    }
+  }
+`;
 export const onCreatePost = /* GraphQL */ `
   subscription OnCreatePost(
     $filter: ModelSubscriptionPostFilterInput

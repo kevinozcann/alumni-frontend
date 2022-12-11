@@ -63,6 +63,67 @@ export const listUsers = /* GraphQL */ `
     }
   }
 `;
+export const getPerson = /* GraphQL */ `
+  query GetPerson($id: ID!) {
+    getPerson(id: $id) {
+      id
+      ssn_number
+      school_number
+      name
+      second_name
+      last_name
+      birth_date
+      gender
+      student_picture
+      occupation
+      graduation_period
+      graduation_status
+      education_status
+      marital_status
+      phone_number
+      email
+      linkedin_url
+      twitter_url
+      facebook_url
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const listPeople = /* GraphQL */ `
+  query ListPeople(
+    $filter: ModelPersonFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listPeople(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        ssn_number
+        school_number
+        name
+        second_name
+        last_name
+        birth_date
+        gender
+        student_picture
+        occupation
+        graduation_period
+        graduation_status
+        education_status
+        marital_status
+        phone_number
+        email
+        linkedin_url
+        twitter_url
+        facebook_url
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
 export const getPost = /* GraphQL */ `
   query GetPost($id: ID!) {
     getPost(id: $id) {

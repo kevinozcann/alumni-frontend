@@ -229,7 +229,7 @@ export function* saga() {
       if (actionType === 'add') {
         yield put(postActions.setPhase('adding'));
 
-        // const user = yield Auth.currentAuthenticatedUser();
+        const { username } = yield Auth.currentAuthenticatedUser();
 
         try {
           const { data } = yield API.graphql({
@@ -237,7 +237,8 @@ export function* saga() {
             variables: {
               input: {
                 title: post.title,
-                content: post.content
+                content: post.content,
+                userPostsId: username
               }
             },
             authMode: 'AMAZON_COGNITO_USER_POOLS'

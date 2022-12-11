@@ -119,6 +119,127 @@ export type DeleteUserInput = {
   id: string,
 };
 
+export type CreatePersonInput = {
+  id?: string | null,
+  ssn_number?: string | null,
+  school_number?: string | null,
+  name: string,
+  second_name?: string | null,
+  last_name: string,
+  birth_date?: string | null,
+  gender?: Gender | null,
+  student_picture?: string | null,
+  occupation?: string | null,
+  graduation_period?: string | null,
+  graduation_status?: string | null,
+  education_status?: string | null,
+  marital_status?: MaritalStatus | null,
+  phone_number?: string | null,
+  email?: string | null,
+  linkedin_url?: string | null,
+  twitter_url?: string | null,
+  facebook_url?: string | null,
+};
+
+export enum Gender {
+  MALE = "MALE",
+  FEMAIL = "FEMAIL",
+  OTHER = "OTHER",
+}
+
+
+export enum MaritalStatus {
+  SINGLE = "SINGLE",
+  MARRIED = "MARRIED",
+  SEPARATED = "SEPARATED",
+}
+
+
+export type ModelPersonConditionInput = {
+  ssn_number?: ModelStringInput | null,
+  school_number?: ModelStringInput | null,
+  name?: ModelStringInput | null,
+  second_name?: ModelStringInput | null,
+  last_name?: ModelStringInput | null,
+  birth_date?: ModelStringInput | null,
+  gender?: ModelGenderInput | null,
+  student_picture?: ModelStringInput | null,
+  occupation?: ModelStringInput | null,
+  graduation_period?: ModelStringInput | null,
+  graduation_status?: ModelStringInput | null,
+  education_status?: ModelStringInput | null,
+  marital_status?: ModelMaritalStatusInput | null,
+  phone_number?: ModelStringInput | null,
+  email?: ModelStringInput | null,
+  linkedin_url?: ModelStringInput | null,
+  twitter_url?: ModelStringInput | null,
+  facebook_url?: ModelStringInput | null,
+  and?: Array< ModelPersonConditionInput | null > | null,
+  or?: Array< ModelPersonConditionInput | null > | null,
+  not?: ModelPersonConditionInput | null,
+};
+
+export type ModelGenderInput = {
+  eq?: Gender | null,
+  ne?: Gender | null,
+};
+
+export type ModelMaritalStatusInput = {
+  eq?: MaritalStatus | null,
+  ne?: MaritalStatus | null,
+};
+
+export type Person = {
+  __typename: "Person",
+  id: string,
+  ssn_number?: string | null,
+  school_number?: string | null,
+  name: string,
+  second_name?: string | null,
+  last_name: string,
+  birth_date?: string | null,
+  gender?: Gender | null,
+  student_picture?: string | null,
+  occupation?: string | null,
+  graduation_period?: string | null,
+  graduation_status?: string | null,
+  education_status?: string | null,
+  marital_status?: MaritalStatus | null,
+  phone_number?: string | null,
+  email?: string | null,
+  linkedin_url?: string | null,
+  twitter_url?: string | null,
+  facebook_url?: string | null,
+  createdAt: string,
+  updatedAt: string,
+};
+
+export type UpdatePersonInput = {
+  id: string,
+  ssn_number?: string | null,
+  school_number?: string | null,
+  name?: string | null,
+  second_name?: string | null,
+  last_name?: string | null,
+  birth_date?: string | null,
+  gender?: Gender | null,
+  student_picture?: string | null,
+  occupation?: string | null,
+  graduation_period?: string | null,
+  graduation_status?: string | null,
+  education_status?: string | null,
+  marital_status?: MaritalStatus | null,
+  phone_number?: string | null,
+  email?: string | null,
+  linkedin_url?: string | null,
+  twitter_url?: string | null,
+  facebook_url?: string | null,
+};
+
+export type DeletePersonInput = {
+  id: string,
+};
+
 export type CreatePostInput = {
   id?: string | null,
   title?: string | null,
@@ -205,6 +326,37 @@ export type ModelUserConnection = {
   nextToken?: string | null,
 };
 
+export type ModelPersonFilterInput = {
+  id?: ModelIDInput | null,
+  ssn_number?: ModelStringInput | null,
+  school_number?: ModelStringInput | null,
+  name?: ModelStringInput | null,
+  second_name?: ModelStringInput | null,
+  last_name?: ModelStringInput | null,
+  birth_date?: ModelStringInput | null,
+  gender?: ModelGenderInput | null,
+  student_picture?: ModelStringInput | null,
+  occupation?: ModelStringInput | null,
+  graduation_period?: ModelStringInput | null,
+  graduation_status?: ModelStringInput | null,
+  education_status?: ModelStringInput | null,
+  marital_status?: ModelMaritalStatusInput | null,
+  phone_number?: ModelStringInput | null,
+  email?: ModelStringInput | null,
+  linkedin_url?: ModelStringInput | null,
+  twitter_url?: ModelStringInput | null,
+  facebook_url?: ModelStringInput | null,
+  and?: Array< ModelPersonFilterInput | null > | null,
+  or?: Array< ModelPersonFilterInput | null > | null,
+  not?: ModelPersonFilterInput | null,
+};
+
+export type ModelPersonConnection = {
+  __typename: "ModelPersonConnection",
+  items:  Array<Person | null >,
+  nextToken?: string | null,
+};
+
 export type ModelPostFilterInput = {
   id?: ModelIDInput | null,
   title?: ModelStringInput | null,
@@ -262,6 +414,30 @@ export type ModelSubscriptionStringInput = {
   beginsWith?: string | null,
   in?: Array< string | null > | null,
   notIn?: Array< string | null > | null,
+};
+
+export type ModelSubscriptionPersonFilterInput = {
+  id?: ModelSubscriptionIDInput | null,
+  ssn_number?: ModelSubscriptionStringInput | null,
+  school_number?: ModelSubscriptionStringInput | null,
+  name?: ModelSubscriptionStringInput | null,
+  second_name?: ModelSubscriptionStringInput | null,
+  last_name?: ModelSubscriptionStringInput | null,
+  birth_date?: ModelSubscriptionStringInput | null,
+  gender?: ModelSubscriptionStringInput | null,
+  student_picture?: ModelSubscriptionStringInput | null,
+  occupation?: ModelSubscriptionStringInput | null,
+  graduation_period?: ModelSubscriptionStringInput | null,
+  graduation_status?: ModelSubscriptionStringInput | null,
+  education_status?: ModelSubscriptionStringInput | null,
+  marital_status?: ModelSubscriptionStringInput | null,
+  phone_number?: ModelSubscriptionStringInput | null,
+  email?: ModelSubscriptionStringInput | null,
+  linkedin_url?: ModelSubscriptionStringInput | null,
+  twitter_url?: ModelSubscriptionStringInput | null,
+  facebook_url?: ModelSubscriptionStringInput | null,
+  and?: Array< ModelSubscriptionPersonFilterInput | null > | null,
+  or?: Array< ModelSubscriptionPersonFilterInput | null > | null,
 };
 
 export type ModelSubscriptionPostFilterInput = {
@@ -409,6 +585,102 @@ export type DeleteUserMutation = {
       } | null >,
       nextToken?: string | null,
     } | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type CreatePersonMutationVariables = {
+  input: CreatePersonInput,
+  condition?: ModelPersonConditionInput | null,
+};
+
+export type CreatePersonMutation = {
+  createPerson?:  {
+    __typename: "Person",
+    id: string,
+    ssn_number?: string | null,
+    school_number?: string | null,
+    name: string,
+    second_name?: string | null,
+    last_name: string,
+    birth_date?: string | null,
+    gender?: Gender | null,
+    student_picture?: string | null,
+    occupation?: string | null,
+    graduation_period?: string | null,
+    graduation_status?: string | null,
+    education_status?: string | null,
+    marital_status?: MaritalStatus | null,
+    phone_number?: string | null,
+    email?: string | null,
+    linkedin_url?: string | null,
+    twitter_url?: string | null,
+    facebook_url?: string | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type UpdatePersonMutationVariables = {
+  input: UpdatePersonInput,
+  condition?: ModelPersonConditionInput | null,
+};
+
+export type UpdatePersonMutation = {
+  updatePerson?:  {
+    __typename: "Person",
+    id: string,
+    ssn_number?: string | null,
+    school_number?: string | null,
+    name: string,
+    second_name?: string | null,
+    last_name: string,
+    birth_date?: string | null,
+    gender?: Gender | null,
+    student_picture?: string | null,
+    occupation?: string | null,
+    graduation_period?: string | null,
+    graduation_status?: string | null,
+    education_status?: string | null,
+    marital_status?: MaritalStatus | null,
+    phone_number?: string | null,
+    email?: string | null,
+    linkedin_url?: string | null,
+    twitter_url?: string | null,
+    facebook_url?: string | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type DeletePersonMutationVariables = {
+  input: DeletePersonInput,
+  condition?: ModelPersonConditionInput | null,
+};
+
+export type DeletePersonMutation = {
+  deletePerson?:  {
+    __typename: "Person",
+    id: string,
+    ssn_number?: string | null,
+    school_number?: string | null,
+    name: string,
+    second_name?: string | null,
+    last_name: string,
+    birth_date?: string | null,
+    gender?: Gender | null,
+    student_picture?: string | null,
+    occupation?: string | null,
+    graduation_period?: string | null,
+    graduation_status?: string | null,
+    education_status?: string | null,
+    marital_status?: MaritalStatus | null,
+    phone_number?: string | null,
+    email?: string | null,
+    linkedin_url?: string | null,
+    twitter_url?: string | null,
+    facebook_url?: string | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -809,6 +1081,74 @@ export type ListUsersQuery = {
   } | null,
 };
 
+export type GetPersonQueryVariables = {
+  id: string,
+};
+
+export type GetPersonQuery = {
+  getPerson?:  {
+    __typename: "Person",
+    id: string,
+    ssn_number?: string | null,
+    school_number?: string | null,
+    name: string,
+    second_name?: string | null,
+    last_name: string,
+    birth_date?: string | null,
+    gender?: Gender | null,
+    student_picture?: string | null,
+    occupation?: string | null,
+    graduation_period?: string | null,
+    graduation_status?: string | null,
+    education_status?: string | null,
+    marital_status?: MaritalStatus | null,
+    phone_number?: string | null,
+    email?: string | null,
+    linkedin_url?: string | null,
+    twitter_url?: string | null,
+    facebook_url?: string | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type ListPeopleQueryVariables = {
+  filter?: ModelPersonFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type ListPeopleQuery = {
+  listPeople?:  {
+    __typename: "ModelPersonConnection",
+    items:  Array< {
+      __typename: "Person",
+      id: string,
+      ssn_number?: string | null,
+      school_number?: string | null,
+      name: string,
+      second_name?: string | null,
+      last_name: string,
+      birth_date?: string | null,
+      gender?: Gender | null,
+      student_picture?: string | null,
+      occupation?: string | null,
+      graduation_period?: string | null,
+      graduation_status?: string | null,
+      education_status?: string | null,
+      marital_status?: MaritalStatus | null,
+      phone_number?: string | null,
+      email?: string | null,
+      linkedin_url?: string | null,
+      twitter_url?: string | null,
+      facebook_url?: string | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null >,
+    nextToken?: string | null,
+  } | null,
+};
+
 export type GetPostQueryVariables = {
   id: string,
 };
@@ -1119,6 +1459,99 @@ export type OnDeleteUserSubscription = {
       } | null >,
       nextToken?: string | null,
     } | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnCreatePersonSubscriptionVariables = {
+  filter?: ModelSubscriptionPersonFilterInput | null,
+};
+
+export type OnCreatePersonSubscription = {
+  onCreatePerson?:  {
+    __typename: "Person",
+    id: string,
+    ssn_number?: string | null,
+    school_number?: string | null,
+    name: string,
+    second_name?: string | null,
+    last_name: string,
+    birth_date?: string | null,
+    gender?: Gender | null,
+    student_picture?: string | null,
+    occupation?: string | null,
+    graduation_period?: string | null,
+    graduation_status?: string | null,
+    education_status?: string | null,
+    marital_status?: MaritalStatus | null,
+    phone_number?: string | null,
+    email?: string | null,
+    linkedin_url?: string | null,
+    twitter_url?: string | null,
+    facebook_url?: string | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnUpdatePersonSubscriptionVariables = {
+  filter?: ModelSubscriptionPersonFilterInput | null,
+};
+
+export type OnUpdatePersonSubscription = {
+  onUpdatePerson?:  {
+    __typename: "Person",
+    id: string,
+    ssn_number?: string | null,
+    school_number?: string | null,
+    name: string,
+    second_name?: string | null,
+    last_name: string,
+    birth_date?: string | null,
+    gender?: Gender | null,
+    student_picture?: string | null,
+    occupation?: string | null,
+    graduation_period?: string | null,
+    graduation_status?: string | null,
+    education_status?: string | null,
+    marital_status?: MaritalStatus | null,
+    phone_number?: string | null,
+    email?: string | null,
+    linkedin_url?: string | null,
+    twitter_url?: string | null,
+    facebook_url?: string | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnDeletePersonSubscriptionVariables = {
+  filter?: ModelSubscriptionPersonFilterInput | null,
+};
+
+export type OnDeletePersonSubscription = {
+  onDeletePerson?:  {
+    __typename: "Person",
+    id: string,
+    ssn_number?: string | null,
+    school_number?: string | null,
+    name: string,
+    second_name?: string | null,
+    last_name: string,
+    birth_date?: string | null,
+    gender?: Gender | null,
+    student_picture?: string | null,
+    occupation?: string | null,
+    graduation_period?: string | null,
+    graduation_status?: string | null,
+    education_status?: string | null,
+    marital_status?: MaritalStatus | null,
+    phone_number?: string | null,
+    email?: string | null,
+    linkedin_url?: string | null,
+    twitter_url?: string | null,
+    facebook_url?: string | null,
     createdAt: string,
     updatedAt: string,
   } | null,

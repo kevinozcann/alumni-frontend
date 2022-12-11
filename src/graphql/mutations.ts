@@ -119,6 +119,96 @@ export const deleteUser = /* GraphQL */ `
     }
   }
 `;
+export const createPerson = /* GraphQL */ `
+  mutation CreatePerson(
+    $input: CreatePersonInput!
+    $condition: ModelPersonConditionInput
+  ) {
+    createPerson(input: $input, condition: $condition) {
+      id
+      ssn_number
+      school_number
+      name
+      second_name
+      last_name
+      birth_date
+      gender
+      student_picture
+      occupation
+      graduation_period
+      graduation_status
+      education_status
+      marital_status
+      phone_number
+      email
+      linkedin_url
+      twitter_url
+      facebook_url
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const updatePerson = /* GraphQL */ `
+  mutation UpdatePerson(
+    $input: UpdatePersonInput!
+    $condition: ModelPersonConditionInput
+  ) {
+    updatePerson(input: $input, condition: $condition) {
+      id
+      ssn_number
+      school_number
+      name
+      second_name
+      last_name
+      birth_date
+      gender
+      student_picture
+      occupation
+      graduation_period
+      graduation_status
+      education_status
+      marital_status
+      phone_number
+      email
+      linkedin_url
+      twitter_url
+      facebook_url
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const deletePerson = /* GraphQL */ `
+  mutation DeletePerson(
+    $input: DeletePersonInput!
+    $condition: ModelPersonConditionInput
+  ) {
+    deletePerson(input: $input, condition: $condition) {
+      id
+      ssn_number
+      school_number
+      name
+      second_name
+      last_name
+      birth_date
+      gender
+      student_picture
+      occupation
+      graduation_period
+      graduation_status
+      education_status
+      marital_status
+      phone_number
+      email
+      linkedin_url
+      twitter_url
+      facebook_url
+      createdAt
+      updatedAt
+    }
+  }
+`;
 export const createPost = /* GraphQL */ `
   mutation CreatePost(
     $input: CreatePostInput!
