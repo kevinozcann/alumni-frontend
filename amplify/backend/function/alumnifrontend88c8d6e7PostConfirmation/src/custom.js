@@ -1,10 +1,9 @@
-var aws = require('aws-sdk');
-var ddb = new aws.DynamoDB({ apiVersion: '2012-10-08' });
+import * as ATW from 'aws-typescript-wrapper';
 
 /**
  * @type {import('@types/aws-lambda').APIGatewayProxyHandler}
  */
-exports.handler = async (event, context) => {
+exports.handler = async (event) => {
   console.log(event);
 
   const environment = process.env.ENV;
@@ -15,30 +14,25 @@ exports.handler = async (event, context) => {
   console.log('Region: ', region);
   console.log('Table: ', userTableName);
 
-  aws.config.update({ region: region });
-
   if (event.request.userAttributes.sub) {
-    const ddbParams = {
-      Item: {
-        id: { S: event.request.userAttributes.sub },
-        __typename: { S: 'User' },
-        name: { S: event.request.userAttributes.name },
-        family_name: { S: event.request.userAttributes.family_name }
-      },
-      TableName: userTableName
-    };
-
     try {
-      await ddb.putItem(ddbParams).promise();
+      await ATW.putItem({
+        region: region,
+        tableName: userTableName,
+        item: {
+          id: { S: event.request.userAttributes.sub },
+          __typename: { S: 'User' },
+          name: { S: event.request.userAttributes.name },
+          family_name: { S: event.request.userAttributes.family_name }
+        }
+      }).promise();
+
       console.log('Success');
     } catch (err) {
       console.log('Error', err);
     }
-
-    context.done(null, event);
   } else {
     console.log('Sub does not exist!');
-    context.done(null, event);
   }
 
   return event;
