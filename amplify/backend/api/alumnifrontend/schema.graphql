@@ -16,8 +16,9 @@ enum MaritalStatus {
 
 type User @model @auth(rules: [{ allow: private }]) {
   id: ID!
-  name: String
-  family_name: String
+  name: String!
+  family_name: String!
+  email: String!
   picture: String
   posts: [Post] @hasMany
   comments: [Comment] @hasMany

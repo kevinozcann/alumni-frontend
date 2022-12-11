@@ -1,10 +1,10 @@
-import { Callback, Context, Handler } from 'aws-lambda';
-import * as ATW from 'aws-typescript-wrapper';
+var AWS = require('aws-sdk');
+var ddb = new AWS.DynamoDB({ apiVersion: '2012-10-08' });
 
 /**
  * @type {import('@types/aws-lambda').APIGatewayProxyHandler}
  */
-exports.handler = async (event: any, context: Context, callback: Callback<string>) => {
+exports.handler = async (event, context) => {
   console.log(event);
 
   const environment = process.env.ENV;
@@ -15,19 +15,21 @@ exports.handler = async (event: any, context: Context, callback: Callback<string
   console.log('Region: ', region);
   console.log('Table: ', userTableName);
 
-  if (event.request.userAttributes.sub) {
-    try {
-      await ATW.putItem({
-        region: region,
-        tableName: userTableName,
-        item: {
-          id: { S: event.request.userAttributes.sub },
-          __typename: { S: 'User' },
-          name: { S: event.request.userAttributes.name },
-          family_name: { S: event.request.userAttributes.family_name }
-        }
-      });
+  AWS.config.update({ region: region });
 
+  if (event.request.userAttributes.sub) {
+    const ddbParams = {
+      Item: {
+        id: { S: event.request.userAttributes.sub },
+        __typename: { S: 'User' },
+        name: { S: event.request.userAttributes.name },
+        family_name: { S: event.request.userAttributes.family_name }
+      },
+      TableName: userTableName
+    };
+
+    try {
+      await ddb.putItem(ddbParams).promise();
       console.log('Success');
     } catch (err) {
       console.log('Error', err);
