@@ -3,7 +3,7 @@ import * as ATW from 'aws-typescript-wrapper';
 /**
  * @type {import('@types/aws-lambda').APIGatewayProxyHandler}
  */
-exports.handler = async (event) => {
+exports.handler = async (event: any, context: any) => {
   console.log(event);
 
   const environment = process.env.ENV;
@@ -25,7 +25,7 @@ exports.handler = async (event) => {
           name: { S: event.request.userAttributes.name },
           family_name: { S: event.request.userAttributes.family_name }
         }
-      }).promise();
+      });
 
       console.log('Success');
     } catch (err) {
