@@ -16,7 +16,7 @@
     "check-types:watch": "tsc --watch",
     "extract": "formatjs extract 'src/pages/**/*.ts*' --out-file src/theme/i18n/messages/keys.json --id-interpolation-pattern '[sha512:contenthash:base64:6]'",
     "generate-build-meta": "./node_modules/react-clear-cache/bin/cli.js",
-    "amplify:alumnifrontend88c8d6e7PostConfirmation": "cd amplify/backend/function/alumnifrontend88c8d6e7PostConfirmation/src && yarn install && tsc && cd -"
+    "amplify:alumnifrontend88c8d6e7PostConfirmation": "cd amplify/backend/function/alumnifrontend88c8d6e7PostConfirmation/lib && yarn && tsc -p ./tsconfig.json && cd -"
   },
   "lint-staged": {
     "*.@(ts|tsx|js|jsx|json|yml|yaml)": [

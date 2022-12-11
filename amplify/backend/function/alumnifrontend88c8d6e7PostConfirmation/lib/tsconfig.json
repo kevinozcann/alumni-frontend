@@ -1,16 +1,16 @@
 {
   "compilerOptions": {
     "allowSyntheticDefaultImports": true,
-    "allowJs": true,
-    "declaration": false,
     "lib": ["dom", "esnext"],
     "module": "commonjs",
     "moduleResolution": "node",
     "skipLibCheck": true,
     "resolveJsonModule": true,
-    "esModuleInterop": true,
-    "outDir": "../dist"
-  },
-  "include": ["."],
-  "exclude": ["node_modules", "**/*.spec.ts"]
+    "outDir": "../src",
+    "baseUrl": ".",
+    "rootDir": ".",
+    "paths": {
+      "src": ["."]
+    }
+  }
 }
