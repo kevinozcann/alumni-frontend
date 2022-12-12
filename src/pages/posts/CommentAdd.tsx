@@ -45,7 +45,7 @@ const CommentAdd = (props: TCommentAddProps) => {
 
   return (
     <Box sx={{ alignItems: 'center', display: 'flex' }}>
-      <Avatar alt='User' src={user.picture} />
+      <Avatar alt='User' src={user.attributes.pictureUrl} />
 
       <Paper sx={{ flexGrow: 1, ml: 2, p: 0.5 }} variant='outlined'>
         <Input

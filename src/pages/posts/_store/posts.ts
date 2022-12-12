@@ -7,7 +7,7 @@ import { put, takeLatest } from 'redux-saga/effects';
 import { createSelector } from 'reselect';
 
 import { createPost } from 'graphql/mutations';
-import { listPosts } from 'graphql/queries';
+import { postsByDate } from 'graphql/queries';
 import { IUser } from 'pages/account/account-types';
 import { IPost } from 'pages/posts/post-types';
 import { IAction } from 'store/store';
@@ -180,7 +180,7 @@ export function* saga() {
 
       try {
         const { data } = yield API.graphql({
-          query: listPosts,
+          query: postsByDate,
           authMode: 'AMAZON_COGNITO_USER_POOLS'
         });
 

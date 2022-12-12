@@ -65,7 +65,7 @@ const Post = (props: FeedProps) => {
   const lang = useSelector(i18nLangSelector);
   const postsPhase = useSelector(postsPhaseSelector);
 
-  const isMe = post?.owner?.isMe;
+  const isMe = post?.user?.id === user.attributes.sub;
   const images = post.files?.filter((file) => file.mimeType.includes('image/'));
   const files = post.files?.filter((file) => !file.mimeType.includes('image/'));
 
@@ -100,8 +100,8 @@ const Post = (props: FeedProps) => {
       <Card>
         <CardHeader
           avatar={
-            <Avatar alt='user avatar' src={post?.owner?.picture}>
-              {getInitials(post?.owner?.fullName)}
+            <Avatar alt='user avatar' src={post?.user?.pictureUrl}>
+              {getInitials(`${post?.user?.name} ${post?.user?.family_name}`)}
             </Avatar>
           }
           disableTypography

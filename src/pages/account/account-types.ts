@@ -3,6 +3,7 @@ import { ISchool } from 'pages/organization/organization-types';
 export type TUserZone = 'headquarters' | 'campus' | 'school' | 'teacher' | 'parent' | 'student';
 
 export interface IUserAttributes {
+  id?: string;
   sub?: string;
   email_verified?: boolean;
   name?: string;

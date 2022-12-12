@@ -70,7 +70,7 @@ const NewFeed = (props: TNewFeedProps) => {
                 onClick={handleAddClick}
                 placeholder={intl.translate(
                   { id: 'post.whats_in_your_mind.name' },
-                  { name: user.name }
+                  { name: user.attributes.name }
                 )}
               />
             </Paper>
