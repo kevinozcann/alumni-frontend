@@ -106,12 +106,17 @@
       "service": "Lambda",
       "dependsOn": [
         {
+          "category": "storage",
+          "resourceName": "storage",
+          "attributes": [
+            "BucketName"
+          ]
+        },
+        {
           "category": "api",
           "resourceName": "alumnifrontend",
           "attributes": [
-            "GraphQLAPIIdOutput",
-            "GraphQLAPIEndpointOutput",
-            "GraphQLAPIKeyOutput"
+            "GraphQLAPIIdOutput"
           ]
         }
       ]
@@ -141,6 +146,20 @@
       "build": true,
       "providerPlugin": "awscloudformation",
       "service": "Lambda"
+    },
+    "getUserPicture": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda",
+      "dependsOn": [
+        {
+          "category": "storage",
+          "resourceName": "storage",
+          "attributes": [
+            "BucketName"
+          ]
+        }
+      ]
     }
   },
   "storage": {

@@ -17,13 +17,18 @@ exports.handler = async (event, context) => {
 
   AWS.config.update({ region: region });
 
+  const date = new Date();
+
   if (event.request.userAttributes.sub) {
     const ddbParams = {
       Item: {
         id: { S: event.request.userAttributes.sub },
         __typename: { S: 'User' },
         name: { S: event.request.userAttributes.name },
-        family_name: { S: event.request.userAttributes.family_name }
+        family_name: { S: event.request.userAttributes.family_name },
+        email: { S: event.request.userAttributes.email },
+        createdAt: { S: date.toISOString() },
+        updatedAt: { S: date.toISOString() }
       },
       TableName: userTableName
     };

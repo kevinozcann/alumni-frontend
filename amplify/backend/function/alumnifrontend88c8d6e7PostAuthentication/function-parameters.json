@@ -15,6 +15,15 @@
   "skipEdit": true,
   "enableCors": false,
   "permissions": {
+    "storage": {
+      "storage": [
+        "create",
+        "read"
+      ],
+      "User:@model(appsync)": [
+        "update"
+      ]
+    },
     "api": {
       "alumnifrontend": [
         "Query",

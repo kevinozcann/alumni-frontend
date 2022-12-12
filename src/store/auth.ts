@@ -405,6 +405,14 @@ export function* saga() {
                 attributes: updateAttributes
               }
             });
+
+            // If pictures are updated then get a temp url for them
+            if (
+              attributes.hasOwnProperty('custom:picture') ||
+              attributes.hasOwnProperty('custom:wallpaper')
+            ) {
+              yield call(getUserImages);
+            }
           } else {
             yield put(authActions.setPhase('error', 'An error occurred!'));
           }

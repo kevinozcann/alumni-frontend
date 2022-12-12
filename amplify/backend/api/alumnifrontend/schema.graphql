@@ -70,3 +70,7 @@ type Comment
   user: User @belongsTo
   content: String!
 }
+
+type Query {
+  getUserPicture(picture: String): String @function(name: "getUserPicture-${env}")
+}
