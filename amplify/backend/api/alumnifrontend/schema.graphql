@@ -18,16 +18,32 @@ type S3Object {
   key: String!
   region: String!
 }
-type User @model @auth(rules: [{ allow: private }]) {
+type User
+  @model
+  @auth(
+    rules: [
+      { allow: owner }
+      { allow: private, operations: [read] }
+      { allow: public, operations: [read] }
+    ]
+  ) {
   id: ID!
   name: String!
   family_name: String!
   email: String!
   picture: String
-  posts: [Post] @hasMany
-  comments: [Comment] @hasMany
+  posts: [Post] @hasMany(indexName: "byUser", fields: ["id"])
+  comments: [Comment] @hasMany(indexName: "byUser", fields: ["id"])
 }
-type Person @model @auth(rules: [{ allow: private }]) {
+type Person
+  @model
+  @auth(
+    rules: [
+      { allow: owner }
+      { allow: private, operations: [read] }
+      { allow: public, operations: [read] }
+    ]
+  ) {
   id: ID!
   ssn_number: String
   school_number: String
@@ -48,12 +64,21 @@ type Person @model @auth(rules: [{ allow: private }]) {
   twitter_url: String
   facebook_url: String
 }
-type Post @model @auth(rules: [{ allow: owner }, { allow: private, operations: [read] }]) {
+type Post
+  @model
+  @auth(
+    rules: [
+      { allow: owner }
+      { allow: private, operations: [read] }
+      { allow: public, operations: [read] }
+    ]
+  ) {
   id: ID!
   title: String
   content: String!
-  user: User @belongsTo
-  comments: [Comment] @hasMany
+  userID: ID! @index(name: "byUser", sortKeyFields: ["title"])
+  user: User @belongsTo(fields: ["userID"])
+  comments: [Comment] @hasMany(indexName: "byPost", fields: ["id"])
   type: String! @index(name: "postsByDate", queryField: "postsByDate", sortKeyFields: ["createdAt"])
   createdAt: String!
 }
@@ -67,9 +92,11 @@ type Comment
     ]
   ) {
   id: ID!
-  post: Post! @belongsTo
-  user: User! @belongsTo
   content: String!
+  postID: ID! @index(name: "byPost")
+  post: Post! @belongsTo(fields: ["postID"])
+  userID: ID! @index(name: "byUser")
+  user: User! @belongsTo(fields: ["userID"])
 }
 
 type Query {
