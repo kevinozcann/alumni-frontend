@@ -10,20 +10,19 @@ import { TActionType } from 'utils/shared-types';
 import { IUser } from 'pages/account/account-types';
 
 import { IPost, IPostComment } from './post-types';
-import { IExtendedPost } from './_store/posts';
 
 interface TCommentProps {
   user: IUser;
   post: IPost;
   phase: string;
   comment: IPostComment;
-  handleSaveFeed: (user: IUser, post: Partial<IExtendedPost>, actionType: TActionType) => void;
+  handleSaveFeed: (user: IUser, post: Partial<IPost>, actionType: TActionType) => void;
 }
 
 const Comment = (props: TCommentProps) => {
   const { user, post, phase, comment, handleSaveFeed } = props;
   const [showConfirmDialog, setShowConfirmDialog] = React.useState(false);
-  const [userComment, setUserComment] = React.useState(comment.comment);
+  const [userComment, setUserComment] = React.useState(comment.content);
   const intl = useTranslation();
 
   const isMe = comment.owner.isMe;
@@ -31,7 +30,7 @@ const Comment = (props: TCommentProps) => {
   const handleCommentUpdate = (text: string) => {
     setUserComment(text);
 
-    handleSaveFeed(user, { commentId: comment.id, comment: text }, 'update-comment');
+    // handleSaveFeed(user, { commentId: comment.id, comment: text }, 'update-comment');
   };
 
   const handleCommentDelete = () => {
@@ -39,7 +38,7 @@ const Comment = (props: TCommentProps) => {
   };
 
   const handleDeleteConfirm = () => {
-    handleSaveFeed(user, { feedId: post.id, commentId: comment.id }, 'delete-comment');
+    // handleSaveFeed(user, { feedId: post.id, commentId: comment.id }, 'delete-comment');
   };
 
   const handleCloseConfirm = () => {
@@ -76,7 +75,7 @@ const Comment = (props: TCommentProps) => {
                   onSetText={(text: string) => handleCommentUpdate(text)}
                 />
               ) : (
-                comment.comment
+                comment.content
               )}
             </Typography>
           </Box>

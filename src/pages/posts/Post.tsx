@@ -33,6 +33,7 @@ import { authUserSelector } from 'store/auth';
 import { i18nLangSelector } from 'store/i18n';
 import { IPost } from './post-types';
 import { postActions, postsPhaseSelector } from './_store/posts';
+import { IUser } from 'pages/account/account-types';
 
 const Moment = loadable.lib(() => import('moment'));
 
@@ -69,7 +70,7 @@ const Post = (props: FeedProps) => {
   const images = post.files?.filter((file) => file.mimeType.includes('image/'));
   const files = post.files?.filter((file) => !file.mimeType.includes('image/'));
 
-  const handleSaveFeed = React.useCallback((user, post: IPost, actionType: TActionType) => {
+  const handleSaveFeed = React.useCallback((user: IUser, post: IPost, actionType: TActionType) => {
     dispatch(postActions.savePost(user, post, actionType));
   }, []);
 
@@ -268,7 +269,7 @@ const Post = (props: FeedProps) => {
 
           <Divider sx={{ marginBottom: 1 }} />
 
-          <CommentAdd user={user} post={post} handleSaveFeed={handleSaveFeed} />
+          <CommentAdd post={post} />
         </Box>
       </Card>
 

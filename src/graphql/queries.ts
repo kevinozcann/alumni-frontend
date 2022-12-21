@@ -2,12 +2,18 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
+export const getUserPicture = /* GraphQL */ `
+  query GetUserPicture($picture: String) {
+    getUserPicture(picture: $picture)
+  }
+`;
 export const getUser = /* GraphQL */ `
   query GetUser($id: ID!) {
     getUser(id: $id) {
       id
       name
       family_name
+      email
       picture
       posts {
         items {
@@ -50,6 +56,7 @@ export const listUsers = /* GraphQL */ `
         id
         name
         family_name
+        email
         picture
         posts {
           nextToken
@@ -135,6 +142,7 @@ export const getPost = /* GraphQL */ `
         id
         name
         family_name
+        email
         picture
         posts {
           nextToken
@@ -180,6 +188,7 @@ export const listPosts = /* GraphQL */ `
           id
           name
           family_name
+          email
           picture
           createdAt
           updatedAt
@@ -222,6 +231,7 @@ export const postsByDate = /* GraphQL */ `
           id
           name
           family_name
+          email
           picture
           createdAt
           updatedAt
@@ -251,6 +261,7 @@ export const getComment = /* GraphQL */ `
           id
           name
           family_name
+          email
           picture
           createdAt
           updatedAt
@@ -268,6 +279,7 @@ export const getComment = /* GraphQL */ `
         id
         name
         family_name
+        email
         picture
         posts {
           nextToken
@@ -310,6 +322,7 @@ export const listComments = /* GraphQL */ `
           id
           name
           family_name
+          email
           picture
           createdAt
           updatedAt

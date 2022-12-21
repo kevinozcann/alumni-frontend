@@ -6,19 +6,19 @@ import storage from 'redux-persist/lib/storage';
 import { put, takeLatest } from 'redux-saga/effects';
 import { createSelector } from 'reselect';
 
-import { createPost } from 'graphql/mutations';
+import { createPost, deletePost } from 'graphql/mutations';
 import { postsByDate } from 'graphql/queries';
 import { IUser } from 'pages/account/account-types';
-import { IPost } from 'pages/posts/post-types';
+import { IPost, IPostComment } from 'pages/posts/post-types';
 import { IAction } from 'store/store';
 import { TActionType, TLang } from 'utils/shared-types';
 
-export interface IExtendedPost extends IPost {
-  commentId?: number;
-  comment?: string;
-  feedId?: number;
+import { addComment } from './sagas/comment/addComment';
+
+interface IPostsStoreState {
+  posts: IPostsStore;
 }
-interface IPostsState {
+interface IPostsStore {
   owned: IPost[];
   all: IPost[];
   add: IPost;
@@ -27,21 +27,21 @@ interface IPostsState {
   phase: string;
   error?: string;
 }
-interface IParentPostsState {
-  posts: IPostsState;
-}
-type TActionAllState = IPostsState & {
+type TPostsStoreActions = IPostsStore & {
   actionType?: TActionType;
-  post?: Partial<IExtendedPost>;
+  post?: Partial<IPost>;
+  comment?: Partial<IPostComment>;
   posts?: IPost[];
-  feedType?: string;
+  postType?: string;
   id?: number;
   lang?: TLang;
   page?: number;
   user?: IUser;
 };
 
-export const feedActionTypes = {
+export type TPostActionType = IAction<Partial<TPostsStoreActions>>;
+
+export const postActionTypes = {
   POSTS_PULL: 'posts/PULL_POSTS',
   POSTS_UPDATE: 'posts/UPDATE_POSTS',
   POSTS_SAVE: 'posts/SAVE_POSTS',
@@ -49,11 +49,15 @@ export const feedActionTypes = {
   POST_SAVE: 'posts/SAVE_POST',
   POST_UPDATE: 'posts/UPDATE_POST',
   POST_REMOVE: 'posts/REMOVE_POST',
+  STORE_POST_REMOVE: 'posts/STORE_POST_REMOVE',
   ADD_POST_UPDATE: 'posts/ADD_UPDATE_POST',
+  COMMENT_ADD: 'posts/ADD_COMMENT',
+  COMMENT_UPDATE: 'posts/UPDATE_COMMENT',
+  COMMENT_DELETE: 'posts/DELETE_COMMENT',
   POSTS_PHASE: 'posts/PHASE'
 };
 
-const initialState: IPostsState = {
+const initialState: IPostsStore = {
   owned: null,
   all: null,
   add: null,
@@ -64,29 +68,29 @@ const initialState: IPostsState = {
 };
 
 export const postsOwnedSelector = createSelector(
-  (state: IParentPostsState) => objectPath.get(state, ['posts', 'owned']),
+  (state: IPostsStoreState) => objectPath.get(state, ['posts', 'owned']),
   (posts: IPost[]) => posts
 );
 
 export const postsAddSelector = createSelector(
-  (state: IParentPostsState) => objectPath.get(state, ['posts', 'add']),
+  (state: IPostsStoreState) => objectPath.get(state, ['posts', 'add']),
   (post: IPost) => post
 );
 
 export const postsPhaseSelector = createSelector(
-  (state: IParentPostsState) => objectPath.get(state, ['posts', 'phase']),
+  (state: IPostsStoreState) => objectPath.get(state, ['posts', 'phase']),
   (phase: string) => phase
 );
 
 export const reducer = persistReducer(
   { storage, key: 'posts', whitelist: ['owned', 'all', 'add', 'edit', 'phase'] },
-  (state: IPostsState = initialState, action: IAction<TActionAllState>): IPostsState => {
+  (state: IPostsStore = initialState, action: IAction<TPostsStoreActions>): IPostsStore => {
     switch (action.type) {
-      case feedActionTypes.POSTS_UPDATE: {
+      case postActionTypes.POSTS_UPDATE: {
         const { posts, nextToken } = action.payload;
         return { ...state, owned: posts, nextToken };
       }
-      case feedActionTypes.POST_UPDATE: {
+      case postActionTypes.POST_UPDATE: {
         const { post } = action.payload;
         return produce(state, (draftState) => {
           const index = draftState.owned.findIndex((d) => d.id === post.id);
@@ -97,7 +101,7 @@ export const reducer = persistReducer(
           }
         });
       }
-      case feedActionTypes.POST_REMOVE: {
+      case postActionTypes.STORE_POST_REMOVE: {
         const { post } = action.payload;
         return produce(state, (draftState) => {
           const index = draftState.owned.findIndex((d) => d.id === post.id);
@@ -106,13 +110,13 @@ export const reducer = persistReducer(
           }
         });
       }
-      case feedActionTypes.ADD_POST_UPDATE: {
+      case postActionTypes.ADD_POST_UPDATE: {
         const { post } = action.payload;
         return produce(state, (draftState) => {
           draftState.add = post;
         });
       }
-      case feedActionTypes.POSTS_PHASE: {
+      case postActionTypes.POSTS_PHASE: {
         const { phase, error } = action.payload;
         return { ...state, phase, error };
       }
@@ -123,57 +127,52 @@ export const reducer = persistReducer(
 );
 
 export const postActions = {
-  pullPosts: (user: IUser, page: number): IAction<Partial<TActionAllState>> => ({
-    type: feedActionTypes.POSTS_PULL,
+  pullPosts: (user: IUser, page: number): TPostActionType => ({
+    type: postActionTypes.POSTS_PULL,
     payload: { user, page }
   }),
-  pullPost: (id: number): IAction<Partial<TActionAllState>> => ({
-    type: feedActionTypes.POST_PULL,
+  pullPost: (id: number): TPostActionType => ({
+    type: postActionTypes.POST_PULL,
     payload: { id }
   }),
   // updatePosts: (posts: IPost[]) => ({
-  //   type: feedActionTypes.POSTS_UPDATE,
+  //   type: postActionTypes.POSTS_UPDATE,
   //   payload: { posts }
   // }),
-  savePosts: (
-    lang: TLang,
-    user: IUser,
-    feedType: string,
-    posts: IPost[]
-  ): IAction<Partial<TActionAllState>> => ({
-    type: feedActionTypes.POSTS_SAVE,
-    payload: { lang, user, feedType, posts }
+  savePosts: (lang: TLang, user: IUser, postType: string, posts: IPost[]): TPostActionType => ({
+    type: postActionTypes.POSTS_SAVE,
+    payload: { lang, user, postType, posts }
   }),
-  savePost: (
-    user: IUser,
-    post: Partial<IExtendedPost>,
-    actionType: TActionType
-  ): IAction<Partial<TActionAllState>> => ({
-    type: feedActionTypes.POST_SAVE,
+  savePost: (user: IUser, post: Partial<IPost>, actionType: TActionType): TPostActionType => ({
+    type: postActionTypes.POST_SAVE,
     payload: { user, post, actionType }
   }),
-  // updatePost: (post: Partial<IExtendedPost>): IAction<Partial<TActionAllState>> => ({
-  //   type: feedActionTypes.POST_UPDATE,
+  // updatePost: (post: Partial<IExtendedPost>): TPostActionType => ({
+  //   type: postActionTypes.POST_UPDATE,
   //   payload: { post }
   // }),
-  removePost: (post: IPost): IAction<Partial<TActionAllState>> => ({
-    type: feedActionTypes.POST_REMOVE,
+  removePost: (post: IPost): TPostActionType => ({
+    type: postActionTypes.POST_REMOVE,
     payload: { post }
   }),
-  updateAddPost: (post: IPost): IAction<Partial<TActionAllState>> => ({
-    type: feedActionTypes.ADD_POST_UPDATE,
+  updateAddPost: (post: IPost): TPostActionType => ({
+    type: postActionTypes.ADD_POST_UPDATE,
     payload: { post }
   }),
-  setPhase: (phase: string, error?: string): IAction<Partial<TActionAllState>> => ({
-    type: feedActionTypes.POSTS_PHASE,
+  addPostComment: (user: IUser, post: IPost, comment: IPostComment): TPostActionType => ({
+    type: postActionTypes.COMMENT_ADD,
+    payload: { user, post, comment }
+  }),
+  setPhase: (phase: string, error?: string): TPostActionType => ({
+    type: postActionTypes.POSTS_PHASE,
     payload: { phase, error }
   })
 };
 
 export function* saga() {
   yield takeLatest(
-    feedActionTypes.POSTS_PULL,
-    function* postsPull({ payload }: IAction<Partial<TActionAllState>>) {
+    postActionTypes.POSTS_PULL,
+    function* postsPull({ payload }: IAction<Partial<TPostsStoreActions>>) {
       yield put(postActions.setPhase('loading'));
 
       const { user, page } = payload;
@@ -181,16 +180,16 @@ export function* saga() {
       try {
         const { data } = yield API.graphql({
           query: postsByDate,
+          variables: { type: 'Post' },
           authMode: 'AMAZON_COGNITO_USER_POOLS'
         });
 
         if (data) {
-          const posts = data.listPosts.items;
-          const nextToken = data.listPosts.nextToken;
+          const posts = data.postsByDate.items;
+          const nextToken = data.postsByDate.nextToken;
 
-          console.log(posts);
           yield put({
-            type: feedActionTypes.POSTS_UPDATE,
+            type: postActionTypes.POSTS_UPDATE,
             payload: { posts: posts, nextToken }
           });
           yield put(postActions.setPhase('success'));
@@ -204,27 +203,40 @@ export function* saga() {
   );
 
   yield takeLatest(
-    feedActionTypes.POST_PULL,
-    function* postsPull({ payload }: IAction<Partial<TActionAllState>>) {
-      yield put(postActions.setPhase('updating'));
+    postActionTypes.POST_REMOVE,
+    function* postRemove({ payload }: IAction<Partial<TPostsStoreActions>>) {
+      yield put(postActions.setPhase('deleting'));
 
-      // const { id } = payload;
-      // const { status, data } = yield axios.get(`${POSTS_API_URL}/${id}.jsonld`);
+      const { post } = payload;
 
-      // if (status !== 200) {
-      //   yield put(postActions.setPhase('error'));
-      //   return;
-      // }
+      try {
+        const { data } = yield API.graphql({
+          query: deletePost,
+          variables: { input: { id: post.id } },
+          authMode: 'AMAZON_COGNITO_USER_POOLS'
+        });
 
-      // // yield put(postActions.updatePost(data));
-      // yield put(postActions.setPhase('success'));
+        if (data) {
+          yield put({
+            type: postActionTypes.STORE_POST_REMOVE,
+            payload: { post: post }
+          });
+          yield put(postActions.setPhase('success'));
+        } else {
+          yield put(postActions.setPhase('error', 'Error occurred!'));
+        }
+      } catch (error) {
+        yield put(postActions.setPhase('error', error));
+      }
     }
   );
 
   yield takeLatest(
-    feedActionTypes.POST_SAVE,
-    function* feedSave({ payload }: IAction<Partial<TActionAllState>>) {
+    postActionTypes.POST_SAVE,
+    function* postSave({ payload }: IAction<Partial<TPostsStoreActions>>) {
       const { user, post, actionType } = payload;
+
+      console.log('payload:', payload);
 
       if (actionType === 'add') {
         yield put(postActions.setPhase('adding'));
@@ -249,7 +261,7 @@ export function* saga() {
 
           if (data) {
             yield put({
-              type: feedActionTypes.POST_UPDATE,
+              type: postActionTypes.POST_UPDATE,
               payload: { post: data.createPost }
             });
             yield put(postActions.setPhase('success'));
@@ -259,20 +271,6 @@ export function* saga() {
         } catch (error) {
           yield put(postActions.setPhase('error', error));
         }
-
-        // const { status, data } = yield axios.post(`${POSTS_API_URL}`, {
-        //   commentsOn: post.commentsOn,
-        //   content: post.content,
-        //   coverPicture: post.coverPicture,
-        //   feedType: post.feedType,
-        //   files: post.files,
-        //   poster: user['@id'],
-        //   related: post.related,
-        //   shortText: post.shortText,
-        //   tags: post.tags,
-        //   title: post.title,
-        //   url: post.url
-        // });
       } else if (actionType === 'delete') {
         yield put(postActions.setPhase('deleting'));
 
@@ -306,19 +304,6 @@ export function* saga() {
         //     return;
         //   }
         // }
-      } else if (actionType === 'add-comment') {
-        // yield put(postActions.setPhase('updating'));
-        // // post is coming as { feedId: post.id, comment: value }
-        // const { status } = yield axios.post(`${COMMENTS_API_URL}`, {
-        //   createdBy: user['@id'],
-        //   post: `/api/posts/${post.feedId}`,
-        //   comment: post.comment
-        // });
-        // if (status !== 201) {
-        //   yield put(postActions.setPhase('error'));
-        //   return;
-        // }
-        // yield put(postActions.pullPost(post.feedId));
       } else if (actionType === 'update-comment') {
         // yield put(postActions.setPhase('updating'));
         // // post has comment data here
@@ -343,4 +328,6 @@ export function* saga() {
       yield put(postActions.setPhase('success'));
     }
   );
+
+  yield takeLatest(postActionTypes.COMMENT_ADD, addComment);
 }

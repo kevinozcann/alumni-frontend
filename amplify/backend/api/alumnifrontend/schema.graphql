@@ -13,7 +13,11 @@ enum MaritalStatus {
   MARRIED
   SEPARATED
 }
-
+type S3Object {
+  bucket: String!
+  key: String!
+  region: String!
+}
 type User @model @auth(rules: [{ allow: private }]) {
   id: ID!
   name: String!
@@ -23,7 +27,6 @@ type User @model @auth(rules: [{ allow: private }]) {
   posts: [Post] @hasMany
   comments: [Comment] @hasMany
 }
-
 type Person @model @auth(rules: [{ allow: private }]) {
   id: ID!
   ssn_number: String
@@ -45,7 +48,6 @@ type Person @model @auth(rules: [{ allow: private }]) {
   twitter_url: String
   facebook_url: String
 }
-
 type Post @model @auth(rules: [{ allow: owner }, { allow: private, operations: [read] }]) {
   id: ID!
   title: String
@@ -55,7 +57,6 @@ type Post @model @auth(rules: [{ allow: owner }, { allow: private, operations: [
   type: String! @index(name: "postsByDate", queryField: "postsByDate", sortKeyFields: ["createdAt"])
   createdAt: String!
 }
-
 type Comment
   @model
   @auth(
@@ -66,8 +67,8 @@ type Comment
     ]
   ) {
   id: ID!
-  post: Post @belongsTo
-  user: User @belongsTo
+  post: Post! @belongsTo
+  user: User! @belongsTo
   content: String!
 }
 

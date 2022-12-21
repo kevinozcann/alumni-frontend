@@ -1,102 +1,62 @@
-import React from 'react';
-import { connect, ConnectedProps, useSelector } from 'react-redux';
-import useSWR from 'swr';
-import { useFormik } from 'formik';
-import {
-  Box,
-  Card,
-  CardContent,
-  IconButton,
-  Tooltip,
-  TextField,
-  CardHeader,
-  Avatar,
-  Chip,
-  CardMedia,
-  CardActions,
-  Button,
-  FilledInput,
-  CardActionArea,
-  Grid
-} from '@mui/material';
-import { grey } from '@mui/material/colors';
-import { ExpandMore, MoreVert, AddPhotoAlternate, Photo } from '@mui/icons-material';
+import AddPhotoAlternate from '@mui/icons-material/AddPhotoAlternate';
+import ExpandMore from '@mui/icons-material/ExpandMore';
+import MoreVert from '@mui/icons-material/MoreVert';
+import Photo from '@mui/icons-material/Photo';
 import PublicIcon from '@mui/icons-material/Public';
+import Avatar from '@mui/material/Avatar';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import Card from '@mui/material/Card';
+import CardActionArea from '@mui/material/CardActionArea';
+import CardActions from '@mui/material/CardActions';
+import CardContent from '@mui/material/CardContent';
+import CardHeader from '@mui/material/CardHeader';
+import CardMedia from '@mui/material/CardMedia';
+import Chip from '@mui/material/Chip';
+import { grey } from '@mui/material/colors';
+import FilledInput from '@mui/material/FilledInput';
+import Grid from '@mui/material/Grid';
+import IconButton from '@mui/material/IconButton';
+import TextField from '@mui/material/TextField';
+import Tooltip from '@mui/material/Tooltip';
+import { useFormik } from 'formik';
+import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
-import { FILEMANAGER_USER_URL, updateApiUrl } from 'store/ApiUrls';
-import { AppDispatch, RootState } from 'store/store';
-import { i18nLangSelector } from 'store/i18n';
-import { authUserSelector } from 'store/auth';
-import useTranslation from 'hooks/useTranslation';
-import useFileManager from 'hooks/useFileManager';
 import FileCard from 'components/FileCard';
+import useTranslation from 'hooks/useTranslation';
+import { authUserSelector } from 'store/auth';
 import { SaveButton } from 'utils/ActionLinks';
-import { IFile, TActionType } from 'utils/shared-types';
 import { fileExtension, filenameFromPath, filetypeFromFilename } from 'utils/Helpers';
-import fetcher from 'utils/fetcher';
-
-import { IUser } from 'pages/account/account-types';
+import { IFile, TActionType } from 'utils/shared-types';
 
 import { IPost } from './post-types';
-import { postsAddSelector, postActions, postsPhaseSelector } from './_store/posts';
+import { postActions, postsAddSelector, postsPhaseSelector } from './_store/posts';
 
-const mapStateToProps = (state: RootState) => ({
-  addFeed: postsAddSelector(state),
-  phase: postsPhaseSelector(state),
-  lang: i18nLangSelector(state),
-  user: authUserSelector(state)
-});
-const mapDispatchToProps = (dispatch: AppDispatch) => ({
-  savePost: (user: IUser, post: Partial<IPost>, actionType: TActionType) =>
-    dispatch(postActions.savePost(user, post, actionType)),
-  updateAddPost: (post: Partial<IPost>) => dispatch(postActions.updateAddPost(post))
-});
-const connector = connect(mapStateToProps, mapDispatchToProps);
-type PropsFromRedux = ConnectedProps<typeof connector>;
-type NewFeedFormProps = PropsFromRedux & {
+type NewFeedFormProps = {
   actionType: TActionType;
   handleClose?: () => void;
 };
 
 const NewFeedForm: React.FC<NewFeedFormProps> = (props) => {
-  const { actionType, addFeed, phase, lang, handleClose, savePost, updateAddPost } = props;
+  const { actionType, handleClose } = props;
   const intl = useTranslation();
-  const { showFileManager } = useFileManager();
+  const dispatch = useDispatch();
 
   const user = useSelector(authUserSelector);
+  const postsPhase = useSelector(postsPhaseSelector);
+  const addFeed = useSelector(postsAddSelector);
+
   const userAttributes = user.attributes;
 
   const transPhoto = intl.translate({ id: 'post.photo' });
   const transDoc = intl.translate({ id: 'post.doc' });
 
-  const { data: coverPictureFMLink } = useSWR(
-    updateApiUrl(FILEMANAGER_USER_URL, { lang: lang, userId: user.uuid }) + '/coverPicture',
-    fetcher,
-    {
-      refreshInterval: 0
-    }
-  );
-  const { data: photoFMLink } = useSWR(
-    updateApiUrl(FILEMANAGER_USER_URL, { lang: lang, userId: user.uuid }) + '/photo',
-    fetcher,
-    {
-      refreshInterval: 0
-    }
-  );
-
-  const { data: docFMLink } = useSWR(
-    updateApiUrl(FILEMANAGER_USER_URL, { lang: lang, userId: user.uuid }) + '/doc/2',
-    fetcher,
-    {
-      refreshInterval: 0
-    }
-  );
-
   const formValues: IPost = {
     commentsOn: true,
     content: addFeed ? addFeed.content : '',
     coverPicture: addFeed ? addFeed.coverPicture : '',
-    feedType: 'post',
+    postType: 'post',
     files: addFeed ? addFeed.files : [],
     related: addFeed ? addFeed.related : [],
     shortText: addFeed ? addFeed.shortText : '',
@@ -104,6 +64,7 @@ const NewFeedForm: React.FC<NewFeedFormProps> = (props) => {
     title: addFeed ? addFeed.title : '',
     url: addFeed ? addFeed.url : ''
   };
+
   const {
     handleSubmit,
     handleChange,
@@ -161,7 +122,7 @@ const NewFeedForm: React.FC<NewFeedFormProps> = (props) => {
   const submitForm = (values: Partial<IPost>) => {
     if (values !== initialValues || addFeed) {
       setStatus('submitted');
-      savePost(user, values, actionType);
+      dispatch(postActions.savePost(user, values, actionType));
     }
   };
 
@@ -172,15 +133,15 @@ const NewFeedForm: React.FC<NewFeedFormProps> = (props) => {
   React.useEffect(() => {
     setSubmitting(false);
 
-    if (status === 'submitted' && phase === 'success') {
+    if (status === 'submitted' && postsPhase === 'success') {
       handleClose();
     }
-  }, [status, phase]);
+  }, [status, postsPhase]);
 
   // Auto save as draft
   React.useEffect(() => {
     if (values !== initialValues) {
-      updateAddPost(values);
+      dispatch(postActions.updateAddPost(values));
     }
   }, [initialValues, values]);
 
@@ -237,13 +198,13 @@ const NewFeedForm: React.FC<NewFeedFormProps> = (props) => {
                 variant='outlined'
                 aria-label='add cover photo'
                 disableRipple
-                onClick={() =>
-                  showFileManager({
-                    iframeSrc: coverPictureFMLink,
-                    isOpen: true,
-                    selectCallback: handleSelectCallback
-                  })
-                }
+                // onClick={() =>
+                //   showFileManager({
+                //     iframeSrc: coverPictureFMLink,
+                //     isOpen: true,
+                //     selectCallback: handleSelectCallback
+                //   })
+                // }
               >
                 <Photo style={{ fontSize: 60, color: grey[300] }} />
               </Button>
@@ -295,13 +256,13 @@ const NewFeedForm: React.FC<NewFeedFormProps> = (props) => {
                       variant='outlined'
                       aria-label='add photo'
                       color='primary'
-                      onClick={() =>
-                        showFileManager({
-                          iframeSrc: photoFMLink,
-                          isOpen: true,
-                          selectCallback: handleFileCallback
-                        })
-                      }
+                      // onClick={() =>
+                      //   showFileManager({
+                      //     iframeSrc: photoFMLink,
+                      //     isOpen: true,
+                      //     selectCallback: handleFileCallback
+                      //   })
+                      // }
                     >
                       <AddPhotoAlternate fontSize='large' />
                     </Button>
@@ -335,13 +296,13 @@ const NewFeedForm: React.FC<NewFeedFormProps> = (props) => {
             <Button
               aria-label='add photo'
               color='primary'
-              onClick={() =>
-                showFileManager({
-                  iframeSrc: photoFMLink,
-                  isOpen: true,
-                  selectCallback: handleFileCallback
-                })
-              }
+              // onClick={() =>
+              //   showFileManager({
+              //     iframeSrc: photoFMLink,
+              //     isOpen: true,
+              //     selectCallback: handleFileCallback
+              //   })
+              // }
             >
               {intl.translate({ id: 'app.add.something' }, { something: transPhoto })}
             </Button>
@@ -349,13 +310,13 @@ const NewFeedForm: React.FC<NewFeedFormProps> = (props) => {
 
           <Button
             aria-label='add document'
-            onClick={() =>
-              showFileManager({
-                iframeSrc: docFMLink,
-                isOpen: true,
-                selectCallback: handleFileCallback
-              })
-            }
+            // onClick={() =>
+            //   showFileManager({
+            //     iframeSrc: docFMLink,
+            //     isOpen: true,
+            //     selectCallback: handleFileCallback
+            //   })
+            // }
           >
             {intl.translate({ id: 'app.add.something' }, { something: transDoc })}
           </Button>
@@ -368,4 +329,4 @@ const NewFeedForm: React.FC<NewFeedFormProps> = (props) => {
   );
 };
 
-export default connector(NewFeedForm);
+export default NewFeedForm;

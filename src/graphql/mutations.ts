@@ -11,6 +11,7 @@ export const createUser = /* GraphQL */ `
       id
       name
       family_name
+      email
       picture
       posts {
         items {
@@ -51,6 +52,7 @@ export const updateUser = /* GraphQL */ `
       id
       name
       family_name
+      email
       picture
       posts {
         items {
@@ -91,6 +93,7 @@ export const deleteUser = /* GraphQL */ `
       id
       name
       family_name
+      email
       picture
       posts {
         items {
@@ -225,6 +228,7 @@ export const createPost = /* GraphQL */ `
         id
         name
         family_name
+        email
         picture
         posts {
           nextToken
@@ -268,6 +272,7 @@ export const updatePost = /* GraphQL */ `
         id
         name
         family_name
+        email
         picture
         posts {
           nextToken
@@ -311,6 +316,7 @@ export const deletePost = /* GraphQL */ `
         id
         name
         family_name
+        email
         picture
         posts {
           nextToken
@@ -356,6 +362,7 @@ export const createComment = /* GraphQL */ `
           id
           name
           family_name
+          email
           picture
           createdAt
           updatedAt
@@ -373,6 +380,7 @@ export const createComment = /* GraphQL */ `
         id
         name
         family_name
+        email
         picture
         posts {
           nextToken
@@ -407,6 +415,7 @@ export const updateComment = /* GraphQL */ `
           id
           name
           family_name
+          email
           picture
           createdAt
           updatedAt
@@ -424,6 +433,7 @@ export const updateComment = /* GraphQL */ `
         id
         name
         family_name
+        email
         picture
         posts {
           nextToken
@@ -458,6 +468,7 @@ export const deleteComment = /* GraphQL */ `
           id
           name
           family_name
+          email
           picture
           createdAt
           updatedAt
@@ -475,6 +486,7 @@ export const deleteComment = /* GraphQL */ `
         id
         name
         family_name
+        email
         picture
         posts {
           nextToken

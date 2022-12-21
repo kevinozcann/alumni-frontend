@@ -3,7 +3,7 @@ import { IFile } from 'utils/shared-types';
 
 export interface IPostComment {
   id?: number;
-  comment?: string;
+  content?: string;
   owner?: IUser;
   createdAt?: Date;
 }
@@ -14,7 +14,7 @@ export interface IFeedLike {
 }
 export interface IPost {
   id?: number;
-  feedType?: 'Post' | string;
+  postType?: 'Post' | string;
   title?: string;
   shortText?: string;
   content?: string;

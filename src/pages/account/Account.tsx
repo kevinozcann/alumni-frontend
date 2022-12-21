@@ -22,8 +22,6 @@ import { useSubheader } from 'contexts/SubheaderContext';
 import Page from 'layout/Page';
 import { authUserSelector } from 'store/auth';
 import { userActiveSchoolSelector, userSchoolsSelector } from 'store/user';
-import { getS3File } from 'utils/amplifyUtils';
-import { toAbsoluteUrl } from 'utils/AssetsHelpers';
 import StyledMenu from 'utils/StyledMenu';
 
 import awsconfig from 'aws-exports';

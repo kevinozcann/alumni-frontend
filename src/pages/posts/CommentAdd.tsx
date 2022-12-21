@@ -1,27 +1,28 @@
-import React from 'react';
-import { Avatar, IconButton, Input, Paper, Box } from '@mui/material';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPaperPlane } from '@fortawesome/pro-duotone-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Avatar, Box, IconButton, Input, Paper } from '@mui/material';
+import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
 import useKeyPress from 'hooks/useKeypress';
 import useTranslation from 'hooks/useTranslation';
-import { TActionType } from 'utils/shared-types';
-import { IUser } from 'pages/account/account-types';
+import { authUserSelector } from 'store/auth';
 
-import { IExtendedPost } from './_store/posts';
 import { IPost } from './post-types';
+import { postActions } from './_store/posts';
 
 type TCommentAddProps = {
-  user: IUser;
   post: IPost;
-  handleSaveFeed: (user: IUser, post: Partial<IExtendedPost>, actionType: TActionType) => void;
 };
 
 const CommentAdd = (props: TCommentAddProps) => {
-  const { user, post, handleSaveFeed } = props;
+  const { post } = props;
   const [value, setValue] = React.useState<string>('');
   const enter = useKeyPress('Enter');
   const intl = useTranslation();
+  const dispatch = useDispatch();
+
+  const user = useSelector(authUserSelector);
 
   const handleChange = (event: any) => {
     event.persist();
@@ -29,12 +30,8 @@ const CommentAdd = (props: TCommentAddProps) => {
   };
 
   const handleSave = () => {
-    handleSaveFeed(user, { feedId: post.id, comment: value }, 'add-comment');
+    dispatch(postActions.addPostComment(user, post, { content: value }));
   };
-
-  // const handleAttach = () => {
-  //   fileInputRef.current.click();
-  // };
 
   React.useEffect(() => {
     if (value && enter) {

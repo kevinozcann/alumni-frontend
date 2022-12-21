@@ -4,14 +4,16 @@
 
 export type CreateUserInput = {
   id?: string | null,
-  name?: string | null,
-  family_name?: string | null,
+  name: string,
+  family_name: string,
+  email: string,
   picture?: string | null,
 };
 
 export type ModelUserConditionInput = {
   name?: ModelStringInput | null,
   family_name?: ModelStringInput | null,
+  email?: ModelStringInput | null,
   picture?: ModelStringInput | null,
   and?: Array< ModelUserConditionInput | null > | null,
   or?: Array< ModelUserConditionInput | null > | null,
@@ -61,8 +63,9 @@ export type ModelSizeInput = {
 export type User = {
   __typename: "User",
   id: string,
-  name?: string | null,
-  family_name?: string | null,
+  name: string,
+  family_name: string,
+  email: string,
   picture?: string | null,
   posts?: ModelPostConnection | null,
   comments?: ModelCommentConnection | null,
@@ -99,8 +102,8 @@ export type ModelCommentConnection = {
 export type Comment = {
   __typename: "Comment",
   id: string,
-  post?: Post | null,
-  user?: User | null,
+  post: Post,
+  user: User,
   content: string,
   createdAt: string,
   updatedAt: string,
@@ -113,6 +116,7 @@ export type UpdateUserInput = {
   id: string,
   name?: string | null,
   family_name?: string | null,
+  email?: string | null,
   picture?: string | null,
 };
 
@@ -321,6 +325,7 @@ export type ModelUserFilterInput = {
   id?: ModelIDInput | null,
   name?: ModelStringInput | null,
   family_name?: ModelStringInput | null,
+  email?: ModelStringInput | null,
   picture?: ModelStringInput | null,
   and?: Array< ModelUserFilterInput | null > | null,
   or?: Array< ModelUserFilterInput | null > | null,
@@ -406,6 +411,7 @@ export type ModelSubscriptionUserFilterInput = {
   id?: ModelSubscriptionIDInput | null,
   name?: ModelSubscriptionStringInput | null,
   family_name?: ModelSubscriptionStringInput | null,
+  email?: ModelSubscriptionStringInput | null,
   picture?: ModelSubscriptionStringInput | null,
   and?: Array< ModelSubscriptionUserFilterInput | null > | null,
   or?: Array< ModelSubscriptionUserFilterInput | null > | null,
@@ -491,8 +497,9 @@ export type CreateUserMutation = {
   createUser?:  {
     __typename: "User",
     id: string,
-    name?: string | null,
-    family_name?: string | null,
+    name: string,
+    family_name: string,
+    email: string,
     picture?: string | null,
     posts?:  {
       __typename: "ModelPostConnection",
@@ -537,8 +544,9 @@ export type UpdateUserMutation = {
   updateUser?:  {
     __typename: "User",
     id: string,
-    name?: string | null,
-    family_name?: string | null,
+    name: string,
+    family_name: string,
+    email: string,
     picture?: string | null,
     posts?:  {
       __typename: "ModelPostConnection",
@@ -583,8 +591,9 @@ export type DeleteUserMutation = {
   deleteUser?:  {
     __typename: "User",
     id: string,
-    name?: string | null,
-    family_name?: string | null,
+    name: string,
+    family_name: string,
+    email: string,
     picture?: string | null,
     posts?:  {
       __typename: "ModelPostConnection",
@@ -730,8 +739,9 @@ export type CreatePostMutation = {
     user?:  {
       __typename: "User",
       id: string,
-      name?: string | null,
-      family_name?: string | null,
+      name: string,
+      family_name: string,
+      email: string,
       picture?: string | null,
       posts?:  {
         __typename: "ModelPostConnection",
@@ -780,8 +790,9 @@ export type UpdatePostMutation = {
     user?:  {
       __typename: "User",
       id: string,
-      name?: string | null,
-      family_name?: string | null,
+      name: string,
+      family_name: string,
+      email: string,
       picture?: string | null,
       posts?:  {
         __typename: "ModelPostConnection",
@@ -830,8 +841,9 @@ export type DeletePostMutation = {
     user?:  {
       __typename: "User",
       id: string,
-      name?: string | null,
-      family_name?: string | null,
+      name: string,
+      family_name: string,
+      email: string,
       picture?: string | null,
       posts?:  {
         __typename: "ModelPostConnection",
@@ -875,7 +887,7 @@ export type CreateCommentMutation = {
   createComment?:  {
     __typename: "Comment",
     id: string,
-    post?:  {
+    post:  {
       __typename: "Post",
       id: string,
       title?: string | null,
@@ -883,8 +895,9 @@ export type CreateCommentMutation = {
       user?:  {
         __typename: "User",
         id: string,
-        name?: string | null,
-        family_name?: string | null,
+        name: string,
+        family_name: string,
+        email: string,
         picture?: string | null,
         createdAt: string,
         updatedAt: string,
@@ -898,12 +911,13 @@ export type CreateCommentMutation = {
       updatedAt: string,
       userPostsId?: string | null,
       owner?: string | null,
-    } | null,
-    user?:  {
+    },
+    user:  {
       __typename: "User",
       id: string,
-      name?: string | null,
-      family_name?: string | null,
+      name: string,
+      family_name: string,
+      email: string,
       picture?: string | null,
       posts?:  {
         __typename: "ModelPostConnection",
@@ -915,7 +929,7 @@ export type CreateCommentMutation = {
       } | null,
       createdAt: string,
       updatedAt: string,
-    } | null,
+    },
     content: string,
     createdAt: string,
     updatedAt: string,
@@ -934,7 +948,7 @@ export type UpdateCommentMutation = {
   updateComment?:  {
     __typename: "Comment",
     id: string,
-    post?:  {
+    post:  {
       __typename: "Post",
       id: string,
       title?: string | null,
@@ -942,8 +956,9 @@ export type UpdateCommentMutation = {
       user?:  {
         __typename: "User",
         id: string,
-        name?: string | null,
-        family_name?: string | null,
+        name: string,
+        family_name: string,
+        email: string,
         picture?: string | null,
         createdAt: string,
         updatedAt: string,
@@ -957,12 +972,13 @@ export type UpdateCommentMutation = {
       updatedAt: string,
       userPostsId?: string | null,
       owner?: string | null,
-    } | null,
-    user?:  {
+    },
+    user:  {
       __typename: "User",
       id: string,
-      name?: string | null,
-      family_name?: string | null,
+      name: string,
+      family_name: string,
+      email: string,
       picture?: string | null,
       posts?:  {
         __typename: "ModelPostConnection",
@@ -974,7 +990,7 @@ export type UpdateCommentMutation = {
       } | null,
       createdAt: string,
       updatedAt: string,
-    } | null,
+    },
     content: string,
     createdAt: string,
     updatedAt: string,
@@ -993,7 +1009,7 @@ export type DeleteCommentMutation = {
   deleteComment?:  {
     __typename: "Comment",
     id: string,
-    post?:  {
+    post:  {
       __typename: "Post",
       id: string,
       title?: string | null,
@@ -1001,8 +1017,9 @@ export type DeleteCommentMutation = {
       user?:  {
         __typename: "User",
         id: string,
-        name?: string | null,
-        family_name?: string | null,
+        name: string,
+        family_name: string,
+        email: string,
         picture?: string | null,
         createdAt: string,
         updatedAt: string,
@@ -1016,12 +1033,13 @@ export type DeleteCommentMutation = {
       updatedAt: string,
       userPostsId?: string | null,
       owner?: string | null,
-    } | null,
-    user?:  {
+    },
+    user:  {
       __typename: "User",
       id: string,
-      name?: string | null,
-      family_name?: string | null,
+      name: string,
+      family_name: string,
+      email: string,
       picture?: string | null,
       posts?:  {
         __typename: "ModelPostConnection",
@@ -1033,7 +1051,7 @@ export type DeleteCommentMutation = {
       } | null,
       createdAt: string,
       updatedAt: string,
-    } | null,
+    },
     content: string,
     createdAt: string,
     updatedAt: string,
@@ -1041,6 +1059,14 @@ export type DeleteCommentMutation = {
     postCommentsId?: string | null,
     owner?: string | null,
   } | null,
+};
+
+export type GetUserPictureQueryVariables = {
+  picture?: string | null,
+};
+
+export type GetUserPictureQuery = {
+  getUserPicture?: string | null,
 };
 
 export type GetUserQueryVariables = {
@@ -1051,8 +1077,9 @@ export type GetUserQuery = {
   getUser?:  {
     __typename: "User",
     id: string,
-    name?: string | null,
-    family_name?: string | null,
+    name: string,
+    family_name: string,
+    email: string,
     picture?: string | null,
     posts?:  {
       __typename: "ModelPostConnection",
@@ -1100,8 +1127,9 @@ export type ListUsersQuery = {
     items:  Array< {
       __typename: "User",
       id: string,
-      name?: string | null,
-      family_name?: string | null,
+      name: string,
+      family_name: string,
+      email: string,
       picture?: string | null,
       posts?:  {
         __typename: "ModelPostConnection",
@@ -1199,8 +1227,9 @@ export type GetPostQuery = {
     user?:  {
       __typename: "User",
       id: string,
-      name?: string | null,
-      family_name?: string | null,
+      name: string,
+      family_name: string,
+      email: string,
       picture?: string | null,
       posts?:  {
         __typename: "ModelPostConnection",
@@ -1252,8 +1281,9 @@ export type ListPostsQuery = {
       user?:  {
         __typename: "User",
         id: string,
-        name?: string | null,
-        family_name?: string | null,
+        name: string,
+        family_name: string,
+        email: string,
         picture?: string | null,
         createdAt: string,
         updatedAt: string,
@@ -1292,8 +1322,9 @@ export type PostsByDateQuery = {
       user?:  {
         __typename: "User",
         id: string,
-        name?: string | null,
-        family_name?: string | null,
+        name: string,
+        family_name: string,
+        email: string,
         picture?: string | null,
         createdAt: string,
         updatedAt: string,
@@ -1320,7 +1351,7 @@ export type GetCommentQuery = {
   getComment?:  {
     __typename: "Comment",
     id: string,
-    post?:  {
+    post:  {
       __typename: "Post",
       id: string,
       title?: string | null,
@@ -1328,8 +1359,9 @@ export type GetCommentQuery = {
       user?:  {
         __typename: "User",
         id: string,
-        name?: string | null,
-        family_name?: string | null,
+        name: string,
+        family_name: string,
+        email: string,
         picture?: string | null,
         createdAt: string,
         updatedAt: string,
@@ -1343,12 +1375,13 @@ export type GetCommentQuery = {
       updatedAt: string,
       userPostsId?: string | null,
       owner?: string | null,
-    } | null,
-    user?:  {
+    },
+    user:  {
       __typename: "User",
       id: string,
-      name?: string | null,
-      family_name?: string | null,
+      name: string,
+      family_name: string,
+      email: string,
       picture?: string | null,
       posts?:  {
         __typename: "ModelPostConnection",
@@ -1360,7 +1393,7 @@ export type GetCommentQuery = {
       } | null,
       createdAt: string,
       updatedAt: string,
-    } | null,
+    },
     content: string,
     createdAt: string,
     updatedAt: string,
@@ -1382,7 +1415,7 @@ export type ListCommentsQuery = {
     items:  Array< {
       __typename: "Comment",
       id: string,
-      post?:  {
+      post:  {
         __typename: "Post",
         id: string,
         title?: string | null,
@@ -1392,16 +1425,17 @@ export type ListCommentsQuery = {
         updatedAt: string,
         userPostsId?: string | null,
         owner?: string | null,
-      } | null,
-      user?:  {
+      },
+      user:  {
         __typename: "User",
         id: string,
-        name?: string | null,
-        family_name?: string | null,
+        name: string,
+        family_name: string,
+        email: string,
         picture?: string | null,
         createdAt: string,
         updatedAt: string,
-      } | null,
+      },
       content: string,
       createdAt: string,
       updatedAt: string,
@@ -1421,8 +1455,9 @@ export type OnCreateUserSubscription = {
   onCreateUser?:  {
     __typename: "User",
     id: string,
-    name?: string | null,
-    family_name?: string | null,
+    name: string,
+    family_name: string,
+    email: string,
     picture?: string | null,
     posts?:  {
       __typename: "ModelPostConnection",
@@ -1466,8 +1501,9 @@ export type OnUpdateUserSubscription = {
   onUpdateUser?:  {
     __typename: "User",
     id: string,
-    name?: string | null,
-    family_name?: string | null,
+    name: string,
+    family_name: string,
+    email: string,
     picture?: string | null,
     posts?:  {
       __typename: "ModelPostConnection",
@@ -1511,8 +1547,9 @@ export type OnDeleteUserSubscription = {
   onDeleteUser?:  {
     __typename: "User",
     id: string,
-    name?: string | null,
-    family_name?: string | null,
+    name: string,
+    family_name: string,
+    email: string,
     picture?: string | null,
     posts?:  {
       __typename: "ModelPostConnection",
@@ -1655,8 +1692,9 @@ export type OnCreatePostSubscription = {
     user?:  {
       __typename: "User",
       id: string,
-      name?: string | null,
-      family_name?: string | null,
+      name: string,
+      family_name: string,
+      email: string,
       picture?: string | null,
       posts?:  {
         __typename: "ModelPostConnection",
@@ -1705,8 +1743,9 @@ export type OnUpdatePostSubscription = {
     user?:  {
       __typename: "User",
       id: string,
-      name?: string | null,
-      family_name?: string | null,
+      name: string,
+      family_name: string,
+      email: string,
       picture?: string | null,
       posts?:  {
         __typename: "ModelPostConnection",
@@ -1755,8 +1794,9 @@ export type OnDeletePostSubscription = {
     user?:  {
       __typename: "User",
       id: string,
-      name?: string | null,
-      family_name?: string | null,
+      name: string,
+      family_name: string,
+      email: string,
       picture?: string | null,
       posts?:  {
         __typename: "ModelPostConnection",
@@ -1800,7 +1840,7 @@ export type OnCreateCommentSubscription = {
   onCreateComment?:  {
     __typename: "Comment",
     id: string,
-    post?:  {
+    post:  {
       __typename: "Post",
       id: string,
       title?: string | null,
@@ -1808,8 +1848,9 @@ export type OnCreateCommentSubscription = {
       user?:  {
         __typename: "User",
         id: string,
-        name?: string | null,
-        family_name?: string | null,
+        name: string,
+        family_name: string,
+        email: string,
         picture?: string | null,
         createdAt: string,
         updatedAt: string,
@@ -1823,12 +1864,13 @@ export type OnCreateCommentSubscription = {
       updatedAt: string,
       userPostsId?: string | null,
       owner?: string | null,
-    } | null,
-    user?:  {
+    },
+    user:  {
       __typename: "User",
       id: string,
-      name?: string | null,
-      family_name?: string | null,
+      name: string,
+      family_name: string,
+      email: string,
       picture?: string | null,
       posts?:  {
         __typename: "ModelPostConnection",
@@ -1840,7 +1882,7 @@ export type OnCreateCommentSubscription = {
       } | null,
       createdAt: string,
       updatedAt: string,
-    } | null,
+    },
     content: string,
     createdAt: string,
     updatedAt: string,
@@ -1859,7 +1901,7 @@ export type OnUpdateCommentSubscription = {
   onUpdateComment?:  {
     __typename: "Comment",
     id: string,
-    post?:  {
+    post:  {
       __typename: "Post",
       id: string,
       title?: string | null,
@@ -1867,8 +1909,9 @@ export type OnUpdateCommentSubscription = {
       user?:  {
         __typename: "User",
         id: string,
-        name?: string | null,
-        family_name?: string | null,
+        name: string,
+        family_name: string,
+        email: string,
         picture?: string | null,
         createdAt: string,
         updatedAt: string,
@@ -1882,12 +1925,13 @@ export type OnUpdateCommentSubscription = {
       updatedAt: string,
       userPostsId?: string | null,
       owner?: string | null,
-    } | null,
-    user?:  {
+    },
+    user:  {
       __typename: "User",
       id: string,
-      name?: string | null,
-      family_name?: string | null,
+      name: string,
+      family_name: string,
+      email: string,
       picture?: string | null,
       posts?:  {
         __typename: "ModelPostConnection",
@@ -1899,7 +1943,7 @@ export type OnUpdateCommentSubscription = {
       } | null,
       createdAt: string,
       updatedAt: string,
-    } | null,
+    },
     content: string,
     createdAt: string,
     updatedAt: string,
@@ -1918,7 +1962,7 @@ export type OnDeleteCommentSubscription = {
   onDeleteComment?:  {
     __typename: "Comment",
     id: string,
-    post?:  {
+    post:  {
       __typename: "Post",
       id: string,
       title?: string | null,
@@ -1926,8 +1970,9 @@ export type OnDeleteCommentSubscription = {
       user?:  {
         __typename: "User",
         id: string,
-        name?: string | null,
-        family_name?: string | null,
+        name: string,
+        family_name: string,
+        email: string,
         picture?: string | null,
         createdAt: string,
         updatedAt: string,
@@ -1941,12 +1986,13 @@ export type OnDeleteCommentSubscription = {
       updatedAt: string,
       userPostsId?: string | null,
       owner?: string | null,
-    } | null,
-    user?:  {
+    },
+    user:  {
       __typename: "User",
       id: string,
-      name?: string | null,
-      family_name?: string | null,
+      name: string,
+      family_name: string,
+      email: string,
       picture?: string | null,
       posts?:  {
         __typename: "ModelPostConnection",
@@ -1958,7 +2004,7 @@ export type OnDeleteCommentSubscription = {
       } | null,
       createdAt: string,
       updatedAt: string,
-    } | null,
+    },
     content: string,
     createdAt: string,
     updatedAt: string,

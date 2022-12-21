@@ -8,6 +8,7 @@ export const onCreateUser = /* GraphQL */ `
       id
       name
       family_name
+      email
       picture
       posts {
         items {
@@ -45,6 +46,7 @@ export const onUpdateUser = /* GraphQL */ `
       id
       name
       family_name
+      email
       picture
       posts {
         items {
@@ -82,6 +84,7 @@ export const onDeleteUser = /* GraphQL */ `
       id
       name
       family_name
+      email
       picture
       posts {
         items {
@@ -207,6 +210,7 @@ export const onCreatePost = /* GraphQL */ `
         id
         name
         family_name
+        email
         picture
         posts {
           nextToken
@@ -250,6 +254,7 @@ export const onUpdatePost = /* GraphQL */ `
         id
         name
         family_name
+        email
         picture
         posts {
           nextToken
@@ -293,6 +298,7 @@ export const onDeletePost = /* GraphQL */ `
         id
         name
         family_name
+        email
         picture
         posts {
           nextToken
@@ -338,6 +344,7 @@ export const onCreateComment = /* GraphQL */ `
           id
           name
           family_name
+          email
           picture
           createdAt
           updatedAt
@@ -355,6 +362,7 @@ export const onCreateComment = /* GraphQL */ `
         id
         name
         family_name
+        email
         picture
         posts {
           nextToken
@@ -389,6 +397,7 @@ export const onUpdateComment = /* GraphQL */ `
           id
           name
           family_name
+          email
           picture
           createdAt
           updatedAt
@@ -406,6 +415,7 @@ export const onUpdateComment = /* GraphQL */ `
         id
         name
         family_name
+        email
         picture
         posts {
           nextToken
@@ -440,6 +450,7 @@ export const onDeleteComment = /* GraphQL */ `
           id
           name
           family_name
+          email
           picture
           createdAt
           updatedAt
@@ -457,6 +468,7 @@ export const onDeleteComment = /* GraphQL */ `
         id
         name
         family_name
+        email
         picture
         posts {
           nextToken

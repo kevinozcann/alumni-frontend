@@ -6,6 +6,7 @@ Amplify.configure(awsconfig);
 
 export function* getS3File(filename: string) {
   return yield Storage.get(filename, {
-    level: 'private'
+    level: 'private',
+    expires: 24 * 60 * 60
   });
 }
