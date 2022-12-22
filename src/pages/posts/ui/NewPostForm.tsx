@@ -39,7 +39,7 @@ type NewFeedFormProps = {
   handleClose?: () => void;
 };
 
-const NewFeedForm: React.FC<NewFeedFormProps> = (props) => {
+const NewFeedForm = (props: NewFeedFormProps) => {
   const { actionType, handleClose } = props;
   const intl = useTranslation();
   const dispatch = useDispatch();

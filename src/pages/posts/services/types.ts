@@ -12,13 +12,15 @@ export const postActionTypes = {
     DELETE_COMMENT: 'posts/saga/DELETE_COMMENT',
     GET_POSTS: 'posts/saga/GET_POSTS',
     UPDATE_COMMENT: 'posts/saga/UPDATE_COMMENT',
-    UPDATE_PHASE: 'posts/saga/UPDATE_PHASE'
+    UPDATE_PHASE: 'posts/saga/UPDATE_PHASE',
+    UPSERT_DRAFT: 'posts/saga/UPSERT_DRAFT'
   },
   STORE: {
     DELETE_POST: 'posts/store/DELETE_POST',
     UPDATE_PHASE: 'posts/store/UPDATE_PHASE',
     UPDATE_POST: 'posts/store/UPDATE_POST',
-    UPDATE_POSTS: 'posts/store/UPDATE_POSTS'
+    UPDATE_POSTS: 'posts/store/UPDATE_POSTS',
+    UPSERT_DRAFT: 'posts/saga/UPSERT_DRAFT'
   }
 };
 
