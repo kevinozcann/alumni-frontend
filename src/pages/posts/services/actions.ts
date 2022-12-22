@@ -5,9 +5,9 @@ import { TActionType } from 'utils/shared-types';
 import { postActionTypes, TPostActionType } from './types';
 
 export const postActions = {
-  addPost: (user: IUser, post: Partial<IPost>, actionType: TActionType): TPostActionType => ({
-    type: postActionTypes.SAGA.ADD_POSTS,
-    payload: { user, post, actionType }
+  addPost: (user: IUser, post: Partial<IPost>): TPostActionType => ({
+    type: postActionTypes.SAGA.ADD_POST,
+    payload: { user, post }
   }),
   addComment: (user: IUser, post: IPost, comment: IPostComment): TPostActionType => ({
     type: postActionTypes.SAGA.ADD_COMMENT,

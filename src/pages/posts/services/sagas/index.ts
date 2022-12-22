@@ -10,7 +10,7 @@ import { sagaUpsertDraft } from './post/sagaUpsertDraft';
 import { sagaUpdatePhase } from './sagaUpdatePhase';
 
 export function* sagas() {
-  yield takeLatest(postActionTypes.SAGA.ADD_POSTS, sagaAddPost);
+  yield takeLatest(postActionTypes.SAGA.ADD_POST, sagaAddPost);
   yield takeLatest(postActionTypes.SAGA.ADD_COMMENT, sagaAddComment);
   yield takeLatest(postActionTypes.SAGA.DELETE_POST, sagaDeletePost);
   yield takeLatest(postActionTypes.SAGA.GET_POSTS, sagaGetPosts);

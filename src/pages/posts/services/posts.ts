@@ -37,10 +37,29 @@ export const reducer = persistReducer(
   { storage, key: 'posts', whitelist: ['owned', 'all', 'add', 'edit', 'phase'] },
   (state: IPostsStore = initialState, action: IAction<TPostsStoreActions>): IPostsStore => {
     switch (action.type) {
+      // DELETE POST
+      case postActionTypes.STORE.DELETE_POST: {
+        const { post } = action.payload;
+        return produce(state, (draftState) => {
+          const index = draftState.owned.findIndex((d) => d.id === post.id);
+          if (index !== -1) {
+            draftState.owned.splice(index, 1);
+          }
+        });
+      }
+      // UPSERT DRAFT
+      case postActionTypes.STORE.UPSERT_DRAFT: {
+        const { post } = action.payload;
+        return produce(state, (draftState) => {
+          draftState.add = post;
+        });
+      }
+      // UPDATE POSTS
       case postActionTypes.STORE.UPDATE_POSTS: {
         const { posts, nextToken } = action.payload;
         return { ...state, owned: posts, nextToken };
       }
+      // UPDATE POST
       case postActionTypes.STORE.UPDATE_POST: {
         const { post } = action.payload;
         return produce(state, (draftState) => {
@@ -52,15 +71,7 @@ export const reducer = persistReducer(
           }
         });
       }
-      case postActionTypes.STORE.DELETE_POST: {
-        const { post } = action.payload;
-        return produce(state, (draftState) => {
-          const index = draftState.owned.findIndex((d) => d.id === post.id);
-          if (index !== -1) {
-            draftState.owned.splice(index, 1);
-          }
-        });
-      }
+      // UPDATE PHASE
       case postActionTypes.STORE.UPDATE_PHASE: {
         const { phase, error } = action.payload;
         return { ...state, phase, error };

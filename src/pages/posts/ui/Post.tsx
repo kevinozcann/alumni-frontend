@@ -72,7 +72,7 @@ const Post = (props: FeedProps) => {
   const files = post.files?.filter((file) => !file.mimeType.includes('image/'));
 
   const handleSaveFeed = React.useCallback((user: IUser, post: IPost, actionType: TActionType) => {
-    dispatch(postActions.addPost(user, post, actionType));
+    // dispatch(postActions.addPost(user, post));
   }, []);
 
   const handleActionsClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -155,18 +155,6 @@ const Post = (props: FeedProps) => {
         />
 
         <Box sx={{ paddingX: 3, paddingBottom: 2 }}>
-          {post?.title && (
-            <Typography variant='subtitle1' color='textPrimary'>
-              {post.title}
-            </Typography>
-          )}
-
-          {post?.shortText && (
-            <Typography variant='body1' color='textSecondary'>
-              {post?.shortText}
-            </Typography>
-          )}
-
           {post?.coverPicture && (
             <Box sx={{ marginY: 1 }}>
               <CardActionArea ref={ref} onClick={() => setSelectedImage(post?.coverPicture)}>

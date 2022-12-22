@@ -9,26 +9,24 @@ import { postActions } from '../../actions';
 export function* sagaAddPost({ payload }: TPostActionType) {
   yield put(postActions.setPhase('adding'));
 
-  const { user, post, actionType } = payload;
+  const { user, post } = payload;
 
-  const { username } = yield Auth.currentAuthenticatedUser();
-  const date = new Date();
-
+  console.log(user);
   try {
     const { data } = yield API.graphql({
       query: createPost,
       variables: {
         input: {
           type: 'Post',
-          title: post.title,
           content: post.content,
-          userPostsId: username,
-          createdAt: date.toISOString()
+          userID: user.attributes.sub
+          // createdAt: date.toISOString()
         }
       },
       authMode: 'AMAZON_COGNITO_USER_POOLS'
     });
 
+    console.log(data);
     if (data) {
       yield put({
         type: postActionTypes.STORE.UPDATE_POST,

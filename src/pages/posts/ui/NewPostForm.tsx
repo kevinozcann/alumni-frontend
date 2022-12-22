@@ -60,9 +60,7 @@ const NewFeedForm = (props: NewFeedFormProps) => {
     postType: 'post',
     files: addFeed ? addFeed.files : [],
     related: addFeed ? addFeed.related : [],
-    shortText: addFeed ? addFeed.shortText : '',
     tags: addFeed ? addFeed.tags : [],
-    title: addFeed ? addFeed.title : '',
     url: addFeed ? addFeed.url : ''
   };
 
@@ -123,7 +121,7 @@ const NewFeedForm = (props: NewFeedFormProps) => {
   const submitForm = (values: Partial<IPost>) => {
     if (values !== initialValues || addFeed) {
       setStatus('submitted');
-      dispatch(postActions.addPost(user, values, actionType));
+      dispatch(postActions.addPost(user, values));
     }
   };
 
@@ -142,7 +140,7 @@ const NewFeedForm = (props: NewFeedFormProps) => {
   // Auto save as draft
   React.useEffect(() => {
     if (values !== initialValues) {
-      // dispatch(postActions.updateAddPost(values));
+      dispatch(postActions.upsertDraft(values));
     }
   }, [initialValues, values]);
 

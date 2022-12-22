@@ -6,7 +6,7 @@ import { IPost, IPostComment } from '../data/post-types';
 
 export const postActionTypes = {
   SAGA: {
-    ADD_POSTS: 'posts/saga/ADD_POSTS',
+    ADD_POST: 'posts/saga/ADD_POST',
     ADD_COMMENT: 'posts/saga/ADD_COMMENT',
     DELETE_POST: 'posts/saga/DELETE_POST',
     DELETE_COMMENT: 'posts/saga/DELETE_COMMENT',
@@ -20,7 +20,7 @@ export const postActionTypes = {
     UPDATE_PHASE: 'posts/store/UPDATE_PHASE',
     UPDATE_POST: 'posts/store/UPDATE_POST',
     UPDATE_POSTS: 'posts/store/UPDATE_POSTS',
-    UPSERT_DRAFT: 'posts/saga/UPSERT_DRAFT'
+    UPSERT_DRAFT: 'posts/store/UPSERT_DRAFT'
   }
 };
 
