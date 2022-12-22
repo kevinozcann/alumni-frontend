@@ -2,7 +2,7 @@ import { IUser } from 'pages/account/account-types';
 import { IAction } from 'store/store';
 import { TActionType, TLang } from 'utils/shared-types';
 
-import { IPost, IPostComment } from '../post-types';
+import { IPost, IPostComment } from '../data/post-types';
 
 export const postActionTypes = {
   SAGA: {

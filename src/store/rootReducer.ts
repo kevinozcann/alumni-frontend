@@ -10,7 +10,7 @@ import { saga as recentUpdatesSagas, reducer as recentUpdatesReducer } from './r
 import { saga as userSagas, reducer as userReducer } from './user';
 
 import { developerReducer, developerSagas } from 'pages/developer/_store';
-import { postsReducer, postsSagas } from 'pages/posts/_store';
+import { postsReducer, postsSagas } from 'pages/posts/services';
 import { filemanagerReducer } from 'pages/filemanager/redux/reducers';
 import { mailReducer, mailSagas } from 'pages/mail/_store';
 import { organizationReducer, organizationSagas } from 'pages/organization/_store';

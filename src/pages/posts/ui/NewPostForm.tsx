@@ -30,9 +30,9 @@ import { SaveButton } from 'utils/ActionLinks';
 import { fileExtension, filenameFromPath, filetypeFromFilename } from 'utils/Helpers';
 import { IFile, TActionType } from 'utils/shared-types';
 
-import { IPost } from './post-types';
-import { postsAddSelector, postsPhaseSelector } from './_store/posts';
-import { postActions } from './_store/actions';
+import { IPost } from '../data/post-types';
+import { postsAddSelector, postsPhaseSelector } from '../services/posts';
+import { postActions } from '../services/actions';
 
 type NewFeedFormProps = {
   actionType: TActionType;

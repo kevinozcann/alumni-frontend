@@ -10,7 +10,7 @@ import { RootState } from 'store/store';
 import useTranslation from 'hooks/useTranslation';
 import SchoostDialog from 'components/SchoostDialog';
 
-import { postsPhaseSelector } from './_store/posts';
+import { postsPhaseSelector } from '../services/posts';
 import AddFeedForm from './NewPostForm';
 
 const mapStateToProps = (state: RootState) => ({

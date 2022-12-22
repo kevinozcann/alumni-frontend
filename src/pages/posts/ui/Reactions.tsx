@@ -2,9 +2,9 @@ import React from 'react';
 import { Box, IconButton, Tooltip, Typography, colors } from '@mui/material';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
-import { IUser } from '../account/account-types';
-import { IPost } from './post-types';
-import { TActionType } from '../../utils/shared-types';
+import { IUser } from '../../account/account-types';
+import { IPost } from '../data/post-types';
+import { TActionType } from '../../../utils/shared-types';
 // import ShareIcon from '@mui/icons-material/Share';
 
 type TReactionsProps = {

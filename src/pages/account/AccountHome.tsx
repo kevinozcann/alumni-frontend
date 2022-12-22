@@ -4,14 +4,14 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router';
 
-import { IPost } from 'pages/posts/post-types';
-import NewPost from 'pages/posts/NewPost';
-import { postsOwnedSelector, postsPhaseSelector } from 'pages/posts/_store/posts';
+import { IPost } from 'pages/posts/data/post-types';
+import NewPost from 'pages/posts/ui/NewPost';
+import { postsOwnedSelector, postsPhaseSelector } from 'pages/posts/services/posts';
 
 import { authUserSelector } from 'store/auth';
-import { postActions } from 'pages/posts/_store/actions';
+import { postActions } from 'pages/posts/services/actions';
 
-const Post = loadable(() => import('pages/posts/Post'));
+const Post = loadable(() => import('pages/posts/ui/Post'));
 const About = loadable(() => import('./profile/About'));
 
 const AccountHome = () => {

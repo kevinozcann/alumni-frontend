@@ -9,7 +9,7 @@ import ConfirmDialog from 'components/ConfirmDialog';
 import { TActionType } from 'utils/shared-types';
 import { IUser } from 'pages/account/account-types';
 
-import { IPost, IPostComment } from './post-types';
+import { IPost, IPostComment } from '../data/post-types';
 
 interface TCommentProps {
   user: IUser;

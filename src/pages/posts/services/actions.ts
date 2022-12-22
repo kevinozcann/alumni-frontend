@@ -1,5 +1,5 @@
 import { IUser } from 'pages/account/account-types';
-import { IPost, IPostComment } from 'pages/posts/post-types';
+import { IPost, IPostComment } from 'pages/posts/data/post-types';
 import { TActionType } from 'utils/shared-types';
 
 import { postActionTypes, TPostActionType } from './types';

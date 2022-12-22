@@ -8,8 +8,8 @@ import useKeyPress from 'hooks/useKeypress';
 import useTranslation from 'hooks/useTranslation';
 import { authUserSelector } from 'store/auth';
 
-import { IPost } from './post-types';
-import { postActions } from './_store/actions';
+import { IPost } from '../data/post-types';
+import { postActions } from '../services/actions';
 
 type TCommentAddProps = {
   post: IPost;

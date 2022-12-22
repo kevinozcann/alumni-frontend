@@ -31,10 +31,10 @@ import { IFile, TActionType } from 'utils/shared-types';
 import { useDispatch, useSelector } from 'react-redux';
 import { authUserSelector } from 'store/auth';
 import { i18nLangSelector } from 'store/i18n';
-import { IPost } from './post-types';
-import { postsPhaseSelector } from './_store/posts';
+import { IPost } from '../data/post-types';
+import { postsPhaseSelector } from '../services/posts';
 import { IUser } from 'pages/account/account-types';
-import { postActions } from './_store/actions';
+import { postActions } from '../services/actions';
 
 const Moment = loadable.lib(() => import('moment'));
 

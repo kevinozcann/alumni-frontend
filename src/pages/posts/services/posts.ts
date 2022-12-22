@@ -4,7 +4,7 @@ import { persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import { createSelector } from 'reselect';
 
-import { IPost } from 'pages/posts/post-types';
+import { IPost } from 'pages/posts/data/post-types';
 import { IAction } from 'store/store';
 import { IPostsStore, IPostsStoreState, postActionTypes, TPostsStoreActions } from './types';
 

@@ -5,7 +5,7 @@ import { Loadable } from 'layout';
 const AuthGuard = loadable(() => import('components/guard/AuthGuard'));
 const MainLayout = loadable(() => import('layout/MainLayout'));
 
-const Post = Loadable(lazy(() => import('./Post')));
+const Post = Loadable(lazy(() => import('./ui/Post')));
 
 const routes = {
   path: 'posts',
