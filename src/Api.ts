@@ -7,6 +7,7 @@ export type CreateUserInput = {
   name: string,
   family_name: string,
   email: string,
+  owner: string,
   picture?: string | null,
 };
 
@@ -14,6 +15,7 @@ export type ModelUserConditionInput = {
   name?: ModelStringInput | null,
   family_name?: ModelStringInput | null,
   email?: ModelStringInput | null,
+  owner?: ModelStringInput | null,
   picture?: ModelStringInput | null,
   and?: Array< ModelUserConditionInput | null > | null,
   or?: Array< ModelUserConditionInput | null > | null,
@@ -66,6 +68,7 @@ export type User = {
   name: string,
   family_name: string,
   email: string,
+  owner: string,
   picture?: string | null,
   posts?: ModelPostConnection | null,
   comments?: ModelCommentConnection | null,
@@ -117,6 +120,7 @@ export type UpdateUserInput = {
   name?: string | null,
   family_name?: string | null,
   email?: string | null,
+  owner?: string | null,
   picture?: string | null,
 };
 
@@ -217,6 +221,7 @@ export type Person = {
   facebook_url?: string | null,
   createdAt: string,
   updatedAt: string,
+  owner?: string | null,
 };
 
 export type UpdatePersonInput = {
@@ -326,6 +331,7 @@ export type ModelUserFilterInput = {
   name?: ModelStringInput | null,
   family_name?: ModelStringInput | null,
   email?: ModelStringInput | null,
+  owner?: ModelStringInput | null,
   picture?: ModelStringInput | null,
   and?: Array< ModelUserFilterInput | null > | null,
   or?: Array< ModelUserFilterInput | null > | null,
@@ -503,6 +509,7 @@ export type CreateUserMutation = {
     name: string,
     family_name: string,
     email: string,
+    owner: string,
     picture?: string | null,
     posts?:  {
       __typename: "ModelPostConnection",
@@ -550,6 +557,7 @@ export type UpdateUserMutation = {
     name: string,
     family_name: string,
     email: string,
+    owner: string,
     picture?: string | null,
     posts?:  {
       __typename: "ModelPostConnection",
@@ -597,6 +605,7 @@ export type DeleteUserMutation = {
     name: string,
     family_name: string,
     email: string,
+    owner: string,
     picture?: string | null,
     posts?:  {
       __typename: "ModelPostConnection",
@@ -661,6 +670,7 @@ export type CreatePersonMutation = {
     facebook_url?: string | null,
     createdAt: string,
     updatedAt: string,
+    owner?: string | null,
   } | null,
 };
 
@@ -693,6 +703,7 @@ export type UpdatePersonMutation = {
     facebook_url?: string | null,
     createdAt: string,
     updatedAt: string,
+    owner?: string | null,
   } | null,
 };
 
@@ -725,6 +736,7 @@ export type DeletePersonMutation = {
     facebook_url?: string | null,
     createdAt: string,
     updatedAt: string,
+    owner?: string | null,
   } | null,
 };
 
@@ -746,6 +758,7 @@ export type CreatePostMutation = {
       name: string,
       family_name: string,
       email: string,
+      owner: string,
       picture?: string | null,
       posts?:  {
         __typename: "ModelPostConnection",
@@ -797,6 +810,7 @@ export type UpdatePostMutation = {
       name: string,
       family_name: string,
       email: string,
+      owner: string,
       picture?: string | null,
       posts?:  {
         __typename: "ModelPostConnection",
@@ -848,6 +862,7 @@ export type DeletePostMutation = {
       name: string,
       family_name: string,
       email: string,
+      owner: string,
       picture?: string | null,
       posts?:  {
         __typename: "ModelPostConnection",
@@ -904,6 +919,7 @@ export type CreateCommentMutation = {
         name: string,
         family_name: string,
         email: string,
+        owner: string,
         picture?: string | null,
         createdAt: string,
         updatedAt: string,
@@ -924,6 +940,7 @@ export type CreateCommentMutation = {
       name: string,
       family_name: string,
       email: string,
+      owner: string,
       picture?: string | null,
       posts?:  {
         __typename: "ModelPostConnection",
@@ -965,6 +982,7 @@ export type UpdateCommentMutation = {
         name: string,
         family_name: string,
         email: string,
+        owner: string,
         picture?: string | null,
         createdAt: string,
         updatedAt: string,
@@ -985,6 +1003,7 @@ export type UpdateCommentMutation = {
       name: string,
       family_name: string,
       email: string,
+      owner: string,
       picture?: string | null,
       posts?:  {
         __typename: "ModelPostConnection",
@@ -1026,6 +1045,7 @@ export type DeleteCommentMutation = {
         name: string,
         family_name: string,
         email: string,
+        owner: string,
         picture?: string | null,
         createdAt: string,
         updatedAt: string,
@@ -1046,6 +1066,7 @@ export type DeleteCommentMutation = {
       name: string,
       family_name: string,
       email: string,
+      owner: string,
       picture?: string | null,
       posts?:  {
         __typename: "ModelPostConnection",
@@ -1083,6 +1104,7 @@ export type GetUserQuery = {
     name: string,
     family_name: string,
     email: string,
+    owner: string,
     picture?: string | null,
     posts?:  {
       __typename: "ModelPostConnection",
@@ -1133,6 +1155,7 @@ export type ListUsersQuery = {
       name: string,
       family_name: string,
       email: string,
+      owner: string,
       picture?: string | null,
       posts?:  {
         __typename: "ModelPostConnection",
@@ -1177,6 +1200,7 @@ export type GetPersonQuery = {
     facebook_url?: string | null,
     createdAt: string,
     updatedAt: string,
+    owner?: string | null,
   } | null,
 };
 
@@ -1212,6 +1236,7 @@ export type ListPeopleQuery = {
       facebook_url?: string | null,
       createdAt: string,
       updatedAt: string,
+      owner?: string | null,
     } | null >,
     nextToken?: string | null,
   } | null,
@@ -1234,6 +1259,7 @@ export type GetPostQuery = {
       name: string,
       family_name: string,
       email: string,
+      owner: string,
       picture?: string | null,
       posts?:  {
         __typename: "ModelPostConnection",
@@ -1288,6 +1314,7 @@ export type ListPostsQuery = {
         name: string,
         family_name: string,
         email: string,
+        owner: string,
         picture?: string | null,
         createdAt: string,
         updatedAt: string,
@@ -1329,6 +1356,7 @@ export type PostsByUserIDAndTitleQuery = {
         name: string,
         family_name: string,
         email: string,
+        owner: string,
         picture?: string | null,
         createdAt: string,
         updatedAt: string,
@@ -1370,6 +1398,7 @@ export type PostsByDateQuery = {
         name: string,
         family_name: string,
         email: string,
+        owner: string,
         picture?: string | null,
         createdAt: string,
         updatedAt: string,
@@ -1409,6 +1438,7 @@ export type GetCommentQuery = {
         name: string,
         family_name: string,
         email: string,
+        owner: string,
         picture?: string | null,
         createdAt: string,
         updatedAt: string,
@@ -1429,6 +1459,7 @@ export type GetCommentQuery = {
       name: string,
       family_name: string,
       email: string,
+      owner: string,
       picture?: string | null,
       posts?:  {
         __typename: "ModelPostConnection",
@@ -1479,6 +1510,7 @@ export type ListCommentsQuery = {
         name: string,
         family_name: string,
         email: string,
+        owner: string,
         picture?: string | null,
         createdAt: string,
         updatedAt: string,
@@ -1525,6 +1557,7 @@ export type CommentsByPostIDQuery = {
         name: string,
         family_name: string,
         email: string,
+        owner: string,
         picture?: string | null,
         createdAt: string,
         updatedAt: string,
@@ -1571,6 +1604,7 @@ export type CommentsByUserIDQuery = {
         name: string,
         family_name: string,
         email: string,
+        owner: string,
         picture?: string | null,
         createdAt: string,
         updatedAt: string,
@@ -1585,6 +1619,7 @@ export type CommentsByUserIDQuery = {
 
 export type OnCreateUserSubscriptionVariables = {
   filter?: ModelSubscriptionUserFilterInput | null,
+  owner?: string | null,
 };
 
 export type OnCreateUserSubscription = {
@@ -1594,6 +1629,7 @@ export type OnCreateUserSubscription = {
     name: string,
     family_name: string,
     email: string,
+    owner: string,
     picture?: string | null,
     posts?:  {
       __typename: "ModelPostConnection",
@@ -1631,6 +1667,7 @@ export type OnCreateUserSubscription = {
 
 export type OnUpdateUserSubscriptionVariables = {
   filter?: ModelSubscriptionUserFilterInput | null,
+  owner?: string | null,
 };
 
 export type OnUpdateUserSubscription = {
@@ -1640,6 +1677,7 @@ export type OnUpdateUserSubscription = {
     name: string,
     family_name: string,
     email: string,
+    owner: string,
     picture?: string | null,
     posts?:  {
       __typename: "ModelPostConnection",
@@ -1677,6 +1715,7 @@ export type OnUpdateUserSubscription = {
 
 export type OnDeleteUserSubscriptionVariables = {
   filter?: ModelSubscriptionUserFilterInput | null,
+  owner?: string | null,
 };
 
 export type OnDeleteUserSubscription = {
@@ -1686,6 +1725,7 @@ export type OnDeleteUserSubscription = {
     name: string,
     family_name: string,
     email: string,
+    owner: string,
     picture?: string | null,
     posts?:  {
       __typename: "ModelPostConnection",
@@ -1723,6 +1763,7 @@ export type OnDeleteUserSubscription = {
 
 export type OnCreatePersonSubscriptionVariables = {
   filter?: ModelSubscriptionPersonFilterInput | null,
+  owner?: string | null,
 };
 
 export type OnCreatePersonSubscription = {
@@ -1749,11 +1790,13 @@ export type OnCreatePersonSubscription = {
     facebook_url?: string | null,
     createdAt: string,
     updatedAt: string,
+    owner?: string | null,
   } | null,
 };
 
 export type OnUpdatePersonSubscriptionVariables = {
   filter?: ModelSubscriptionPersonFilterInput | null,
+  owner?: string | null,
 };
 
 export type OnUpdatePersonSubscription = {
@@ -1780,11 +1823,13 @@ export type OnUpdatePersonSubscription = {
     facebook_url?: string | null,
     createdAt: string,
     updatedAt: string,
+    owner?: string | null,
   } | null,
 };
 
 export type OnDeletePersonSubscriptionVariables = {
   filter?: ModelSubscriptionPersonFilterInput | null,
+  owner?: string | null,
 };
 
 export type OnDeletePersonSubscription = {
@@ -1811,6 +1856,7 @@ export type OnDeletePersonSubscription = {
     facebook_url?: string | null,
     createdAt: string,
     updatedAt: string,
+    owner?: string | null,
   } | null,
 };
 
@@ -1832,6 +1878,7 @@ export type OnCreatePostSubscription = {
       name: string,
       family_name: string,
       email: string,
+      owner: string,
       picture?: string | null,
       posts?:  {
         __typename: "ModelPostConnection",
@@ -1883,6 +1930,7 @@ export type OnUpdatePostSubscription = {
       name: string,
       family_name: string,
       email: string,
+      owner: string,
       picture?: string | null,
       posts?:  {
         __typename: "ModelPostConnection",
@@ -1934,6 +1982,7 @@ export type OnDeletePostSubscription = {
       name: string,
       family_name: string,
       email: string,
+      owner: string,
       picture?: string | null,
       posts?:  {
         __typename: "ModelPostConnection",
@@ -1990,6 +2039,7 @@ export type OnCreateCommentSubscription = {
         name: string,
         family_name: string,
         email: string,
+        owner: string,
         picture?: string | null,
         createdAt: string,
         updatedAt: string,
@@ -2010,6 +2060,7 @@ export type OnCreateCommentSubscription = {
       name: string,
       family_name: string,
       email: string,
+      owner: string,
       picture?: string | null,
       posts?:  {
         __typename: "ModelPostConnection",
@@ -2051,6 +2102,7 @@ export type OnUpdateCommentSubscription = {
         name: string,
         family_name: string,
         email: string,
+        owner: string,
         picture?: string | null,
         createdAt: string,
         updatedAt: string,
@@ -2071,6 +2123,7 @@ export type OnUpdateCommentSubscription = {
       name: string,
       family_name: string,
       email: string,
+      owner: string,
       picture?: string | null,
       posts?:  {
         __typename: "ModelPostConnection",
@@ -2112,6 +2165,7 @@ export type OnDeleteCommentSubscription = {
         name: string,
         family_name: string,
         email: string,
+        owner: string,
         picture?: string | null,
         createdAt: string,
         updatedAt: string,
@@ -2132,6 +2186,7 @@ export type OnDeleteCommentSubscription = {
       name: string,
       family_name: string,
       email: string,
+      owner: string,
       picture?: string | null,
       posts?:  {
         __typename: "ModelPostConnection",

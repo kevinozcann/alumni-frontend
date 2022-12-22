@@ -3,12 +3,16 @@
 // this is an auto generated file. This will be overwritten
 
 export const onCreateUser = /* GraphQL */ `
-  subscription OnCreateUser($filter: ModelSubscriptionUserFilterInput) {
-    onCreateUser(filter: $filter) {
+  subscription OnCreateUser(
+    $filter: ModelSubscriptionUserFilterInput
+    $owner: String
+  ) {
+    onCreateUser(filter: $filter, owner: $owner) {
       id
       name
       family_name
       email
+      owner
       picture
       posts {
         items {
@@ -41,12 +45,16 @@ export const onCreateUser = /* GraphQL */ `
   }
 `;
 export const onUpdateUser = /* GraphQL */ `
-  subscription OnUpdateUser($filter: ModelSubscriptionUserFilterInput) {
-    onUpdateUser(filter: $filter) {
+  subscription OnUpdateUser(
+    $filter: ModelSubscriptionUserFilterInput
+    $owner: String
+  ) {
+    onUpdateUser(filter: $filter, owner: $owner) {
       id
       name
       family_name
       email
+      owner
       picture
       posts {
         items {
@@ -79,12 +87,16 @@ export const onUpdateUser = /* GraphQL */ `
   }
 `;
 export const onDeleteUser = /* GraphQL */ `
-  subscription OnDeleteUser($filter: ModelSubscriptionUserFilterInput) {
-    onDeleteUser(filter: $filter) {
+  subscription OnDeleteUser(
+    $filter: ModelSubscriptionUserFilterInput
+    $owner: String
+  ) {
+    onDeleteUser(filter: $filter, owner: $owner) {
       id
       name
       family_name
       email
+      owner
       picture
       posts {
         items {
@@ -117,8 +129,11 @@ export const onDeleteUser = /* GraphQL */ `
   }
 `;
 export const onCreatePerson = /* GraphQL */ `
-  subscription OnCreatePerson($filter: ModelSubscriptionPersonFilterInput) {
-    onCreatePerson(filter: $filter) {
+  subscription OnCreatePerson(
+    $filter: ModelSubscriptionPersonFilterInput
+    $owner: String
+  ) {
+    onCreatePerson(filter: $filter, owner: $owner) {
       id
       ssn_number
       school_number
@@ -140,12 +155,16 @@ export const onCreatePerson = /* GraphQL */ `
       facebook_url
       createdAt
       updatedAt
+      owner
     }
   }
 `;
 export const onUpdatePerson = /* GraphQL */ `
-  subscription OnUpdatePerson($filter: ModelSubscriptionPersonFilterInput) {
-    onUpdatePerson(filter: $filter) {
+  subscription OnUpdatePerson(
+    $filter: ModelSubscriptionPersonFilterInput
+    $owner: String
+  ) {
+    onUpdatePerson(filter: $filter, owner: $owner) {
       id
       ssn_number
       school_number
@@ -167,12 +186,16 @@ export const onUpdatePerson = /* GraphQL */ `
       facebook_url
       createdAt
       updatedAt
+      owner
     }
   }
 `;
 export const onDeletePerson = /* GraphQL */ `
-  subscription OnDeletePerson($filter: ModelSubscriptionPersonFilterInput) {
-    onDeletePerson(filter: $filter) {
+  subscription OnDeletePerson(
+    $filter: ModelSubscriptionPersonFilterInput
+    $owner: String
+  ) {
+    onDeletePerson(filter: $filter, owner: $owner) {
       id
       ssn_number
       school_number
@@ -194,6 +217,7 @@ export const onDeletePerson = /* GraphQL */ `
       facebook_url
       createdAt
       updatedAt
+      owner
     }
   }
 `;
@@ -212,6 +236,7 @@ export const onCreatePost = /* GraphQL */ `
         name
         family_name
         email
+        owner
         picture
         posts {
           nextToken
@@ -256,6 +281,7 @@ export const onUpdatePost = /* GraphQL */ `
         name
         family_name
         email
+        owner
         picture
         posts {
           nextToken
@@ -300,6 +326,7 @@ export const onDeletePost = /* GraphQL */ `
         name
         family_name
         email
+        owner
         picture
         posts {
           nextToken
@@ -348,6 +375,7 @@ export const onCreateComment = /* GraphQL */ `
           name
           family_name
           email
+          owner
           picture
           createdAt
           updatedAt
@@ -366,6 +394,7 @@ export const onCreateComment = /* GraphQL */ `
         name
         family_name
         email
+        owner
         picture
         posts {
           nextToken
@@ -401,6 +430,7 @@ export const onUpdateComment = /* GraphQL */ `
           name
           family_name
           email
+          owner
           picture
           createdAt
           updatedAt
@@ -419,6 +449,7 @@ export const onUpdateComment = /* GraphQL */ `
         name
         family_name
         email
+        owner
         picture
         posts {
           nextToken
@@ -454,6 +485,7 @@ export const onDeleteComment = /* GraphQL */ `
           name
           family_name
           email
+          owner
           picture
           createdAt
           updatedAt
@@ -472,6 +504,7 @@ export const onDeleteComment = /* GraphQL */ `
         name
         family_name
         email
+        owner
         picture
         posts {
           nextToken

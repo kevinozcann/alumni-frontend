@@ -12,6 +12,7 @@ export const createUser = /* GraphQL */ `
       name
       family_name
       email
+      owner
       picture
       posts {
         items {
@@ -53,6 +54,7 @@ export const updateUser = /* GraphQL */ `
       name
       family_name
       email
+      owner
       picture
       posts {
         items {
@@ -94,6 +96,7 @@ export const deleteUser = /* GraphQL */ `
       name
       family_name
       email
+      owner
       picture
       posts {
         items {
@@ -152,6 +155,7 @@ export const createPerson = /* GraphQL */ `
       facebook_url
       createdAt
       updatedAt
+      owner
     }
   }
 `;
@@ -182,6 +186,7 @@ export const updatePerson = /* GraphQL */ `
       facebook_url
       createdAt
       updatedAt
+      owner
     }
   }
 `;
@@ -212,6 +217,7 @@ export const deletePerson = /* GraphQL */ `
       facebook_url
       createdAt
       updatedAt
+      owner
     }
   }
 `;
@@ -230,6 +236,7 @@ export const createPost = /* GraphQL */ `
         name
         family_name
         email
+        owner
         picture
         posts {
           nextToken
@@ -274,6 +281,7 @@ export const updatePost = /* GraphQL */ `
         name
         family_name
         email
+        owner
         picture
         posts {
           nextToken
@@ -318,6 +326,7 @@ export const deletePost = /* GraphQL */ `
         name
         family_name
         email
+        owner
         picture
         posts {
           nextToken
@@ -366,6 +375,7 @@ export const createComment = /* GraphQL */ `
           name
           family_name
           email
+          owner
           picture
           createdAt
           updatedAt
@@ -384,6 +394,7 @@ export const createComment = /* GraphQL */ `
         name
         family_name
         email
+        owner
         picture
         posts {
           nextToken
@@ -419,6 +430,7 @@ export const updateComment = /* GraphQL */ `
           name
           family_name
           email
+          owner
           picture
           createdAt
           updatedAt
@@ -437,6 +449,7 @@ export const updateComment = /* GraphQL */ `
         name
         family_name
         email
+        owner
         picture
         posts {
           nextToken
@@ -472,6 +485,7 @@ export const deleteComment = /* GraphQL */ `
           name
           family_name
           email
+          owner
           picture
           createdAt
           updatedAt
@@ -490,6 +504,7 @@ export const deleteComment = /* GraphQL */ `
         name
         family_name
         email
+        owner
         picture
         posts {
           nextToken

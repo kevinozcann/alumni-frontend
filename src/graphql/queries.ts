@@ -14,6 +14,7 @@ export const getUser = /* GraphQL */ `
       name
       family_name
       email
+      owner
       picture
       posts {
         items {
@@ -57,6 +58,7 @@ export const listUsers = /* GraphQL */ `
         name
         family_name
         email
+        owner
         picture
         posts {
           nextToken
@@ -95,6 +97,7 @@ export const getPerson = /* GraphQL */ `
       facebook_url
       createdAt
       updatedAt
+      owner
     }
   }
 `;
@@ -127,6 +130,7 @@ export const listPeople = /* GraphQL */ `
         facebook_url
         createdAt
         updatedAt
+        owner
       }
       nextToken
     }
@@ -144,6 +148,7 @@ export const getPost = /* GraphQL */ `
         name
         family_name
         email
+        owner
         picture
         posts {
           nextToken
@@ -190,6 +195,7 @@ export const listPosts = /* GraphQL */ `
           name
           family_name
           email
+          owner
           picture
           createdAt
           updatedAt
@@ -233,6 +239,7 @@ export const postsByUserIDAndTitle = /* GraphQL */ `
           name
           family_name
           email
+          owner
           picture
           createdAt
           updatedAt
@@ -276,6 +283,7 @@ export const postsByDate = /* GraphQL */ `
           name
           family_name
           email
+          owner
           picture
           createdAt
           updatedAt
@@ -308,6 +316,7 @@ export const getComment = /* GraphQL */ `
           name
           family_name
           email
+          owner
           picture
           createdAt
           updatedAt
@@ -326,6 +335,7 @@ export const getComment = /* GraphQL */ `
         name
         family_name
         email
+        owner
         picture
         posts {
           nextToken
@@ -369,6 +379,7 @@ export const listComments = /* GraphQL */ `
           name
           family_name
           email
+          owner
           picture
           createdAt
           updatedAt
@@ -416,6 +427,7 @@ export const commentsByPostID = /* GraphQL */ `
           name
           family_name
           email
+          owner
           picture
           createdAt
           updatedAt
@@ -463,6 +475,7 @@ export const commentsByUserID = /* GraphQL */ `
           name
           family_name
           email
+          owner
           picture
           createdAt
           updatedAt
