@@ -18,11 +18,7 @@ type S3Object {
   key: String!
   region: String!
 }
-type User
-  @model
-  @auth(
-    rules: [{ allow: owner, operations: [read, update, create] }, { allow: private, provider: iam }]
-  ) {
+type User @model @auth(rules: [{ allow: owner, operations: [read, update, create] }]) {
   id: ID!
   name: String!
   family_name: String!
