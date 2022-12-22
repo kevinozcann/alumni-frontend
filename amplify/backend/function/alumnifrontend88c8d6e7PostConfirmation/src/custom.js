@@ -4,8 +4,8 @@ const { SignatureV4 } = require('@aws-sdk/signature-v4');
 const { HttpRequest } = require('@aws-sdk/protocol-http');
 const { default: fetch, Request } = require('node-fetch');
 
-const GRAPHQL_ENDPOINT = process.env.API_AMPLIFYTRIPSPLANNER_GRAPHQLAPIENDPOINTOUTPUT;
-const AWS_REGION = process.env.AWS_REGION || 'us-east-1';
+const GRAPHQL_ENDPOINT = process.env.API_ALUMNIFRONTEND_GRAPHQLAPIENDPOINTOUTPUT;
+const AWS_REGION = process.env.REGION || 'us-east-1';
 
 const query = /* GraphQL */ `
   mutation createUser($email: String!, $name: String!, $family_name: String!, $owner: String!) {
