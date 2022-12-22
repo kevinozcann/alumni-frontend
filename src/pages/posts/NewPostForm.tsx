@@ -31,7 +31,8 @@ import { fileExtension, filenameFromPath, filetypeFromFilename } from 'utils/Hel
 import { IFile, TActionType } from 'utils/shared-types';
 
 import { IPost } from './post-types';
-import { postActions, postsAddSelector, postsPhaseSelector } from './_store/posts';
+import { postsAddSelector, postsPhaseSelector } from './_store/posts';
+import { postActions } from './_store/actions';
 
 type NewFeedFormProps = {
   actionType: TActionType;
@@ -122,7 +123,7 @@ const NewFeedForm: React.FC<NewFeedFormProps> = (props) => {
   const submitForm = (values: Partial<IPost>) => {
     if (values !== initialValues || addFeed) {
       setStatus('submitted');
-      dispatch(postActions.savePost(user, values, actionType));
+      dispatch(postActions.addPost(user, values, actionType));
     }
   };
 
@@ -141,7 +142,7 @@ const NewFeedForm: React.FC<NewFeedFormProps> = (props) => {
   // Auto save as draft
   React.useEffect(() => {
     if (values !== initialValues) {
-      dispatch(postActions.updateAddPost(values));
+      // dispatch(postActions.updateAddPost(values));
     }
   }, [initialValues, values]);
 

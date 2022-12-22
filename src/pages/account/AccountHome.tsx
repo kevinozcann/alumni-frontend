@@ -6,9 +6,10 @@ import { useNavigate } from 'react-router';
 
 import { IPost } from 'pages/posts/post-types';
 import NewPost from 'pages/posts/NewPost';
-import { postActions, postsOwnedSelector, postsPhaseSelector } from 'pages/posts/_store/posts';
+import { postsOwnedSelector, postsPhaseSelector } from 'pages/posts/_store/posts';
 
 import { authUserSelector } from 'store/auth';
+import { postActions } from 'pages/posts/_store/actions';
 
 const Post = loadable(() => import('pages/posts/Post'));
 const About = loadable(() => import('./profile/About'));
@@ -27,7 +28,7 @@ const AccountHome = () => {
   };
 
   React.useEffect(() => {
-    dispatch(postActions.pullPosts(user, page));
+    dispatch(postActions.getPosts(user, page));
 
     return () => null;
   }, [user, page]);

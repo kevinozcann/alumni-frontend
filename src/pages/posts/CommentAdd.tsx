@@ -9,7 +9,7 @@ import useTranslation from 'hooks/useTranslation';
 import { authUserSelector } from 'store/auth';
 
 import { IPost } from './post-types';
-import { postActions } from './_store/posts';
+import { postActions } from './_store/actions';
 
 type TCommentAddProps = {
   post: IPost;
@@ -30,7 +30,7 @@ const CommentAdd = (props: TCommentAddProps) => {
   };
 
   const handleSave = () => {
-    dispatch(postActions.addPostComment(user, post, { content: value }));
+    dispatch(postActions.addComment(user, post, { content: value }));
   };
 
   React.useEffect(() => {

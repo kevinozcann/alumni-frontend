@@ -32,8 +32,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { authUserSelector } from 'store/auth';
 import { i18nLangSelector } from 'store/i18n';
 import { IPost } from './post-types';
-import { postActions, postsPhaseSelector } from './_store/posts';
+import { postsPhaseSelector } from './_store/posts';
 import { IUser } from 'pages/account/account-types';
+import { postActions } from './_store/actions';
 
 const Moment = loadable.lib(() => import('moment'));
 
@@ -71,7 +72,7 @@ const Post = (props: FeedProps) => {
   const files = post.files?.filter((file) => !file.mimeType.includes('image/'));
 
   const handleSaveFeed = React.useCallback((user: IUser, post: IPost, actionType: TActionType) => {
-    dispatch(postActions.savePost(user, post, actionType));
+    dispatch(postActions.addPost(user, post, actionType));
   }, []);
 
   const handleActionsClick = (event: React.MouseEvent<HTMLButtonElement>) => {

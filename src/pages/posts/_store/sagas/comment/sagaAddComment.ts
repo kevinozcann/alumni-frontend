@@ -2,9 +2,11 @@ import { API } from 'aws-amplify';
 import { put } from 'redux-saga/effects';
 
 import { createComment } from 'graphql/mutations';
-import { postActions, postActionTypes, TPostActionType } from '../../posts';
 
-export function* addComment({ payload }: TPostActionType) {
+import { postActions } from '../../actions';
+import { postActionTypes, TPostActionType } from '../../types';
+
+export function* sagaAddComment({ payload }: TPostActionType) {
   yield put(postActions.setPhase('adding', null));
 
   const { user, post, comment } = payload;
@@ -23,7 +25,7 @@ export function* addComment({ payload }: TPostActionType) {
 
   if (data) {
     yield put({
-      type: postActionTypes.POST_UPDATE,
+      type: postActionTypes.STORE.UPDATE_POST,
       payload: { post: data.createComment }
     });
     yield put(postActions.setPhase('success'));
