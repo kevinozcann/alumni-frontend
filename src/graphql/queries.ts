@@ -212,18 +212,18 @@ export const listPosts = /* GraphQL */ `
     }
   }
 `;
-export const postsByUserIDAndTitle = /* GraphQL */ `
-  query PostsByUserIDAndTitle(
+export const postsByUserIDAndCreatedAt = /* GraphQL */ `
+  query PostsByUserIDAndCreatedAt(
     $userID: ID!
-    $title: ModelStringKeyConditionInput
+    $createdAt: ModelStringKeyConditionInput
     $sortDirection: ModelSortDirection
     $filter: ModelPostFilterInput
     $limit: Int
     $nextToken: String
   ) {
-    postsByUserIDAndTitle(
+    postsByUserIDAndCreatedAt(
       userID: $userID
-      title: $title
+      createdAt: $createdAt
       sortDirection: $sortDirection
       filter: $filter
       limit: $limit

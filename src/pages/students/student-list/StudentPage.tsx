@@ -1,31 +1,31 @@
-import React from 'react';
 import { lazy } from '@loadable/component';
-import { useNavigate, useParams } from 'react-router';
-import { connect, ConnectedProps } from 'react-redux';
-import { LoadableScreen } from 'layout';
 import {
+  Avatar,
   Box,
+  Card,
+  CardContent,
+  CardHeader,
   Divider,
   Grid,
-  Card,
-  CardHeader,
-  Avatar,
-  Tab,
-  Tabs,
   Skeleton,
-  CardContent
+  Tab,
+  Tabs
 } from '@mui/material';
+import { LoadableScreen } from 'layout';
+import React from 'react';
+import { connect, ConnectedProps } from 'react-redux';
+import { useNavigate, useParams } from 'react-router';
 
+import { IBreadcrumb } from 'components/BreadCrumbs';
+import { useSubheader } from 'contexts/SubheaderContext';
 import useTranslation from 'hooks/useTranslation';
 import Page from 'layout/Page';
-import { AppDispatch, RootState } from 'store/store';
-import { studentsActions, studentsPhaseSelector, studentInfoSelector } from './_store/students';
-import { useSubheader } from 'contexts/SubheaderContext';
-import { IBreadcrumb } from 'components/BreadCrumbs';
 import { i18nLangSelector } from 'store/i18n';
-import studentPageTabs from './student-page-tabs';
-import { IPageTab } from 'utils/shared-types';
+import { AppDispatch, RootState } from 'store/store';
 import { userActiveSchoolSelector } from 'store/user';
+import { IPageTab } from 'utils/shared-types';
+import studentPageTabs from './student-page-tabs';
+import { studentInfoSelector, studentsActions, studentsPhaseSelector } from './_store/students';
 
 const Schoolinfo = LoadableScreen(lazy(() => import('./student-pages/Schoolinfo')));
 
@@ -63,11 +63,11 @@ const StudentPage: React.FC<TStudentPageProps> = (props) => {
       //navigate(`/student/${studentInfo.id}/school-info`);
       navigate(`/student/${id}/school-info`);
     }
-  }, [id, activeSchool]);
+  }, [navigate, section, id, activeSchool]);
 
   React.useEffect(() => {
     pullStudentInfo(parseInt(id));
-  }, [id, activeSchool]);
+  }, [id, activeSchool, pullStudentInfo]);
 
   React.useEffect(() => {
     const breadcrumbs: IBreadcrumb[] = [];
@@ -82,7 +82,7 @@ const StudentPage: React.FC<TStudentPageProps> = (props) => {
       original: true
     });
     subheader.setBreadcrumbs(breadcrumbs);
-  }, []);
+  }, [id, intl, subheader]);
 
   return (
     <Page title={intl.translate({ id: 'student.student_page' })}>

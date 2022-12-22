@@ -14,7 +14,6 @@ export interface IFeedLike {
 }
 export interface IPost {
   id?: number;
-  postType?: 'Post' | string;
   content?: string;
   url?: string;
   files?: IFile[];

@@ -1,13 +1,13 @@
+import { Box, Card, CardContent, CardHeader, Divider } from '@mui/material';
 import React from 'react';
 import { useNavigate } from 'react-router';
-import { Box, Card, CardContent, CardHeader, Divider } from '@mui/material';
 
-import { Page } from 'layout/Page';
-import useTranslation from 'hooks/useTranslation';
 import { useSubheader } from 'contexts/SubheaderContext';
+import useTranslation from 'hooks/useTranslation';
+import { Page } from 'layout/Page';
 
-import StudentTagsForm from './StudentTagsForm';
 import { IBreadcrumb } from 'components/BreadCrumbs';
+import StudentTagsForm from './StudentTagsForm';
 
 const NewStudentTag = () => {
   const intl = useTranslation();
@@ -26,7 +26,7 @@ const NewStudentTag = () => {
     breadcrumbs.push({ title: transStudentTags, url: '/student/tags', original: true });
     breadcrumbs.push({ title: transNewStudentTag, url: '/student/tags/new', original: true });
     subheader.setBreadcrumbs(breadcrumbs);
-  }, []);
+  }, [subheader, transNewStudentTag, transStudentTags]);
 
   return (
     <Page title={transNewStudentTag}>

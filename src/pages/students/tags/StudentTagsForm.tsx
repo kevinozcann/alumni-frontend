@@ -1,17 +1,17 @@
+import { Box, Divider, Grid, TextField } from '@mui/material';
+import { useFormik } from 'formik';
 import React from 'react';
 import { connect, ConnectedProps } from 'react-redux';
 import { useParams } from 'react-router';
-import { useFormik } from 'formik';
-import { Box, Divider, Grid, TextField } from '@mui/material';
 
-import { AppDispatch, RootState } from 'store/store';
-import { userActiveSchoolSelector } from 'store/user';
-import { authUserSelector } from 'store/auth';
 import useSnackbar from 'hooks/useSnackbar';
 import useTranslation from 'hooks/useTranslation';
+import { ISchool } from 'pages/organization/organization-types';
+import { authUserSelector } from 'store/auth';
+import { AppDispatch, RootState } from 'store/store';
+import { userActiveSchoolSelector } from 'store/user';
 import { CancelButton, FormButtons, SaveButton } from 'utils/ActionLinks';
 import { TActionType } from 'utils/shared-types';
-import { ISchool } from 'pages/organization/organization-types';
 
 import {
   IStudentTag,
@@ -110,7 +110,7 @@ const StudentTagsForm = (props: TFormProps) => {
 
   React.useEffect(() => {
     setStatus('notSubmitted');
-  }, []);
+  }, [setStatus]);
 
   React.useEffect(() => {
     setSubmitting(false);
@@ -127,7 +127,7 @@ const StudentTagsForm = (props: TFormProps) => {
         }, 500);
       }
     }
-  }, [status, phase, setSubmitting, handleClose]);
+  }, [intl, showSnackbar, sideForm, status, phase, setSubmitting, handleClose]);
 
   return (
     <Box sx={{ display: 'flex' }}>

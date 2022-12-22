@@ -57,7 +57,6 @@ const NewFeedForm = (props: NewFeedFormProps) => {
     commentsOn: true,
     content: addFeed ? addFeed.content : '',
     coverPicture: addFeed ? addFeed.coverPicture : '',
-    postType: 'post',
     files: addFeed ? addFeed.files : [],
     related: addFeed ? addFeed.related : [],
     tags: addFeed ? addFeed.tags : [],

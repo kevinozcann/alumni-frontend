@@ -1332,17 +1332,17 @@ export type ListPostsQuery = {
   } | null,
 };
 
-export type PostsByUserIDAndTitleQueryVariables = {
+export type PostsByUserIDAndCreatedAtQueryVariables = {
   userID: string,
-  title?: ModelStringKeyConditionInput | null,
+  createdAt?: ModelStringKeyConditionInput | null,
   sortDirection?: ModelSortDirection | null,
   filter?: ModelPostFilterInput | null,
   limit?: number | null,
   nextToken?: string | null,
 };
 
-export type PostsByUserIDAndTitleQuery = {
-  postsByUserIDAndTitle?:  {
+export type PostsByUserIDAndCreatedAtQuery = {
+  postsByUserIDAndCreatedAt?:  {
     __typename: "ModelPostConnection",
     items:  Array< {
       __typename: "Post",

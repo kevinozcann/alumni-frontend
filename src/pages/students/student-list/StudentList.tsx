@@ -1,6 +1,5 @@
-import React from 'react';
-import { connect, ConnectedProps } from 'react-redux';
-import { useNavigate } from 'react-router';
+import { faFemale, faMale } from '@fortawesome/pro-duotone-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   Avatar,
   Box,
@@ -11,38 +10,32 @@ import {
   useMediaQuery,
   useTheme
 } from '@mui/material';
-import { GridColDef, LicenseInfo, DataGridPro, GridValueGetterParams } from '@mui/x-data-grid-pro';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faMale } from '@fortawesome/pro-duotone-svg-icons';
-import { faFemale } from '@fortawesome/pro-duotone-svg-icons';
+import { DataGridPro, GridColDef, GridValueGetterParams, LicenseInfo } from '@mui/x-data-grid-pro';
 import { format } from 'date-fns';
+import React from 'react';
+import { connect, ConnectedProps } from 'react-redux';
+import { useNavigate } from 'react-router';
 
+import RowActions from 'components/table/RowActions';
+import { useSubheader } from 'contexts/SubheaderContext';
+import useTranslation from 'hooks/useTranslation';
 import Page from 'layout/Page';
 import Scrollbar from 'layout/Scrollbar';
-import { useSubheader } from 'contexts/SubheaderContext';
-import { AppDispatch, RootState } from 'store/store';
-import useTranslation from 'hooks/useTranslation';
-import { ISchool } from 'pages/organization/organization-types';
-import { userActiveSchoolSelector, userPersonalSelector } from 'store/user';
-import {
-  ITeacherClasses,
-  studentsActions,
-  studentsPhaseSelector,
-  teacherClassesSelector
-} from './_store/students';
-import { toAbsoluteUrl } from '../../../utils/AssetsHelpers';
-import RowActions from 'components/table/RowActions';
-import { i18nLangSelector } from 'store/i18n';
-import { authUserSelector } from 'store/auth';
 import { IPersonal, IUser } from 'pages/account/account-types';
+import { ISchool } from 'pages/organization/organization-types';
+import { authUserSelector } from 'store/auth';
+import { i18nLangSelector } from 'store/i18n';
+import { AppDispatch, RootState } from 'store/store';
+import { userActiveSchoolSelector, userPersonalSelector } from 'store/user';
+import { toAbsoluteUrl } from '../../../utils/AssetsHelpers';
 import { IStudent } from '../_store/types';
+import { studentsActions, studentsPhaseSelector } from './_store/students';
 
 LicenseInfo.setLicenseKey(process.env.REACT_APP_MATERIALUI_KEY);
 
 const mapStateToProps = (state: RootState) => ({
   lang: i18nLangSelector(state),
   activeSchool: userActiveSchoolSelector(state),
-  teacherClasses: teacherClassesSelector(state),
   userPersonal: userPersonalSelector(state),
   user: authUserSelector(state),
   phase: studentsPhaseSelector(state)
@@ -56,7 +49,7 @@ type PropsFromRedux = ConnectedProps<typeof connector>;
 type TStudentsProps = PropsFromRedux;
 
 const StudentList: React.FC<TStudentsProps> = (props) => {
-  const { phase, activeSchool, user, teacherClasses, userPersonal, pullStudents } = props;
+  const { phase, activeSchool, user, userPersonal, pullStudents } = props;
   const intl = useTranslation();
   const theme = useTheme();
   const subheader = useSubheader();
@@ -104,7 +97,7 @@ const StudentList: React.FC<TStudentsProps> = (props) => {
       headerAlign: 'center',
       align: 'center',
       renderCell: (params: GridValueGetterParams) => (
-        <FontAwesomeIcon icon={params.row.gender == 'E' ? faMale : faFemale} fontSize={25} />
+        <FontAwesomeIcon icon={params.row.gender === 'E' ? faMale : faFemale} fontSize={25} />
       )
     },
     {
@@ -123,7 +116,7 @@ const StudentList: React.FC<TStudentsProps> = (props) => {
       headerAlign: 'center',
       align: 'center',
       renderCell: (params: GridValueGetterParams) =>
-        params.row.dateOfBirth != '0000-00-00' ? format(new Date(params.row.dateOfBirth), 'P') : ''
+        params.row.dateOfBirth !== '0000-00-00' ? format(new Date(params.row.dateOfBirth), 'P') : ''
     },
     {
       field: 'batchNames',
@@ -162,24 +155,24 @@ const StudentList: React.FC<TStudentsProps> = (props) => {
     }
   ];
 
-  React.useEffect(() => {
-    const std = [];
+  // React.useEffect(() => {
+  //   const std = [];
 
-    const filteredStudents = () => {
-      return teacherClasses
-        .filter((t: ITeacherClasses) => t.classStudents)
-        .map((x) => x.classStudents);
-    };
+  //   const filteredStudents = () => {
+  //     return teacherClasses
+  //       .filter((t: ITeacherClasses) => t.classStudents)
+  //       .map((x) => x.classStudents);
+  //   };
 
-    const students = filteredStudents();
-    students.map((s) => {
-      s.map((tt) => {
-        const findItem = std.find((x) => x.id === tt.id);
-        if (!findItem) std.push(tt);
-      });
-    });
-    setAllStudents(std);
-  }, []);
+  //   const students = filteredStudents();
+  //   students.map((s) => {
+  //     return s.map((tt) => {
+  //       const findItem = std.find((x) => x.id === tt.id);
+  //       if (!findItem) std.push(tt);
+  //     });
+  //   });
+  //   setAllStudents(std);
+  // }, []);
 
   React.useEffect(() => {
     pullStudents(user, userPersonal, activeSchool);
