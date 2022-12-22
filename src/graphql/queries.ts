@@ -20,10 +20,10 @@ export const getUser = /* GraphQL */ `
           id
           title
           content
+          userID
           type
           createdAt
           updatedAt
-          userPostsId
           owner
         }
         nextToken
@@ -32,10 +32,10 @@ export const getUser = /* GraphQL */ `
         items {
           id
           content
+          postID
+          userID
           createdAt
           updatedAt
-          userCommentsId
-          postCommentsId
           owner
         }
         nextToken
@@ -138,6 +138,7 @@ export const getPost = /* GraphQL */ `
       id
       title
       content
+      userID
       user {
         id
         name
@@ -157,10 +158,10 @@ export const getPost = /* GraphQL */ `
         items {
           id
           content
+          postID
+          userID
           createdAt
           updatedAt
-          userCommentsId
-          postCommentsId
           owner
         }
         nextToken
@@ -168,7 +169,6 @@ export const getPost = /* GraphQL */ `
       type
       createdAt
       updatedAt
-      userPostsId
       owner
     }
   }
@@ -184,6 +184,7 @@ export const listPosts = /* GraphQL */ `
         id
         title
         content
+        userID
         user {
           id
           name
@@ -199,7 +200,49 @@ export const listPosts = /* GraphQL */ `
         type
         createdAt
         updatedAt
-        userPostsId
+        owner
+      }
+      nextToken
+    }
+  }
+`;
+export const postsByUserIDAndTitle = /* GraphQL */ `
+  query PostsByUserIDAndTitle(
+    $userID: ID!
+    $title: ModelStringKeyConditionInput
+    $sortDirection: ModelSortDirection
+    $filter: ModelPostFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    postsByUserIDAndTitle(
+      userID: $userID
+      title: $title
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        title
+        content
+        userID
+        user {
+          id
+          name
+          family_name
+          email
+          picture
+          createdAt
+          updatedAt
+        }
+        comments {
+          nextToken
+        }
+        type
+        createdAt
+        updatedAt
         owner
       }
       nextToken
@@ -227,6 +270,7 @@ export const postsByDate = /* GraphQL */ `
         id
         title
         content
+        userID
         user {
           id
           name
@@ -242,7 +286,6 @@ export const postsByDate = /* GraphQL */ `
         type
         createdAt
         updatedAt
-        userPostsId
         owner
       }
       nextToken
@@ -253,10 +296,13 @@ export const getComment = /* GraphQL */ `
   query GetComment($id: ID!) {
     getComment(id: $id) {
       id
+      content
+      postID
       post {
         id
         title
         content
+        userID
         user {
           id
           name
@@ -272,9 +318,9 @@ export const getComment = /* GraphQL */ `
         type
         createdAt
         updatedAt
-        userPostsId
         owner
       }
+      userID
       user {
         id
         name
@@ -290,11 +336,8 @@ export const getComment = /* GraphQL */ `
         createdAt
         updatedAt
       }
-      content
       createdAt
       updatedAt
-      userCommentsId
-      postCommentsId
       owner
     }
   }
@@ -308,16 +351,19 @@ export const listComments = /* GraphQL */ `
     listComments(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
+        content
+        postID
         post {
           id
           title
           content
+          userID
           type
           createdAt
           updatedAt
-          userPostsId
           owner
         }
+        userID
         user {
           id
           name
@@ -327,11 +373,102 @@ export const listComments = /* GraphQL */ `
           createdAt
           updatedAt
         }
-        content
         createdAt
         updatedAt
-        userCommentsId
-        postCommentsId
+        owner
+      }
+      nextToken
+    }
+  }
+`;
+export const commentsByPostID = /* GraphQL */ `
+  query CommentsByPostID(
+    $postID: ID!
+    $sortDirection: ModelSortDirection
+    $filter: ModelCommentFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    commentsByPostID(
+      postID: $postID
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        content
+        postID
+        post {
+          id
+          title
+          content
+          userID
+          type
+          createdAt
+          updatedAt
+          owner
+        }
+        userID
+        user {
+          id
+          name
+          family_name
+          email
+          picture
+          createdAt
+          updatedAt
+        }
+        createdAt
+        updatedAt
+        owner
+      }
+      nextToken
+    }
+  }
+`;
+export const commentsByUserID = /* GraphQL */ `
+  query CommentsByUserID(
+    $userID: ID!
+    $sortDirection: ModelSortDirection
+    $filter: ModelCommentFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    commentsByUserID(
+      userID: $userID
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        content
+        postID
+        post {
+          id
+          title
+          content
+          userID
+          type
+          createdAt
+          updatedAt
+          owner
+        }
+        userID
+        user {
+          id
+          name
+          family_name
+          email
+          picture
+          createdAt
+          updatedAt
+        }
+        createdAt
+        updatedAt
         owner
       }
       nextToken

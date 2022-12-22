@@ -15,10 +15,10 @@ export const onCreateUser = /* GraphQL */ `
           id
           title
           content
+          userID
           type
           createdAt
           updatedAt
-          userPostsId
           owner
         }
         nextToken
@@ -27,10 +27,10 @@ export const onCreateUser = /* GraphQL */ `
         items {
           id
           content
+          postID
+          userID
           createdAt
           updatedAt
-          userCommentsId
-          postCommentsId
           owner
         }
         nextToken
@@ -53,10 +53,10 @@ export const onUpdateUser = /* GraphQL */ `
           id
           title
           content
+          userID
           type
           createdAt
           updatedAt
-          userPostsId
           owner
         }
         nextToken
@@ -65,10 +65,10 @@ export const onUpdateUser = /* GraphQL */ `
         items {
           id
           content
+          postID
+          userID
           createdAt
           updatedAt
-          userCommentsId
-          postCommentsId
           owner
         }
         nextToken
@@ -91,10 +91,10 @@ export const onDeleteUser = /* GraphQL */ `
           id
           title
           content
+          userID
           type
           createdAt
           updatedAt
-          userPostsId
           owner
         }
         nextToken
@@ -103,10 +103,10 @@ export const onDeleteUser = /* GraphQL */ `
         items {
           id
           content
+          postID
+          userID
           createdAt
           updatedAt
-          userCommentsId
-          postCommentsId
           owner
         }
         nextToken
@@ -206,6 +206,7 @@ export const onCreatePost = /* GraphQL */ `
       id
       title
       content
+      userID
       user {
         id
         name
@@ -225,10 +226,10 @@ export const onCreatePost = /* GraphQL */ `
         items {
           id
           content
+          postID
+          userID
           createdAt
           updatedAt
-          userCommentsId
-          postCommentsId
           owner
         }
         nextToken
@@ -236,7 +237,6 @@ export const onCreatePost = /* GraphQL */ `
       type
       createdAt
       updatedAt
-      userPostsId
       owner
     }
   }
@@ -250,6 +250,7 @@ export const onUpdatePost = /* GraphQL */ `
       id
       title
       content
+      userID
       user {
         id
         name
@@ -269,10 +270,10 @@ export const onUpdatePost = /* GraphQL */ `
         items {
           id
           content
+          postID
+          userID
           createdAt
           updatedAt
-          userCommentsId
-          postCommentsId
           owner
         }
         nextToken
@@ -280,7 +281,6 @@ export const onUpdatePost = /* GraphQL */ `
       type
       createdAt
       updatedAt
-      userPostsId
       owner
     }
   }
@@ -294,6 +294,7 @@ export const onDeletePost = /* GraphQL */ `
       id
       title
       content
+      userID
       user {
         id
         name
@@ -313,10 +314,10 @@ export const onDeletePost = /* GraphQL */ `
         items {
           id
           content
+          postID
+          userID
           createdAt
           updatedAt
-          userCommentsId
-          postCommentsId
           owner
         }
         nextToken
@@ -324,7 +325,6 @@ export const onDeletePost = /* GraphQL */ `
       type
       createdAt
       updatedAt
-      userPostsId
       owner
     }
   }
@@ -336,10 +336,13 @@ export const onCreateComment = /* GraphQL */ `
   ) {
     onCreateComment(filter: $filter, owner: $owner) {
       id
+      content
+      postID
       post {
         id
         title
         content
+        userID
         user {
           id
           name
@@ -355,9 +358,9 @@ export const onCreateComment = /* GraphQL */ `
         type
         createdAt
         updatedAt
-        userPostsId
         owner
       }
+      userID
       user {
         id
         name
@@ -373,11 +376,8 @@ export const onCreateComment = /* GraphQL */ `
         createdAt
         updatedAt
       }
-      content
       createdAt
       updatedAt
-      userCommentsId
-      postCommentsId
       owner
     }
   }
@@ -389,10 +389,13 @@ export const onUpdateComment = /* GraphQL */ `
   ) {
     onUpdateComment(filter: $filter, owner: $owner) {
       id
+      content
+      postID
       post {
         id
         title
         content
+        userID
         user {
           id
           name
@@ -408,9 +411,9 @@ export const onUpdateComment = /* GraphQL */ `
         type
         createdAt
         updatedAt
-        userPostsId
         owner
       }
+      userID
       user {
         id
         name
@@ -426,11 +429,8 @@ export const onUpdateComment = /* GraphQL */ `
         createdAt
         updatedAt
       }
-      content
       createdAt
       updatedAt
-      userCommentsId
-      postCommentsId
       owner
     }
   }
@@ -442,10 +442,13 @@ export const onDeleteComment = /* GraphQL */ `
   ) {
     onDeleteComment(filter: $filter, owner: $owner) {
       id
+      content
+      postID
       post {
         id
         title
         content
+        userID
         user {
           id
           name
@@ -461,9 +464,9 @@ export const onDeleteComment = /* GraphQL */ `
         type
         createdAt
         updatedAt
-        userPostsId
         owner
       }
+      userID
       user {
         id
         name
@@ -479,11 +482,8 @@ export const onDeleteComment = /* GraphQL */ `
         createdAt
         updatedAt
       }
-      content
       createdAt
       updatedAt
-      userCommentsId
-      postCommentsId
       owner
     }
   }

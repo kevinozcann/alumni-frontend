@@ -21,16 +21,13 @@ type S3Object {
 type User
   @model
   @auth(
-    rules: [
-      { allow: owner }
-      { allow: private, operations: [read] }
-      { allow: public, operations: [read] }
-    ]
+    rules: [{ allow: owner, operations: [read, update, create] }, { allow: private, provider: iam }]
   ) {
   id: ID!
   name: String!
   family_name: String!
   email: String!
+  owner: String!
   picture: String
   posts: [Post] @hasMany(indexName: "byUser", fields: ["id"])
   comments: [Comment] @hasMany(indexName: "byUser", fields: ["id"])
