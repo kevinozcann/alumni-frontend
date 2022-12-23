@@ -17,10 +17,8 @@ export const createUser = /* GraphQL */ `
       posts {
         items {
           id
-          title
           content
           userID
-          type
           createdAt
           updatedAt
           owner
@@ -59,10 +57,8 @@ export const updateUser = /* GraphQL */ `
       posts {
         items {
           id
-          title
           content
           userID
-          type
           createdAt
           updatedAt
           owner
@@ -101,10 +97,8 @@ export const deleteUser = /* GraphQL */ `
       posts {
         items {
           id
-          title
           content
           userID
-          type
           createdAt
           updatedAt
           owner
@@ -228,7 +222,6 @@ export const createPost = /* GraphQL */ `
   ) {
     createPost(input: $input, condition: $condition) {
       id
-      title
       content
       userID
       user {
@@ -259,7 +252,6 @@ export const createPost = /* GraphQL */ `
         }
         nextToken
       }
-      type
       createdAt
       updatedAt
       owner
@@ -273,7 +265,6 @@ export const updatePost = /* GraphQL */ `
   ) {
     updatePost(input: $input, condition: $condition) {
       id
-      title
       content
       userID
       user {
@@ -304,7 +295,6 @@ export const updatePost = /* GraphQL */ `
         }
         nextToken
       }
-      type
       createdAt
       updatedAt
       owner
@@ -318,7 +308,6 @@ export const deletePost = /* GraphQL */ `
   ) {
     deletePost(input: $input, condition: $condition) {
       id
-      title
       content
       userID
       user {
@@ -349,7 +338,6 @@ export const deletePost = /* GraphQL */ `
         }
         nextToken
       }
-      type
       createdAt
       updatedAt
       owner
@@ -367,7 +355,6 @@ export const createComment = /* GraphQL */ `
       postID
       post {
         id
-        title
         content
         userID
         user {
@@ -383,7 +370,6 @@ export const createComment = /* GraphQL */ `
         comments {
           nextToken
         }
-        type
         createdAt
         updatedAt
         owner
@@ -422,7 +408,6 @@ export const updateComment = /* GraphQL */ `
       postID
       post {
         id
-        title
         content
         userID
         user {
@@ -438,7 +423,6 @@ export const updateComment = /* GraphQL */ `
         comments {
           nextToken
         }
-        type
         createdAt
         updatedAt
         owner
@@ -477,7 +461,6 @@ export const deleteComment = /* GraphQL */ `
       postID
       post {
         id
-        title
         content
         userID
         user {
@@ -493,7 +476,6 @@ export const deleteComment = /* GraphQL */ `
         comments {
           nextToken
         }
-        type
         createdAt
         updatedAt
         owner

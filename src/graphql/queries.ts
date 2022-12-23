@@ -19,10 +19,8 @@ export const getUser = /* GraphQL */ `
       posts {
         items {
           id
-          title
           content
           userID
-          type
           createdAt
           updatedAt
           owner
@@ -140,7 +138,6 @@ export const getPost = /* GraphQL */ `
   query GetPost($id: ID!) {
     getPost(id: $id) {
       id
-      title
       content
       userID
       user {
@@ -171,7 +168,6 @@ export const getPost = /* GraphQL */ `
         }
         nextToken
       }
-      type
       createdAt
       updatedAt
       owner
@@ -187,7 +183,6 @@ export const listPosts = /* GraphQL */ `
     listPosts(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
-        title
         content
         userID
         user {
@@ -203,7 +198,6 @@ export const listPosts = /* GraphQL */ `
         comments {
           nextToken
         }
-        type
         createdAt
         updatedAt
         owner
@@ -231,7 +225,6 @@ export const postsByUserIDAndCreatedAt = /* GraphQL */ `
     ) {
       items {
         id
-        title
         content
         userID
         user {
@@ -247,7 +240,6 @@ export const postsByUserIDAndCreatedAt = /* GraphQL */ `
         comments {
           nextToken
         }
-        type
         createdAt
         updatedAt
         owner
@@ -256,17 +248,15 @@ export const postsByUserIDAndCreatedAt = /* GraphQL */ `
     }
   }
 `;
-export const postsByDate = /* GraphQL */ `
-  query PostsByDate(
-    $type: String!
-    $createdAt: ModelStringKeyConditionInput
+export const postsByCreatedAt = /* GraphQL */ `
+  query PostsByCreatedAt(
+    $createdAt: String!
     $sortDirection: ModelSortDirection
     $filter: ModelPostFilterInput
     $limit: Int
     $nextToken: String
   ) {
-    postsByDate(
-      type: $type
+    postsByCreatedAt(
       createdAt: $createdAt
       sortDirection: $sortDirection
       filter: $filter
@@ -275,7 +265,6 @@ export const postsByDate = /* GraphQL */ `
     ) {
       items {
         id
-        title
         content
         userID
         user {
@@ -291,7 +280,6 @@ export const postsByDate = /* GraphQL */ `
         comments {
           nextToken
         }
-        type
         createdAt
         updatedAt
         owner
@@ -308,7 +296,6 @@ export const getComment = /* GraphQL */ `
       postID
       post {
         id
-        title
         content
         userID
         user {
@@ -324,7 +311,6 @@ export const getComment = /* GraphQL */ `
         comments {
           nextToken
         }
-        type
         createdAt
         updatedAt
         owner
@@ -365,10 +351,8 @@ export const listComments = /* GraphQL */ `
         postID
         post {
           id
-          title
           content
           userID
-          type
           createdAt
           updatedAt
           owner
@@ -413,10 +397,8 @@ export const commentsByPostID = /* GraphQL */ `
         postID
         post {
           id
-          title
           content
           userID
-          type
           createdAt
           updatedAt
           owner
@@ -461,10 +443,8 @@ export const commentsByUserID = /* GraphQL */ `
         postID
         post {
           id
-          title
           content
           userID
-          type
           createdAt
           updatedAt
           owner
