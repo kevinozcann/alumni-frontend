@@ -97,6 +97,10 @@ const Post = (props: FeedProps) => {
     setShowConfirmDialog(false);
   };
 
+  React.useEffect(() => {
+    // if (post.user.)
+  }, []);
+
   return (
     <React.Fragment>
       <Card>

@@ -5,11 +5,13 @@ import { postsByDate } from 'graphql/queries';
 import { postActions } from '../../actions';
 import { postActionTypes, TPostActionType } from '../../types';
 
-export function* sagaGetPosts({ payload }: TPostActionType) {
+export function* sagaUpdatePostImages({ payload }: TPostActionType) {
   yield put(postActions.setPhase('loading'));
 
-  const { user, page } = payload;
+  const { post } = payload;
 
+  console.log(post);
+  return;
   try {
     const { data } = yield API.graphql({
       query: postsByDate,

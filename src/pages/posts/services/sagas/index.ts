@@ -6,6 +6,7 @@ import { sagaAddComment } from './comment/sagaAddComment';
 import { sagaAddPost } from './post/sagaAddPost';
 import { sagaDeletePost } from './post/sagaDeletePost';
 import { sagaGetPosts } from './post/sagaGetPosts';
+import { sagaUpdatePostImages } from './post/sagaUpdatePostImages';
 import { sagaUpsertDraft } from './post/sagaUpsertDraft';
 import { sagaUpdatePhase } from './sagaUpdatePhase';
 
@@ -15,5 +16,6 @@ export function* sagas() {
   yield takeLatest(postActionTypes.SAGA.DELETE_POST, sagaDeletePost);
   yield takeLatest(postActionTypes.SAGA.GET_POSTS, sagaGetPosts);
   yield takeLatest(postActionTypes.SAGA.UPDATE_PHASE, sagaUpdatePhase);
+  yield takeLatest(postActionTypes.SAGA.UPDATE_POST_IMAGES, sagaUpdatePostImages);
   yield takeLatest(postActionTypes.SAGA.UPSERT_DRAFT, sagaUpsertDraft);
 }

@@ -25,6 +25,10 @@ export const postActions = {
     type: postActionTypes.SAGA.UPDATE_PHASE,
     payload: { phase, error }
   }),
+  updatePost: (post: IPost): TPostActionType => ({
+    type: postActionTypes.SAGA.DELETE_POST,
+    payload: { post }
+  }),
   upsertDraft: (post: Partial<IPost>): TPostActionType => ({
     type: postActionTypes.SAGA.UPSERT_DRAFT,
     payload: { post }

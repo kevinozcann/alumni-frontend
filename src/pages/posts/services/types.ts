@@ -13,6 +13,7 @@ export const postActionTypes = {
     GET_POSTS: 'posts/saga/GET_POSTS',
     UPDATE_COMMENT: 'posts/saga/UPDATE_COMMENT',
     UPDATE_PHASE: 'posts/saga/UPDATE_PHASE',
+    UPDATE_POST_IMAGES: 'posts/saga/UPDATE_POST_IMAGES',
     UPSERT_DRAFT: 'posts/saga/UPSERT_DRAFT'
   },
   STORE: {
