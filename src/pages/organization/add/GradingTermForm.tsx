@@ -15,7 +15,7 @@ import useSnackbar from 'hooks/useSnackbar';
 import useTranslation from 'hooks/useTranslation';
 import { FormButtons, SaveButton } from 'utils/ActionLinks';
 import { TLang } from 'utils/shared-types';
-import { IUser } from 'pages/account/account-types';
+import { IUser } from 'pages/auth/data/account-types';
 import { IGradingTerm, ISeason } from 'pages/organization/organization-types';
 
 const mapStateToProps = (state: RootState) => ({
@@ -97,9 +97,9 @@ const GradingTermForm = (props: TAddSeasonProps) => {
     setStatus('submitted');
 
     if (values.id) {
-      updateGradingTerm(lang, user, values);
+      // updateGradingTerm(lang, user, values);
     } else {
-      addGradingTerm(lang, user, values);
+      // addGradingTerm(lang, user, values);
     }
   };
 

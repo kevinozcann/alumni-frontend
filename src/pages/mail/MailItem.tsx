@@ -169,7 +169,7 @@ const MailItem = (props: MailItemProps) => {
           <Avatar
             sx={{ backgroundColor: 'primary.main' }}
             alt={emailToUser?.fullName}
-            src={emailToUser?.picture}
+            src={emailToUser?.avatarUrl}
           >
             {getInitials(emailToUser?.fullName)}
           </Avatar>
@@ -177,7 +177,7 @@ const MailItem = (props: MailItemProps) => {
           <Avatar
             sx={{ backgroundColor: 'primary.main' }}
             alt={sender?.fullName || sender?.name}
-            src={sender?.picture}
+            src={sender?.avatarUrl}
           >
             {getInitials(sender?.fullName || sender?.name)}
           </Avatar>

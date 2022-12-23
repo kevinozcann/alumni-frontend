@@ -117,7 +117,7 @@ const Account = () => {
                 <Skeleton variant='rectangular' height={300} width='100%' sx={{ height: 300 }} />
               )}
               <CardHeader
-                avatar={<Avatar alt='username' src={userAttributes.pictureUrl} />}
+                avatar={<Avatar alt='username' src={userAttributes.avatarUrl} />}
                 title={`${userAttributes?.name} ${userAttributes?.family_name}`}
                 subheader={userAttributes?.email}
                 action={

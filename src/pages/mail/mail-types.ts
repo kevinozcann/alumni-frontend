@@ -1,4 +1,4 @@
-import { IUser } from 'pages/account/account-types';
+import { IUser } from 'pages/auth/data/account-types';
 
 export interface IMailLabel {
   id: string;

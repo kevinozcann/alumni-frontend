@@ -22,9 +22,9 @@ export function* sendEMails({ payload }: IAction<Partial<TActionAllState>>) {
       attachment: email.attachment,
       subject: email.subject,
       msgBody: email.msgBody,
-      sender: `/api/users/${email.sender.uuid}`
+      sender: `/api/users/${email.sender.id}`
     },
-    user: `/api/users/${email.sender.uuid}`,
+    user: `/api/users/${email.sender.id}`,
     isSender: true,
     isTo: false,
     isCc: false,

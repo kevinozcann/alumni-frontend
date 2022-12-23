@@ -21,7 +21,7 @@ import { useSubheader } from 'contexts/SubheaderContext';
 import useTranslation from 'hooks/useTranslation';
 import Page from 'layout/Page';
 import Scrollbar from 'layout/Scrollbar';
-import { IPersonal, IUser } from 'pages/account/account-types';
+import { IPersonal, IUser } from 'pages/auth/data/account-types';
 import { ISchool } from 'pages/organization/organization-types';
 import { authUserSelector } from 'store/auth';
 import { i18nLangSelector } from 'store/i18n';
@@ -175,7 +175,7 @@ const StudentList: React.FC<TStudentsProps> = (props) => {
   // }, []);
 
   React.useEffect(() => {
-    pullStudents(user, userPersonal, activeSchool);
+    pullStudents(user.attributes, userPersonal, activeSchool);
   }, [activeSchool]);
 
   React.useEffect(() => {

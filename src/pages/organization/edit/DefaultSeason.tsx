@@ -11,7 +11,7 @@ import useTranslation from 'hooks/useTranslation';
 import { FormButtons, SaveButton } from 'utils/ActionLinks';
 import { TLang } from 'utils/shared-types';
 import { ISchool, ISeason } from 'pages/organization/organization-types';
-import { IUser } from 'pages/account/account-types';
+import { IUser } from 'pages/auth/data/account-types';
 
 const mapStateToProps = (state: RootState) => ({
   lang: i18nLangSelector(state),
@@ -50,7 +50,7 @@ const DefaultSeason = (props: TDefaultSeasonProps) => {
       }
     });
 
-    setDefault(lang, user, seasons2Update);
+    setDefault(lang, user.attributes, seasons2Update);
   };
 
   React.useEffect(() => {

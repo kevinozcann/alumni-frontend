@@ -5,7 +5,7 @@ import { Loadable } from 'layout';
 const AuthGuard = loadable(() => import('components/guard/AuthGuard'));
 const MainLayout = loadable(() => import('layout/MainLayout'));
 
-const Dashboard = Loadable(lazy(() => import('./Dashboard')));
+const Dashboard = Loadable(lazy(() => import('./ui/Dashboard')));
 
 const routes = {
   path: 'school',

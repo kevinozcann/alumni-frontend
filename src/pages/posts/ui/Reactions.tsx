@@ -2,7 +2,7 @@ import React from 'react';
 import { Box, IconButton, Tooltip, Typography, colors } from '@mui/material';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
-import { IUser } from '../../account/account-types';
+import { IUser } from '../../auth/data/account-types';
 import { IPost } from '../data/post-types';
 import { TActionType } from '../../../utils/shared-types';
 // import ShareIcon from '@mui/icons-material/Share';
@@ -37,7 +37,7 @@ const Reactions: React.FC<TReactionsProps> = (props) => {
 
   React.useEffect(() => {
     const total = likes ? likes.length : null;
-    const isMe = likes ? likes.filter((like) => like.createdBy.isMe) : null;
+    const isMe = likes ? likes.filter((like) => like.createdBy.id === user.id) : null;
 
     setCount(total);
     setLiked(isMe?.length > 0);

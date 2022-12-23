@@ -17,7 +17,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBriefcase, faEnvelope, faWifi } from '@fortawesome/pro-duotone-svg-icons';
 
 import { ISchool } from 'pages/organization/organization-types';
-import { IUser } from 'pages/account/account-types';
+import { IUser } from 'pages/auth/data/account-types';
 
 type TAboutProps = {
   user: IUser;

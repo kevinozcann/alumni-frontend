@@ -7,7 +7,7 @@ import useTranslation from 'hooks/useTranslation';
 import InlineEdit from 'components/InlineEdit';
 import ConfirmDialog from 'components/ConfirmDialog';
 import { TActionType } from 'utils/shared-types';
-import { IUser } from 'pages/account/account-types';
+import { IUser } from 'pages/auth/data/account-types';
 
 import { IPost, IPostComment } from '../data/post-types';
 
@@ -25,7 +25,7 @@ const Comment = (props: TCommentProps) => {
   const [userComment, setUserComment] = React.useState(comment.content);
   const intl = useTranslation();
 
-  const isMe = comment.owner.isMe;
+  const isMe = comment.owner.id === user.id;
 
   const handleCommentUpdate = (text: string) => {
     setUserComment(text);
@@ -47,7 +47,7 @@ const Comment = (props: TCommentProps) => {
 
   return (
     <Box sx={{ display: 'flex', marginBottom: 1 }}>
-      <Avatar alt='User' src={comment.owner.picture} />
+      <Avatar alt='User' src={comment.owner.avatarUrl} />
       <Box
         sx={{
           backgroundColor: 'background.default',

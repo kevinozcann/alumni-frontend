@@ -11,7 +11,7 @@ import { IStudent } from 'pages/students/_store/types';
 import { IAction } from 'store/store';
 import { CLASS_TEACHERS_URL, STUDENTS_API_URL } from 'store/ApiUrls';
 import { TLang } from 'utils/shared-types';
-import { IPersonal, IUser } from 'pages/account/account-types';
+import { IPersonal, IUser } from 'pages/auth/data/account-types';
 
 export type TPhase = null | 'student-loading' | 'student-error' | 'student-successful';
 
@@ -158,7 +158,7 @@ export function* saga() {
 
       const { userPersonal, school, user } = payload;
 
-      if (user.userType.id === 6) {
+      if (user.userType === 'admin') {
         const response = yield axios.get(
           `${CLASS_TEACHERS_URL}.json?school=${school.id}&teacher=${userPersonal.id}`
         );

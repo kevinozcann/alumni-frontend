@@ -10,7 +10,7 @@ import { IAction } from 'store/store';
 import { userActions } from 'store/user';
 import { TLang } from 'utils/shared-types';
 import { IFilter } from 'components/filter/Filter';
-import { IUser } from 'pages/account/account-types';
+import { IUser } from 'pages/auth/data/account-types';
 
 import { ISchool } from '../organization-types';
 import { TSchoolFormValues } from '../add/AddSchool';

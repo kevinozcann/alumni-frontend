@@ -16,7 +16,7 @@ import { useFormik } from 'formik';
 import useSnackbar from 'hooks/useSnackbar';
 import { SaveButton } from 'utils/ActionLinks';
 import { TLang } from 'utils/shared-types';
-import { IUser } from 'pages/account/account-types';
+import { IUser } from 'pages/auth/data/account-types';
 
 import { ISchool, TConfigKey, TConfiguration } from '../organization-types';
 

@@ -7,7 +7,7 @@ import { createSelector } from 'reselect';
 import { IAction } from './store';
 import { SEARCH_URL, updateApiUrl } from './ApiUrls';
 import { TLang } from '../utils/shared-types';
-import { IUser } from '../pages/account/account-types';
+import { IUser } from '../pages/auth/data/account-types';
 
 interface IStudent {
   name: string;

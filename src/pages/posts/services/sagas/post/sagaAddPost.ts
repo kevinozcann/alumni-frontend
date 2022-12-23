@@ -19,7 +19,7 @@ export function* sagaAddPost({ payload }: TPostActionType) {
         input: {
           type: 'Post',
           content: post.content,
-          userID: user.attributes.sub
+          userID: user.sub
           // createdAt: date.toISOString()
         }
       },

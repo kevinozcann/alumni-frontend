@@ -17,7 +17,7 @@ import BreadCrumbs from 'components/BreadCrumbs';
 import SchoolsPopover from 'components/SchoolsPopover';
 import SeasonsPopover from 'components/SeasonsPopover';
 import { TLang } from 'utils/shared-types';
-import { IUser } from 'pages/account/account-types';
+import { IUser } from 'pages/auth/data/account-types';
 import { ISchool, ISeason } from 'pages/organization/organization-types';
 
 const mapStateToProps = (state: RootState) => ({
@@ -44,7 +44,7 @@ const SubNavbar = (props: TSubNavbarProps) => {
   const intl = useTranslation();
 
   const changeSchool = (school: ISchool) => {
-    setActiveSchool(lang, user, school);
+    // setActiveSchool(lang, user, school);
   };
 
   const changeSeason = (season: ISeason) => {

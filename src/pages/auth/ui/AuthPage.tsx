@@ -11,7 +11,7 @@ import { userActions, userActiveSchoolSelector } from 'store/user';
 import gtm from 'utils/gtm';
 import { TLang } from 'utils/shared-types';
 
-import Languages from './Languages';
+import Languages from './components/Languages';
 
 const Legal = loadable(() => import('layout/Legal'));
 const CookiesNotification = loadable(() => import('components/CookiesNotification'));

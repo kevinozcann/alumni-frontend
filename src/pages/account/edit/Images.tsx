@@ -1,4 +1,3 @@
-import { Amplify, Storage } from 'aws-amplify';
 import Button from '@mui/material/Button';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
@@ -10,14 +9,14 @@ import FormHelperText from '@mui/material/FormHelperText';
 import Grid from '@mui/material/Grid';
 import InputAdornment from '@mui/material/InputAdornment';
 import InputLabel from '@mui/material/InputLabel';
+import { Amplify, Storage } from 'aws-amplify';
 import { useFormik } from 'formik';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import useFileManager from 'hooks/useFileManager';
 import useSnackbar from 'hooks/useSnackbar';
 import useTranslation from 'hooks/useTranslation';
-import { IUserAttributes } from 'pages/account/account-types';
+import { IUser } from 'pages/auth/data/account-types';
 import { authActions, authPhaseSelector, authUserSelector } from 'store/auth';
 
 import awsconfig from 'aws-exports';
@@ -40,7 +39,7 @@ const Images = () => {
   const user = useSelector(authUserSelector);
   const authPhase = useSelector(authPhaseSelector);
 
-  const userAttributes: IUserAttributes = user.attributes;
+  const userAttributes: IUser = user.attributes;
 
   const formInitialValues: IFormValues = {
     picture: userAttributes['custom:picture'],
@@ -89,13 +88,13 @@ const Images = () => {
             level: 'private'
           });
 
-          dispatch(
-            authActions.updateUserInfo({
-              attributes: {
-                'custom:picture': upload.key
-              }
-            })
-          );
+          // dispatch(
+          //   authActions.updateUserInfo({
+          //     attributes: {
+          //       'custom:picture': upload.key
+          //     }
+          //   })
+          // );
         } catch (error) {
           console.log('Error uploading file: ', error);
         }
@@ -105,13 +104,13 @@ const Images = () => {
             level: 'private'
           });
 
-          dispatch(
-            authActions.updateUserInfo({
-              attributes: {
-                'custom:wallpaper': upload.key
-              }
-            })
-          );
+          // dispatch(
+          //   authActions.updateUserInfo({
+          //     attributes: {
+          //       'custom:wallpaper': upload.key
+          //     }
+          //   })
+          // );
         } catch (error) {
           console.log('Error uploading file: ', error);
         }

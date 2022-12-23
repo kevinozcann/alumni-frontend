@@ -24,7 +24,10 @@ type User @model @auth(rules: [{ allow: owner, operations: [read, update, create
   family_name: String!
   email: String!
   owner: String!
-  picture: String
+  avatarUrl: String
+  avatarKey: String
+  wallpaperUrl: String
+  wallpaperKey: String
   posts: [Post] @hasMany(indexName: "byUser", fields: ["id"])
   comments: [Comment] @hasMany(indexName: "byUser", fields: ["id"])
 }

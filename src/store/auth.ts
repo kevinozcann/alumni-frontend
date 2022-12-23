@@ -6,7 +6,7 @@ import storage from 'redux-persist/lib/storage';
 import { call, delay, put, takeLatest } from 'redux-saga/effects';
 import { createSelector } from 'reselect';
 
-import { IUser } from 'pages/account/account-types';
+import { IAuthUser, IUser } from 'pages/auth/data/account-types';
 import { ISchool } from 'pages/organization/organization-types';
 import { TLang, TLinkedAccount } from 'utils/shared-types';
 
@@ -33,9 +33,9 @@ export type TUserPassword = {
   newPassword: string;
   confirmPassword: string;
 };
-export type TExtendedUser = IUser & TUserPassword;
+export type TExtendedUser = IAuthUser & TUserPassword;
 interface IAuthState {
-  user?: IUser;
+  user?: IAuthUser;
   phase?: string;
   error?: string;
 }
@@ -59,7 +59,7 @@ type TActionAllState = IAuthState & {
   updateAll?: boolean;
   userPassword?: TUserPassword;
   userSub?: string;
-  userData?: Partial<IUser>;
+  userData?: Partial<IAuthUser>;
   accountType?: TLinkedAccount;
   googleResponse?: GoogleLoginResponse;
   accountResponse?: any;
@@ -140,23 +140,11 @@ export const authSelector = createSelector(
 );
 export const authUserSelector = createSelector(
   (state: IParentAuthState) => objectPath.get(state, ['auth', 'user']),
-  (authUser: IUser) => authUser
-);
-export const authImpersonateSelector = createSelector(
-  (state: IParentAuthState) => objectPath.get(state, ['auth', 'impersonate']),
-  (impersonateUser: IUser) => impersonateUser
-);
-export const authAccountsImpersonatesSelector = createSelector(
-  (state: IParentAuthState) => objectPath.get(state, ['auth', 'accounts', 'impersonates']),
-  (impersonates: IUser[]) => impersonates
+  (authUser: IAuthUser) => authUser
 );
 export const authAccessTokenSelector = createSelector(
   (state: IParentAuthState) => objectPath.get(state, ['auth', 'accessToken']),
   (accessToken: string) => accessToken
-);
-export const authUserIdSelector = createSelector(
-  (state: IParentAuthState) => objectPath.get(state, ['auth', 'user', 'uuid']),
-  (uuid: string) => uuid
 );
 export const authPhaseSelector = createSelector(
   (state: IParentAuthState) => objectPath.get(state, ['auth', 'phase']),
@@ -247,7 +235,7 @@ export const authActions = {
     payload: { userPassword }
   }),
   logout: (): IAction<Partial<TActionAllState>> => ({ type: actionTypes.AUTH_LOGOUT }),
-  updateUserInfo: (userData: Partial<IUser>): IAction<Partial<TActionAllState>> => ({
+  updateUserInfo: (userData: Partial<IAuthUser>): IAction<Partial<TActionAllState>> => ({
     type: actionTypes.UPDATE_USER_INFO,
     payload: { userData }
   }),

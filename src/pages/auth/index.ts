@@ -1,6 +1,6 @@
-import AuthPage from './AuthPage';
-import Login from './Login';
-import Logout from './Logout';
+import AuthPage from './ui/AuthPage';
+import Login from './ui/Login';
+import Logout from './ui/Logout';
 
 export { Login, Logout };
 export default AuthPage;

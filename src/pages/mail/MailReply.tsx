@@ -9,7 +9,7 @@ import { faPaperPlane } from '@fortawesome/pro-duotone-svg-icons';
 
 import { AppDispatch, RootState } from 'store/store';
 import useSnackbar from 'hooks/useSnackbar';
-import { IUser } from 'pages/account/account-types';
+import { IUser } from 'pages/auth/data/account-types';
 
 import { mailActions, phases } from './_store';
 import { mailsPhaseSelector } from './_store/selectors';
@@ -94,7 +94,7 @@ const MailReply: React.FC<MailReplyProps> = ({ mail, user, mailsPhase, sendMail 
         p: 3
       }}
     >
-      <Avatar src={user.picture} />
+      <Avatar src={user.avatarUrl} />
       <Paper
         sx={{
           flexGrow: 1,

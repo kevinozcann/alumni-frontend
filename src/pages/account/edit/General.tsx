@@ -15,7 +15,7 @@ import { useIntl } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
 
 // import { loginPhases } from 'store/auth';
-import { IUserAttributes } from 'pages/account/account-types';
+import { IUser } from 'pages/auth/data/account-types';
 import { authActions, authPhaseSelector, authUserSelector } from 'store/auth';
 import { SaveButton } from 'utils/ActionLinks';
 
@@ -33,7 +33,7 @@ const General = () => {
   const user = useSelector(authUserSelector);
   const phase = useSelector(authPhaseSelector);
 
-  const userAttributes: IUserAttributes = user.attributes;
+  const userAttributes: IUser = user.attributes;
 
   const formInitialValues: IFormValues = {
     name: userAttributes.name,

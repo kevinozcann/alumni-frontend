@@ -34,7 +34,7 @@ import getFlatMenus from 'utils/getFlatMenus';
 import { TLang } from 'utils/shared-types';
 import UserAvatar from 'components/UserAvatar';
 import SearchForm from 'components/SearchForm';
-import { IUser } from 'pages/account/account-types';
+import { IUser } from 'pages/auth/data/account-types';
 import Scrollbar from 'layout/Scrollbar';
 
 const mapStateToProps = (state: RootState) => ({
@@ -146,7 +146,7 @@ const ContentSearch: React.FC<TContentSearchProps> = (props) => {
               </Box>
 
               {userResults?.map((user: IUser) => (
-                <Box key={user.uuid} sx={{ mb: 1, display: 'flex', alignItems: 'center' }}>
+                <Box key={user.id} sx={{ mb: 1, display: 'flex', alignItems: 'center' }}>
                   <Chip
                     sx={{ mr: 1, height: '18px' }}
                     label={intl.formatMessage({ id: 'account.user' })}
@@ -157,7 +157,7 @@ const ContentSearch: React.FC<TContentSearchProps> = (props) => {
                   <Link
                     color='textPrimary'
                     component={RouterLink}
-                    to={`/users/${user.uuid}`}
+                    to={`/users/${user.id}`}
                     variant='h5'
                   >
                     <UserAvatar

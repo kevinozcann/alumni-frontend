@@ -25,7 +25,7 @@ import { configActions, configPhaseSelector } from 'store/config';
 import useTranslation from 'hooks/useTranslation';
 import { TLang } from 'utils/shared-types';
 import ResponsiveActions from 'components/ResponsiveActions';
-import { IUser } from 'pages/account/account-types';
+import { IUser } from 'pages/auth/data/account-types';
 import ConfirmDialog from 'components/ConfirmDialog';
 
 const SchoostDialog = loadable(() => import('components/SchoostDialog'));
@@ -64,7 +64,7 @@ const GradingTerms = (props: TGradingTermsProps) => {
 
   const handleDeleteConfirm = () => {
     setDeleted(true);
-    deleteGradingTerm(lang, user, parseInt(gid));
+    deleteGradingTerm(lang, user.attributes, parseInt(gid));
   };
 
   const handleDialogClose = () => {

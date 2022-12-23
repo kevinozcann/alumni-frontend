@@ -10,7 +10,7 @@ import { Link } from 'react-router-dom';
 
 import ForgotPassword from 'components/links/ForgotPassword';
 
-const LoginAmplify = loadable(() => import('./LoginAmplify'));
+const LoginAmplify = loadable(() => import('./components/LoginAmplify'));
 
 export const Login = () => {
   const intl = useIntl();

@@ -10,7 +10,7 @@ import useSettings from 'hooks/useSettings';
 import useTranslation from 'hooks/useTranslation';
 import { useSubheader } from 'contexts/SubheaderContext';
 import { TActionType } from 'utils/shared-types';
-import { IUser } from 'pages/account/account-types';
+import { IUser } from 'pages/auth/data/account-types';
 
 import { mailActions } from './_store';
 import { composeSelector, mailsPhaseSelector, mailsSelector } from './_store/selectors';
@@ -86,7 +86,7 @@ const Mail = () => {
   }, [allMails, section, id]);
 
   React.useEffect(() => {
-    pullMails(user);
+    pullMails(user.attributes);
   }, []);
 
   React.useEffect(() => {

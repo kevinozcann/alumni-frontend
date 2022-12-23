@@ -13,7 +13,7 @@ export function* sagaGetPosts({ payload }: TPostActionType) {
   try {
     const { data } = yield API.graphql({
       query: postsByDate,
-      variables: { type: 'Post' },
+      variables: { type: 'Post', sortDirection: 'DESC' },
       authMode: 'AMAZON_COGNITO_USER_POOLS'
     });
 

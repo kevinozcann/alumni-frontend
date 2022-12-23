@@ -4,7 +4,7 @@ import storage from 'redux-persist/lib/storage';
 import { createSelector } from 'reselect';
 
 import { IMenu } from 'data/menu';
-import { IPersonal, IUser } from 'pages/account/account-types';
+import { IPersonal, IUser } from 'pages/auth/data/account-types';
 import { ISchool, ISeason } from 'pages/organization/organization-types';
 import { IStudent } from 'pages/students/_store/types';
 import { IAction } from 'store/store';

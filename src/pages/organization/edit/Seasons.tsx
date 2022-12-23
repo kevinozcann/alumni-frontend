@@ -15,7 +15,7 @@ import useTranslation from 'hooks/useTranslation';
 import ResponsiveActions from 'components/ResponsiveActions';
 import ConfirmDialog from 'components/ConfirmDialog';
 import { TLang } from 'utils/shared-types';
-import { IUser } from 'pages/account/account-types';
+import { IUser } from 'pages/auth/data/account-types';
 import { schoolSelector } from 'pages/organization/_store/school';
 import ViewSeasons from 'pages/organization/view/ViewSeasons';
 
@@ -53,7 +53,7 @@ const Seasons = () => {
 
   const handleDeleteConfirm = () => {
     setDeleted(true);
-    deleteSeason(lang, user, parseInt(subsection));
+    deleteSeason(lang, user.attributes, parseInt(subsection));
   };
 
   const handleDialogClose = () => {
@@ -76,7 +76,7 @@ const Seasons = () => {
       key: 'reload',
       title: intl.translate({ id: 'app.reload' }),
       startIcon: <FontAwesomeIcon icon={faSync} spin={userPhase?.includes('ing')} />,
-      onClick: () => updateUserSchools(lang, user)
+      onClick: () => updateUserSchools(lang, user.attributes)
     },
     {
       key: 'set-default',

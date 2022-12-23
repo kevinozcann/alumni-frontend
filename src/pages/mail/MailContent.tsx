@@ -168,7 +168,7 @@ const MailContent: React.FC<MailContentProps> = (props) => {
         >
           {section == 'sent' ? (
             <Avatar
-              src={currentMail?.email?.emailToUser?.picture}
+              src={currentMail?.email?.emailToUser?.avatarUrl}
               sx={{
                 height: 48,
                 width: 48
@@ -178,7 +178,7 @@ const MailContent: React.FC<MailContentProps> = (props) => {
             </Avatar>
           ) : (
             <Avatar
-              src={currentMail?.email?.sender?.picture}
+              src={currentMail?.email?.sender?.avatarUrl}
               sx={{
                 height: 48,
                 width: 48
@@ -321,7 +321,7 @@ const MailContent: React.FC<MailContentProps> = (props) => {
       </Box>
       <Divider />
 
-      <MailReply mail={currentMail} user={user} />
+      <MailReply mail={currentMail} user={user.attributes} />
 
       <ConfirmDialog
         handleClose={handleCloseConfirm}

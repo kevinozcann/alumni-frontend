@@ -33,7 +33,7 @@ import { authUserSelector } from 'store/auth';
 import { i18nLangSelector } from 'store/i18n';
 import { IPost } from '../data/post-types';
 import { postsPhaseSelector } from '../services/posts';
-import { IUser } from 'pages/account/account-types';
+import { IUser } from 'pages/auth/data/account-types';
 import { postActions } from '../services/actions';
 
 const Moment = loadable.lib(() => import('moment'));
@@ -67,7 +67,7 @@ const Post = (props: FeedProps) => {
   const lang = useSelector(i18nLangSelector);
   const postsPhase = useSelector(postsPhaseSelector);
 
-  const isMe = post?.user?.id === user.attributes.sub;
+  const isMe = post?.user?.id === user.attributes.id;
   const images = post.files?.filter((file) => file.mimeType.includes('image/'));
   const files = post.files?.filter((file) => !file.mimeType.includes('image/'));
 
@@ -90,7 +90,7 @@ const Post = (props: FeedProps) => {
   };
 
   const handleDeleteConfirm = () => {
-    handleSaveFeed(user, post, 'delete');
+    handleSaveFeed(user.attributes, post, 'delete');
   };
 
   const handleCloseConfirm = () => {
@@ -106,7 +106,7 @@ const Post = (props: FeedProps) => {
       <Card>
         <CardHeader
           avatar={
-            <Avatar alt='user avatar' src={post?.user?.pictureUrl}>
+            <Avatar alt='user avatar' src={post?.user?.avatarUrl}>
               {getInitials(`${post?.user?.name} ${post?.user?.family_name}`)}
             </Avatar>
           }
@@ -238,7 +238,7 @@ const Post = (props: FeedProps) => {
           )}
 
           <Box sx={{ marginTop: 2 }}>
-            <Reactions user={user} post={post} handleSaveFeed={handleSaveFeed} />
+            <Reactions user={user.attributes} post={post} handleSaveFeed={handleSaveFeed} />
           </Box>
 
           {post?.comments?.length > 0 && (
@@ -250,7 +250,7 @@ const Post = (props: FeedProps) => {
               {post?.comments?.map((comment) => (
                 <Comment
                   key={comment.id}
-                  user={user}
+                  user={user.attributes}
                   post={post}
                   phase={postsPhase}
                   comment={comment}

@@ -16,7 +16,7 @@ import {
   TConfiguration
 } from 'pages/organization/organization-types';
 import { ISeasonTable } from 'pages/organization/edit/CopySeasonData';
-import { IUser } from 'pages/account/account-types';
+import { IUser } from 'pages/auth/data/account-types';
 
 import { IAction, TPhase } from './store';
 import {

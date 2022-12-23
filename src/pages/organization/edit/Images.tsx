@@ -22,7 +22,7 @@ import useSnackbar from 'hooks/useSnackbar';
 import useTranslation from 'hooks/useTranslation';
 import { EditButton } from 'utils/ActionLinks';
 import { TLang } from 'utils/shared-types';
-import { IUser } from 'pages/account/account-types';
+import { IUser } from 'pages/auth/data/account-types';
 import { ISchool, TConfigKey, TConfiguration } from 'pages/organization/organization-types';
 
 const fetcher = async (url: string) => {

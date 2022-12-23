@@ -120,7 +120,7 @@ const NewFeedForm = (props: NewFeedFormProps) => {
   const submitForm = (values: Partial<IPost>) => {
     if (values !== initialValues || addFeed) {
       setStatus('submitted');
-      dispatch(postActions.addPost(user, values));
+      dispatch(postActions.addPost(user.attributes, values));
     }
   };
 
@@ -148,7 +148,7 @@ const NewFeedForm = (props: NewFeedFormProps) => {
       <Card elevation={0}>
         <CardHeader
           sx={{ padding: 1 }}
-          avatar={<Avatar alt='username' src={userAttributes.pictureUrl} />}
+          avatar={<Avatar alt='username' src={userAttributes.avatarUrl} />}
           title={`${userAttributes.name} ${userAttributes.family_name}`}
           subheader={
             <Chip

@@ -24,7 +24,7 @@ import ConfirmDialog from 'components/ConfirmDialog';
 import ResponsiveActions from 'components/ResponsiveActions';
 import { TLang } from 'utils/shared-types';
 import { countryToFlag } from 'utils/Helpers';
-import { IUser } from 'pages/account/account-types';
+import { IUser } from 'pages/auth/data/account-types';
 import { ISchool, TConfiguration } from 'pages/organization/organization-types';
 
 type TGeneralProps = {
@@ -42,7 +42,7 @@ const Schools = (props: TGeneralProps) => {
   const [showConfirmDialog, setConfirmDialog] = React.useState<boolean>(false);
   const intl = useTranslation();
   const { showSnackbar } = useSnackbar();
-  const { superAdmin } = user;
+  const { isAdmin } = user;
 
   const handleDeleteClick = (campus: ISchool) => {
     setSelectedSchool(campus);
@@ -121,7 +121,7 @@ const Schools = (props: TGeneralProps) => {
                           </Typography>
                         }
                         action={
-                          superAdmin && (
+                          isAdmin && (
                             <IconButton
                               aria-label='delete'
                               title={intl.formatMessage({ id: 'app.delete' })}

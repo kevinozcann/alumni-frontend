@@ -28,7 +28,7 @@ import useTranslation from 'hooks/useTranslation';
 import { ICountry, TLang } from 'utils/shared-types';
 import { SaveButton } from 'utils/ActionLinks';
 import { countryToFlag } from 'utils/Helpers';
-import { IUser } from 'pages/account/account-types';
+import { IUser } from 'pages/auth/data/account-types';
 
 import { TSchoolType } from '../organization-types';
 import { schoolActions, schoolPhaseSelector } from '../_store/school';
@@ -148,7 +148,7 @@ const AddSchool = (props: TSchoolFormProps) => {
   const submitForm = (values: TSchoolFormValues) => {
     setStatus('submitted');
 
-    addSchool(user, lang, values);
+    // addSchool(user, lang, values);
   };
 
   // const handleSeasonClick = (event: React.ChangeEvent<HTMLInputElement>, season: ISeason) => {

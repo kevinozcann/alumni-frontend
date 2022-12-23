@@ -29,10 +29,10 @@ import useTranslation from 'hooks/useTranslation';
 import Filter, { IFilter, IFilterOptions } from 'components/filter/Filter';
 import { TLang } from 'utils/shared-types';
 import StyledMenu from 'utils/StyledMenu';
-import { IUser } from 'pages/account/account-types';
 
 import { ISchool, TConfiguration } from '../organization-types';
 import { schoolActions, schoolFiltersSelector } from '../_store/school';
+import { IUser } from 'pages/auth/data/account-types';
 
 const hiddenFields = [
   'address',
@@ -94,7 +94,7 @@ const Config = (props: TConfigProps) => {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const intl = useTranslation();
   const { showSnackbar } = useSnackbar();
-  const { superAdmin } = user;
+  const { isAdmin } = user;
 
   const filterOptions: IFilterOptions[] = [];
   //   {
@@ -295,7 +295,7 @@ const Config = (props: TConfigProps) => {
                               />
                             </IconButton>
 
-                            {superAdmin && (
+                            {isAdmin && (
                               <>
                                 <IconButton
                                   aria-label='config-actions'
@@ -392,8 +392,7 @@ const Config = (props: TConfigProps) => {
                           )) || (
                             <TextField
                               disabled={
-                                (!superAdmin && isAdminOnly) ||
-                                (isSubmitting && selectedId === cnf.id)
+                                (!isAdmin && isAdminOnly) || (isSubmitting && selectedId === cnf.id)
                               }
                               fullWidth
                               id={cnf.configKey}
@@ -405,7 +404,7 @@ const Config = (props: TConfigProps) => {
                           )}
                       </CardContent>
 
-                      {superAdmin && (
+                      {isAdmin && (
                         <CardActions sx={{ mx: 2, display: 'flex' }}>
                           <Typography gutterBottom variant='body2'>
                             {cnf.configKey}

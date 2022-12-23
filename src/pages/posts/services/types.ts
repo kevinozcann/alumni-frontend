@@ -1,4 +1,4 @@
-import { IUser } from 'pages/account/account-types';
+import { IUser } from 'pages/auth/data/account-types';
 import { IAction } from 'store/store';
 import { TActionType, TLang } from 'utils/shared-types';
 

@@ -13,7 +13,7 @@ import { TLang } from 'utils/shared-types';
 
 import { developerActions, developerDataSelector } from './_store/developer';
 import useSnackbar from 'hooks/useSnackbar';
-import { IUser } from 'pages/account/account-types';
+import { IUser } from 'pages/auth/data/account-types';
 import HighlightCode from 'components/HighlightCode';
 
 const mapStateToProps = (state: RootState) => ({
@@ -39,7 +39,7 @@ const ApiKey = (props: TApiKeyProps) => {
   const { showSnackbar } = useSnackbar();
 
   const handleGenerateConfirm = () => {
-    generateApiKey(lang, user);
+    generateApiKey(lang, user.attributes);
   };
 
   const handleCloseConfirm = () => {

@@ -16,7 +16,7 @@ export function* sagaAddComment({ payload }: TPostActionType) {
     variables: {
       input: {
         content: comment.content,
-        userCommentsId: user.attributes.sub,
+        userCommentsId: user.sub,
         postCommentsId: post.id
       }
     },

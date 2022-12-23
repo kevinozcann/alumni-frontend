@@ -1,5 +1,5 @@
 import { TActionType } from 'utils/shared-types';
-import { IUser } from 'pages/account/account-types';
+import { IUser } from 'pages/auth/data/account-types';
 import { IUserMail, IMail } from 'pages/mail/mail-types';
 
 import { IAction } from 'store/store';

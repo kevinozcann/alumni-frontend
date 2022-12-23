@@ -5,7 +5,7 @@ import { persistReducer } from 'redux-persist';
 import { put, takeLatest } from 'redux-saga/effects';
 import { createSelector } from 'reselect';
 
-import { IUser } from 'pages/account/account-types';
+import { IUser } from 'pages/auth/data/account-types';
 import { USER_GENERATE_API_KEY_URL, updateApiUrl } from 'store/ApiUrls';
 import { actionTypes as authActionTypes } from 'store/auth';
 import { AppError, IAction } from 'store/store';
@@ -77,7 +77,7 @@ export function* saga() {
 
       const generateApiKeyUrl = updateApiUrl(USER_GENERATE_API_KEY_URL, {
         lang,
-        userId: user.uuid
+        userId: user.id
       });
       const response = yield axios.get(generateApiKeyUrl);
 
@@ -103,7 +103,7 @@ export function* saga() {
       }
 
       const newApiKey = data.apiKey;
-      const jwtAccessToken = sign({ userId: user.uuid }, JWT_SECRET, { expiresIn: JWT_EXPIRES_IN });
+      const jwtAccessToken = sign({ userId: user.id }, JWT_SECRET, { expiresIn: JWT_EXPIRES_IN });
 
       // Update tokens in the store
       yield put({

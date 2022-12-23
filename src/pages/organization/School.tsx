@@ -16,7 +16,7 @@ import { i18nLangSelector } from 'store/i18n';
 import { citiesSelector, countriesSelector, statesSelector, staticActions } from 'store/static';
 import { TLang, IPageTab } from 'utils/shared-types';
 import { useSubheader } from 'contexts/SubheaderContext';
-import { IUser } from 'pages/account/account-types';
+import { IUser } from 'pages/auth/data/account-types';
 
 import { schoolActions, schoolPhaseSelector, schoolSelector } from './_store/school';
 import { ISchool, TConfiguration } from './organization-types';
@@ -25,7 +25,6 @@ import pageTabs from './page-tabs';
 const General = LoadableScreen(lazy(() => import('./edit/General')));
 const Contact = LoadableScreen(lazy(() => import('./edit/Contact')));
 const Images = LoadableScreen(lazy(() => import('./edit/Images')));
-const Campuses = LoadableScreen(lazy(() => import('./edit/Campuses')));
 const Schools = LoadableScreen(lazy(() => import('./edit/Schools')));
 const Seasons = LoadableScreen(lazy(() => import('./edit/Seasons')));
 const Grades = LoadableScreen(lazy(() => import('./edit/Grades')));
@@ -212,15 +211,6 @@ const School = () => {
             />
           )) ||
           (section === 'seasons' && <Seasons saveSchoolInfo={saveSchoolInfo} />) ||
-          (section === 'campuses' && (
-            <Campuses
-              user={user}
-              lang={lang}
-              phase={schoolPhase}
-              schoolInfo={schoolInfo}
-              deleteSchool={deleteSchool}
-            />
-          )) ||
           (section === 'schools' && (
             <Schools
               user={user}

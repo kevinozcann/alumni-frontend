@@ -1,13 +1,7 @@
-import {
-  faArrowCircleLeft,
-  faBomb,
-  faFileSearch,
-  faSync
-} from '@fortawesome/pro-duotone-svg-icons';
+import { faArrowCircleLeft, faFileSearch, faSync } from '@fortawesome/pro-duotone-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   Box,
-  Button,
   Divider,
   Drawer,
   List,
@@ -163,19 +157,7 @@ const MainSidebar = (props: MainSidebarProps) => {
               width: '100%'
             }}
           >
-            {(activeSchool && (
-              <>
-                <FontAwesomeIcon icon={faBomb} size='lg' />
-                <Typography variant='body1' sx={{ mt: 1 }}>
-                  {intl.translate({ id: 'menus.not_loaded' })}
-                </Typography>
-                <Button
-                  onClick={() => dispatch(userActions.updateUserMenus(lang, user, activeSchool))}
-                >
-                  {intl.translate({ id: 'app.try_again' })}
-                </Button>
-              </>
-            )) || (
+            {
               <>
                 <FontAwesomeIcon icon={faFileSearch} size='lg' />
                 <Typography variant='body1' sx={{ mt: 1 }}>
@@ -192,7 +174,7 @@ const MainSidebar = (props: MainSidebarProps) => {
                   {intl.translate({ id: 'app.try_again' })}
                 </Button> */}
               </>
-            )}
+            }
           </Box>
         )}
       </Scrollbar>

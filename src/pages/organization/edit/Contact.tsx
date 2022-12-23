@@ -20,7 +20,7 @@ import { Place } from 'components/google/MapPlaces';
 import { SaveButton } from 'utils/ActionLinks';
 import { countryToFlag } from 'utils/Helpers';
 import { ICity, ICountry, TLang, IState } from 'utils/shared-types';
-import { IUser } from 'pages/account/account-types';
+import { IUser } from 'pages/auth/data/account-types';
 import { ISchool } from 'pages/organization/organization-types';
 
 const SchoostDialog = loadable(() => import('components/SchoostDialog'));

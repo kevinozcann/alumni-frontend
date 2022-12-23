@@ -13,17 +13,16 @@ import organizationRoutes from 'pages/organization/routes';
 import schoolRoutes from 'pages/school/routes';
 import studentsRoutes from 'pages/students/routes';
 import usersRoutes from 'pages/users/routes';
-import SSORoutes from 'pages/sso/routes';
 
 const GuestGuard = loadable(() => import('components/guard/GuestGuard'));
 
-const AuthPage = LoadableScreen(lazy(() => import('pages/auth/AuthPage')));
-const Login = LoadableScreen(lazy(() => import('pages/auth/Login')));
-const Logout = LoadableScreen(lazy(() => import('pages/auth/Logout')));
-const ForgotPassword = LoadableScreen(lazy(() => import('pages/auth/ForgotPassword')));
-const Registration = LoadableScreen(lazy(() => import('pages/auth/Registration')));
-const Verify = LoadableScreen(lazy(() => import('pages/auth/Verify')));
-const ResetPassword = LoadableScreen(lazy(() => import('pages/auth/ResetPassword')));
+const AuthPage = LoadableScreen(lazy(() => import('pages/auth/ui/AuthPage')));
+const Login = LoadableScreen(lazy(() => import('pages/auth/ui/Login')));
+const Logout = LoadableScreen(lazy(() => import('pages/auth/ui/Logout')));
+const ForgotPassword = LoadableScreen(lazy(() => import('pages/auth/ui/ForgotPassword')));
+const Registration = LoadableScreen(lazy(() => import('pages/auth/ui/Registration')));
+const Verify = LoadableScreen(lazy(() => import('pages/auth/ui/Verify')));
+const ResetPassword = LoadableScreen(lazy(() => import('pages/auth/ui/ResetPassword')));
 const FileManager = Loadable(lazy(() => import('pages/filemanager/FileManager')));
 
 const AuthorizationRequired = Loadable(lazy(() => import('pages/error/AuthorizationRequired')));
@@ -49,7 +48,6 @@ const routes = [
   schoolRoutes,
   studentsRoutes,
   usersRoutes,
-  SSORoutes,
   {
     path: '*',
     element: (

@@ -21,7 +21,7 @@ import { useNavigate } from 'react-router-dom';
 import { ILayoutSettings } from 'contexts/SettingsContext';
 import useSettings from 'hooks/useSettings';
 import SettingsDrawer from 'layout/SettingsDrawer';
-import { IUser } from 'pages/account/account-types';
+import { IUser } from 'pages/auth/data/account-types';
 import { authUserSelector } from 'store/auth';
 
 import awsconfig from 'aws-exports';
@@ -109,7 +109,7 @@ const AccountPopover = (props: TAccountPopoverProps) => {
       >
         <Avatar
           alt='user'
-          src={userAttributes.pictureUrl}
+          src={userAttributes.avatarUrl}
           sx={{
             height: 32,
             width: 32

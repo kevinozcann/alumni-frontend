@@ -7,7 +7,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars } from '@fortawesome/pro-duotone-svg-icons';
 
 import { RootState } from 'store/store';
-import { authImpersonateSelector } from 'store/auth';
 import { userActiveSchoolSelector } from 'store/user';
 
 const ContentSearch = loadable(() => import('./search/ContentSearch'));
@@ -16,8 +15,7 @@ const NotificationsPopover = loadable(() => import('./notifications/Notification
 const AccountPopover = loadable(() => import('./account/AccountPopover'));
 
 const mapStateToProps = (state: RootState) => ({
-  activeSchool: userActiveSchoolSelector(state),
-  impersonateUser: authImpersonateSelector(state)
+  activeSchool: userActiveSchoolSelector(state)
 });
 const connector = connect(mapStateToProps, null);
 type PropsFromRedux = ConnectedProps<typeof connector>;
@@ -26,7 +24,7 @@ type TMainNavbarProps = PropsFromRedux & {
 };
 
 const MainNavbar: React.FC<TMainNavbarProps> = (props) => {
-  const { activeSchool, impersonateUser, onSidebarMobileOpen } = props;
+  const { activeSchool, onSidebarMobileOpen } = props;
   const theme = useTheme();
 
   return (
@@ -77,9 +75,6 @@ const MainNavbar: React.FC<TMainNavbarProps> = (props) => {
         </Box>
         <Box sx={{ ml: 1 }}>
           <LanguagePopover />
-        </Box>
-        <Box sx={{ ml: 2 }}>
-          <AccountPopover impersonateUser={impersonateUser} />
         </Box>
       </Toolbar>
     </AppBar>

@@ -30,7 +30,7 @@ const CommentAdd = (props: TCommentAddProps) => {
   };
 
   const handleSave = () => {
-    dispatch(postActions.addComment(user, post, { content: value }));
+    dispatch(postActions.addComment(user.attributes, post, { content: value }));
   };
 
   React.useEffect(() => {
@@ -42,7 +42,7 @@ const CommentAdd = (props: TCommentAddProps) => {
 
   return (
     <Box sx={{ alignItems: 'center', display: 'flex' }}>
-      <Avatar alt='User' src={user.attributes.pictureUrl} />
+      <Avatar alt='User' src={user.attributes.avatarUrl} />
 
       <Paper sx={{ flexGrow: 1, ml: 2, p: 0.5 }} variant='outlined'>
         <Input
