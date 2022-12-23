@@ -17,6 +17,7 @@ export const onCreateUser = /* GraphQL */ `
       posts {
         items {
           id
+          type
           content
           userID
           createdAt
@@ -57,6 +58,7 @@ export const onUpdateUser = /* GraphQL */ `
       posts {
         items {
           id
+          type
           content
           userID
           createdAt
@@ -97,6 +99,7 @@ export const onDeleteUser = /* GraphQL */ `
       posts {
         items {
           id
+          type
           content
           userID
           createdAt
@@ -222,6 +225,7 @@ export const onCreatePost = /* GraphQL */ `
   ) {
     onCreatePost(filter: $filter, owner: $owner) {
       id
+      type
       content
       userID
       user {
@@ -265,6 +269,7 @@ export const onUpdatePost = /* GraphQL */ `
   ) {
     onUpdatePost(filter: $filter, owner: $owner) {
       id
+      type
       content
       userID
       user {
@@ -308,6 +313,7 @@ export const onDeletePost = /* GraphQL */ `
   ) {
     onDeletePost(filter: $filter, owner: $owner) {
       id
+      type
       content
       userID
       user {
@@ -355,6 +361,7 @@ export const onCreateComment = /* GraphQL */ `
       postID
       post {
         id
+        type
         content
         userID
         user {
@@ -408,6 +415,7 @@ export const onUpdateComment = /* GraphQL */ `
       postID
       post {
         id
+        type
         content
         userID
         user {
@@ -461,6 +469,7 @@ export const onDeleteComment = /* GraphQL */ `
       postID
       post {
         id
+        type
         content
         userID
         user {

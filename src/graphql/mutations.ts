@@ -17,6 +17,7 @@ export const createUser = /* GraphQL */ `
       posts {
         items {
           id
+          type
           content
           userID
           createdAt
@@ -57,6 +58,7 @@ export const updateUser = /* GraphQL */ `
       posts {
         items {
           id
+          type
           content
           userID
           createdAt
@@ -97,6 +99,7 @@ export const deleteUser = /* GraphQL */ `
       posts {
         items {
           id
+          type
           content
           userID
           createdAt
@@ -222,6 +225,7 @@ export const createPost = /* GraphQL */ `
   ) {
     createPost(input: $input, condition: $condition) {
       id
+      type
       content
       userID
       user {
@@ -265,6 +269,7 @@ export const updatePost = /* GraphQL */ `
   ) {
     updatePost(input: $input, condition: $condition) {
       id
+      type
       content
       userID
       user {
@@ -308,6 +313,7 @@ export const deletePost = /* GraphQL */ `
   ) {
     deletePost(input: $input, condition: $condition) {
       id
+      type
       content
       userID
       user {
@@ -355,6 +361,7 @@ export const createComment = /* GraphQL */ `
       postID
       post {
         id
+        type
         content
         userID
         user {
@@ -408,6 +415,7 @@ export const updateComment = /* GraphQL */ `
       postID
       post {
         id
+        type
         content
         userID
         user {
@@ -461,6 +469,7 @@ export const deleteComment = /* GraphQL */ `
       postID
       post {
         id
+        type
         content
         userID
         user {

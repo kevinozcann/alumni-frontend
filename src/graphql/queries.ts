@@ -19,6 +19,7 @@ export const getUser = /* GraphQL */ `
       posts {
         items {
           id
+          type
           content
           userID
           createdAt
@@ -138,6 +139,7 @@ export const getPost = /* GraphQL */ `
   query GetPost($id: ID!) {
     getPost(id: $id) {
       id
+      type
       content
       userID
       user {
@@ -183,6 +185,50 @@ export const listPosts = /* GraphQL */ `
     listPosts(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
+        type
+        content
+        userID
+        user {
+          id
+          name
+          family_name
+          email
+          owner
+          picture
+          createdAt
+          updatedAt
+        }
+        comments {
+          nextToken
+        }
+        createdAt
+        updatedAt
+        owner
+      }
+      nextToken
+    }
+  }
+`;
+export const postsByDate = /* GraphQL */ `
+  query PostsByDate(
+    $type: String!
+    $createdAt: ModelStringKeyConditionInput
+    $sortDirection: ModelSortDirection
+    $filter: ModelPostFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    postsByDate(
+      type: $type
+      createdAt: $createdAt
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        type
         content
         userID
         user {
@@ -225,46 +271,7 @@ export const postsByUserIDAndCreatedAt = /* GraphQL */ `
     ) {
       items {
         id
-        content
-        userID
-        user {
-          id
-          name
-          family_name
-          email
-          owner
-          picture
-          createdAt
-          updatedAt
-        }
-        comments {
-          nextToken
-        }
-        createdAt
-        updatedAt
-        owner
-      }
-      nextToken
-    }
-  }
-`;
-export const postsByCreatedAt = /* GraphQL */ `
-  query PostsByCreatedAt(
-    $createdAt: String!
-    $sortDirection: ModelSortDirection
-    $filter: ModelPostFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    postsByCreatedAt(
-      createdAt: $createdAt
-      sortDirection: $sortDirection
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-    ) {
-      items {
-        id
+        type
         content
         userID
         user {
@@ -296,6 +303,7 @@ export const getComment = /* GraphQL */ `
       postID
       post {
         id
+        type
         content
         userID
         user {
@@ -351,6 +359,7 @@ export const listComments = /* GraphQL */ `
         postID
         post {
           id
+          type
           content
           userID
           createdAt
@@ -397,6 +406,7 @@ export const commentsByPostID = /* GraphQL */ `
         postID
         post {
           id
+          type
           content
           userID
           createdAt
@@ -443,6 +453,7 @@ export const commentsByUserID = /* GraphQL */ `
         postID
         post {
           id
+          type
           content
           userID
           createdAt
