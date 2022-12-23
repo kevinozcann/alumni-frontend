@@ -15,7 +15,10 @@ export const getUser = /* GraphQL */ `
       family_name
       email
       owner
-      picture
+      avatarUrl
+      avatarKey
+      wallpaperUrl
+      wallpaperKey
       posts {
         items {
           id
@@ -58,7 +61,10 @@ export const listUsers = /* GraphQL */ `
         family_name
         email
         owner
-        picture
+        avatarUrl
+        avatarKey
+        wallpaperUrl
+        wallpaperKey
         posts {
           nextToken
         }
@@ -148,7 +154,10 @@ export const getPost = /* GraphQL */ `
         family_name
         email
         owner
-        picture
+        avatarUrl
+        avatarKey
+        wallpaperUrl
+        wallpaperKey
         posts {
           nextToken
         }
@@ -194,7 +203,10 @@ export const listPosts = /* GraphQL */ `
           family_name
           email
           owner
-          picture
+          avatarUrl
+          avatarKey
+          wallpaperUrl
+          wallpaperKey
           createdAt
           updatedAt
         }
@@ -237,7 +249,10 @@ export const postsByDate = /* GraphQL */ `
           family_name
           email
           owner
-          picture
+          avatarUrl
+          avatarKey
+          wallpaperUrl
+          wallpaperKey
           createdAt
           updatedAt
         }
@@ -280,7 +295,10 @@ export const postsByUserIDAndCreatedAt = /* GraphQL */ `
           family_name
           email
           owner
-          picture
+          avatarUrl
+          avatarKey
+          wallpaperUrl
+          wallpaperKey
           createdAt
           updatedAt
         }
@@ -312,7 +330,10 @@ export const getComment = /* GraphQL */ `
           family_name
           email
           owner
-          picture
+          avatarUrl
+          avatarKey
+          wallpaperUrl
+          wallpaperKey
           createdAt
           updatedAt
         }
@@ -330,7 +351,10 @@ export const getComment = /* GraphQL */ `
         family_name
         email
         owner
-        picture
+        avatarUrl
+        avatarKey
+        wallpaperUrl
+        wallpaperKey
         posts {
           nextToken
         }
@@ -373,7 +397,10 @@ export const listComments = /* GraphQL */ `
           family_name
           email
           owner
-          picture
+          avatarUrl
+          avatarKey
+          wallpaperUrl
+          wallpaperKey
           createdAt
           updatedAt
         }
@@ -420,7 +447,10 @@ export const commentsByPostID = /* GraphQL */ `
           family_name
           email
           owner
-          picture
+          avatarUrl
+          avatarKey
+          wallpaperUrl
+          wallpaperKey
           createdAt
           updatedAt
         }
@@ -467,7 +497,10 @@ export const commentsByUserID = /* GraphQL */ `
           family_name
           email
           owner
-          picture
+          avatarUrl
+          avatarKey
+          wallpaperUrl
+          wallpaperKey
           createdAt
           updatedAt
         }

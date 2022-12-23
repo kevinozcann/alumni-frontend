@@ -13,7 +13,10 @@ export const createUser = /* GraphQL */ `
       family_name
       email
       owner
-      picture
+      avatarUrl
+      avatarKey
+      wallpaperUrl
+      wallpaperKey
       posts {
         items {
           id
@@ -54,7 +57,10 @@ export const updateUser = /* GraphQL */ `
       family_name
       email
       owner
-      picture
+      avatarUrl
+      avatarKey
+      wallpaperUrl
+      wallpaperKey
       posts {
         items {
           id
@@ -95,7 +101,10 @@ export const deleteUser = /* GraphQL */ `
       family_name
       email
       owner
-      picture
+      avatarUrl
+      avatarKey
+      wallpaperUrl
+      wallpaperKey
       posts {
         items {
           id
@@ -234,7 +243,10 @@ export const createPost = /* GraphQL */ `
         family_name
         email
         owner
-        picture
+        avatarUrl
+        avatarKey
+        wallpaperUrl
+        wallpaperKey
         posts {
           nextToken
         }
@@ -278,7 +290,10 @@ export const updatePost = /* GraphQL */ `
         family_name
         email
         owner
-        picture
+        avatarUrl
+        avatarKey
+        wallpaperUrl
+        wallpaperKey
         posts {
           nextToken
         }
@@ -322,7 +337,10 @@ export const deletePost = /* GraphQL */ `
         family_name
         email
         owner
-        picture
+        avatarUrl
+        avatarKey
+        wallpaperUrl
+        wallpaperKey
         posts {
           nextToken
         }
@@ -370,7 +388,10 @@ export const createComment = /* GraphQL */ `
           family_name
           email
           owner
-          picture
+          avatarUrl
+          avatarKey
+          wallpaperUrl
+          wallpaperKey
           createdAt
           updatedAt
         }
@@ -388,7 +409,10 @@ export const createComment = /* GraphQL */ `
         family_name
         email
         owner
-        picture
+        avatarUrl
+        avatarKey
+        wallpaperUrl
+        wallpaperKey
         posts {
           nextToken
         }
@@ -424,7 +448,10 @@ export const updateComment = /* GraphQL */ `
           family_name
           email
           owner
-          picture
+          avatarUrl
+          avatarKey
+          wallpaperUrl
+          wallpaperKey
           createdAt
           updatedAt
         }
@@ -442,7 +469,10 @@ export const updateComment = /* GraphQL */ `
         family_name
         email
         owner
-        picture
+        avatarUrl
+        avatarKey
+        wallpaperUrl
+        wallpaperKey
         posts {
           nextToken
         }
@@ -478,7 +508,10 @@ export const deleteComment = /* GraphQL */ `
           family_name
           email
           owner
-          picture
+          avatarUrl
+          avatarKey
+          wallpaperUrl
+          wallpaperKey
           createdAt
           updatedAt
         }
@@ -496,7 +529,10 @@ export const deleteComment = /* GraphQL */ `
         family_name
         email
         owner
-        picture
+        avatarUrl
+        avatarKey
+        wallpaperUrl
+        wallpaperKey
         posts {
           nextToken
         }
