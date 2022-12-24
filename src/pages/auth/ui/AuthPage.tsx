@@ -1,5 +1,5 @@
 import loadable from '@loadable/component';
-import { Backdrop, Box, CircularProgress, Container, useMediaQuery, useTheme } from '@mui/material';
+import { Box, Container, useMediaQuery, useTheme } from '@mui/material';
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useDispatch, useSelector } from 'react-redux';
@@ -25,18 +25,11 @@ const AuthPage = () => {
 
   // Selectors
   const lang = useSelector(i18nLangSelector);
-  // const activeSchool = useSelector(userActiveSchoolSelector);
   const languages = useSelector(i18nLanguagesSelector);
 
   const handleChangeLanguage = (language: TLang): void => {
     dispatch(i18nActions.setLanguage(language));
   };
-
-  // React.useEffect(() => {
-  //   if (activeSchool) {
-  //     setTitle(`${activeSchool.title} - ${appTitle}`);
-  //   }
-  // }, [activeSchool]);
 
   React.useEffect(() => {
     gtm.push({ event: 'page_view' });
@@ -46,14 +39,7 @@ const AuthPage = () => {
     <React.Fragment>
       <Helmet htmlAttributes={{ lang: lang }}>
         <title>{title}</title>
-        {/* <link rel='icon' type='image/png' href={activeSchool?.config?.favicon} sizes='16x16' /> */}
       </Helmet>
-      {/* <Backdrop
-        sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
-        open={activeSchool ? false : true}
-      >
-        <CircularProgress color='inherit' />
-      </Backdrop> */}
       <Box
         sx={{
           backgroundColor: 'background.default',

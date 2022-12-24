@@ -21,7 +21,7 @@ import { AppDispatch, RootState } from 'store/store';
 import { countriesSelector, staticActions } from 'store/static';
 import { configActions, gradeLevelsSelector } from 'store/config';
 import { i18nLangSelector } from 'store/i18n';
-import { authUserSelector } from 'pages/auth/services/auth';
+import { authUserSelector } from 'pages/auth/services/store/auth';
 import { userActiveSchoolSelector } from 'pages/profile/services/user';
 import useSnackbar from 'hooks/useSnackbar';
 import useTranslation from 'hooks/useTranslation';

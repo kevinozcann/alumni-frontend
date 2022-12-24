@@ -22,7 +22,7 @@ import { ILayoutSettings } from 'contexts/SettingsContext';
 import useSettings from 'hooks/useSettings';
 import SettingsDrawer from 'layout/SettingsDrawer';
 import { IUser } from 'pages/auth/data/account-types';
-import { authUserSelector } from 'pages/auth/services/auth';
+import { authUserSelector } from 'pages/auth/services/store/auth';
 
 import awsconfig from 'aws-exports';
 

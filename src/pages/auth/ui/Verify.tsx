@@ -12,7 +12,7 @@ import { useNavigate } from 'react-router-dom';
 import useTranslation from 'hooks/useTranslation';
 import LabelWithIcon from 'utils/LabelWithIcon';
 
-import { authErrorSelector, authPhaseSelector, authUserSelector } from '../services/auth';
+import { authErrorSelector, authPhaseSelector, authUserSelector } from '../services/store/auth';
 import { authActions } from '../services/actions';
 
 type TFormValues = {

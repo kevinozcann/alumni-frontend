@@ -1,4 +1,4 @@
-import { reducer } from './auth';
+import { reducer } from './store/auth';
 import { sagas } from './middleware';
 
 export { sagas as authSagas };

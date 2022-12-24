@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect, ConnectedProps } from 'react-redux';
-import { authUserSelector } from '../auth/services/auth';
+import { authUserSelector } from '../auth/services/store/auth';
 import { RootState } from '../../store/store';
 import { TLoginType } from '../auth/data/account-types';
 

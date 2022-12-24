@@ -18,7 +18,7 @@ import { format } from 'date-fns';
 
 import { Loadable } from 'layout';
 import { AppDispatch, RootState } from 'store/store';
-import { authUserSelector } from 'pages/auth/services/auth';
+import { authUserSelector } from 'pages/auth/services/store/auth';
 import { i18nLangSelector } from 'store/i18n';
 import { userActiveSchoolSelector, userActiveSeasonSelector } from 'pages/profile/services/user';
 import { configActions, configPhaseSelector } from 'store/config';

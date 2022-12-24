@@ -19,7 +19,7 @@ import ArrowRightIcon from '@mui/icons-material/ArrowRight';
 
 import Page from 'layout/Page';
 import { RootState } from 'store/store';
-import { authUserSelector } from 'pages/auth/services/auth';
+import { authUserSelector } from 'pages/auth/services/store/auth';
 import { userActiveSchoolSelector, userActiveSeasonSelector } from 'pages/profile/services/user';
 import { apiBaseUrl } from 'store/ApiUrls';
 import { useSubheader } from 'contexts/SubheaderContext';

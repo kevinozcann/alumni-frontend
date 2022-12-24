@@ -23,7 +23,7 @@ import Page from 'layout/Page';
 import Scrollbar from 'layout/Scrollbar';
 import { IPersonal, IUser } from 'pages/auth/data/account-types';
 import { ISchool } from 'pages/organization/organization-types';
-import { authUserSelector } from 'pages/auth/services/auth';
+import { authUserSelector } from 'pages/auth/services/store/auth';
 import { i18nLangSelector } from 'store/i18n';
 import { AppDispatch, RootState } from 'store/store';
 import { userActiveSchoolSelector, userPersonalSelector } from 'pages/profile/services/user';

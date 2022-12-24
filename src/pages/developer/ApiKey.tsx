@@ -5,7 +5,7 @@ import { Box, Divider, Card, CardHeader, CardContent, Typography, Button } from 
 
 import Page from 'layout/Page';
 import { AppDispatch, RootState } from 'store/store';
-import { authUserSelector } from 'pages/auth/services/auth';
+import { authUserSelector } from 'pages/auth/services/store/auth';
 import { i18nLangSelector } from 'store/i18n';
 import { useSubheader } from 'contexts/SubheaderContext';
 import ConfirmDialog from 'components/ConfirmDialog';

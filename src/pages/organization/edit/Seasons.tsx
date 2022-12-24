@@ -8,7 +8,7 @@ import { faCheckCircle, faPlus, faSync } from '@fortawesome/pro-duotone-svg-icon
 
 import { Loadable } from 'layout';
 import { i18nLangSelector } from 'store/i18n';
-import { authUserSelector } from 'pages/auth/services/auth';
+import { authUserSelector } from 'pages/auth/services/store/auth';
 import { userActiveSchoolSelector, userPhaseSelector } from 'pages/profile/services/user';
 import { configActions, configPhaseSelector } from 'store/config';
 import useTranslation from 'hooks/useTranslation';

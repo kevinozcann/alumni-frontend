@@ -21,7 +21,11 @@ import zxcvbn, { ZXCVBNResult } from 'zxcvbn';
 import useSnackbar from 'hooks/useSnackbar';
 import { SaveButton } from 'utils/ActionLinks';
 import { basicList, PasswordMeterColor } from 'utils/Helpers';
-import { authErrorSelector, authPhaseSelector, authUserSelector } from 'pages/auth/services/auth';
+import {
+  authErrorSelector,
+  authPhaseSelector,
+  authUserSelector
+} from 'pages/auth/services/store/auth';
 import { TUserPassword } from 'pages/auth/services/types';
 import { authActions } from 'pages/auth/services/actions';
 

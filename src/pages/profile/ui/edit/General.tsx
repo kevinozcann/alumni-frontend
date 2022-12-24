@@ -16,7 +16,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 // import { loginPhases } from 'store/auth';
 import { IUser } from 'pages/auth/data/account-types';
-import { authPhaseSelector, authUserSelector } from 'pages/auth/services/auth';
+import { authPhaseSelector, authUserSelector } from 'pages/auth/services/store/auth';
 import { SaveButton } from 'utils/ActionLinks';
 import { authActions } from 'pages/auth/services/actions';
 

@@ -20,7 +20,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 
 import { useSubheader } from 'contexts/SubheaderContext';
 import Page from 'layout/Page';
-import { authUserSelector } from 'pages/auth/services/auth';
+import { authUserSelector } from 'pages/auth/services/store/auth';
 import { userActiveSchoolSelector, userSchoolsSelector } from 'pages/profile/services/user';
 import StyledMenu from 'utils/StyledMenu';
 

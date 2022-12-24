@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Box } from '@mui/material';
 
 import Page from 'layout/Page';
-import { authUserSelector } from 'pages/auth/services/auth';
+import { authUserSelector } from 'pages/auth/services/store/auth';
 import useSettings from 'hooks/useSettings';
 import useTranslation from 'hooks/useTranslation';
 import { useSubheader } from 'contexts/SubheaderContext';

@@ -25,7 +25,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import FileCard from 'components/FileCard';
 import useTranslation from 'hooks/useTranslation';
-import { authUserSelector } from 'pages/auth/services/auth';
+import { authUserSelector } from 'pages/auth/services/store/auth';
 import { SaveButton } from 'utils/ActionLinks';
 import { fileExtension, filenameFromPath, filetypeFromFilename } from 'utils/Helpers';
 import { IFile, TActionType } from 'utils/shared-types';

@@ -21,7 +21,7 @@ import FullscreenIcon from '@mui/icons-material/Fullscreen';
 import CloseIcon from '@mui/icons-material/Close';
 
 import { AppDispatch, RootState } from 'store/store';
-import { authUserSelector } from 'pages/auth/services/auth';
+import { authUserSelector } from 'pages/auth/services/store/auth';
 import { searchActions, searchUsersSelector } from 'store/search';
 import useSnackbar from 'hooks/useSnackbar';
 import { useTranslation } from 'hooks/useTranslation';

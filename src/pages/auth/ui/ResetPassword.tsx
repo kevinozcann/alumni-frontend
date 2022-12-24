@@ -2,7 +2,11 @@ import React from 'react';
 import { connect, ConnectedProps } from 'react-redux';
 
 import { AppDispatch, RootState } from 'store/store';
-import { authErrorSelector, authPhaseSelector, authUserSelector } from 'pages/auth/services/auth';
+import {
+  authErrorSelector,
+  authPhaseSelector,
+  authUserSelector
+} from 'pages/auth/services/store/auth';
 import { i18nLangSelector } from 'store/i18n';
 import { TLang } from 'utils/shared-types';
 import ChangePassword from 'pages/profile/ui/edit/ChangePassword';

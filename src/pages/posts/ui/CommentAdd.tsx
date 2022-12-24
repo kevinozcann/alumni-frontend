@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import useKeyPress from 'hooks/useKeypress';
 import useTranslation from 'hooks/useTranslation';
-import { authUserSelector } from 'pages/auth/services/auth';
+import { authUserSelector } from 'pages/auth/services/store/auth';
 
 import { IPost } from '../data/post-types';
 import { postActions } from '../services/actions';

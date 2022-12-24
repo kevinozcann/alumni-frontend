@@ -10,7 +10,7 @@ import { Link } from 'react-router-dom';
 
 import ForgotPassword from 'components/links/ForgotPassword';
 
-const LoginAmplify = loadable(() => import('./components/LoginAmplify'));
+const LoginCognito = loadable(() => import('./components/LoginCognito'));
 
 export const Login = () => {
   const intl = useIntl();
@@ -33,7 +33,7 @@ export const Login = () => {
           </Box>
 
           <Box sx={{ flexGrow: 1, mt: 2 }}>
-            <LoginAmplify />
+            <LoginCognito />
           </Box>
 
           <Divider sx={{ my: 3 }} />

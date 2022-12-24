@@ -8,7 +8,7 @@ import { IPost } from 'pages/posts/data/post-types';
 import NewPost from 'pages/posts/ui/NewPost';
 import { postsOwnedSelector, postsPhaseSelector } from 'pages/posts/services/posts';
 
-import { authUserSelector } from 'pages/auth/services/auth';
+import { authUserSelector } from 'pages/auth/services/store/auth';
 import { postActions } from 'pages/posts/services/actions';
 
 const Post = loadable(() => import('pages/posts/ui/Post'));

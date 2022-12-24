@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router';
 import { LoadingScreen } from 'layout/LoadingScreen';
 
 import { authActions } from '../services/actions';
-import { authUserSelector } from '../services/auth';
+import { authUserSelector } from '../services/store/auth';
 
 const Logout = () => {
   const dispatch = useDispatch();

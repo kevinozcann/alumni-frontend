@@ -22,7 +22,7 @@ import useSettings from 'hooks/useSettings';
 import GlobalStyles from 'layout/GlobalStyles';
 import { schoolSelector } from 'pages/organization/_store/school';
 import routes from 'routes';
-import { authSelector } from 'pages/auth/services/auth';
+import { authSelector } from 'pages/auth/services/store/auth';
 import { i18nActions, i18nLangSelector } from 'store/i18n';
 import { LocaleProvider } from 'theme/i18n/LocaleProvider';
 import { createCustomTheme } from 'theme/index';

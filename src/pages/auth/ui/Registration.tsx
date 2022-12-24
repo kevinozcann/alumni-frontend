@@ -19,7 +19,7 @@ import zxcvbn, { ZXCVBNResult } from 'zxcvbn';
 import useTranslation from 'hooks/useTranslation';
 import { basicList, PasswordMeterColor } from 'utils/Helpers';
 
-import { authErrorSelector, authPhaseSelector, authUserSelector } from '../services/auth';
+import { authErrorSelector, authPhaseSelector, authUserSelector } from '../services/store/auth';
 import { authActions } from '../services/actions';
 
 type FormValues = {

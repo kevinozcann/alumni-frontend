@@ -1,41 +1,13 @@
-import { Amplify } from 'aws-amplify';
-import objectPath from 'object-path';
 import { persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
-import { createSelector } from 'reselect';
 
-import { IAuthUser } from 'pages/auth/data/account-types';
-import { authActionTypes, IAuthStore, IAuthStoreState, TAuthActionType } from './types';
-import awsconfig from 'aws-exports';
+import { authActionTypes, IAuthStore, TAuthActionType } from '../types';
 
-Amplify.configure(awsconfig);
-
-const initialAuthState: IAuthStore = {
+export const initialAuthState: IAuthStore = {
   user: null,
   phase: null,
   error: null
 };
-
-export const authSelector = createSelector(
-  (state: IAuthStoreState) => objectPath.get(state, ['auth']),
-  (auth: IAuthStore) => auth
-);
-export const authUserSelector = createSelector(
-  (state: IAuthStoreState) => objectPath.get(state, ['auth', 'user']),
-  (authUser: IAuthUser) => authUser
-);
-export const authAccessTokenSelector = createSelector(
-  (state: IAuthStoreState) => objectPath.get(state, ['auth', 'accessToken']),
-  (accessToken: string) => accessToken
-);
-export const authPhaseSelector = createSelector(
-  (state: IAuthStoreState) => objectPath.get(state, ['auth', 'phase']),
-  (authPhase: string) => authPhase
-);
-export const authErrorSelector = createSelector(
-  (state: IAuthStoreState) => objectPath.get(state, ['auth', 'error']),
-  (authError: any) => authError
-);
 
 export const reducer = persistReducer(
   {

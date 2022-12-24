@@ -7,7 +7,7 @@ import SeasonsPopover from 'components/SeasonsPopover';
 import { useSubheader } from 'contexts/SubheaderContext';
 import useTranslation from 'hooks/useTranslation';
 import { IUser } from 'pages/auth/data/account-types';
-import { authUserSelector } from 'pages/auth/services/auth';
+import { authUserSelector } from 'pages/auth/services/store/auth';
 import { ISchool, ISeason } from 'pages/organization/organization-types';
 import { userActions } from 'pages/profile/services/actions';
 import {

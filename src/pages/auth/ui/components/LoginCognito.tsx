@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router';
 import useTranslation from 'hooks/useTranslation';
 import { isLocalhost } from 'utils/Helpers';
 
-import { authErrorSelector, authPhaseSelector, authUserSelector } from '../../services/auth';
+import { authErrorSelector, authPhaseSelector, authUserSelector } from '../../services/store/auth';
 import { authActions } from '../../services/actions';
 
 type FormValues = {
@@ -15,7 +15,7 @@ type FormValues = {
   password: string;
 };
 
-export const LoginAmplify = () => {
+export const LoginCognito = () => {
   const intl = useTranslation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -154,4 +154,4 @@ export const LoginAmplify = () => {
   );
 };
 
-export default LoginAmplify;
+export default LoginCognito;
