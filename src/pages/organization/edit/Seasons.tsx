@@ -8,8 +8,8 @@ import { faCheckCircle, faPlus, faSync } from '@fortawesome/pro-duotone-svg-icon
 
 import { Loadable } from 'layout';
 import { i18nLangSelector } from 'store/i18n';
-import { authUserSelector } from 'store/auth';
-import { userActions, userActiveSchoolSelector, userPhaseSelector } from 'store/user';
+import { authUserSelector } from 'pages/auth/services/auth';
+import { userActiveSchoolSelector, userPhaseSelector } from 'pages/profile/services/user';
 import { configActions, configPhaseSelector } from 'store/config';
 import useTranslation from 'hooks/useTranslation';
 import ResponsiveActions from 'components/ResponsiveActions';
@@ -18,6 +18,7 @@ import { TLang } from 'utils/shared-types';
 import { IUser } from 'pages/auth/data/account-types';
 import { schoolSelector } from 'pages/organization/_store/school';
 import ViewSeasons from 'pages/organization/view/ViewSeasons';
+import { userActions } from 'pages/profile/services/actions';
 
 const SchoostDialog = loadable(() => import('components/SchoostDialog'));
 const GradingTerms = loadable(() => import('pages/organization/edit/GradingTerms'));

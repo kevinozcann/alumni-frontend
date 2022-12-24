@@ -7,8 +7,8 @@ import { Box, Grid, TextField } from '@mui/material';
 import { DatePicker } from '@mui/x-date-pickers';
 
 import { AppDispatch, RootState } from 'store/store';
-import { authUserSelector } from 'store/auth';
-import { userActiveSchoolSelector, userActiveSeasonSelector } from 'store/user';
+import { authUserSelector } from 'pages/auth/services/auth';
+import { userActiveSchoolSelector, userActiveSeasonSelector } from 'pages/profile/services/user';
 import { i18nLangSelector } from 'store/i18n';
 import { configActions, configPhaseSelector } from 'store/config';
 import useSnackbar from 'hooks/useSnackbar';

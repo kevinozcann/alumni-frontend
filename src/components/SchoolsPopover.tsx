@@ -23,7 +23,6 @@ import {
 import 'intro.js/introjs.css';
 
 import Scrollbar from 'layout/Scrollbar';
-import { authActions } from 'store/auth';
 import BasicSearch from 'utils/BasicSearch';
 import getFlatSchools from 'utils/getFlatSchools';
 import { ISchool, TSchoolType } from 'pages/organization/organization-types';

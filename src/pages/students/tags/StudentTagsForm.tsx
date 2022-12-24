@@ -7,9 +7,9 @@ import { useParams } from 'react-router';
 import useSnackbar from 'hooks/useSnackbar';
 import useTranslation from 'hooks/useTranslation';
 import { ISchool } from 'pages/organization/organization-types';
-import { authUserSelector } from 'store/auth';
+import { authUserSelector } from 'pages/auth/services/auth';
 import { AppDispatch, RootState } from 'store/store';
-import { userActiveSchoolSelector } from 'store/user';
+import { userActiveSchoolSelector } from 'pages/profile/services/user';
 import { CancelButton, FormButtons, SaveButton } from 'utils/ActionLinks';
 import { TActionType } from 'utils/shared-types';
 

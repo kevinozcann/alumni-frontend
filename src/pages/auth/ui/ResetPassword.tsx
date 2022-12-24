@@ -2,21 +2,17 @@ import React from 'react';
 import { connect, ConnectedProps } from 'react-redux';
 
 import { AppDispatch, RootState } from 'store/store';
-import {
-  authActions,
-  authErrorSelector,
-  authPhaseSelector,
-  authUserSelector,
-  TUserPassword
-} from 'store/auth';
+import { authErrorSelector, authPhaseSelector, authUserSelector } from 'pages/auth/services/auth';
 import { i18nLangSelector } from 'store/i18n';
 import { TLang } from 'utils/shared-types';
-import ChangePassword from 'pages/account/edit/ChangePassword';
+import ChangePassword from 'pages/profile/ui/edit/ChangePassword';
 import { useLocation, useNavigate } from 'react-router';
 import { Box, Divider } from '@mui/material';
 
 import Login from 'components/links/Login';
 import ForgotPassword from 'components/links/ForgotPassword';
+
+import { TUserPassword } from '../services/types';
 
 const mapStateToProps = (state: RootState) => ({
   lang: i18nLangSelector(state),

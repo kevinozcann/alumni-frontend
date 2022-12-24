@@ -17,8 +17,10 @@ import * as Yup from 'yup';
 import zxcvbn, { ZXCVBNResult } from 'zxcvbn';
 
 import useTranslation from 'hooks/useTranslation';
-import { authActions, authErrorSelector, authPhaseSelector, authUserSelector } from 'store/auth';
 import { basicList, PasswordMeterColor } from 'utils/Helpers';
+
+import { authErrorSelector, authPhaseSelector, authUserSelector } from '../services/auth';
+import { authActions } from '../services/actions';
 
 type FormValues = {
   email: string;

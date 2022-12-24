@@ -3,7 +3,7 @@ import loadable, { lazy } from '@loadable/component';
 
 import { Loadable, LoadableScreen } from 'layout';
 
-import accountRoutes from 'pages/account/routes';
+import accountRoutes from 'pages/profile/routes';
 import authRoutes from 'pages/auth/routes';
 import configRoutes from 'pages/config/routes';
 import developerRoutes from 'pages/developer/routes';

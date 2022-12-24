@@ -10,8 +10,8 @@ import { Box, Card, CardContent, Divider, Grid, Skeleton, Tab, Tabs } from '@mui
 import Page from 'layout/Page';
 import { LoadableScreen } from 'layout';
 import { configActions, configPhaseSelector, gradeLevelsSelector } from 'store/config';
-import { authUserSelector } from 'store/auth';
-import { userActiveSchoolSelector } from 'store/user';
+import { authUserSelector } from 'pages/auth/services/auth';
+import { userActiveSchoolSelector } from 'pages/profile/services/user';
 import { i18nLangSelector } from 'store/i18n';
 import { citiesSelector, countriesSelector, statesSelector, staticActions } from 'store/static';
 import { TLang, IPageTab } from 'utils/shared-types';

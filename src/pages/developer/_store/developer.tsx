@@ -7,10 +7,10 @@ import { createSelector } from 'reselect';
 
 import { IUser } from 'pages/auth/data/account-types';
 import { USER_GENERATE_API_KEY_URL, updateApiUrl } from 'store/ApiUrls';
-import { actionTypes as authActionTypes } from 'store/auth';
 import { AppError, IAction } from 'store/store';
 import { JWT_EXPIRES_IN, JWT_SECRET, sign } from 'utils/jwt';
 import { TLang } from 'utils/shared-types';
+import { authActionTypes } from 'pages/auth/services/types';
 
 interface IDeveloperState {
   phase: string;
@@ -107,14 +107,14 @@ export function* saga() {
 
       // Update tokens in the store
       yield put({
-        type: authActionTypes.AUTH_TOKEN_SAVE_WITH_USER,
+        type: authActionTypes.SAGA.AUTH_TOKEN_SAVE_WITH_USER,
         payload: { authToken: newApiKey, accessToken: jwtAccessToken }
       });
 
       // Update user token in the store
       const updatedUser = Object.assign({}, user, { accessToken: newApiKey });
       yield put({
-        type: authActionTypes.AUTH_UPDATE_USER,
+        type: authActionTypes.SAGA.AUTH_UPDATE_USER,
         payload: { user: updatedUser }
       });
 

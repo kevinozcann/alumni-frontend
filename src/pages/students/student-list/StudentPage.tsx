@@ -22,7 +22,7 @@ import useTranslation from 'hooks/useTranslation';
 import Page from 'layout/Page';
 import { i18nLangSelector } from 'store/i18n';
 import { AppDispatch, RootState } from 'store/store';
-import { userActiveSchoolSelector } from 'store/user';
+import { userActiveSchoolSelector } from 'pages/profile/services/user';
 import { IPageTab } from 'utils/shared-types';
 import studentPageTabs from './student-page-tabs';
 import { studentInfoSelector, studentsActions, studentsPhaseSelector } from './_store/students';

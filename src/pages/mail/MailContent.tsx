@@ -9,7 +9,7 @@ import { Avatar, Box, Button, Divider, IconButton, Link, Tooltip, Typography } f
 import { styled } from '@mui/material/styles';
 import { AttachFile, Delete, OpenInNew, Shortcut } from '@mui/icons-material';
 
-import { authUserSelector } from 'store/auth';
+import { authUserSelector } from 'pages/auth/services/auth';
 import { AppDispatch, RootState } from 'store/store';
 import { TActionType } from 'utils/shared-types';
 import getInitials from 'utils/getInitials';

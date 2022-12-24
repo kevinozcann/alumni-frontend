@@ -7,7 +7,7 @@ import axios from 'axios';
 
 import { SCHOOLS_API_URL } from 'store/ApiUrls';
 import { IAction } from 'store/store';
-import { userActions } from 'store/user';
+import { userActions } from 'pages/profile/services/actions';
 import { TLang } from 'utils/shared-types';
 import { IFilter } from 'components/filter/Filter';
 import { IUser } from 'pages/auth/data/account-types';

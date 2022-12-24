@@ -19,8 +19,8 @@ import ArrowRightIcon from '@mui/icons-material/ArrowRight';
 
 import Page from 'layout/Page';
 import { RootState } from 'store/store';
-import { authUserSelector } from 'store/auth';
-import { userActiveSchoolSelector, userActiveSeasonSelector } from 'store/user';
+import { authUserSelector } from 'pages/auth/services/auth';
+import { userActiveSchoolSelector, userActiveSeasonSelector } from 'pages/profile/services/user';
 import { apiBaseUrl } from 'store/ApiUrls';
 import { useSubheader } from 'contexts/SubheaderContext';
 import HighlightCode from 'components/HighlightCode';

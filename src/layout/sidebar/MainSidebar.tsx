@@ -20,14 +20,14 @@ import menus, { IMenu } from 'data/menu';
 import useTranslation from 'hooks/useTranslation';
 import Footer from 'layout/Footer';
 import Scrollbar from 'layout/Scrollbar';
-import { authUserSelector } from 'store/auth';
+import { authUserSelector } from 'pages/auth/services/auth';
 import { i18nLangSelector } from 'store/i18n';
+import { userActions } from 'pages/profile/services/actions';
 import {
-  userActions,
   userActiveMenuSelector,
   userActiveSchoolSelector,
   userPhaseSelector
-} from 'store/user';
+} from 'pages/profile/services/user';
 import ActiveMenuItems from './ActiveMenuItems';
 import MainNavItem from './MainNavItem';
 

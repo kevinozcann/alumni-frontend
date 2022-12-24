@@ -28,7 +28,7 @@ import {
 
 import { configCurrencySelector } from 'store/config';
 import { i18nLangSelector } from 'store/i18n';
-import { userActiveSchoolSelector, userActiveSeasonSelector } from 'store/user';
+import { userActiveSchoolSelector, userActiveSeasonSelector } from 'pages/profile/services/user';
 import { AppDispatch, RootState } from 'store/store';
 import StatsBox from 'components/dashboard/StatsBox';
 // import Resize from 'components/Resize';

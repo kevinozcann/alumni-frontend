@@ -1,10 +1,11 @@
 import React from 'react';
-import { connect, ConnectedProps, useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router';
 
-import { authActions, authSelector, authUserSelector } from 'store/auth';
-import { AppDispatch, RootState } from 'store/store';
 import { LoadingScreen } from 'layout/LoadingScreen';
+
+import { authActions } from '../services/actions';
+import { authUserSelector } from '../services/auth';
 
 const Logout = () => {
   const dispatch = useDispatch();

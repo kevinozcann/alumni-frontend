@@ -5,7 +5,7 @@ import { Box, Card, CardContent, IconButton, Input, Paper } from '@mui/material'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPaperPlane } from '@fortawesome/pro-duotone-svg-icons';
 
-import { authUserSelector } from 'store/auth';
+import { authUserSelector } from 'pages/auth/services/auth';
 import { RootState } from 'store/store';
 import useTranslation from 'hooks/useTranslation';
 import SchoostDialog from 'components/SchoostDialog';

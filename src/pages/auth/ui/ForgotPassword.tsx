@@ -17,9 +17,11 @@ import { faPaperPlane, faSpinner } from '@fortawesome/pro-duotone-svg-icons';
 
 import Login from 'components/links/Login';
 import { AppDispatch, RootState } from 'store/store';
-import { actionPhases, authActions, authErrorSelector, authPhaseSelector } from 'store/auth';
+import { authErrorSelector, authPhaseSelector } from 'pages/auth/services/auth';
 import { i18nLangSelector } from 'store/i18n';
 import { TLang } from 'utils/shared-types';
+import { authActions } from '../services/actions';
+import { actionPhases } from '../services/types';
 
 const mapStateToProps = (state: RootState) => ({
   lang: i18nLangSelector(state),

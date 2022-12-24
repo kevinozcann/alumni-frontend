@@ -7,7 +7,6 @@ import { Outlet } from 'react-router-dom';
 
 import useSettings from 'hooks/useSettings';
 import { i18nActions, i18nLangSelector, i18nLanguagesSelector } from 'store/i18n';
-import { userActions, userActiveSchoolSelector } from 'store/user';
 import gtm from 'utils/gtm';
 import { TLang } from 'utils/shared-types';
 
@@ -26,18 +25,18 @@ const AuthPage = () => {
 
   // Selectors
   const lang = useSelector(i18nLangSelector);
-  const activeSchool = useSelector(userActiveSchoolSelector);
+  // const activeSchool = useSelector(userActiveSchoolSelector);
   const languages = useSelector(i18nLanguagesSelector);
 
   const handleChangeLanguage = (language: TLang): void => {
     dispatch(i18nActions.setLanguage(language));
   };
 
-  React.useEffect(() => {
-    if (activeSchool) {
-      setTitle(`${activeSchool.title} - ${appTitle}`);
-    }
-  }, [activeSchool]);
+  // React.useEffect(() => {
+  //   if (activeSchool) {
+  //     setTitle(`${activeSchool.title} - ${appTitle}`);
+  //   }
+  // }, [activeSchool]);
 
   React.useEffect(() => {
     gtm.push({ event: 'page_view' });
@@ -47,7 +46,7 @@ const AuthPage = () => {
     <React.Fragment>
       <Helmet htmlAttributes={{ lang: lang }}>
         <title>{title}</title>
-        <link rel='icon' type='image/png' href={activeSchool?.config?.favicon} sizes='16x16' />
+        {/* <link rel='icon' type='image/png' href={activeSchool?.config?.favicon} sizes='16x16' /> */}
       </Helmet>
       {/* <Backdrop
         sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}

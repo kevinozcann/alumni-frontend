@@ -18,9 +18,9 @@ import { format } from 'date-fns';
 
 import { Loadable } from 'layout';
 import { AppDispatch, RootState } from 'store/store';
-import { authUserSelector } from 'store/auth';
+import { authUserSelector } from 'pages/auth/services/auth';
 import { i18nLangSelector } from 'store/i18n';
-import { userActiveSchoolSelector, userActiveSeasonSelector } from 'store/user';
+import { userActiveSchoolSelector, userActiveSeasonSelector } from 'pages/profile/services/user';
 import { configActions, configPhaseSelector } from 'store/config';
 import useTranslation from 'hooks/useTranslation';
 import { TLang } from 'utils/shared-types';

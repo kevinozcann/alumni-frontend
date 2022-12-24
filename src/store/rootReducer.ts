@@ -1,13 +1,13 @@
 import { all, spawn } from 'redux-saga/effects';
 import { combineReducers } from 'redux';
 
-import { saga as authSagas, reducer as authReducer } from './auth';
+import { authSagas, authReducer } from '../pages/auth/services';
 import { saga as configSagas, reducer as configReducer } from './config';
 import { saga as i18nSagas, reducer as i18nReducer } from './i18n';
 import { saga as searchSagas, reducer as searchReducer } from './search';
 import { saga as staticSagas, reducer as staticReducer } from './static';
 import { saga as recentUpdatesSagas, reducer as recentUpdatesReducer } from './recentUpdates';
-import { saga as userSagas, reducer as userReducer } from './user';
+import { userSagas, userReducer } from 'pages/profile/services';
 
 import { developerReducer, developerSagas } from 'pages/developer/_store';
 import { postsReducer, postsSagas } from 'pages/posts/services';
@@ -44,13 +44,13 @@ export function* rootSaga() {
     configSagas(),
     searchSagas(),
     i18nSagas(),
+    postsSagas(),
     staticSagas(),
     recentUpdatesSagas(),
     userSagas()
   ];
   const allSagas = mainSagas.concat(
     developerSagas,
-    postsSagas,
     mailSagas,
     organizationSagas,
     schoolSagas,

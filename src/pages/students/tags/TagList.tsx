@@ -19,7 +19,7 @@ import Page from 'layout/Page';
 import Scrollbar from 'layout/Scrollbar';
 import { useSubheader } from 'contexts/SubheaderContext';
 import { AppDispatch, RootState } from 'store/store';
-import { userActiveSchoolSelector } from 'store/user';
+import { userActiveSchoolSelector } from 'pages/profile/services/user';
 import useTranslation from 'hooks/useTranslation';
 import SchoostDialog from 'components/SchoostDialog';
 import SideForm from 'components/SideForm';

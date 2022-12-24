@@ -1,5 +1,5 @@
 import { reducer } from './posts';
-import { sagas } from './sagas';
+import { sagas } from './middleware';
 
-export const postsSagas = [sagas()];
-export const postsReducer = reducer;
+export { sagas as postsSagas };
+export { reducer as postsReducer };

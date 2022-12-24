@@ -29,7 +29,7 @@ import { createMarkup } from 'utils/Helpers';
 import { IFile, TActionType } from 'utils/shared-types';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { authUserSelector } from 'store/auth';
+import { authUserSelector } from 'pages/auth/services/auth';
 import { i18nLangSelector } from 'store/i18n';
 import { IPost } from '../data/post-types';
 import { postsPhaseSelector } from '../services/posts';

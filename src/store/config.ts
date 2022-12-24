@@ -28,7 +28,6 @@ import {
   SEASONS_URL,
   updateApiUrl
 } from './ApiUrls';
-import { getUserSchools } from './user';
 
 //@TODO we shouldn't maintain seasons reducer. Instead, we should use activeSchool.seasons
 interface IConfigState {
@@ -431,9 +430,6 @@ export function* saga() {
     }
 
     yield put(configActions.setPhase('success'));
-
-    // Update user schools after success to get updated season
-    yield call(getUserSchools, lang, user, false);
   });
 
   // Update season
@@ -449,9 +445,6 @@ export function* saga() {
     }
 
     yield put(configActions.setPhase('success'));
-
-    // Update user schools after success to get updated season
-    yield call(getUserSchools, lang, user, false);
   });
 
   // Delete season
@@ -467,9 +460,6 @@ export function* saga() {
     }
 
     yield put(configActions.setPhase('success'));
-
-    // Update user schools after success to get updated season
-    yield call(getUserSchools, lang, user, false);
   });
 
   // Set default season
@@ -484,8 +474,6 @@ export function* saga() {
       );
 
       yield put(configActions.setPhase('success'));
-
-      yield call(getUserSchools, lang, user, false);
     }
   );
 
@@ -525,8 +513,6 @@ export function* saga() {
       }
 
       yield put(configActions.setPhase('success'));
-
-      yield call(getUserSchools, lang, user, false);
     }
   );
 
@@ -548,8 +534,6 @@ export function* saga() {
       }
 
       yield put(configActions.setPhase('success'));
-
-      yield call(getUserSchools, lang, user, false);
     }
   );
 
@@ -568,8 +552,6 @@ export function* saga() {
       }
 
       yield put(configActions.setPhase('success'));
-
-      yield call(getUserSchools, lang, user, false);
     }
   );
 }

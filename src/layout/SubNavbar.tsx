@@ -1,24 +1,23 @@
-import React from 'react';
-import { connect, ConnectedProps } from 'react-redux';
 import { Box, useTheme } from '@mui/material';
+import { connect, ConnectedProps } from 'react-redux';
 
-import { AppDispatch, RootState } from 'store/store';
-import { authUserSelector } from 'store/auth';
-import { i18nLangSelector } from 'store/i18n';
-import {
-  userActions,
-  userSchoolsSelector,
-  userActiveSchoolSelector,
-  userActiveSeasonSelector
-} from 'store/user';
-import { useSubheader } from 'contexts/SubheaderContext';
-import useTranslation from 'hooks/useTranslation';
 import BreadCrumbs from 'components/BreadCrumbs';
 import SchoolsPopover from 'components/SchoolsPopover';
 import SeasonsPopover from 'components/SeasonsPopover';
-import { TLang } from 'utils/shared-types';
+import { useSubheader } from 'contexts/SubheaderContext';
+import useTranslation from 'hooks/useTranslation';
 import { IUser } from 'pages/auth/data/account-types';
+import { authUserSelector } from 'pages/auth/services/auth';
 import { ISchool, ISeason } from 'pages/organization/organization-types';
+import { userActions } from 'pages/profile/services/actions';
+import {
+  userActiveSchoolSelector,
+  userActiveSeasonSelector,
+  userSchoolsSelector
+} from 'pages/profile/services/user';
+import { i18nLangSelector } from 'store/i18n';
+import { AppDispatch, RootState } from 'store/store';
+import { TLang } from 'utils/shared-types';
 
 const mapStateToProps = (state: RootState) => ({
   lang: i18nLangSelector(state),

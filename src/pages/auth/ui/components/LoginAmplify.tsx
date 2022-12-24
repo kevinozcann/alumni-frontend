@@ -5,8 +5,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router';
 
 import useTranslation from 'hooks/useTranslation';
-import { authActions, authErrorSelector, authPhaseSelector, authUserSelector } from 'store/auth';
 import { isLocalhost } from 'utils/Helpers';
+
+import { authErrorSelector, authPhaseSelector, authUserSelector } from '../../services/auth';
+import { authActions } from '../../services/actions';
 
 type FormValues = {
   email: string;

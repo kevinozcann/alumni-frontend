@@ -7,7 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars } from '@fortawesome/pro-duotone-svg-icons';
 
 import { RootState } from 'store/store';
-import { userActiveSchoolSelector } from 'store/user';
+import { userActiveSchoolSelector } from 'pages/profile/services/user';
 
 const ContentSearch = loadable(() => import('./search/ContentSearch'));
 const LanguagePopover = loadable(() => import('./languages/LanguagePopover'));
