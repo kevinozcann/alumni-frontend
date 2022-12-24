@@ -50,7 +50,7 @@ const DefaultSeason = (props: TDefaultSeasonProps) => {
       }
     });
 
-    setDefault(lang, user.attributes, seasons2Update);
+    setDefault(lang, user, seasons2Update);
   };
 
   React.useEffect(() => {

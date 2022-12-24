@@ -114,7 +114,7 @@ export function* saga() {
       // Update user token in the store
       const updatedUser = Object.assign({}, user, { accessToken: newApiKey });
       yield put({
-        type: authActionTypes.SAGA.AUTH_UPDATE_USER,
+        type: authActionTypes.SAGA.UPDATE_AUTH,
         payload: { user: updatedUser }
       });
 

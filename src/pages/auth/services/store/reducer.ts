@@ -4,7 +4,11 @@ import storage from 'redux-persist/lib/storage';
 import { authActionTypes, IAuthStore, TAuthActionType } from '../types';
 
 export const initialAuthState: IAuthStore = {
+  username: null,
+  accessToken: null,
+  refreshToken: null,
   user: null,
+  userConfirmed: false,
   phase: null,
   error: null
 };
@@ -28,33 +32,51 @@ export const reducer = persistReducer(
   },
   (state: IAuthStore = initialAuthState, action: TAuthActionType): IAuthStore => {
     switch (action.type) {
+      // LOGIN
       case authActionTypes.STORE.AUTH_LOGIN: {
         return { user: null };
       }
+      // LOGOUT
       case authActionTypes.STORE.AUTH_LOGOUT: {
         return { ...state, user: null, phase: null, error: null };
       }
-      case authActionTypes.STORE.AUTH_UPDATE_USER: {
-        const { payload } = action;
-        const { user } = { ...state };
+      // UPDATE USER
+      case authActionTypes.STORE.UPDATE_AUTH: {
+        const {
+          username,
+          pool,
+          client,
+          signInUserSession,
+          accessToken,
+          refreshToken,
+          user,
+          preferredMFA
+        } = action.payload;
 
-        console.log('payload', payload);
-        if (payload.hasOwnProperty('attributes')) {
-          const updatedAttributes = Object.assign(
-            {},
-            user?.attributes || {},
-            payload['attributes']
-          );
-          payload['attributes'] = updatedAttributes;
-        }
+        // if (payload.hasOwnProperty('attributes')) {
+        //   const updatedAttributes = Object.assign(
+        //     {},
+        //     user?.attributes || {},
+        //     payload['attributes']
+        //   );
+        //   payload['attributes'] = updatedAttributes;
+        // }
 
-        const updatedUser = Object.assign({}, user, payload);
+        // const updatedAuth = Object.assign({}, auth, payload);
 
         return {
           ...state,
-          user: updatedUser
+          username,
+          pool,
+          client,
+          signInUserSession,
+          accessToken,
+          refreshToken,
+          user,
+          preferredMFA
         };
       }
+      // UPDATE PHASE
       case authActionTypes.STORE.UPDATE_PHASE: {
         const { phase, error } = action.payload;
         return { ...state, phase, error };

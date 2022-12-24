@@ -39,7 +39,7 @@ const Images = () => {
   const user = useSelector(authUserSelector);
   const authPhase = useSelector(authPhaseSelector);
 
-  const userAttributes: IUser = user.attributes;
+  const userAttributes: IUser = user;
 
   const formInitialValues: IFormValues = {
     picture: userAttributes['custom:picture'],

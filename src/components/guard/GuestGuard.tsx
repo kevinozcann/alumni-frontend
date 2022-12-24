@@ -2,7 +2,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { Navigate } from 'react-router-dom';
 
-import { authUserSelector } from 'pages/auth/services/store/auth';
+import { authSelector } from 'pages/auth/services/store/auth';
 
 interface GuestGuardProps {
   children: React.ReactNode;
@@ -10,9 +10,9 @@ interface GuestGuardProps {
 
 const GuestGuard = ({ children }: GuestGuardProps) => {
   // Selectors
-  const user = useSelector(authUserSelector);
+  const auth = useSelector(authSelector);
 
-  if (user && user.accessToken) {
+  if (auth && auth.accessToken) {
     return <Navigate to='/account/home' />;
   }
 

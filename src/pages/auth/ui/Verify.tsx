@@ -12,7 +12,7 @@ import { useNavigate } from 'react-router-dom';
 import useTranslation from 'hooks/useTranslation';
 import LabelWithIcon from 'utils/LabelWithIcon';
 
-import { authErrorSelector, authPhaseSelector, authUserSelector } from '../services/store/auth';
+import { authSelector, authErrorSelector, authPhaseSelector } from '../services/store/auth';
 import { authActions } from '../services/actions';
 
 type TFormValues = {
@@ -27,7 +27,7 @@ const Verify = () => {
   const [isSubmitted, setSubmitted] = React.useState(false);
 
   // Selectors
-  const user = useSelector(authUserSelector);
+  const auth = useSelector(authSelector);
   const authPhase = useSelector(authPhaseSelector);
   const authError = useSelector(authErrorSelector);
 
@@ -36,7 +36,7 @@ const Verify = () => {
   const { handleSubmit, handleChange, values, errors, touched, isSubmitting, setSubmitting } =
     useFormik({
       initialValues: {
-        email: user.username,
+        email: auth.username,
         code: ''
       },
       validate: (values: TFormValues) => validateForm(values),
@@ -68,12 +68,12 @@ const Verify = () => {
   }, [authError, authPhase]);
 
   React.useEffect(() => {
-    if (user.userConfirmed) {
+    if (auth.userConfirmed) {
       setTimeout(() => {
         navigate('/auth/login');
       }, 5000);
     }
-  }, [user]);
+  }, [auth]);
 
   React.useEffect(() => {
     dispatch(authActions.setPhase(null, null));

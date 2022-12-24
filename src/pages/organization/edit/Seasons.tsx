@@ -54,7 +54,7 @@ const Seasons = () => {
 
   const handleDeleteConfirm = () => {
     setDeleted(true);
-    deleteSeason(lang, user.attributes, parseInt(subsection));
+    deleteSeason(lang, user, parseInt(subsection));
   };
 
   const handleDialogClose = () => {
@@ -77,7 +77,7 @@ const Seasons = () => {
       key: 'reload',
       title: intl.translate({ id: 'app.reload' }),
       startIcon: <FontAwesomeIcon icon={faSync} spin={userPhase?.includes('ing')} />,
-      onClick: () => updateUserSchools(lang, user.attributes)
+      onClick: () => updateUserSchools(lang, user)
     },
     {
       key: 'set-default',

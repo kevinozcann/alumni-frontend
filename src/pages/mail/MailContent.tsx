@@ -321,7 +321,7 @@ const MailContent: React.FC<MailContentProps> = (props) => {
       </Box>
       <Divider />
 
-      <MailReply mail={currentMail} user={user.attributes} />
+      <MailReply mail={currentMail} user={user} />
 
       <ConfirmDialog
         handleClose={handleCloseConfirm}

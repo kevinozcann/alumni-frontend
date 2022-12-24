@@ -1,4 +1,4 @@
-import { IAuthUser } from '../data/account-types';
+import { IUser } from '../data/account-types';
 import { authActionTypes, TAuthActionType, TUserPassword } from './types';
 
 export const authActions = {
@@ -25,9 +25,9 @@ export const authActions = {
     type: authActionTypes.SAGA.UPDATE_PHASE,
     payload: { phase, error }
   }),
-  updateUserInfo: (userData: Partial<IAuthUser>): TAuthActionType => ({
-    type: authActionTypes.SAGA.UPDATE_USER_INFO,
-    payload: { userData }
+  updateUser: (user: Partial<IUser>): TAuthActionType => ({
+    type: authActionTypes.SAGA.UPDATE_USER,
+    payload: { user }
   }),
   verify: (email: string, code: string): TAuthActionType => ({
     type: authActionTypes.SAGA.AUTH_VERIFY,

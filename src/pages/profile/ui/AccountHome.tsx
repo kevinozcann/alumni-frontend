@@ -28,7 +28,7 @@ const AccountHome = () => {
   };
 
   React.useEffect(() => {
-    dispatch(postActions.getPosts(user.attributes, page));
+    dispatch(postActions.getPosts(user, page));
 
     return () => null;
   }, [user, page]);

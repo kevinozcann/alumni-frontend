@@ -64,7 +64,7 @@ const GradingTerms = (props: TGradingTermsProps) => {
 
   const handleDeleteConfirm = () => {
     setDeleted(true);
-    deleteGradingTerm(lang, user.attributes, parseInt(gid));
+    deleteGradingTerm(lang, user, parseInt(gid));
   };
 
   const handleDialogClose = () => {

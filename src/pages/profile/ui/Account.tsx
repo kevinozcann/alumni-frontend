@@ -58,7 +58,7 @@ const Account = () => {
   const activeSchool = useSelector(userActiveSchoolSelector);
   const schools = useSelector(userSchoolsSelector);
 
-  const userAttributes = user.attributes;
+  const userAttributes = user;
 
   const handleHomeMenuElClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorHomeMenuEl(event.currentTarget);

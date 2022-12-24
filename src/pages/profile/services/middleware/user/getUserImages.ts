@@ -21,7 +21,7 @@ export function* getUserImages() {
   ]);
 
   yield put({
-    type: authActionTypes.STORE.AUTH_UPDATE_USER,
+    type: authActionTypes.STORE.UPDATE_AUTH,
     payload: {
       attributes: {
         pictureUrl,

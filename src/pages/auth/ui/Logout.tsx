@@ -5,24 +5,24 @@ import { useNavigate } from 'react-router';
 import { LoadingScreen } from 'layout/LoadingScreen';
 
 import { authActions } from '../services/actions';
-import { authUserSelector } from '../services/store/auth';
+import { authSelector } from '../services/store/auth';
 
 const Logout = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   // Selectors
-  const user = useSelector(authUserSelector);
+  const auth = useSelector(authSelector);
 
   React.useEffect(() => {
     dispatch(authActions.logout());
   }, []);
 
   React.useEffect(() => {
-    if (!user || !user?.accessToken) {
+    if (!auth || !auth?.accessToken) {
       navigate('/auth/login');
     }
-  }, [user]);
+  }, [auth]);
 
   return <LoadingScreen />;
 };

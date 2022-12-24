@@ -67,7 +67,7 @@ const Post = (props: FeedProps) => {
   const lang = useSelector(i18nLangSelector);
   const postsPhase = useSelector(postsPhaseSelector);
 
-  const isMe = post?.user?.id === user.attributes.id;
+  const isMe = post?.user?.id === user.id;
   const images = post.files?.filter((file) => file.mimeType.includes('image/'));
   const files = post.files?.filter((file) => !file.mimeType.includes('image/'));
 
@@ -90,7 +90,7 @@ const Post = (props: FeedProps) => {
   };
 
   const handleDeleteConfirm = () => {
-    handleSaveFeed(user.attributes, post, 'delete');
+    handleSaveFeed(user, post, 'delete');
   };
 
   const handleCloseConfirm = () => {
@@ -238,7 +238,7 @@ const Post = (props: FeedProps) => {
           )}
 
           <Box sx={{ marginTop: 2 }}>
-            <Reactions user={user.attributes} post={post} handleSaveFeed={handleSaveFeed} />
+            <Reactions user={user} post={post} handleSaveFeed={handleSaveFeed} />
           </Box>
 
           {post?.comments?.length > 0 && (
@@ -250,7 +250,7 @@ const Post = (props: FeedProps) => {
               {post?.comments?.map((comment) => (
                 <Comment
                   key={comment.id}
-                  user={user.attributes}
+                  user={user}
                   post={post}
                   phase={postsPhase}
                   comment={comment}

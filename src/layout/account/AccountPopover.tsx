@@ -55,8 +55,6 @@ const AccountPopover = (props: TAccountPopoverProps) => {
   // Selectors
   const user = useSelector(authUserSelector);
 
-  const userAttributes = user.attributes;
-
   const handleSettingsOpen = (): void => {
     setSettingsOpen(true);
     setOpen(false);
@@ -109,7 +107,7 @@ const AccountPopover = (props: TAccountPopoverProps) => {
       >
         <Avatar
           alt='user'
-          src={userAttributes.avatarUrl}
+          src={user.avatarUrl}
           sx={{
             height: 32,
             width: 32
@@ -132,10 +130,10 @@ const AccountPopover = (props: TAccountPopoverProps) => {
       >
         <Box sx={{ p: 2 }}>
           <Typography color='textPrimary' variant='subtitle2'>
-            {`${userAttributes?.name} ${userAttributes.family_name}`}
+            {`${user?.name} ${user.family_name}`}
           </Typography>
           <Typography color='textSecondary' variant='subtitle2'>
-            {userAttributes?.email}
+            {user?.email}
           </Typography>
         </Box>
         <Divider />

@@ -7,29 +7,42 @@ import { authActions } from '../actions';
 import { authActionTypes, TAuthActionType } from '../types';
 
 export function* sagaLogin({ payload }: TAuthActionType) {
-  yield put(authActions.setPhase('validating', null));
+  yield put({
+    type: authActionTypes.STORE.UPDATE_PHASE,
+    payload: { phase: 'validating', error: null }
+  });
 
   const { email, password } = payload;
 
   try {
-    const user = yield Auth.signIn(email, password);
+    const cognitoUser = yield Auth.signIn(email, password);
 
     yield put({
-      type: authActionTypes.STORE.AUTH_UPDATE_USER,
+      type: authActionTypes.STORE.UPDATE_AUTH,
       payload: {
-        accessToken: user.signInUserSession.accessToken.jwtToken,
-        refreshToken: user.signInUserSession.refreshToken.token,
-        signInUserSession: user.signInUserSession,
-        attributes: user.attributes,
-        preferredMFA: user.preferredMFA
+        username: cognitoUser.username,
+        pool: {
+          userPoolId: cognitoUser.pool.userPoolId,
+          clientId: cognitoUser.pool.clientId,
+          advancedSecurityDataCollectionFlag: cognitoUser.pool.advancedSecurityDataCollectionFlag
+        },
+        client: cognitoUser.client,
+        signInUserSession: cognitoUser.signInUserSession,
+        accessToken: cognitoUser.signInUserSession.accessToken.jwtToken,
+        refreshToken: cognitoUser.signInUserSession.refreshToken.token,
+        user: cognitoUser.attributes,
+        preferredMFA: cognitoUser.preferredMFA
       }
     });
 
-    yield call(getUserImages);
-
-    yield put(authActions.setPhase('success', null));
+    yield put({
+      type: authActionTypes.STORE.UPDATE_PHASE,
+      payload: { phase: 'success', error: null }
+    });
   } catch (error) {
-    console.log('error', error);
-    yield put(authActions.setPhase('error', error));
+    yield put({
+      type: authActionTypes.STORE.UPDATE_PHASE,
+      payload: { phase: 'error', error }
+    });
   }
 }

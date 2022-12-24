@@ -15,7 +15,7 @@ export function* sagaVerify({ payload }: TAuthActionType) {
     if (response === 'SUCCESS') {
       // Update user info
       yield put({
-        type: authActionTypes.STORE.AUTH_UPDATE_USER,
+        type: authActionTypes.STORE.UPDATE_AUTH,
         payload: {
           userConfirmed: true
         }

@@ -34,7 +34,7 @@ const General = () => {
   const user = useSelector(authUserSelector);
   const phase = useSelector(authPhaseSelector);
 
-  const userAttributes: IUser = user.attributes;
+  const userAttributes: IUser = user;
 
   const formInitialValues: IFormValues = {
     name: userAttributes.name,
@@ -71,14 +71,14 @@ const General = () => {
 
   const submitForm = (values: IFormValues) => {
     setStatus('submitted');
-    dispatch(
-      authActions.updateUserInfo({
-        attributes: {
-          name: values.name,
-          family_name: values.lastName
-        }
-      })
-    );
+    // dispatch(
+    //   authActions.updateUser({
+    //     attributes: {
+    //       name: values.name,
+    //       family_name: values.lastName
+    //     }
+    //   })
+    // );
   };
 
   React.useEffect(() => {

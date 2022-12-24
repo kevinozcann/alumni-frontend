@@ -22,19 +22,6 @@ export interface IUser {
   email_verified?: boolean;
   phone_number_verified?: boolean;
 }
-export interface IAuthUser {
-  username?: string;
-  accessToken: string;
-  refreshToken: string;
-  attributes: IUser;
-  signInUserSession: any;
-  client?: {
-    endpoint: string;
-    fetchOptions: any;
-  };
-  userConfirmed?: boolean;
-  preferredMFA: string;
-}
 export interface IUserType {
   id: number;
   loginType: string;

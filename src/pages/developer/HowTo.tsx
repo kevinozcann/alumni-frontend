@@ -40,7 +40,8 @@ const ApiKey = (props: TApiKeyProps) => {
   const [codeTab, setCodeTab] = React.useState<string>('curl');
   const intl = useIntl();
   const subheader = useSubheader();
-  const truncatedToken = `${user?.accessToken?.substring(0, 7)}.......`;
+  // const truncatedToken = `${user?.accessToken?.substring(0, 7)}.......`;
+  const truncatedToken = 'placeholder';
 
   const codeTabs: IPageTab[] = [
     {

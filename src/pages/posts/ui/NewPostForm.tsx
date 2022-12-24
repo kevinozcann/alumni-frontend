@@ -48,7 +48,7 @@ const NewFeedForm = (props: NewFeedFormProps) => {
   const postsPhase = useSelector(postsPhaseSelector);
   const addFeed = useSelector(postsAddSelector);
 
-  const userAttributes = user.attributes;
+  const userAttributes = user;
 
   const transPhoto = intl.translate({ id: 'post.photo' });
   const transDoc = intl.translate({ id: 'post.doc' });
@@ -120,7 +120,7 @@ const NewFeedForm = (props: NewFeedFormProps) => {
   const submitForm = (values: Partial<IPost>) => {
     if (values !== initialValues || addFeed) {
       setStatus('submitted');
-      dispatch(postActions.addPost(user.attributes, values));
+      dispatch(postActions.addPost(user, values));
     }
   };
 

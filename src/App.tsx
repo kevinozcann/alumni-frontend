@@ -1,6 +1,7 @@
 import { StyledEngineProvider, ThemeProvider } from '@mui/material/styles';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { Amplify } from 'aws-amplify';
 import arLocale from 'date-fns/locale/ar-SA';
 import enLocale from 'date-fns/locale/en-US';
 import esLocale from 'date-fns/locale/es';
@@ -20,14 +21,18 @@ import { SnackbarProvider } from 'contexts/SnackbarContext';
 import useScrollReset from 'hooks/useScrollReset';
 import useSettings from 'hooks/useSettings';
 import GlobalStyles from 'layout/GlobalStyles';
+import { authSelector } from 'pages/auth/services/store/auth';
 import { schoolSelector } from 'pages/organization/_store/school';
 import routes from 'routes';
-import { authSelector } from 'pages/auth/services/store/auth';
 import { i18nActions, i18nLangSelector } from 'store/i18n';
 import { LocaleProvider } from 'theme/i18n/LocaleProvider';
 import { createCustomTheme } from 'theme/index';
 import gtm from 'utils/gtm';
 import { TLang } from 'utils/shared-types';
+
+import awsconfig from 'aws-exports';
+
+Amplify.configure(awsconfig);
 
 const localeMap = {
   ar: arLocale,

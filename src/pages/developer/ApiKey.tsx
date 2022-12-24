@@ -39,7 +39,7 @@ const ApiKey = (props: TApiKeyProps) => {
   const { showSnackbar } = useSnackbar();
 
   const handleGenerateConfirm = () => {
-    generateApiKey(lang, user.attributes);
+    // generateApiKey(lang, user.attributes);
   };
 
   const handleCloseConfirm = () => {
@@ -75,9 +75,9 @@ const ApiKey = (props: TApiKeyProps) => {
           <CardHeader title={intl.formatMessage({ id: 'developer.apikey' })} />
           <Divider />
           <CardContent>
-            <HighlightCode language='html' textToCopy={user?.accessToken} styleTop='5px'>
+            {/* <HighlightCode language='html' textToCopy={user?.accessToken} styleTop='5px'>
               {`${user?.accessToken?.substring(0, 7)}.......................`}
-            </HighlightCode>
+            </HighlightCode> */}
           </CardContent>
 
           <Divider />

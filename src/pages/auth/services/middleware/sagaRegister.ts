@@ -25,7 +25,7 @@ export function* sagaRegister({ payload }: TAuthActionType) {
 
     // Update user info
     yield put({
-      type: authActionTypes.STORE.AUTH_UPDATE_USER,
+      type: authActionTypes.STORE.UPDATE_AUTH,
       payload: {
         userSub: userSub,
         userConfirmed: userConfirmed,

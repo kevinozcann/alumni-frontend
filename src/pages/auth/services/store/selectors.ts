@@ -1,7 +1,7 @@
 import objectPath from 'object-path';
 import { createSelector } from 'reselect';
 
-import { IAuthUser } from 'pages/auth/data/account-types';
+import { IUser } from 'pages/auth/data/account-types';
 import { IAuthStore, IAuthStoreState } from '../types';
 
 export const authSelector = createSelector(
@@ -10,7 +10,7 @@ export const authSelector = createSelector(
 );
 export const authUserSelector = createSelector(
   (state: IAuthStoreState) => objectPath.get(state, ['auth', 'user']),
-  (authUser: IAuthUser) => authUser
+  (user: IUser) => user
 );
 export const authAccessTokenSelector = createSelector(
   (state: IAuthStoreState) => objectPath.get(state, ['auth', 'accessToken']),

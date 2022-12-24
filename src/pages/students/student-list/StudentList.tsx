@@ -175,7 +175,7 @@ const StudentList: React.FC<TStudentsProps> = (props) => {
   // }, []);
 
   React.useEffect(() => {
-    pullStudents(user.attributes, userPersonal, activeSchool);
+    pullStudents(user, userPersonal, activeSchool);
   }, [activeSchool]);
 
   React.useEffect(() => {

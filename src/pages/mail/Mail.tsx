@@ -86,7 +86,7 @@ const Mail = () => {
   }, [allMails, section, id]);
 
   React.useEffect(() => {
-    pullMails(user.attributes);
+    pullMails(user);
   }, []);
 
   React.useEffect(() => {

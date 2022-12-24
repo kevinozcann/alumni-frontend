@@ -17,16 +17,16 @@ const attributesList = [
   'custom:wallpaper'
 ];
 
-export function* sagaUpdateUserInfo({ payload }: TAuthActionType) {
+export function* sagaUpdateUser({ payload }: TAuthActionType) {
   yield put(authActions.setPhase('updating', null));
 
-  const { userData } = payload;
+  const { user } = payload;
 
-  const user = yield Auth.currentAuthenticatedUser();
+  const authenticatedUser = yield Auth.currentAuthenticatedUser();
 
-  if (userData.hasOwnProperty('attributes')) {
+  if (user.hasOwnProperty('attributes')) {
     try {
-      const attributes = userData['attributes'];
+      const attributes = user['attributes'];
       const updateAttributes = {};
 
       attributesList.forEach((attribute) => {
@@ -35,11 +35,11 @@ export function* sagaUpdateUserInfo({ payload }: TAuthActionType) {
         }
       });
 
-      const result = yield Auth.updateUserAttributes(user, updateAttributes);
+      const result = yield Auth.updateUserAttributes(authenticatedUser, updateAttributes);
 
       if (result === 'SUCCESS') {
         yield put({
-          type: authActionTypes.STORE.AUTH_UPDATE_USER,
+          type: authActionTypes.STORE.UPDATE_AUTH,
           payload: {
             attributes: updateAttributes
           }

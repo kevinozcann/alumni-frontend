@@ -19,8 +19,8 @@ import zxcvbn, { ZXCVBNResult } from 'zxcvbn';
 import useTranslation from 'hooks/useTranslation';
 import { basicList, PasswordMeterColor } from 'utils/Helpers';
 
-import { authErrorSelector, authPhaseSelector, authUserSelector } from '../services/store/auth';
 import { authActions } from '../services/actions';
+import { authErrorSelector, authPhaseSelector, authSelector } from '../services/store/auth';
 
 type FormValues = {
   email: string;
@@ -44,7 +44,7 @@ const Registration = () => {
   const [passwordSuggestion, setPasswordSuggestion] = React.useState<string[]>();
 
   // Selectors
-  const user = useSelector(authUserSelector);
+  const auth = useSelector(authSelector);
   const authPhase = useSelector(authPhaseSelector);
   const authError = useSelector(authErrorSelector);
 
@@ -149,12 +149,12 @@ const Registration = () => {
   }, [authError, authPhase]);
 
   React.useEffect(() => {
-    if (user && !user.userConfirmed) {
+    if (auth && !auth.userConfirmed) {
       setTimeout(() => {
         navigate('/auth/verify');
       }, 5000);
     }
-  }, [user]);
+  }, [auth]);
 
   React.useEffect(() => {
     dispatch(authActions.setPhase(null, null));
