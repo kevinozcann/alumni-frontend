@@ -15,7 +15,7 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import 'utils/fontAwesome';
-
+import { Link as RouterLink } from 'react-router-dom';
 import menus, { IMenu } from 'data/menu';
 import useTranslation from 'hooks/useTranslation';
 import Footer from 'layout/Footer';
@@ -113,12 +113,22 @@ const MainSidebar = (props: MainSidebarProps) => {
                   }
                 >
                   {menus?.map((menu: IMenu) => (
-                    <MainNavItem
-                      key={menu.id}
-                      menu={menu}
-                      isActiveMenu={!!activeMenu}
-                      handleClick={() => handleMainMenuClick(menu)}
-                    />
+                    <React.Fragment>
+                      <ListItemButton
+                        key={menu.id}
+                        sx={{ px: 2 }}
+                        component={RouterLink}
+                        to={menu.url}
+                        onClick={() => handleMenuClick(menu)}
+                      >
+                        <ListItemIcon>
+                          <Box sx={{ fontSize: '12px !important', width: '16px' }}>
+                            <FontAwesomeIcon icon={[menu.iconPrefix, menu.icon]} />
+                          </Box>
+                        </ListItemIcon>
+                        <ListItemText primary={intl.formatMessage({ id: menu.title })} />
+                      </ListItemButton>
+                    </React.Fragment>
                   ))}
                 </List>
               </Box>
