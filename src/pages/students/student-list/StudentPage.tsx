@@ -22,7 +22,6 @@ import useTranslation from 'hooks/useTranslation';
 import Page from 'layout/Page';
 import { i18nLangSelector } from 'store/i18n';
 import { AppDispatch, RootState } from 'store/store';
-import { userActiveSchoolSelector } from 'pages/profile/services/user';
 import { IPageTab } from 'utils/shared-types';
 import studentPageTabs from './student-page-tabs';
 import { studentInfoSelector, studentsActions, studentsPhaseSelector } from './_store/students';
@@ -32,7 +31,6 @@ const Schoolinfo = LoadableScreen(lazy(() => import('./student-pages/Schoolinfo'
 const mapStateToProps = (state: RootState) => ({
   lang: i18nLangSelector(state),
   studentInfo: studentInfoSelector(state),
-  activeSchool: userActiveSchoolSelector(state),
   phase: studentsPhaseSelector(state)
 });
 const mapDispatchToProps = (dispatch: AppDispatch) => ({
@@ -43,7 +41,7 @@ type PropsFromRedux = ConnectedProps<typeof connector>;
 type TStudentPageProps = PropsFromRedux;
 
 const StudentPage: React.FC<TStudentPageProps> = (props) => {
-  const { activeSchool, phase, studentInfo, pullStudentInfo } = props;
+  const { phase, studentInfo, pullStudentInfo } = props;
   const { id, section } = useParams();
   const navigate = useNavigate();
   const intl = useTranslation();
@@ -57,17 +55,17 @@ const StudentPage: React.FC<TStudentPageProps> = (props) => {
   React.useEffect(() => {
     if (
       !studentPageTabs
-        .filter((t) => t.visible.includes(activeSchool.type))
+        // .filter((t) => t.visible.includes(activeSchool.type))
         .some((t) => t.value === section)
     ) {
       //navigate(`/student/${studentInfo.id}/school-info`);
       navigate(`/student/${id}/school-info`);
     }
-  }, [navigate, section, id, activeSchool]);
+  }, [navigate, section, id]);
 
   React.useEffect(() => {
     pullStudentInfo(parseInt(id));
-  }, [id, activeSchool, pullStudentInfo]);
+  }, [id, pullStudentInfo]);
 
   React.useEffect(() => {
     const breadcrumbs: IBreadcrumb[] = [];

@@ -11,7 +11,6 @@ import Page from 'layout/Page';
 import { LoadableScreen } from 'layout';
 import { configActions, configPhaseSelector, gradeLevelsSelector } from 'store/config';
 import { authUserSelector } from 'pages/auth/services/store/auth';
-import { userActiveSchoolSelector } from 'pages/profile/services/user';
 import { i18nLangSelector } from 'store/i18n';
 import { citiesSelector, countriesSelector, statesSelector, staticActions } from 'store/static';
 import { TLang, IPageTab } from 'utils/shared-types';
@@ -41,7 +40,6 @@ const School = () => {
   const user = useSelector(authUserSelector);
   const configPhase = useSelector(configPhaseSelector);
   const schoolPhase = useSelector(schoolPhaseSelector);
-  const activeSchool = useSelector(userActiveSchoolSelector);
   const schoolInfo = useSelector(schoolSelector);
   const countries = useSelector(countriesSelector);
   const states = useSelector(statesSelector);
@@ -65,61 +63,8 @@ const School = () => {
 
   // Handle tab change by user
   const handleTabChange = (_event: React.SyntheticEvent<Element, Event>, newValue: string) => {
-    navigate(`/organization/${activeSchool.id}/${newValue}`);
+    // navigate(`/organization/${activeSchool.id}/${newValue}`);
   };
-
-  // Check if the id is manually changed
-  React.useEffect(() => {
-    if (activeSchool.id !== parseInt(id) || !id) {
-      if (
-        pageTabs
-          .filter((t) => t.visible.includes(activeSchool.type))
-          .some((t) => t.value === section)
-      ) {
-        navigate(`/organization/${activeSchool.id}/${section}`);
-      } else {
-        navigate(`/organization/${activeSchool.id}/general`);
-      }
-    }
-
-    if (
-      !pageTabs
-        .filter((t) => t.visible.includes(activeSchool.type))
-        .some((t) => t.value === section)
-    ) {
-      navigate(`/organization/${activeSchool.id}/general`);
-    }
-  }, [id, activeSchool]);
-
-  // Pull initial data
-  React.useEffect(() => {
-    pullSchoolInfo(activeSchool.id);
-
-    if (gradeLevels?.length === 0) {
-      pullGradeLevels(true);
-    }
-  }, [activeSchool]);
-
-  // Breadcrumbs
-  React.useEffect(() => {
-    const breadcrumbs = [];
-    breadcrumbs.push({ title: 'organization', url: '/organization' });
-
-    breadcrumbs.push({
-      title: activeSchool.title,
-      url: `/organization/${activeSchool.id}`,
-      original: true
-    });
-
-    if (section) {
-      const sectionInfo = pageTabs.find((t) => t.value === section);
-      breadcrumbs.push({
-        title: `${sectionInfo?.label}`,
-        url: `/organization/${activeSchool.id}/${sectionInfo?.value}`
-      });
-    }
-    subheader.setBreadcrumbs(breadcrumbs);
-  }, [activeSchool, action, section]);
 
   return (
     <Page title={intl.formatMessage({ id: 'organization' })}>
@@ -139,7 +84,7 @@ const School = () => {
           aria-label='page tabs'
         >
           {pageTabs
-            .filter((t) => t.visible.includes(activeSchool.type))
+            // .filter((t) => t.visible.includes(activeSchool.type))
             .map((tab: IPageTab) => (
               <Tab
                 key={tab.value}

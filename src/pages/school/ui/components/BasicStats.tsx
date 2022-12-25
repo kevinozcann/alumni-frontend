@@ -28,7 +28,6 @@ import {
 
 import { configCurrencySelector } from 'store/config';
 import { i18nLangSelector } from 'store/i18n';
-import { userActiveSchoolSelector, userActiveSeasonSelector } from 'pages/profile/services/user';
 import { AppDispatch, RootState } from 'store/store';
 import StatsBox from 'components/dashboard/StatsBox';
 // import Resize from 'components/Resize';
@@ -50,8 +49,6 @@ import { fontFamily } from 'theme';
 
 const mapStateToProps = (state: RootState) => ({
   lang: i18nLangSelector(state),
-  activeSchool: userActiveSchoolSelector(state),
-  activeSeason: userActiveSeasonSelector(state),
   basicStats: basicStatsSelector(state),
   basicStatsPhase: basicStatsPhaseSelector(state),
   dailyCashStats: dailyCashStatsSelector(state),
@@ -71,8 +68,6 @@ type TBasicStatsProps = PropsFromRedux;
 const BasicStats = (props: TBasicStatsProps) => {
   const {
     lang,
-    activeSchool,
-    activeSeason,
     basicStats,
     dailyCashStats,
     currencyFormat,
@@ -91,12 +86,12 @@ const BasicStats = (props: TBasicStatsProps) => {
 
   React.useEffect(() => {
     // Pull basic stats
-    pullBasicStats(lang, activeSchool.id);
-  }, [lang, activeSchool, activeSeason]);
+    // pullBasicStats(lang, activeSchool.id);
+  }, [lang]);
 
   React.useEffect(() => {
     // Pull daily cash stats
-    pullDailyCashStats(lang, activeSchool.id, dropdownKey);
+    // pullDailyCashStats(lang, activeSchool.id, dropdownKey);
 
     // Set title of the dropdown menu
     setDropdownTitle(
@@ -104,7 +99,7 @@ const BasicStats = (props: TBasicStatsProps) => {
         ? intl.formatMessage({ id: 'calendar.week' })
         : intl.formatMessage({ id: 'calendar.month' })
     );
-  }, [lang, activeSchool, activeSeason, dropdownKey]);
+  }, [lang, dropdownKey]);
 
   React.useEffect(() => {
     setChartData(dailyCashStats || null);

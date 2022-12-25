@@ -22,7 +22,6 @@ import { countriesSelector, staticActions } from 'store/static';
 import { configActions, gradeLevelsSelector } from 'store/config';
 import { i18nLangSelector } from 'store/i18n';
 import { authUserSelector } from 'pages/auth/services/store/auth';
-import { userActiveSchoolSelector } from 'pages/profile/services/user';
 import useSnackbar from 'hooks/useSnackbar';
 import useTranslation from 'hooks/useTranslation';
 import { ICountry, TLang } from 'utils/shared-types';
@@ -38,7 +37,6 @@ import { useNavigate } from 'react-router';
 const mapStateToProps = (state: RootState) => ({
   lang: i18nLangSelector(state),
   user: authUserSelector(state),
-  activeSchool: userActiveSchoolSelector(state),
   countries: countriesSelector(state),
   gradeLevels: gradeLevelsSelector(state),
   schoolPhase: schoolPhaseSelector(state)
@@ -59,19 +57,18 @@ export type TSchoolFormValues = {
   countryCode: string;
   isActive: boolean;
   grades: number[];
-  parentSchoolId: number;
+  parentSchoolId?: number;
   schoolType: TSchoolType;
   institutionType: string;
   timezone: string;
   language: string;
-  config: Record<string, string>;
+  config?: Record<string, string>;
 };
 
 const AddSchool = (props: TSchoolFormProps) => {
   const {
     user,
     lang,
-    activeSchool,
     countries,
     gradeLevels,
     schoolPhase,
@@ -88,15 +85,13 @@ const AddSchool = (props: TSchoolFormProps) => {
   const initialValues: TSchoolFormValues = {
     title: '',
     email: '',
-    countryCode: activeSchool.countryCode,
+    countryCode: '',
     isActive: true,
     grades: [],
-    parentSchoolId: activeSchool.id,
-    schoolType: activeSchool.type === 'headquarters' ? 'campus' : 'school',
-    institutionType: (activeSchool.config?.institutionType as string) || 'k12',
-    timezone: (activeSchool.config?.timezone as string) || 'America/New_York',
-    language: (activeSchool.config.language as string) || 'en',
-    config: activeSchool.config
+    schoolType: 'school',
+    institutionType: 'k12',
+    timezone: 'America/New_York',
+    language: 'en'
   };
 
   const {
@@ -200,13 +195,13 @@ const AddSchool = (props: TSchoolFormProps) => {
           open: true
         });
 
-        setTimeout(() => {
-          navigate(
-            `/organization/${activeSchool.id}/${
-              (activeSchool.type === 'headquarters' && 'campuses') || 'schools'
-            }`
-          );
-        }, 1000);
+        // setTimeout(() => {
+        //   navigate(
+        //     `/organization/${activeSchool.id}/${
+        //       (activeSchool.type === 'headquarters' && 'campuses') || 'schools'
+        //     }`
+        //   );
+        // }, 1000);
       }
     }
   }, [schoolPhase]);

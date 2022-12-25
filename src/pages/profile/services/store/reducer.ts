@@ -1,13 +1,7 @@
-import { IMenu } from 'data/menu';
-import objectPath from 'object-path';
-import storage from 'redux-persist/lib/storage';
-import { IPersonal } from 'pages/auth/data/account-types';
-import { ISchool, ISeason } from 'pages/organization/organization-types';
-import { IStudent } from 'pages/students/_store/types';
 import { persistReducer } from 'redux-persist';
-import { createSelector } from 'reselect';
-import { IUserStore, IUserStoreState, TUserActionType, userActionTypes } from './types';
+import storage from 'redux-persist/lib/storage';
 import { getFlatSchools } from 'utils';
+import { IUserStore, TUserActionType, userActionTypes } from '../types';
 
 const initialAuthState: IUserStore = {
   activeSchool: null,
@@ -20,43 +14,6 @@ const initialAuthState: IUserStore = {
   phase: null,
   error: null
 };
-
-export const userSchoolsSelector = createSelector(
-  (state: IUserStoreState) => objectPath.get(state, ['user', 'schools']),
-  (schools: ISchool[]) => schools
-);
-export const userPersonalSelector = createSelector(
-  (state: IUserStoreState) => objectPath.get(state, ['user', 'personal']),
-  (personal: IPersonal) => personal
-);
-export const userActiveSchoolSelector = createSelector(
-  (state: IUserStoreState) => objectPath.get(state, ['user', 'activeSchool']),
-  (activeSchool: ISchool) => activeSchool
-);
-export const userActiveSeasonSelector = createSelector(
-  (state: IUserStoreState) => objectPath.get(state, ['user', 'activeSeason']),
-  (activeSeason: ISeason) => activeSeason
-);
-export const userActiveStudentSelector = createSelector(
-  (state: IUserStoreState) => objectPath.get(state, ['user', 'activeStudent']),
-  (activeStudent: IStudent) => activeStudent
-);
-export const userActiveMenuSelector = createSelector(
-  (state: IUserStoreState) => objectPath.get(state, ['user', 'activeMenu']),
-  (activeMenu: IMenu) => activeMenu
-);
-export const userMenusSelector = createSelector(
-  (state: IUserStoreState) => objectPath.get(state, ['user', 'menus']),
-  (menus: IMenu[]) => menus
-);
-export const userPhaseSelector = createSelector(
-  (state: IUserStoreState) => objectPath.get(state, ['user', 'phase']),
-  (userPhase: string) => userPhase
-);
-export const userErrorSelector = createSelector(
-  (state: IUserStoreState) => objectPath.get(state, ['user', 'error']),
-  (userError: string) => userError
-);
 
 export const reducer = persistReducer(
   {

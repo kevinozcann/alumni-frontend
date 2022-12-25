@@ -23,11 +23,7 @@ import Scrollbar from 'layout/Scrollbar';
 import { authUserSelector } from 'pages/auth/services/store/auth';
 import { i18nLangSelector } from 'store/i18n';
 import { userActions } from 'pages/profile/services/actions';
-import {
-  userActiveMenuSelector,
-  userActiveSchoolSelector,
-  userPhaseSelector
-} from 'pages/profile/services/user';
+import { userPhaseSelector } from 'pages/profile/services/store/user';
 import ActiveMenuItems from './ActiveMenuItems';
 import MainNavItem from './MainNavItem';
 
@@ -45,9 +41,7 @@ const MainSidebar = (props: MainSidebarProps) => {
   // Selectors
   const user = useSelector(authUserSelector);
   const userPhase = useSelector(userPhaseSelector);
-  const activeSchool = useSelector(userActiveSchoolSelector);
   const lang = useSelector(i18nLangSelector);
-  const activeMenu = useSelector(userActiveMenuSelector);
 
   const handleMainMenuClick = React.useCallback((menu: IMenu) => {
     dispatch(userActions.updateActiveMenu(menu));
@@ -95,7 +89,7 @@ const MainSidebar = (props: MainSidebarProps) => {
                   width: '272px',
                   height: '100%',
                   bgcolor: 'background.paper',
-                  marginLeft: activeMenu ? '-272px' : 0,
+                  marginLeft: 0,
                   transitionProperty: 'margin-left',
                   transitionDuration: '.2s'
                 }}
@@ -113,22 +107,12 @@ const MainSidebar = (props: MainSidebarProps) => {
                   }
                 >
                   {menus?.map((menu: IMenu) => (
-                    <React.Fragment>
-                      <ListItemButton
-                        key={menu.id}
-                        sx={{ px: 2 }}
-                        component={RouterLink}
-                        to={menu.url}
-                        onClick={() => handleMenuClick(menu)}
-                      >
-                        <ListItemIcon>
-                          <Box sx={{ fontSize: '12px !important', width: '16px' }}>
-                            <FontAwesomeIcon icon={[menu.iconPrefix, menu.icon]} />
-                          </Box>
-                        </ListItemIcon>
-                        <ListItemText primary={intl.formatMessage({ id: menu.title })} />
-                      </ListItemButton>
-                    </React.Fragment>
+                    <MainNavItem
+                      key={menu.id}
+                      menu={menu}
+                      isActiveMenu={false}
+                      handleClick={() => handleMainMenuClick(menu)}
+                    />
                   ))}
                 </List>
               </Box>
@@ -151,9 +135,6 @@ const MainSidebar = (props: MainSidebarProps) => {
                   </ListItemButton>
                 </List>
                 <Divider />
-                {activeMenu && (
-                  <ActiveMenuItems activeMenu={activeMenu} handleMenuClick={handleMenuClick} />
-                )}
               </Box>
             </>
           </Box>

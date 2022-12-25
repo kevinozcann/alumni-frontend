@@ -1,30 +1,21 @@
-import React from 'react';
-import loadable from '@loadable/component';
-import { connect, ConnectedProps } from 'react-redux';
-import { AppBar, Box, IconButton, Toolbar, Typography } from '@mui/material';
-import { useTheme } from '@mui/material/styles';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars } from '@fortawesome/pro-duotone-svg-icons';
-
-import { RootState } from 'store/store';
-import { userActiveSchoolSelector } from 'pages/profile/services/user';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import loadable from '@loadable/component';
+import { AppBar, Box, IconButton, Toolbar } from '@mui/material';
+import { useTheme } from '@mui/material/styles';
+import React from 'react';
 
 const ContentSearch = loadable(() => import('./search/ContentSearch'));
 const LanguagePopover = loadable(() => import('./languages/LanguagePopover'));
 const NotificationsPopover = loadable(() => import('./notifications/NotificationsPopover'));
 const AccountPopover = loadable(() => import('./account/AccountPopover'));
 
-const mapStateToProps = (state: RootState) => ({
-  activeSchool: userActiveSchoolSelector(state)
-});
-const connector = connect(mapStateToProps, null);
-type PropsFromRedux = ConnectedProps<typeof connector>;
-type TMainNavbarProps = PropsFromRedux & {
+type TMainNavbarProps = {
   onSidebarMobileOpen?: () => void;
 };
 
 const MainNavbar: React.FC<TMainNavbarProps> = (props) => {
-  const { activeSchool, onSidebarMobileOpen } = props;
+  const { onSidebarMobileOpen } = props;
   const theme = useTheme();
 
   return (
@@ -55,12 +46,6 @@ const MainNavbar: React.FC<TMainNavbarProps> = (props) => {
           <FontAwesomeIcon icon={faBars} />
         </IconButton>
 
-        {activeSchool && (
-          <Typography sx={{ display: { xs: 'none', sm: 'block' } }} variant='h1'>
-            {activeSchool.title}
-          </Typography>
-        )}
-
         <Box
           sx={{
             flexGrow: 1,
@@ -81,4 +66,4 @@ const MainNavbar: React.FC<TMainNavbarProps> = (props) => {
   );
 };
 
-export default connector(MainNavbar);
+export default MainNavbar;

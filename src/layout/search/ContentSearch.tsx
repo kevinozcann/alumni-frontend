@@ -1,11 +1,8 @@
 /* eslint-disable react/no-array-index-key */
-import React from 'react';
-import { connect, ConnectedProps } from 'react-redux';
-import { Link as RouterLink, useLocation, useNavigate } from 'react-router-dom';
-import { useIntl } from 'react-intl';
+import { faSearch, faTimes } from '@fortawesome/pro-duotone-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   Box,
-  Button,
   Chip,
   CircularProgress,
   Container,
@@ -16,31 +13,29 @@ import {
   Tooltip,
   Typography
 } from '@mui/material';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSearch, faTimes } from '@fortawesome/pro-duotone-svg-icons';
+import React from 'react';
+import { useIntl } from 'react-intl';
+import { connect, ConnectedProps } from 'react-redux';
+import { Link as RouterLink, useLocation, useNavigate } from 'react-router-dom';
 
-import { AppDispatch, RootState } from 'store/store';
-import { i18nLangSelector } from 'store/i18n';
+import SearchForm from 'components/SearchForm';
+import UserAvatar from 'components/UserAvatar';
+import useKeyPress from 'hooks/useKeypress';
+import { IUser } from 'pages/auth/data/account-types';
 import { authUserSelector } from 'pages/auth/services/store/auth';
-import { userMenusSelector } from 'pages/profile/services/user';
+import { i18nLangSelector } from 'store/i18n';
 import {
   searchActions,
   searchKeySelector,
   searchPhaseSelector,
   searchUsersSelector
 } from 'store/search';
-import useKeyPress from 'hooks/useKeypress';
-import getFlatMenus from 'utils/getFlatMenus';
+import { AppDispatch, RootState } from 'store/store';
 import { TLang } from 'utils/shared-types';
-import UserAvatar from 'components/UserAvatar';
-import SearchForm from 'components/SearchForm';
-import { IUser } from 'pages/auth/data/account-types';
-import Scrollbar from 'layout/Scrollbar';
 
 const mapStateToProps = (state: RootState) => ({
   lang: i18nLangSelector(state),
   user: authUserSelector(state),
-  menus: userMenusSelector(state),
   searchKeyCache: searchKeySelector(state),
   userResults: searchUsersSelector(state),
   searchPhase: searchPhaseSelector(state)
@@ -55,7 +50,7 @@ type PropsFromRedux = ConnectedProps<typeof connector>;
 type TContentSearchProps = PropsFromRedux;
 
 const ContentSearch: React.FC<TContentSearchProps> = (props) => {
-  const { lang, user, menus, searchKeyCache, userResults, searchPhase } = props;
+  const { lang, user, searchKeyCache, userResults, searchPhase } = props;
   const [searchKey, setSearchKey] = React.useState<string>(searchKeyCache);
   const [open, setOpen] = React.useState<boolean>(false);
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
@@ -68,9 +63,6 @@ const ContentSearch: React.FC<TContentSearchProps> = (props) => {
     if (searchKey.length === 0) {
       return;
     }
-
-    // Search for menus
-    const flatMenus = getFlatMenus(intl, menus);
 
     // Search for users
     // searchUsers(lang, user.uuid, searchKey);

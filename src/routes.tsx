@@ -6,7 +6,6 @@ import { Loadable, LoadableScreen } from 'layout';
 import accountRoutes from 'pages/profile/routes';
 import authRoutes from 'pages/auth/routes';
 import configRoutes from 'pages/config/routes';
-import developerRoutes from 'pages/developer/routes';
 import feedsRoutes from 'pages/posts/routes';
 import mailRoutes from 'pages/mail/routes';
 import organizationRoutes from 'pages/organization/routes';
@@ -42,7 +41,6 @@ const routes = [
   },
   accountRoutes,
   configRoutes,
-  developerRoutes,
   feedsRoutes,
   mailRoutes,
   organizationRoutes,

@@ -9,7 +9,6 @@ import useTranslation from 'hooks/useTranslation';
 import { ISchool } from 'pages/organization/organization-types';
 import { authUserSelector } from 'pages/auth/services/store/auth';
 import { AppDispatch, RootState } from 'store/store';
-import { userActiveSchoolSelector } from 'pages/profile/services/user';
 import { CancelButton, FormButtons, SaveButton } from 'utils/ActionLinks';
 import { TActionType } from 'utils/shared-types';
 
@@ -21,7 +20,6 @@ import {
 } from './_store/tags';
 
 const mapStateToProps = (state: RootState) => ({
-  activeSchool: userActiveSchoolSelector(state),
   studentTags: studentTagsSelector(state),
   phase: studentTagsPhaseSelector(state),
   user: authUserSelector(state)
@@ -49,7 +47,6 @@ const StudentTagsForm = (props: TFormProps) => {
     studentTags,
     phase,
     handleClose,
-    activeSchool,
     user,
     addStudentTag,
     updateStudentTag
@@ -101,7 +98,7 @@ const StudentTagsForm = (props: TFormProps) => {
       setSubmitting(true);
 
       if (actionType === 'add') {
-        addStudentTag(activeSchool, values);
+        // addStudentTag(activeSchool, values);
       } else {
         updateStudentTag(values);
       }

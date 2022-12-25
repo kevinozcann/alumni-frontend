@@ -26,7 +26,7 @@ import { ISchool } from 'pages/organization/organization-types';
 import { authUserSelector } from 'pages/auth/services/store/auth';
 import { i18nLangSelector } from 'store/i18n';
 import { AppDispatch, RootState } from 'store/store';
-import { userActiveSchoolSelector, userPersonalSelector } from 'pages/profile/services/user';
+import { userPersonalSelector } from 'pages/profile/services/store/user';
 import { toAbsoluteUrl } from '../../../utils/AssetsHelpers';
 import { IStudent } from '../_store/types';
 import { studentsActions, studentsPhaseSelector } from './_store/students';
@@ -35,7 +35,6 @@ LicenseInfo.setLicenseKey(process.env.REACT_APP_MATERIALUI_KEY);
 
 const mapStateToProps = (state: RootState) => ({
   lang: i18nLangSelector(state),
-  activeSchool: userActiveSchoolSelector(state),
   userPersonal: userPersonalSelector(state),
   user: authUserSelector(state),
   phase: studentsPhaseSelector(state)
@@ -49,7 +48,7 @@ type PropsFromRedux = ConnectedProps<typeof connector>;
 type TStudentsProps = PropsFromRedux;
 
 const StudentList: React.FC<TStudentsProps> = (props) => {
-  const { phase, activeSchool, user, userPersonal, pullStudents } = props;
+  const { phase, user, userPersonal, pullStudents } = props;
   const intl = useTranslation();
   const theme = useTheme();
   const subheader = useSubheader();
@@ -174,9 +173,9 @@ const StudentList: React.FC<TStudentsProps> = (props) => {
   //   setAllStudents(std);
   // }, []);
 
-  React.useEffect(() => {
-    pullStudents(user, userPersonal, activeSchool);
-  }, [activeSchool]);
+  // React.useEffect(() => {
+  //   pullStudents(user, userPersonal, activeSchool);
+  // }, [activeSchool]);
 
   React.useEffect(() => {
     const breadcrumbs = [];

@@ -8,7 +8,7 @@ export const initialAuthState: IAuthStore = {
   accessToken: null,
   refreshToken: null,
   user: null,
-  userConfirmed: false,
+  userConfirmed: null,
   phase: null,
   error: null
 };

@@ -1,4 +1,4 @@
-import { reducer } from './user';
+import { reducer } from './store/user';
 import { sagas } from './middleware';
 
 export { sagas as userSagas };

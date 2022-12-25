@@ -21,7 +21,6 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { useSubheader } from 'contexts/SubheaderContext';
 import Page from 'layout/Page';
 import { authUserSelector } from 'pages/auth/services/store/auth';
-import { userActiveSchoolSelector, userSchoolsSelector } from 'pages/profile/services/user';
 import StyledMenu from 'utils/StyledMenu';
 
 import awsconfig from 'aws-exports';
@@ -51,14 +50,9 @@ const Account = () => {
   const [activePage, setActivePage] = React.useState<string>(section);
   const [pageTitle, setPageTitle] = React.useState<string>(getPageTitle(section));
   const [anchorHomeMenuEl, setAnchorHomeMenuEl] = React.useState<HTMLElement>(null);
-  const [showWallpaper, setShowWallpaper] = React.useState<boolean>(false);
 
   // Selectors
   const user = useSelector(authUserSelector);
-  const activeSchool = useSelector(userActiveSchoolSelector);
-  const schools = useSelector(userSchoolsSelector);
-
-  const userAttributes = user;
 
   const handleHomeMenuElClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorHomeMenuEl(event.currentTarget);
@@ -79,12 +73,6 @@ const Account = () => {
     navigate('/account/home');
   }
 
-  React.useLayoutEffect(() => {
-    setTimeout(() => {
-      setShowWallpaper(true);
-    }, 500);
-  }, []);
-
   React.useEffect(() => {
     const breadcrumbs = [];
     breadcrumbs.push({ title: 'account.myaccount', url: '/account' });
@@ -97,19 +85,24 @@ const Account = () => {
     subheader.setBreadcrumbs(breadcrumbs);
   }, [activePage]);
 
+  React.useEffect(() => {
+    if (!user?.avatarUrl) {
+    }
+  }, [user]);
+
   return (
     <Page title={intl.formatMessage({ id: 'account.myaccount' })}>
       <Grid container>
         <Grid container spacing={3} style={{ marginBottom: 24 }}>
           <Grid item xs>
             <Card>
-              {(showWallpaper && (
+              {(user?.wallpaperUrl && (
                 <CardMedia
                   width='100%'
                   height={300}
                   sx={{ height: 300 }}
                   component='img'
-                  image={userAttributes.wallpaperUrl}
+                  image={user?.wallpaperUrl}
                   title='user wallpaper'
                   alt='user wallpaper'
                 />
@@ -117,9 +110,9 @@ const Account = () => {
                 <Skeleton variant='rectangular' height={300} width='100%' sx={{ height: 300 }} />
               )}
               <CardHeader
-                avatar={<Avatar alt='username' src={userAttributes.avatarUrl} />}
-                title={`${userAttributes?.name} ${userAttributes?.family_name}`}
-                subheader={userAttributes?.email}
+                avatar={<Avatar alt='username' src={user.avatarUrl} />}
+                title={`${user?.name} ${user?.family_name}`}
+                subheader={user?.email}
                 action={
                   <React.Fragment>
                     <Box sx={{ mt: 1, display: { xs: 'none', md: 'block' } }}>

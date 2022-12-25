@@ -10,21 +10,13 @@ import { IUser } from 'pages/auth/data/account-types';
 import { authUserSelector } from 'pages/auth/services/store/auth';
 import { ISchool, ISeason } from 'pages/organization/organization-types';
 import { userActions } from 'pages/profile/services/actions';
-import {
-  userActiveSchoolSelector,
-  userActiveSeasonSelector,
-  userSchoolsSelector
-} from 'pages/profile/services/user';
 import { i18nLangSelector } from 'store/i18n';
 import { AppDispatch, RootState } from 'store/store';
 import { TLang } from 'utils/shared-types';
 
 const mapStateToProps = (state: RootState) => ({
   lang: i18nLangSelector(state),
-  user: authUserSelector(state),
-  schools: userSchoolsSelector(state),
-  activeSchool: userActiveSchoolSelector(state),
-  activeSeason: userActiveSeasonSelector(state)
+  user: authUserSelector(state)
 });
 const mapDispatchToProps = (dispatch: AppDispatch) => ({
   setActiveSchool: (lang: TLang, user: IUser, school: ISchool) =>
@@ -36,8 +28,7 @@ type PropsFromRedux = ConnectedProps<typeof connector>;
 type TSubNavbarProps = PropsFromRedux;
 
 const SubNavbar = (props: TSubNavbarProps) => {
-  const { lang, user, schools, activeSchool, activeSeason, setActiveSchool, setActiveSeason } =
-    props;
+  const { lang, user, setActiveSchool, setActiveSeason } = props;
   const theme = useTheme();
   const subheader = useSubheader();
   const intl = useTranslation();
@@ -96,7 +87,7 @@ const SubNavbar = (props: TSubNavbarProps) => {
             }
           }}
         >
-          <Box
+          {/* <Box
             sx={{
               display: 'flex',
               alignItems: 'baseline'
@@ -111,11 +102,11 @@ const SubNavbar = (props: TSubNavbarProps) => {
                 changeSchool={changeSchool}
               />
             )}
-          </Box>
+          </Box> */}
 
-          <Box sx={{ width: '8px' }} />
+          {/* <Box sx={{ width: '8px' }} /> */}
 
-          {activeSchool?.seasons && (
+          {/* {activeSchool?.seasons && (
             <Box sx={{ display: 'flex', alignItems: 'baseline' }}>
               <SeasonsPopover
                 itemKey={activeSeason && activeSeason.title}
@@ -126,7 +117,7 @@ const SubNavbar = (props: TSubNavbarProps) => {
                 changeSeason={changeSeason}
               />
             </Box>
-          )}
+          )} */}
         </Box>
       </Box>
     </Box>

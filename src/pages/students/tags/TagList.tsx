@@ -19,7 +19,6 @@ import Page from 'layout/Page';
 import Scrollbar from 'layout/Scrollbar';
 import { useSubheader } from 'contexts/SubheaderContext';
 import { AppDispatch, RootState } from 'store/store';
-import { userActiveSchoolSelector } from 'pages/profile/services/user';
 import useTranslation from 'hooks/useTranslation';
 import SchoostDialog from 'components/SchoostDialog';
 import SideForm from 'components/SideForm';
@@ -33,7 +32,6 @@ import { studentTagsActions, studentTagsPhaseSelector, studentTagsSelector } fro
 LicenseInfo.setLicenseKey(process.env.REACT_APP_MATERIALUI_KEY);
 
 const mapStateToProps = (state: RootState) => ({
-  activeSchool: userActiveSchoolSelector(state),
   studentTags: studentTagsSelector(state),
   phase: studentTagsPhaseSelector(state)
 });
@@ -46,7 +44,7 @@ type PropsFromRedux = ConnectedProps<typeof connector>;
 type TStudentTagsProps = PropsFromRedux;
 
 const TagList: React.FC<TStudentTagsProps> = (props) => {
-  const { studentTags, phase, activeSchool, pullStudentTags, deleteStudentTag } = props;
+  const { studentTags, phase, pullStudentTags, deleteStudentTag } = props;
   const intl = useTranslation();
   const theme = useTheme();
   const navigate = useNavigate();
@@ -93,9 +91,9 @@ const TagList: React.FC<TStudentTagsProps> = (props) => {
     setShowConfirmDialog(false);
   }, [navigate]);
 
-  React.useEffect(() => {
-    pullStudentTags(activeSchool);
-  }, [activeSchool, pullStudentTags]);
+  // React.useEffect(() => {
+  //   pullStudentTags(activeSchool);
+  // }, [activeSchool, pullStudentTags]);
 
   React.useEffect(() => {
     setShowConfirmDialog(id && action === 'delete' ? true : false);
