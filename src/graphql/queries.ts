@@ -78,6 +78,44 @@ export const listUsers = /* GraphQL */ `
     }
   }
 `;
+export const userByEmail = /* GraphQL */ `
+  query UserByEmail(
+    $email: String!
+    $sortDirection: ModelSortDirection
+    $filter: ModelUserFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    userByEmail(
+      email: $email
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        name
+        family_name
+        email
+        owner
+        avatarUrl
+        avatarKey
+        wallpaperUrl
+        wallpaperKey
+        posts {
+          nextToken
+        }
+        comments {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
 export const getPerson = /* GraphQL */ `
   query GetPerson($id: ID!) {
     getPerson(id: $id) {

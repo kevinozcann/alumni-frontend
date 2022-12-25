@@ -355,6 +355,12 @@ export type ModelUserConnection = {
   nextToken?: string | null,
 };
 
+export enum ModelSortDirection {
+  ASC = "ASC",
+  DESC = "DESC",
+}
+
+
 export type ModelPersonFilterInput = {
   id?: ModelIDInput | null,
   ssn_number?: ModelStringInput | null,
@@ -406,12 +412,6 @@ export type ModelStringKeyConditionInput = {
   between?: Array< string | null > | null,
   beginsWith?: string | null,
 };
-
-export enum ModelSortDirection {
-  ASC = "ASC",
-  DESC = "DESC",
-}
-
 
 export type ModelCommentFilterInput = {
   id?: ModelIDInput | null,
@@ -1189,6 +1189,43 @@ export type ListUsersQueryVariables = {
 
 export type ListUsersQuery = {
   listUsers?:  {
+    __typename: "ModelUserConnection",
+    items:  Array< {
+      __typename: "User",
+      id: string,
+      name: string,
+      family_name: string,
+      email: string,
+      owner: string,
+      avatarUrl?: string | null,
+      avatarKey?: string | null,
+      wallpaperUrl?: string | null,
+      wallpaperKey?: string | null,
+      posts?:  {
+        __typename: "ModelPostConnection",
+        nextToken?: string | null,
+      } | null,
+      comments?:  {
+        __typename: "ModelCommentConnection",
+        nextToken?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null >,
+    nextToken?: string | null,
+  } | null,
+};
+
+export type UserByEmailQueryVariables = {
+  email: string,
+  sortDirection?: ModelSortDirection | null,
+  filter?: ModelUserFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type UserByEmailQuery = {
+  userByEmail?:  {
     __typename: "ModelUserConnection",
     items:  Array< {
       __typename: "User",

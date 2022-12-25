@@ -345,7 +345,7 @@ export function* saga() {
 
       // Update user schools
       // @TODO check this if we can refactor
-      yield put(userActions.updateUserSchools(lang, user));
+      // yield put(userActions.updateUserSchools(lang, user));
       yield put(schoolActions.setPhase('school-adding-success'));
     }
   );
@@ -388,7 +388,7 @@ export function* saga() {
       yield put(schoolActions.pullSchoolInfo(activeSchoolId));
 
       // Update user schools
-      yield put(userActions.updateUserSchools(lang, user));
+      // yield put(userActions.updateUserSchools(lang, user));
       yield put(schoolActions.setPhase('school-deleting-success'));
     }
   );

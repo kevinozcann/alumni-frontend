@@ -1,2 +1,2 @@
 export { reducer } from './reducer';
-export { userPersonalSelector, userPhaseSelector, userErrorSelector } from './selectors';
+export { userProfileSelector, userPhaseSelector, userErrorSelector } from './selectors';

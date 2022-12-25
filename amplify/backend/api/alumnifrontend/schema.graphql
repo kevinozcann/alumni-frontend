@@ -22,7 +22,7 @@ type User @model @auth(rules: [{ allow: owner, operations: [read, update, create
   id: ID!
   name: String!
   family_name: String!
-  email: String!
+  email: String! @index(name: "byEmail", queryField: "userByEmail")
   owner: String!
   avatarUrl: String
   avatarKey: String

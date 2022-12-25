@@ -44,7 +44,7 @@ const MainSidebar = (props: MainSidebarProps) => {
   const lang = useSelector(i18nLangSelector);
 
   const handleMainMenuClick = React.useCallback((menu: IMenu) => {
-    dispatch(userActions.updateActiveMenu(menu));
+    // dispatch(userActions.updateActiveMenu(menu));
   }, []);
 
   const handleMenuClick = React.useCallback(
@@ -57,7 +57,7 @@ const MainSidebar = (props: MainSidebarProps) => {
   );
 
   const handleBackButtonClick = () => {
-    dispatch(userActions.updateActiveMenu(null));
+    // dispatch(userActions.updateActiveMenu(null));
   };
 
   React.useEffect(() => {

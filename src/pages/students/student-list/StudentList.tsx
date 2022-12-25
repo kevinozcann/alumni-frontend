@@ -21,12 +21,12 @@ import { useSubheader } from 'contexts/SubheaderContext';
 import useTranslation from 'hooks/useTranslation';
 import Page from 'layout/Page';
 import Scrollbar from 'layout/Scrollbar';
-import { IPersonal, IUser } from 'pages/auth/data/account-types';
+import { IUser } from 'pages/auth/data/account-types';
 import { ISchool } from 'pages/organization/organization-types';
 import { authUserSelector } from 'pages/auth/services/store/auth';
 import { i18nLangSelector } from 'store/i18n';
 import { AppDispatch, RootState } from 'store/store';
-import { userPersonalSelector } from 'pages/profile/services/store/user';
+import { userProfileSelector } from 'pages/profile/services/store/user';
 import { toAbsoluteUrl } from '../../../utils/AssetsHelpers';
 import { IStudent } from '../_store/types';
 import { studentsActions, studentsPhaseSelector } from './_store/students';
@@ -35,12 +35,12 @@ LicenseInfo.setLicenseKey(process.env.REACT_APP_MATERIALUI_KEY);
 
 const mapStateToProps = (state: RootState) => ({
   lang: i18nLangSelector(state),
-  userPersonal: userPersonalSelector(state),
+  userPersonal: userProfileSelector(state),
   user: authUserSelector(state),
   phase: studentsPhaseSelector(state)
 });
 const mapDispatchToProps = (dispatch: AppDispatch) => ({
-  pullStudents: (user: IUser, userPersonal: IPersonal, school: ISchool) =>
+  pullStudents: (user: IUser, userPersonal: IUser, school: ISchool) =>
     dispatch(studentsActions.pullStudents(user, userPersonal, school))
 });
 const connector = connect(mapStateToProps, mapDispatchToProps);

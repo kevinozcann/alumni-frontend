@@ -13,6 +13,8 @@ export interface IUser {
   avatarKey?: string;
   wallpaperUrl?: string;
   wallpaperKey?: string;
+  homeAddress?: string;
+  workAddress?: string;
   owner?: string;
   createdAt?: Date;
   updatedAt?: Date;
@@ -28,11 +30,5 @@ export interface IUserType {
   title: string;
   userType: string;
 }
-export interface IPersonal {
-  id: number;
-  phone?: string;
-  homeAddress?: string;
-  workAddress?: string;
-}
 
-export type TLoginType = 'admin' | 'manager' | 'teacher' | 'parent' | 'student' | 'anonymous';
+export type TLoginType = 'admin' | 'manager' | 'user' | 'anonymous';

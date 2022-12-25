@@ -37,8 +37,6 @@ const Seasons = () => {
   const schoolInfo = useSelector(schoolSelector);
 
   // Dispatchers
-  const updateUserSchools = (lang: TLang, user: IUser) =>
-    dispatch(userActions.updateUserSchools(lang, user));
   const deleteSeason = (lang: TLang, user: IUser, seasonId: number) =>
     dispatch(configActions.deleteSeason(lang, user, seasonId));
 
@@ -69,8 +67,8 @@ const Seasons = () => {
     {
       key: 'reload',
       title: intl.translate({ id: 'app.reload' }),
-      startIcon: <FontAwesomeIcon icon={faSync} spin={userPhase?.includes('ing')} />,
-      onClick: () => updateUserSchools(lang, user)
+      startIcon: <FontAwesomeIcon icon={faSync} spin={userPhase?.includes('ing')} />
+      // onClick: () => updateUserSchools(lang, user)
     },
     {
       key: 'set-default',

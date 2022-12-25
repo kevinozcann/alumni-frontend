@@ -18,17 +18,12 @@ const mapStateToProps = (state: RootState) => ({
   lang: i18nLangSelector(state),
   user: authUserSelector(state)
 });
-const mapDispatchToProps = (dispatch: AppDispatch) => ({
-  setActiveSchool: (lang: TLang, user: IUser, school: ISchool) =>
-    dispatch(userActions.setActiveSchool(lang, user, school)),
-  setActiveSeason: (season: ISeason) => dispatch(userActions.setActiveSeason(season))
-});
-const connector = connect(mapStateToProps, mapDispatchToProps);
+const connector = connect(mapStateToProps);
 type PropsFromRedux = ConnectedProps<typeof connector>;
 type TSubNavbarProps = PropsFromRedux;
 
 const SubNavbar = (props: TSubNavbarProps) => {
-  const { lang, user, setActiveSchool, setActiveSeason } = props;
+  const { lang, user } = props;
   const theme = useTheme();
   const subheader = useSubheader();
   const intl = useTranslation();
@@ -38,7 +33,7 @@ const SubNavbar = (props: TSubNavbarProps) => {
   };
 
   const changeSeason = (season: ISeason) => {
-    setActiveSeason(season);
+    // setActiveSeason(season);
   };
 
   return (

@@ -1,9 +1,6 @@
 import { Auth } from 'aws-amplify';
-import { call, put } from 'redux-saga/effects';
+import { put } from 'redux-saga/effects';
 
-import { getUserImages } from 'pages/profile/services/middleware/user/getUserImages';
-
-import { authActions } from '../actions';
 import { authActionTypes, TAuthActionType } from '../types';
 
 export function* sagaLogin({ payload }: TAuthActionType) {
