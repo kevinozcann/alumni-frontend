@@ -9,7 +9,8 @@ import {
   Divider,
   useMediaQuery,
   Button,
-  useTheme
+  useTheme,
+  Avatar
 } from '@mui/material';
 import { format } from 'date-fns';
 import RowActions from 'components/table/RowActions';
@@ -53,21 +54,47 @@ const ListPerson: React.FC<TPersonsProps> = (props) => {
   const transStudents = intl.translate({ id: 'school.students' });
 
   const columns: GridColDef[] = [
-    { field: 'student_picture', headerName: intl.translate({ id: 'person.photo' }), flex: 1 },
-    { field: 'name', headerName: intl.translate({ id: 'person.name' }), flex: 2 },
-    { field: 'second_name', headerName: intl.translate({ id: 'person.secondname' }), flex: 2 },
-    { field: 'last_name', headerName: intl.translate({ id: 'person.lastname' }), flex: 2 },
-    { field: 'ssn_number', headerName: intl.translate({ id: 'id_number' }), flex: 2 },
-    { field: 'school_number', headerName: intl.translate({ id: 'student.no' }), flex: 1 },
+    {
+      field: 'student_picture',
+      headerName: intl.translate({ id: 'person.photo' }),
+      headerAlign: 'center',
+      align: 'center',
+      flex: 1,
+      renderCell: (params: GridValueGetterParams) => (
+        <Avatar alt='studentpicture' src={params.row.student_picture} />
+      )
+    },
+    {
+      field: 'name',
+      headerName: intl.translate({ id: 'person.name' }),
+      flex: 1,
+      headerAlign: 'center'
+    },
+    {
+      field: 'second_name',
+      headerName: intl.translate({ id: 'person.secondname' }),
+      flex: 1,
+      headerAlign: 'center'
+    },
+    {
+      field: 'last_name',
+      headerName: intl.translate({ id: 'person.lastname' }),
+      flex: 1,
+      headerAlign: 'center'
+    },
     {
       field: 'birth_date',
       headerName: intl.translate({ id: 'date_of_birth' }),
       flex: 1,
+      headerAlign: 'center',
+      align: 'center',
       renderCell: (params: GridValueGetterParams) =>
         params.row.birth_date != null ? format(new Date(params.row.birth_date), 'P') : ''
     },
     {
       field: 'gender',
+      headerAlign: 'center',
+      align: 'center',
       headerName: intl.translate({ id: 'gender' }),
       flex: 1,
       renderCell: (params: GridValueGetterParams) =>
@@ -79,38 +106,54 @@ const ListPerson: React.FC<TPersonsProps> = (props) => {
           ? intl.translate({ id: 'other' })
           : ''
     },
-    { field: 'occupation', headerName: intl.translate({ id: 'person.occupation' }), flex: 1 },
     {
       field: 'graduation_period',
+      headerAlign: 'center',
+      align: 'center',
       headerName: intl.translate({ id: 'person.graduation_period' }),
       flex: 1
     },
     {
       field: 'graduation_status',
+      headerAlign: 'center',
+      align: 'center',
       headerName: intl.translate({ id: 'person.graduation_status' }),
       flex: 1
     },
     {
       field: 'education_status',
+      headerAlign: 'center',
+      align: 'center',
       headerName: intl.translate({ id: 'person.education_status' }),
       flex: 1
     },
-    { field: 'phone_number', headerName: intl.translate({ id: 'user.phone_number' }), flex: 1 },
-    { field: 'email', headerName: intl.translate({ id: 'person.email' }), flex: 1 },
-    { field: 'linkedin_url', headerName: intl.translate({ id: 'person.linkedin' }), flex: 1 },
-    { field: 'twitter_url', headerName: intl.translate({ id: 'person.twitter' }), flex: 1 },
-    { field: 'facebook_url', headerName: intl.translate({ id: 'person.facebook' }), flex: 1 },
+    {
+      field: 'phone_number',
+      align: 'center',
+      headerName: intl.translate({ id: 'user.phone_number' }),
+      flex: 1,
+      headerAlign: 'center'
+    },
+    {
+      field: 'email',
+      headerName: intl.translate({ id: 'person.email' }),
+      flex: 1,
+      headerAlign: 'center'
+    },
     {
       field: 'id',
+      headerAlign: 'center',
       headerName: intl.translate({ id: 'app.actions' }),
       width: mobileDevice ? 100 : 150,
-      headerAlign: 'center',
       align: 'center',
       renderCell: (params: GridValueGetterParams) => (
         <RowActions
           params={params}
           onEditClick={() => navigate(`/persons/${params.row.id}/edit`)}
           onDeleteClick={() => navigate(`/persons/${params.row.id}/delete`)}
+          onShowClick={
+            mobileDevice ? null : () => navigate(`/persons/person-page/${params.row.id}`)
+          }
         />
       )
     }

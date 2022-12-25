@@ -5,31 +5,31 @@ import { put, takeLatest } from '@redux-saga/core/effects';
 import { createSelector } from 'reselect';
 import produce from 'immer';
 
-import { IAction, TPhase } from 'store/store';
+import { IAction } from 'store/store';
 import { createPerson, deletePerson, updatePerson } from 'graphql/mutations';
 import { API } from 'aws-amplify';
 import { listPeople } from 'graphql/queries';
 
 export interface IPerson {
   id?: string;
-  ssnNumber?: string;
-  schoolNumber?: string;
+  ssn_number?: string;
+  school_number?: string;
   name: string;
-  secondName: string;
-  lastName: string;
-  birthDate: Date;
+  second_name: string;
+  last_name: string;
+  birth_date: Date;
   gender: string;
-  studentPicture: string;
+  student_picture: string;
   occupation: string;
-  graduationPeriod: string;
-  graduationStatus: string;
-  educationStatus: string;
-  maritalStatus: string;
-  phoneNumber: string;
+  graduation_period: string;
+  graduation_status: string;
+  education_status: string;
+  marital_status: string;
+  phone_number: string;
   email: string;
-  linkedinUrl: string;
-  twitterUrl: string;
-  facebookUrl: string;
+  linkedin_url: string;
+  twitter_url: string;
+  facebook_url: string;
 }
 
 interface IPersonState {
@@ -173,24 +173,24 @@ export function* saga() {
           query: createPerson,
           variables: {
             input: {
-              ssn_number: personInfo.ssnNumber,
-              school_number: personInfo.schoolNumber,
+              ssn_number: personInfo.ssn_number,
+              school_number: personInfo.school_number,
               name: personInfo.name,
-              second_name: personInfo.secondName,
-              last_name: personInfo.lastName,
-              birth_date: personInfo.birthDate,
+              second_name: personInfo.second_name,
+              last_name: personInfo.last_name,
+              birth_date: personInfo.birth_date,
               gender: 'MALE',
-              student_picture: personInfo.studentPicture,
+              student_picture: personInfo.student_picture,
               occupation: personInfo.occupation,
-              graduation_period: personInfo.graduationPeriod,
-              graduation_status: personInfo.graduationStatus,
-              education_status: personInfo.educationStatus,
+              graduation_period: personInfo.graduation_period,
+              graduation_status: personInfo.graduation_status,
+              education_status: personInfo.education_status,
               marital_status: 'SINGLE',
-              phone_number: personInfo.phoneNumber,
+              phone_number: personInfo.phone_number,
               email: personInfo.email,
-              linkedin_url: personInfo.linkedinUrl,
-              twitter_url: personInfo.twitterUrl,
-              facebook_url: personInfo.facebookUrl
+              linkedin_url: personInfo.linkedin_url,
+              twitter_url: personInfo.twitter_url,
+              facebook_url: personInfo.facebook_url
             }
           },
           authMode: 'AMAZON_COGNITO_USER_POOLS'
@@ -220,24 +220,24 @@ export function* saga() {
           variables: {
             input: {
               id: personInfo.id,
-              ssn_number: personInfo.ssnNumber,
-              school_number: personInfo.schoolNumber,
+              ssn_number: personInfo.ssn_number,
+              school_number: personInfo.school_number,
               name: personInfo.name,
-              second_name: personInfo.secondName,
-              last_name: personInfo.lastName,
-              birth_date: personInfo.birthDate,
+              second_name: personInfo.second_name,
+              last_name: personInfo.last_name,
+              birth_date: personInfo.birth_date,
               gender: personInfo.gender,
-              student_picture: personInfo.studentPicture,
+              student_picture: personInfo.student_picture,
               occupation: personInfo.occupation,
-              graduation_period: personInfo.graduationPeriod,
-              graduation_status: personInfo.graduationStatus,
-              education_status: personInfo.educationStatus,
-              marital_status: personInfo.maritalStatus,
-              phone_number: personInfo.phoneNumber,
+              graduation_period: personInfo.graduation_period,
+              graduation_status: personInfo.graduation_status,
+              education_status: personInfo.education_status,
+              marital_status: personInfo.marital_status,
+              phone_number: personInfo.phone_number,
               email: personInfo.email,
-              linkedin_url: personInfo.linkedinUrl,
-              twitter_url: personInfo.twitterUrl,
-              facebook_url: personInfo.facebookUrl
+              linkedin_url: personInfo.linkedin_url,
+              twitter_url: personInfo.twitter_url,
+              facebook_url: personInfo.facebook_url
             }
           },
           authMode: 'AMAZON_COGNITO_USER_POOLS'

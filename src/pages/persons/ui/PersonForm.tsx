@@ -40,24 +40,23 @@ const PersonForm = (props: TFormProps) => {
 
   const initialValues: Partial<IPerson> = {
     id: (actionType === 'new' && null) || personInfo?.id || null,
-    ssnNumber: (actionType === 'new' && '') || personInfo?.ssnNumber || '',
-    schoolNumber: (actionType === 'new' && '') || personInfo?.schoolNumber || '',
+    ssn_number: (actionType === 'new' && '') || personInfo?.ssn_number || '',
+    school_number: (actionType === 'new' && '') || personInfo?.school_number || '',
     name: (actionType === 'new' && '') || personInfo?.name || '',
-    secondName: (actionType === 'new' && '') || personInfo?.secondName || '',
-    lastName: (actionType === 'new' && '') || personInfo?.lastName || '',
-    //birthDate: (actionType === 'new' && '') || personInfo?.birthDate || '',
+    second_name: (actionType === 'new' && '') || personInfo?.second_name || '',
+    last_name: (actionType === 'new' && '') || personInfo?.last_name || '',
     gender: (actionType === 'new' && '') || personInfo?.gender || '',
-    studentPicture: (actionType === 'new' && '') || personInfo?.studentPicture || '',
+    student_picture: (actionType === 'new' && '') || personInfo?.student_picture || '',
     occupation: (actionType === 'new' && '') || personInfo?.occupation || '',
-    graduationPeriod: (actionType === 'new' && '') || personInfo?.graduationPeriod || '',
-    graduationStatus: (actionType === 'new' && '') || personInfo?.graduationStatus || '',
-    educationStatus: (actionType === 'new' && '') || personInfo?.educationStatus || '',
-    maritalStatus: (actionType === 'new' && '') || personInfo?.maritalStatus || '',
-    phoneNumber: (actionType === 'new' && '') || personInfo?.phoneNumber || '',
+    graduation_period: (actionType === 'new' && '') || personInfo?.graduation_period || '',
+    graduation_status: (actionType === 'new' && '') || personInfo?.graduation_status || '',
+    education_status: (actionType === 'new' && '') || personInfo?.education_status || '',
+    marital_status: (actionType === 'new' && '') || personInfo?.marital_status || '',
+    phone_number: (actionType === 'new' && '') || personInfo?.phone_number || '',
     email: (actionType === 'new' && '') || personInfo?.email || '',
-    linkedinUrl: (actionType === 'new' && '') || personInfo?.linkedinUrl || '',
-    twitterUrl: (actionType === 'new' && '') || personInfo?.twitterUrl || '',
-    facebookUrl: (actionType === 'new' && '') || personInfo?.facebookUrl || ''
+    linkedin_url: (actionType === 'new' && '') || personInfo?.linkedin_url || '',
+    twitter_url: (actionType === 'new' && '') || personInfo?.twitter_url || '',
+    facebook_url: (actionType === 'new' && '') || personInfo?.facebook_url || ''
   };
 
   const {
@@ -80,7 +79,7 @@ const PersonForm = (props: TFormProps) => {
   const validateForm = (values: Partial<IPerson>) => {
     const errors = {};
     if (activeStep === 0) {
-      const nonEmptyFields = ['name', 'lastName'];
+      const nonEmptyFields = ['name', 'last_name'];
 
       nonEmptyFields.forEach((field) => {
         if (!values[field]) {
@@ -192,25 +191,25 @@ const PersonForm = (props: TFormProps) => {
               </Grid>
               <Grid item xs={12} md={4}>
                 <TextField
-                  id='secondName'
+                  id='second_name'
                   disabled={isSubmitting ? true : false}
                   fullWidth={true}
                   label={intl.translate({ id: 'person.secondname' })}
-                  value={values.secondName}
+                  value={values.second_name}
                   variant='outlined'
                   onChange={handleChange}
                 />
               </Grid>
               <Grid item xs={12} md={4}>
                 <TextField
-                  id='lastName'
-                  className={`${errors.lastName ? 'is-invalid' : isSubmitting ? 'is-valid' : ''}`}
+                  id='last_name'
+                  className={`${errors.last_name ? 'is-invalid' : isSubmitting ? 'is-valid' : ''}`}
                   disabled={isSubmitting ? true : false}
-                  helperText={errors.lastName ? errors.lastName : ''}
-                  error={!!errors.lastName}
+                  helperText={errors.last_name ? errors.last_name : ''}
+                  error={!!errors.last_name}
                   fullWidth={true}
                   label={intl.translate({ id: 'person.lastname' })}
-                  value={values.lastName}
+                  value={values.last_name}
                   variant='outlined'
                   onChange={handleChange}
                 />
@@ -221,7 +220,7 @@ const PersonForm = (props: TFormProps) => {
                   disabled={isSubmitting ? true : false}
                   fullWidth={true}
                   label={intl.translate({ id: 'id_number' })}
-                  value={values.ssnNumber}
+                  value={values.ssn_number}
                   variant='outlined'
                   onChange={handleChange}
                 />
@@ -229,9 +228,9 @@ const PersonForm = (props: TFormProps) => {
               <Grid item xs={12} md={4}>
                 <DatePicker
                   label={intl.translate({ id: 'date_of_birth' })}
-                  value={values.birthDate}
-                  onChange={(value) => setFieldValue('birthDate', value)}
-                  renderInput={(params) => <TextField id='birthDate' fullWidth {...params} />}
+                  value={values.birth_date}
+                  onChange={(value) => setFieldValue('birth_date', value)}
+                  renderInput={(params) => <TextField id='birth_date' fullWidth {...params} />}
                 />
               </Grid>
               <Grid item xs={12} md={4}>
@@ -269,12 +268,12 @@ const PersonForm = (props: TFormProps) => {
               </Grid>
               <Grid item xs={12} md={6}>
                 <TextField
-                  id='maritalStatus'
+                  id='marital_status'
                   select={true}
                   disabled={isSubmitting ? true : false}
                   fullWidth={true}
                   label={intl.translate({ id: 'person.marital_status' })}
-                  value={values.maritalStatus}
+                  value={values.marital_status}
                   variant='outlined'
                   onChange={(event) => setFieldValue('maritalStatus', event.target.value)}
                 >
@@ -295,12 +294,12 @@ const PersonForm = (props: TFormProps) => {
             <Grid container spacing={3}>
               <Grid item xs={12} md={6}>
                 <TextField
-                  id='schoolNumber'
+                  id='school_number'
                   autoFocus
                   disabled={isSubmitting ? true : false}
                   fullWidth={true}
                   label={intl.translate({ id: 'student.no' })}
-                  value={values.schoolNumber}
+                  value={values.school_number}
                   variant='outlined'
                   onChange={handleChange}
                 />
@@ -308,22 +307,22 @@ const PersonForm = (props: TFormProps) => {
 
               <Grid item xs={12} md={6}>
                 <TextField
-                  id='graduationPeriod'
+                  id='graduation_period'
                   disabled={isSubmitting ? true : false}
                   fullWidth={true}
                   label={intl.translate({ id: 'person.graduation_period' })}
-                  value={values.graduationPeriod}
+                  value={values.graduation_period}
                   variant='outlined'
                   onChange={handleChange}
                 />
               </Grid>
               <Grid item xs={12} md={6}>
                 <TextField
-                  id='graduationStatus'
+                  id='graduation_status'
                   disabled={isSubmitting ? true : false}
                   fullWidth={true}
                   label={intl.translate({ id: 'person.graduation_status' })}
-                  value={values.graduationStatus}
+                  value={values.graduation_status}
                   variant='outlined'
                   onChange={handleChange}
                 />
@@ -331,11 +330,11 @@ const PersonForm = (props: TFormProps) => {
 
               <Grid item xs={12} md={6}>
                 <TextField
-                  id='educationStatus'
+                  id='education_status'
                   disabled={isSubmitting ? true : false}
                   fullWidth={true}
                   label={intl.translate({ id: 'person.education_status' })}
-                  value={values.educationStatus}
+                  value={values.education_status}
                   variant='outlined'
                   onChange={handleChange}
                 />
@@ -347,12 +346,12 @@ const PersonForm = (props: TFormProps) => {
             <Grid container spacing={3}>
               <Grid item xs={12} md={6}>
                 <TextField
-                  id='phoneNumber'
+                  id='phone_number'
                   autoFocus
                   disabled={isSubmitting ? true : false}
                   fullWidth={true}
                   label={intl.translate({ id: 'user.phone_number' })}
-                  value={values.phoneNumber}
+                  value={values.phone_number}
                   variant='outlined'
                   onChange={handleChange}
                 />
@@ -371,33 +370,33 @@ const PersonForm = (props: TFormProps) => {
 
               <Grid item xs={12} md={4}>
                 <TextField
-                  id='linkedinUrl'
+                  id='linkedin_url'
                   disabled={isSubmitting ? true : false}
                   fullWidth={true}
                   label={intl.translate({ id: 'person.linkedin' })}
-                  value={values.linkedinUrl}
+                  value={values.linkedin_url}
                   variant='outlined'
                   onChange={handleChange}
                 />
               </Grid>
               <Grid item xs={12} md={4}>
                 <TextField
-                  id='twitterUrl'
+                  id='twitter_url'
                   disabled={isSubmitting ? true : false}
                   fullWidth={true}
                   label={intl.translate({ id: 'person.twitter' })}
-                  value={values.twitterUrl}
+                  value={values.twitter_url}
                   variant='outlined'
                   onChange={handleChange}
                 />
               </Grid>
               <Grid item xs={12} md={4}>
                 <TextField
-                  id='facebookUrl'
+                  id='facebook_url'
                   disabled={isSubmitting ? true : false}
                   fullWidth={true}
                   label={intl.translate({ id: 'person.facebook' })}
-                  value={values.facebookUrl}
+                  value={values.facebook_url}
                   variant='outlined'
                   onChange={handleChange}
                 />
@@ -423,7 +422,6 @@ const PersonForm = (props: TFormProps) => {
             </Box>
           </React.Fragment>
         </Box>
-        {/*<FormButtons saveButton={<SaveButton />} cancelButton={<CancelButton />} />*/}
       </form>
     </Box>
   );

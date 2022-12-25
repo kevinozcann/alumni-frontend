@@ -7,6 +7,7 @@ const MainLayout = loadable(() => import('layout/MainLayout'));
 
 const ListPerson = Loadable(lazy(() => import('./ui/ListPerson')));
 const NewPerson = Loadable(lazy(() => import('./ui/NewPerson')));
+const PersonPage = Loadable(lazy(() => import('./ui/PersonPage')));
 
 const routes = {
   path: 'persons',
@@ -25,8 +26,8 @@ const routes = {
       element: <NewPerson />
     },
     {
-      path: ':id',
-      element: <ListPerson />
+      path: 'person-page/:id',
+      element: <PersonPage />
     },
     {
       path: ':id/:action',
