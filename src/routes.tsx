@@ -13,6 +13,7 @@ import organizationRoutes from 'pages/organization/routes';
 import schoolRoutes from 'pages/school/routes';
 import studentsRoutes from 'pages/students/routes';
 import usersRoutes from 'pages/users/routes';
+import personRoutes from 'pages/persons/routes';
 
 const GuestGuard = loadable(() => import('components/guard/GuestGuard'));
 
@@ -48,6 +49,7 @@ const routes = [
   schoolRoutes,
   studentsRoutes,
   usersRoutes,
+  personRoutes,
   {
     path: '*',
     element: (

@@ -170,6 +170,21 @@ const menus: IMenu[] = [
     parent: null,
     children: [
       {
+        id: 1,
+        title: 'school.students',
+        iconPrefix: 'fad',
+        icon: 'users',
+        url: '/persons',
+        appUrl: 'classes',
+        position: 0,
+        isActive: true,
+        isFlex: true,
+        isEssential: true,
+        isProfessional: true,
+        isEnterprise: true,
+        isAdmin: false
+      },
+      {
         id: 614,
         title: 'school.management.classes',
         iconPrefix: 'fad',

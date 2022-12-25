@@ -17,6 +17,7 @@ import { organizationReducer, organizationSagas } from 'pages/organization/_stor
 import { schoolReducer, schoolSagas } from 'pages/school/_store';
 import { studentsReducer, studentsSagas } from 'pages/students/_store';
 import { usersReducer, usersSagas } from 'pages/users/_store';
+import { personsSagas, personsReducer } from 'pages/persons/services';
 
 export const rootReducer = combineReducers({
   auth: authReducer,
@@ -33,7 +34,8 @@ export const rootReducer = combineReducers({
   static: staticReducer,
   students: studentsReducer,
   user: userReducer,
-  users: usersReducer
+  users: usersReducer,
+  persons: personsReducer
 });
 
 export function* rootSaga() {
@@ -53,7 +55,8 @@ export function* rootSaga() {
     organizationSagas,
     schoolSagas,
     studentsSagas,
-    usersSagas
+    usersSagas,
+    personsSagas
   );
 
   yield all(
