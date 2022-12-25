@@ -7,7 +7,7 @@ import { createSelector } from 'reselect';
 import { IAction } from './store';
 import { SEARCH_URL, updateApiUrl } from './ApiUrls';
 import { TLang } from '../utils/shared-types';
-import { IUser } from '../pages/auth/data/account-types';
+import { IAuthUser } from '../pages/auth/data/account-types';
 
 interface IStudent {
   name: string;
@@ -20,7 +20,7 @@ interface IPersonnel {
   fullName: string;
 }
 interface ISearchState {
-  users: IUser[];
+  users: IAuthUser[];
   students: IStudent[];
   personnel: IPersonnel[];
   searchKey: string;
@@ -73,7 +73,7 @@ export const initialState = {
 
 export const searchUsersSelector = createSelector(
   (state: IParentSearchState) => objectPath.get(state, ['search', 'users']),
-  (users: IUser[]) => users
+  (users: IAuthUser[]) => users
 );
 export const searchStudentsSelector = createSelector(
   (state: IParentSearchState) => objectPath.get(state, ['search', 'students']),

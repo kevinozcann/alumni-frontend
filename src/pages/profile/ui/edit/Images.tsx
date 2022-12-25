@@ -16,7 +16,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import useSnackbar from 'hooks/useSnackbar';
 import useTranslation from 'hooks/useTranslation';
-import { IUser } from 'pages/auth/data/account-types';
+import { IAuthUser } from 'pages/auth/data/account-types';
 import { authPhaseSelector, authUserSelector } from 'pages/auth/services/store/auth';
 
 import awsconfig from 'aws-exports';
@@ -39,7 +39,7 @@ const Images = () => {
   const user = useSelector(authUserSelector);
   const authPhase = useSelector(authPhaseSelector);
 
-  const userAttributes: IUser = user;
+  const userAttributes: IAuthUser = user;
 
   const formInitialValues: IFormValues = {
     picture: userAttributes['custom:picture'],

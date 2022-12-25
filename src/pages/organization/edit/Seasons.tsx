@@ -9,7 +9,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import ConfirmDialog from 'components/ConfirmDialog';
 import useTranslation from 'hooks/useTranslation';
 import { Loadable } from 'layout';
-import { IUser } from 'pages/auth/data/account-types';
+import { IAuthUser } from 'pages/auth/data/account-types';
 import { authUserSelector } from 'pages/auth/services/store/auth';
 import { schoolSelector } from 'pages/organization/_store/school';
 import { userActions } from 'pages/profile/services/actions';
@@ -37,7 +37,7 @@ const Seasons = () => {
   const schoolInfo = useSelector(schoolSelector);
 
   // Dispatchers
-  const deleteSeason = (lang: TLang, user: IUser, seasonId: number) =>
+  const deleteSeason = (lang: TLang, user: IAuthUser, seasonId: number) =>
     dispatch(configActions.deleteSeason(lang, user, seasonId));
 
   const transSeason = intl.translate({ id: 'season' });

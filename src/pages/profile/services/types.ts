@@ -1,7 +1,8 @@
-import { IUser } from 'pages/auth/data/account-types';
-import { ISchool } from 'pages/organization/organization-types';
+import { IAuthUser } from 'pages/auth/data/account-types';
 import { IAction, TPhase } from 'store/store';
 import { TLang } from 'utils/shared-types';
+
+import { IUser } from '../data/user-types';
 
 export const userActionTypes = {
   SAGA: {
@@ -25,11 +26,10 @@ export interface IUserStore {
 export type TUserStoreActions = IUserStore & {
   email?: string;
   lang?: TLang;
-  user?: IUser;
   name?: string;
   lastname?: string;
   password?: string;
   userType?: string;
-  transferSchools?: ISchool[];
+  authUser?: IAuthUser;
 };
 export type TUserActionType = IAction<Partial<TUserStoreActions>>;

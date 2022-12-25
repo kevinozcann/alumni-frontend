@@ -1,4 +1,4 @@
-import { IUser } from 'pages/auth/data/account-types';
+import { IUser } from 'pages/profile/data/user-types';
 
 export interface IMailLabel {
   id: string;
@@ -12,7 +12,6 @@ export interface IMail {
   subject: string;
   msgBody?: string;
   attachment?: string | string[];
-  user?: Partial<IUser>; // for backward compatibiliy. we might remove later
   sender?: Partial<IUser>;
   to?: Partial<IUser>[];
   cc?: Partial<IUser>[];

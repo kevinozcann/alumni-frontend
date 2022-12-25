@@ -27,7 +27,7 @@ import useTranslation from 'hooks/useTranslation';
 import { ICountry, TLang } from 'utils/shared-types';
 import { SaveButton } from 'utils/ActionLinks';
 import { countryToFlag } from 'utils/Helpers';
-import { IUser } from 'pages/auth/data/account-types';
+import { IAuthUser } from 'pages/auth/data/account-types';
 
 import { TSchoolType } from '../organization-types';
 import { schoolActions, schoolPhaseSelector } from '../_store/school';
@@ -44,7 +44,7 @@ const mapStateToProps = (state: RootState) => ({
 const mapDispatchToProps = (dispatch: AppDispatch) => ({
   pullCountries: () => dispatch(staticActions.pullCountries()),
   pullGradeLevels: () => dispatch(configActions.pullGradeLevels(true)),
-  addSchool: (user: IUser, lang: TLang, values: TSchoolFormValues) =>
+  addSchool: (user: IAuthUser, lang: TLang, values: TSchoolFormValues) =>
     dispatch(schoolActions.addSchool(user, lang, values))
 });
 const connector = connect(mapStateToProps, mapDispatchToProps);

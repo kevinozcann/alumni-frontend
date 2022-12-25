@@ -1,4 +1,4 @@
-import { IUser } from 'pages/auth/data/account-types';
+import { IAuthUser } from 'pages/auth/data/account-types';
 import { IAction } from 'store/store';
 import { TActionType, TLang } from 'utils/shared-types';
 
@@ -46,7 +46,7 @@ export type TPostsStoreActions = IPostsStore & {
   id?: number;
   lang?: TLang;
   page?: number;
-  user?: IUser;
+  user?: IAuthUser;
 };
 
 export type TPostActionType = IAction<Partial<TPostsStoreActions>>;

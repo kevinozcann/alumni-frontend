@@ -21,7 +21,7 @@ import { useSubheader } from 'contexts/SubheaderContext';
 import useTranslation from 'hooks/useTranslation';
 import Page from 'layout/Page';
 import Scrollbar from 'layout/Scrollbar';
-import { IUser } from 'pages/auth/data/account-types';
+import { IAuthUser } from 'pages/auth/data/account-types';
 import { ISchool } from 'pages/organization/organization-types';
 import { authUserSelector } from 'pages/auth/services/store/auth';
 import { i18nLangSelector } from 'store/i18n';
@@ -40,7 +40,7 @@ const mapStateToProps = (state: RootState) => ({
   phase: studentsPhaseSelector(state)
 });
 const mapDispatchToProps = (dispatch: AppDispatch) => ({
-  pullStudents: (user: IUser, userPersonal: IUser, school: ISchool) =>
+  pullStudents: (user: IAuthUser, userPersonal: IAuthUser, school: ISchool) =>
     dispatch(studentsActions.pullStudents(user, userPersonal, school))
 });
 const connector = connect(mapStateToProps, mapDispatchToProps);

@@ -88,7 +88,6 @@ const MailListToolbar = (props: TMailListToolbarProps) => {
           (m) =>
             m.email.msgBody.toLowerCase().includes(search.toLowerCase()) ||
             m.email.subject.toLowerCase().includes(search.toLowerCase()) ||
-            m.email.user?.fullName.toLowerCase().includes(search.toLowerCase()) ||
             m.email.sender.fullName.toLowerCase().includes(search.toLowerCase()) ||
             m.email.emailToUser.fullName.toLowerCase().includes(search.toLowerCase()) ||
             m.user?.fullName.toLowerCase().includes(search.toLowerCase())

@@ -9,7 +9,7 @@ import { faPaperPlane } from '@fortawesome/pro-duotone-svg-icons';
 
 import { AppDispatch, RootState } from 'store/store';
 import useSnackbar from 'hooks/useSnackbar';
-import { IUser } from 'pages/auth/data/account-types';
+import { IUser } from 'pages/profile/data/user-types';
 
 import { mailActions, phases } from './_store';
 import { mailsPhaseSelector } from './_store/selectors';

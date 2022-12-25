@@ -21,8 +21,7 @@ import { Link as RouterLink, useLocation, useNavigate } from 'react-router-dom';
 import SearchForm from 'components/SearchForm';
 import UserAvatar from 'components/UserAvatar';
 import useKeyPress from 'hooks/useKeypress';
-import { IUser } from 'pages/auth/data/account-types';
-import { authUserSelector } from 'pages/auth/services/store/auth';
+import { userProfileSelector } from 'pages/profile/services/store/selectors';
 import { i18nLangSelector } from 'store/i18n';
 import {
   searchActions,
@@ -32,10 +31,9 @@ import {
 } from 'store/search';
 import { AppDispatch, RootState } from 'store/store';
 import { TLang } from 'utils/shared-types';
+import { IUser } from 'pages/profile/data/user-types';
 
 const mapStateToProps = (state: RootState) => ({
-  lang: i18nLangSelector(state),
-  user: authUserSelector(state),
   searchKeyCache: searchKeySelector(state),
   userResults: searchUsersSelector(state),
   searchPhase: searchPhaseSelector(state)
@@ -50,7 +48,7 @@ type PropsFromRedux = ConnectedProps<typeof connector>;
 type TContentSearchProps = PropsFromRedux;
 
 const ContentSearch: React.FC<TContentSearchProps> = (props) => {
-  const { lang, user, searchKeyCache, userResults, searchPhase } = props;
+  const { searchKeyCache, userResults, searchPhase } = props;
   const [searchKey, setSearchKey] = React.useState<string>(searchKeyCache);
   const [open, setOpen] = React.useState<boolean>(false);
   const [isLoading, setIsLoading] = React.useState<boolean>(false);

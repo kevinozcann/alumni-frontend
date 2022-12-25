@@ -16,7 +16,7 @@ import {
   TConfiguration
 } from 'pages/organization/organization-types';
 import { ISeasonTable } from 'pages/organization/edit/CopySeasonData';
-import { IUser } from 'pages/auth/data/account-types';
+import { IAuthUser } from 'pages/auth/data/account-types';
 
 import { IAction, TPhase } from './store';
 import {
@@ -42,7 +42,7 @@ interface IParentCongifState {
 }
 type TActionAllState = IConfigState & {
   lang?: TLang;
-  user?: IUser;
+  user?: IAuthUser;
   id?: number;
   active?: boolean;
   gradeLevel?: IGradeLevel;
@@ -192,7 +192,7 @@ export const configActions = {
   }),
   addSeason: (
     lang: TLang,
-    user: IUser,
+    user: IAuthUser,
     seasonInfo: Partial<ISeason>,
     applyChildren: boolean,
     activeSchool: ISchool
@@ -200,15 +200,15 @@ export const configActions = {
     type: actionTypes.ADD_SEASON,
     payload: { lang, user, seasonInfo, applyChildren, activeSchool }
   }),
-  updateSeason: (lang: TLang, user: IUser, seasonInfo: Partial<ISeason>): TActionType => ({
+  updateSeason: (lang: TLang, user: IAuthUser, seasonInfo: Partial<ISeason>): TActionType => ({
     type: actionTypes.UPDATE_SEASON,
     payload: { lang, user, seasonInfo }
   }),
-  deleteSeason: (lang: TLang, user: IUser, id: number): TActionType => ({
+  deleteSeason: (lang: TLang, user: IAuthUser, id: number): TActionType => ({
     type: actionTypes.DELETE_SEASON,
     payload: { lang, user, id }
   }),
-  setDefaultSeason: (lang: TLang, user: IUser, seasons: ISeason[]): TActionType => ({
+  setDefaultSeason: (lang: TLang, user: IAuthUser, seasons: ISeason[]): TActionType => ({
     type: actionTypes.SET_DEFAULT_SEASON,
     payload: { lang, user, seasons }
   }),
@@ -223,7 +223,7 @@ export const configActions = {
   }),
   addGradingTerm: (
     lang: TLang,
-    user: IUser,
+    user: IAuthUser,
     gradingTermInfo: Partial<IGradingTerm>
   ): TActionType => ({
     type: actionTypes.ADD_GRADING_TERM,
@@ -231,13 +231,13 @@ export const configActions = {
   }),
   updateGradingTerm: (
     lang: TLang,
-    user: IUser,
+    user: IAuthUser,
     gradingTermInfo: Partial<IGradingTerm>
   ): TActionType => ({
     type: actionTypes.UPDATE_GRADING_TERM,
     payload: { lang, user, gradingTermInfo }
   }),
-  deleteGradingTerm: (lang: TLang, user: IUser, id: number): TActionType => ({
+  deleteGradingTerm: (lang: TLang, user: IAuthUser, id: number): TActionType => ({
     type: actionTypes.DELETE_GRADING_TERM,
     payload: { lang, user, id }
   }),

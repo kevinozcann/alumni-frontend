@@ -1,5 +1,5 @@
 import { TActionType } from 'utils/shared-types';
-import { IUser } from 'pages/auth/data/account-types';
+import { IAuthUser } from 'pages/auth/data/account-types';
 import { IUserMail, IMail } from 'pages/mail/mail-types';
 
 import { IAction } from 'store/store';
@@ -8,7 +8,7 @@ import { TActionAllState } from './types';
 import { actionTypes } from './actionTypes';
 
 export const mailActions = {
-  pullMails: (user: IUser): IAction<Partial<TActionAllState>> => ({
+  pullMails: (user: IAuthUser): IAction<Partial<TActionAllState>> => ({
     type: actionTypes.PULL_MAILS_FROM_SERVER,
     payload: { user }
   }),

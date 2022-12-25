@@ -1,14 +1,14 @@
-import { IUser } from 'pages/auth/data/account-types';
+import { IAuthUser } from 'pages/auth/data/account-types';
 import { IPost, IPostComment } from 'pages/posts/data/post-types';
 
 import { postActionTypes, TPostActionType } from './types';
 
 export const postActions = {
-  addPost: (user: IUser, post: Partial<IPost>): TPostActionType => ({
+  addPost: (user: IAuthUser, post: Partial<IPost>): TPostActionType => ({
     type: postActionTypes.SAGA.ADD_POST,
     payload: { user, post }
   }),
-  addComment: (user: IUser, post: IPost, comment: IPostComment): TPostActionType => ({
+  addComment: (user: IAuthUser, post: IPost, comment: IPostComment): TPostActionType => ({
     type: postActionTypes.SAGA.ADD_COMMENT,
     payload: { user, post, comment }
   }),
@@ -16,7 +16,7 @@ export const postActions = {
     type: postActionTypes.SAGA.DELETE_POST,
     payload: { post }
   }),
-  getPosts: (user: IUser, page: number): TPostActionType => ({
+  getPosts: (user: IAuthUser, page: number): TPostActionType => ({
     type: postActionTypes.SAGA.GET_POSTS,
     payload: { user, page }
   }),

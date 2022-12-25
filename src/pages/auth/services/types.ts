@@ -1,6 +1,6 @@
 import { IAction } from 'store/store';
 import { TLang, TLinkedAccount } from 'utils/shared-types';
-import { IUser } from '../data/account-types';
+import { IAuthUser } from '../data/account-types';
 
 export const authActionTypes = {
   SAGA: {
@@ -62,7 +62,7 @@ export type TUserPassword = {
   confirmPassword: string;
 };
 
-export type TExtendedUser = IUser & TUserPassword;
+export type TExtendedUser = IAuthUser & TUserPassword;
 
 export interface IAuthStoreState {
   auth: IAuthStore;
@@ -72,7 +72,7 @@ export interface IAuthStore {
   username?: string;
   accessToken?: string;
   refreshToken?: string;
-  user?: IUser;
+  user?: IAuthUser;
   signInUserSession?: any;
   pool?: {
     userPoolId?: string;

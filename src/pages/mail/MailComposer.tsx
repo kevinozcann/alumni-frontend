@@ -28,7 +28,7 @@ import { useTranslation } from 'hooks/useTranslation';
 import { i18nLangSelector } from 'store/i18n';
 import { TLang } from 'utils/shared-types';
 import { SaveButton } from 'utils/ActionLinks';
-import { IUser } from 'pages/auth/data/account-types';
+import { IAuthUser } from 'pages/auth/data/account-types';
 
 import { mailActions, phases } from './_store';
 import { composeSelector, draftSelector, mailsPhaseSelector } from './_store/selectors';
@@ -246,7 +246,7 @@ const MailComposer: React.FC<TMailComposerProps> = (props) => {
             }}
             options={userResults}
             defaultValue={values.to}
-            getOptionLabel={(option: Partial<IUser>) => {
+            getOptionLabel={(option: Partial<IAuthUser>) => {
               if (typeof option === 'string') {
                 return option;
               }

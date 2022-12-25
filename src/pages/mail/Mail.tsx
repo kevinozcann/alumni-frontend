@@ -10,7 +10,7 @@ import useSettings from 'hooks/useSettings';
 import useTranslation from 'hooks/useTranslation';
 import { useSubheader } from 'contexts/SubheaderContext';
 import { TActionType } from 'utils/shared-types';
-import { IUser } from 'pages/auth/data/account-types';
+import { IAuthUser } from 'pages/auth/data/account-types';
 
 import { mailActions } from './_store';
 import { composeSelector, mailsPhaseSelector, mailsSelector } from './_store/selectors';
@@ -38,7 +38,7 @@ const Mail = () => {
   const isComposeOpen = useSelector(composeSelector);
 
   // Dispatches
-  const pullMails = (user: IUser) => dispatch(mailActions.pullMails(user));
+  const pullMails = (user: IAuthUser) => dispatch(mailActions.pullMails(user));
   const updateMail = (mailId: number, mailInfo: Partial<IUserMail>, actionType: TActionType) =>
     dispatch(mailActions.updateMail(mailId, mailInfo, actionType));
 

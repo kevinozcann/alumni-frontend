@@ -1,25 +1,8 @@
-import { ISchool } from 'pages/organization/organization-types';
-
-export type TUserZone = 'headquarters' | 'campus' | 'school' | 'teacher' | 'parent' | 'student';
-
-export interface IUser {
-  id?: string;
+export interface IAuthUser {
   sub?: string;
   name?: string;
   family_name?: string;
-  fullName?: string;
   email?: string;
-  avatarUrl?: string;
-  avatarKey?: string;
-  wallpaperUrl?: string;
-  wallpaperKey?: string;
-  homeAddress?: string;
-  workAddress?: string;
-  owner?: string;
-  createdAt?: Date;
-  updatedAt?: Date;
-  userType?: string;
-  isAdmin?: boolean;
   phone_number?: string;
   email_verified?: boolean;
   phone_number_verified?: boolean;

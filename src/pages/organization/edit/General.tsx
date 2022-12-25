@@ -16,18 +16,18 @@ import { useFormik } from 'formik';
 import useSnackbar from 'hooks/useSnackbar';
 import { SaveButton } from 'utils/ActionLinks';
 import { TLang } from 'utils/shared-types';
-import { IUser } from 'pages/auth/data/account-types';
+import { IAuthUser } from 'pages/auth/data/account-types';
 
 import { ISchool, TConfigKey, TConfiguration } from '../organization-types';
 
 type TGeneralProps = {
-  user: IUser;
+  user: IAuthUser;
   lang: TLang;
   phase: string;
   schoolInfo: ISchool;
   updateConfig?: (configInfo: TConfiguration, idToDelete?: number) => void;
   saveSchoolInfo?: (
-    user: IUser,
+    user: IAuthUser,
     lang: TLang,
     schoolId: number,
     schoolInfo: Partial<ISchool>

@@ -25,14 +25,14 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import FileCard from 'components/FileCard';
 import useTranslation from 'hooks/useTranslation';
-import { authUserSelector } from 'pages/auth/services/store/auth';
+import { userProfileSelector } from 'pages/profile/services/store/selectors';
 import { SaveButton } from 'utils/ActionLinks';
 import { fileExtension, filenameFromPath, filetypeFromFilename } from 'utils/Helpers';
 import { IFile, TActionType } from 'utils/shared-types';
 
 import { IPost } from '../data/post-types';
-import { postsAddSelector, postsPhaseSelector } from '../services/posts';
 import { postActions } from '../services/actions';
+import { postsAddSelector, postsPhaseSelector } from '../services/posts';
 
 type NewFeedFormProps = {
   actionType: TActionType;
@@ -44,7 +44,7 @@ const NewFeedForm = (props: NewFeedFormProps) => {
   const intl = useTranslation();
   const dispatch = useDispatch();
 
-  const user = useSelector(authUserSelector);
+  const user = useSelector(userProfileSelector);
   const postsPhase = useSelector(postsPhaseSelector);
   const addFeed = useSelector(postsAddSelector);
 

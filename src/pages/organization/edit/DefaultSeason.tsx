@@ -11,7 +11,7 @@ import useTranslation from 'hooks/useTranslation';
 import { FormButtons, SaveButton } from 'utils/ActionLinks';
 import { TLang } from 'utils/shared-types';
 import { ISchool, ISeason } from 'pages/organization/organization-types';
-import { IUser } from 'pages/auth/data/account-types';
+import { IAuthUser } from 'pages/auth/data/account-types';
 
 const mapStateToProps = (state: RootState) => ({
   lang: i18nLangSelector(state),
@@ -19,7 +19,7 @@ const mapStateToProps = (state: RootState) => ({
   configPhase: configPhaseSelector(state)
 });
 const mapDispatchToProps = (dispatch: AppDispatch) => ({
-  setDefault: (lang: TLang, user: IUser, seasons: ISeason[]) =>
+  setDefault: (lang: TLang, user: IAuthUser, seasons: ISeason[]) =>
     dispatch(configActions.setDefaultSeason(lang, user, seasons)),
   resetPhase: () => dispatch(configActions.setPhase(null))
 });

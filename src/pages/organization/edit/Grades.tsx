@@ -6,20 +6,20 @@ import { Box, Card, CardHeader, Divider, CardContent } from '@mui/material';
 import useSnackbar from 'hooks/useSnackbar';
 import { SaveButton } from 'utils/ActionLinks';
 import { TLang } from 'utils/shared-types';
-import { IUser } from 'pages/auth/data/account-types';
+import { IAuthUser } from 'pages/auth/data/account-types';
 import { IGradeLevel } from 'pages/config/grade-levels/grade-types';
 
 import { ISchool } from '../organization-types';
 import GradesForm from '../view/ViewGrades';
 
 type TGradesProps = {
-  user: IUser;
+  user: IAuthUser;
   lang: TLang;
   phase: string;
   schoolInfo: ISchool;
   gradeLevels: IGradeLevel[];
   saveSchoolInfo: (
-    user: IUser,
+    user: IAuthUser,
     lang: TLang,
     schoolId: number,
     schoolInfo: Partial<ISchool>

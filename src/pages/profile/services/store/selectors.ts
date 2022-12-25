@@ -1,7 +1,8 @@
 import objectPath from 'object-path';
 import { createSelector } from 'reselect';
 
-import { IUser } from 'pages/auth/data/account-types';
+import { TPhase } from 'store/store';
+import { IUser } from 'pages/profile/data/user-types';
 import { IUserStoreState } from '../types';
 
 export const userProfileSelector = createSelector(
@@ -10,7 +11,7 @@ export const userProfileSelector = createSelector(
 );
 export const userPhaseSelector = createSelector(
   (state: IUserStoreState) => objectPath.get(state, ['user', 'phase']),
-  (userPhase: string) => userPhase
+  (userPhase: TPhase) => userPhase
 );
 export const userErrorSelector = createSelector(
   (state: IUserStoreState) => objectPath.get(state, ['user', 'error']),

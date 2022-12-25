@@ -10,7 +10,7 @@ import { IAction } from 'store/store';
 import { userActions } from 'pages/profile/services/actions';
 import { TLang } from 'utils/shared-types';
 import { IFilter } from 'components/filter/Filter';
-import { IUser } from 'pages/auth/data/account-types';
+import { IAuthUser } from 'pages/auth/data/account-types';
 
 import { ISchool } from '../organization-types';
 import { TSchoolFormValues } from '../add/AddSchool';
@@ -24,7 +24,7 @@ interface IOrganizationState {
   organization: ISchoolState;
 }
 type IActionSchoolState = ISchoolState & {
-  user?: IUser;
+  user?: IAuthUser;
   lang?: TLang;
   schoolId?: number;
   activeSchoolId?: number;
@@ -100,7 +100,7 @@ export const schoolActions = {
     payload: { schoolId }
   }),
   addSchool: (
-    user: IUser,
+    user: IAuthUser,
     lang: TLang,
     values: TSchoolFormValues
   ): IAction<IActionSchoolState> => ({
@@ -112,7 +112,7 @@ export const schoolActions = {
     payload: { school }
   }),
   saveSchoolInfo: (
-    user: IUser,
+    user: IAuthUser,
     lang: TLang,
     schoolId: number,
     schoolInfo: Partial<ISchool>
@@ -121,7 +121,7 @@ export const schoolActions = {
     payload: { user, lang, schoolId, schoolInfo }
   }),
   deleteSchool: (
-    user: IUser,
+    user: IAuthUser,
     lang: TLang,
     activeSchoolId: number,
     schoolId: number

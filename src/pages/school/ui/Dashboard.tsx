@@ -2,7 +2,6 @@ import React from 'react';
 import loadable from '@loadable/component';
 import { useIntl } from 'react-intl';
 import { Box, Grid, Skeleton } from '@mui/material';
-import { IUserType, TLoginType, TUserZone } from 'pages/auth/data/account-types';
 import { useSubheader } from 'contexts/SubheaderContext';
 // import {
 //   SchoolUsageChart,

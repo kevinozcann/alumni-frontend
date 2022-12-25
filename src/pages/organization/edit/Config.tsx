@@ -32,7 +32,7 @@ import StyledMenu from 'utils/StyledMenu';
 
 import { ISchool, TConfiguration } from '../organization-types';
 import { schoolActions, schoolFiltersSelector } from '../_store/school';
-import { IUser } from 'pages/auth/data/account-types';
+import { IUser } from 'pages/profile/data/user-types';
 
 const hiddenFields = [
   'address',

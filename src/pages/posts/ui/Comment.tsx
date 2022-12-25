@@ -7,7 +7,7 @@ import useTranslation from 'hooks/useTranslation';
 import InlineEdit from 'components/InlineEdit';
 import ConfirmDialog from 'components/ConfirmDialog';
 import { TActionType } from 'utils/shared-types';
-import { IUser } from 'pages/auth/data/account-types';
+import { IUser } from 'pages/profile/data/user-types';
 
 import { IPost, IPostComment } from '../data/post-types';
 

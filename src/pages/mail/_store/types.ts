@@ -1,6 +1,6 @@
-import { TActionType, TLang } from 'utils/shared-types';
-import { IUser } from 'pages/auth/data/account-types';
 import { IMail, IMailLabel, IUserMail } from 'pages/mail/mail-types';
+import { IUser } from 'pages/profile/data/user-types';
+import { TActionType, TLang } from 'utils/shared-types';
 
 import labels from './labels';
 

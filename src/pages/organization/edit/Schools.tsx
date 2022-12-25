@@ -24,8 +24,8 @@ import ConfirmDialog from 'components/ConfirmDialog';
 import ResponsiveActions from 'components/ResponsiveActions';
 import { TLang } from 'utils/shared-types';
 import { countryToFlag } from 'utils/Helpers';
-import { IUser } from 'pages/auth/data/account-types';
 import { ISchool, TConfiguration } from 'pages/organization/organization-types';
+import { IUser } from 'pages/profile/data/user-types';
 
 type TGeneralProps = {
   user: IUser;

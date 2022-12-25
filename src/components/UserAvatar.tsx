@@ -1,9 +1,8 @@
-import React from 'react';
 import { Avatar, CardHeader, Paper } from '@mui/material';
 import { SxProps } from '@mui/system';
 
+import { IUser } from 'pages/profile/data/user-types';
 import getInitials from 'utils/getInitials';
-import { IUser } from 'pages/auth/data/account-types';
 
 type TUserAvatarProps = {
   user: Partial<IUser>;
@@ -13,14 +12,14 @@ type TUserAvatarProps = {
   cardHeaderSx?: SxProps;
   avatarSx?: SxProps;
 };
-const UserAvatar: React.FC<TUserAvatarProps> = ({
+const UserAvatar = ({
   user,
   showTitle,
   showSubTitle,
   cardSx,
   cardHeaderSx,
   avatarSx
-}) => {
+}: TUserAvatarProps) => {
   return (
     <Paper
       sx={

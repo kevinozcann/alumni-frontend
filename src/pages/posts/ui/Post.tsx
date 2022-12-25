@@ -28,13 +28,12 @@ import getInitials from 'utils/getInitials';
 import { createMarkup } from 'utils/Helpers';
 import { IFile, TActionType } from 'utils/shared-types';
 
+import { IAuthUser } from 'pages/auth/data/account-types';
+import { userProfileSelector } from 'pages/profile/services/store/selectors';
 import { useDispatch, useSelector } from 'react-redux';
-import { authUserSelector } from 'pages/auth/services/store/auth';
 import { i18nLangSelector } from 'store/i18n';
 import { IPost } from '../data/post-types';
 import { postsPhaseSelector } from '../services/posts';
-import { IUser } from 'pages/auth/data/account-types';
-import { postActions } from '../services/actions';
 
 const Moment = loadable.lib(() => import('moment'));
 
@@ -63,7 +62,7 @@ const Post = (props: FeedProps) => {
     threshold: 0
   });
 
-  const user = useSelector(authUserSelector);
+  const user = useSelector(userProfileSelector);
   const lang = useSelector(i18nLangSelector);
   const postsPhase = useSelector(postsPhaseSelector);
 
@@ -71,9 +70,12 @@ const Post = (props: FeedProps) => {
   const images = post.files?.filter((file) => file.mimeType.includes('image/'));
   const files = post.files?.filter((file) => !file.mimeType.includes('image/'));
 
-  const handleSaveFeed = React.useCallback((user: IUser, post: IPost, actionType: TActionType) => {
-    // dispatch(postActions.addPost(user, post));
-  }, []);
+  const handleSaveFeed = React.useCallback(
+    (user: IAuthUser, post: IPost, actionType: TActionType) => {
+      // dispatch(postActions.addPost(user, post));
+    },
+    []
+  );
 
   const handleActionsClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);

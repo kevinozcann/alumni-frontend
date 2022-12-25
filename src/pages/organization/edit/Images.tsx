@@ -22,7 +22,7 @@ import useSnackbar from 'hooks/useSnackbar';
 import useTranslation from 'hooks/useTranslation';
 import { EditButton } from 'utils/ActionLinks';
 import { TLang } from 'utils/shared-types';
-import { IUser } from 'pages/auth/data/account-types';
+import { IAuthUser } from 'pages/auth/data/account-types';
 import { ISchool, TConfigKey, TConfiguration } from 'pages/organization/organization-types';
 
 const fetcher = async (url: string) => {
@@ -41,13 +41,13 @@ type TLogo = {
   };
 };
 type TImagesProps = {
-  user: IUser;
+  user: IAuthUser;
   lang: TLang;
   phase: string;
   schoolInfo: ISchool;
   updateConfig?: (configInfo: TConfiguration, idToDelete?: number) => void;
   saveSchoolInfo?: (
-    user: IUser,
+    user: IAuthUser,
     lang: TLang,
     schoolId: number,
     schoolInfo: Partial<ISchool>

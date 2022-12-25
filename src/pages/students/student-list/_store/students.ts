@@ -11,7 +11,8 @@ import { IStudent } from 'pages/students/_store/types';
 import { IAction } from 'store/store';
 import { CLASS_TEACHERS_URL, STUDENTS_API_URL } from 'store/ApiUrls';
 import { TLang } from 'utils/shared-types';
-import { IUser } from 'pages/auth/data/account-types';
+import { IAuthUser } from 'pages/auth/data/account-types';
+import { IUser } from 'pages/profile/data/user-types';
 
 export type TPhase = null | 'student-loading' | 'student-error' | 'student-successful';
 
@@ -117,8 +118,8 @@ export const reducer = persistReducer(
 
 export const studentsActions = {
   pullStudents: (
-    user: IUser,
-    userPersonal: IUser,
+    user: IAuthUser,
+    userPersonal: IAuthUser,
     school: ISchool
   ): IAction<Partial<TActionAllState>> => ({
     type: actionTypes.PULL_STUDENTS,

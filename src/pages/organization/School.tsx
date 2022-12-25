@@ -15,7 +15,7 @@ import { i18nLangSelector } from 'store/i18n';
 import { citiesSelector, countriesSelector, statesSelector, staticActions } from 'store/static';
 import { TLang, IPageTab } from 'utils/shared-types';
 import { useSubheader } from 'contexts/SubheaderContext';
-import { IUser } from 'pages/auth/data/account-types';
+import { IAuthUser } from 'pages/auth/data/account-types';
 
 import { schoolActions, schoolPhaseSelector, schoolSelector } from './_store/school';
 import { ISchool, TConfiguration } from './organization-types';
@@ -55,9 +55,9 @@ const School = () => {
   const pullGradeLevels = (active: boolean) => dispatch(configActions.pullGradeLevels(active));
   const updateConfig = (configInfo: TConfiguration, idToDelete?: number) =>
     dispatch(configActions.updateConfig(configInfo, idToDelete));
-  const saveSchoolInfo = (user: IUser, lang: TLang, schoolId: number, schoolInfo: ISchool) =>
+  const saveSchoolInfo = (user: IAuthUser, lang: TLang, schoolId: number, schoolInfo: ISchool) =>
     dispatch(schoolActions.saveSchoolInfo(user, lang, schoolId, schoolInfo));
-  const deleteSchool = (user: IUser, lang: TLang, activeSchoolId: number, schoolId: number) =>
+  const deleteSchool = (user: IAuthUser, lang: TLang, activeSchoolId: number, schoolId: number) =>
     dispatch(schoolActions.deleteSchool(user, lang, activeSchoolId, schoolId));
   const resetConfigPhase = () => dispatch(configActions.setPhase(null));
 

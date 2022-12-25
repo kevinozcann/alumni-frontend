@@ -20,14 +20,14 @@ import { Place } from 'components/google/MapPlaces';
 import { SaveButton } from 'utils/ActionLinks';
 import { countryToFlag } from 'utils/Helpers';
 import { ICity, ICountry, TLang, IState } from 'utils/shared-types';
-import { IUser } from 'pages/auth/data/account-types';
+import { IAuthUser } from 'pages/auth/data/account-types';
 import { ISchool } from 'pages/organization/organization-types';
 
 const SchoostDialog = loadable(() => import('components/SchoostDialog'));
 const MapPlaces = loadable(() => import('components/google/MapPlaces'));
 
 type TContactProps = {
-  user: IUser;
+  user: IAuthUser;
   lang: TLang;
   phase: string;
   schoolInfo: ISchool;
@@ -35,7 +35,7 @@ type TContactProps = {
   states?: IState[];
   cities?: ICity[];
   saveSchoolInfo: (
-    user: IUser,
+    user: IAuthUser,
     lang: TLang,
     schoolId: number,
     schoolInfo: Partial<ISchool>

@@ -1,4 +1,4 @@
-import { IUser } from 'pages/auth/data/account-types';
+import { IUser } from 'pages/profile/data/user-types';
 import { IFile } from 'utils/shared-types';
 
 export interface IPostComment {
@@ -7,7 +7,7 @@ export interface IPostComment {
   owner?: IUser;
   createdAt?: Date;
 }
-export interface IFeedLike {
+export interface IPostLike {
   id?: number;
   createdAt?: Date;
   createdBy?: IUser;
@@ -18,7 +18,7 @@ export interface IPost {
   content?: string;
   url?: string;
   files?: IFile[];
-  likes?: IFeedLike[];
+  likes?: IPostLike[];
   coverPicture?: string;
   comments?: IPostComment[];
   commentsOn?: boolean;
