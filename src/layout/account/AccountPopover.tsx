@@ -21,8 +21,8 @@ import { useNavigate } from 'react-router-dom';
 import { ILayoutSettings } from 'contexts/SettingsContext';
 import useSettings from 'hooks/useSettings';
 import SettingsDrawer from 'layout/SettingsDrawer';
-import { IUser } from 'pages/auth/data/account-types';
-import { authUserSelector } from 'pages/auth/services/store/auth';
+import { IAuthUser } from 'pages/auth/data/account-types';
+import { userProfileSelector } from 'pages/profile/services/store/selectors';
 
 import awsconfig from 'aws-exports';
 
@@ -38,7 +38,7 @@ const getValues = (settings: ILayoutSettings) => ({
 });
 
 type TAccountPopoverProps = {
-  impersonateUser: IUser;
+  impersonateUser: IAuthUser;
 };
 
 const AccountPopover = (props: TAccountPopoverProps) => {
@@ -53,7 +53,7 @@ const AccountPopover = (props: TAccountPopoverProps) => {
   const anchorRef = React.useRef<HTMLButtonElement | null>(null);
 
   // Selectors
-  const user = useSelector(authUserSelector);
+  const user = useSelector(userProfileSelector);
 
   const handleSettingsOpen = (): void => {
     setSettingsOpen(true);
