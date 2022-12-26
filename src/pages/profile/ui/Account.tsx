@@ -85,10 +85,8 @@ const Account = () => {
   }, [activePage]);
 
   React.useEffect(() => {
-    if (!user) {
-      dispatch(userActions.getUserProfile(authUser));
-    }
-  }, [user]);
+    dispatch(userActions.getUserProfile(authUser));
+  }, []);
 
   return (
     <Page title={intl.formatMessage({ id: 'account.myaccount' })}>

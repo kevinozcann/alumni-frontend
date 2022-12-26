@@ -14,7 +14,7 @@ type TMainNavbarProps = {
   onSidebarMobileOpen?: () => void;
 };
 
-const MainNavbar: React.FC<TMainNavbarProps> = (props) => {
+const MainNavbar = (props: TMainNavbarProps) => {
   const { onSidebarMobileOpen } = props;
   const theme = useTheme();
 
@@ -60,6 +60,9 @@ const MainNavbar: React.FC<TMainNavbarProps> = (props) => {
         </Box>
         <Box sx={{ ml: 1 }}>
           <LanguagePopover />
+        </Box>
+        <Box sx={{ ml: 2 }}>
+          <AccountPopover />
         </Box>
       </Toolbar>
     </AppBar>

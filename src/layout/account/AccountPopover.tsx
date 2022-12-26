@@ -24,10 +24,6 @@ import SettingsDrawer from 'layout/SettingsDrawer';
 import { IAuthUser } from 'pages/auth/data/account-types';
 import { userProfileSelector } from 'pages/profile/services/store/selectors';
 
-import awsconfig from 'aws-exports';
-
-Amplify.configure(awsconfig);
-
 const getValues = (settings: ILayoutSettings) => ({
   compact: settings.compact,
   direction: settings.direction,
@@ -37,12 +33,7 @@ const getValues = (settings: ILayoutSettings) => ({
   mainHeightGutter: settings.mainHeightGutter
 });
 
-type TAccountPopoverProps = {
-  impersonateUser: IAuthUser;
-};
-
-const AccountPopover = (props: TAccountPopoverProps) => {
-  const { impersonateUser } = props;
+const AccountPopover = () => {
   const intl = useIntl();
   const navigate = useNavigate();
   const { settings, saveSettings } = useSettings();
@@ -200,7 +191,6 @@ const AccountPopover = (props: TAccountPopoverProps) => {
         <Box sx={{ p: 2 }}>
           <Button
             color='primary'
-            disabled={Boolean(impersonateUser)}
             fullWidth
             onClick={() => handleClick('/logout')}
             variant='outlined'
