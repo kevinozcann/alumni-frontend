@@ -10,7 +10,7 @@ export const authActions = {
     type: authActionTypes.SAGA.LOGIN,
     payload: { email, password }
   }),
-  logout: (): TAuthActionType => ({ type: authActionTypes.SAGA.AUTH_LOGOUT }),
+  logout: (): TAuthActionType => ({ type: authActionTypes.SAGA.LOGOUT }),
   register: (
     email: string,
     password: string,

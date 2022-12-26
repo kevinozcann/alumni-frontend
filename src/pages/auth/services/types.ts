@@ -5,8 +5,7 @@ import { IAuthUser } from '../data/account-types';
 export const authActionTypes = {
   SAGA: {
     LOGIN: 'auth/saga/LOGIN',
-    AUTH_LOGIN_ERROR: 'auth/LOGIN_ERROR',
-    AUTH_LOGOUT: 'auth/saga/LOGOUT',
+    LOGOUT: 'auth/saga/LOGOUT',
     REGISTER: 'auth/saga/REGISTER',
     AUTH_VERIFY: 'auth/saga/VERIFY',
     AUTH_TOKEN: 'auth/AUTH_TOKEN',
@@ -22,8 +21,8 @@ export const authActionTypes = {
     UPDATE_PHASE: 'auth/saga/UPDATE_PHASE'
   },
   STORE: {
-    AUTH_LOGIN: 'auth/store/LOGIN',
-    AUTH_LOGOUT: 'auth/store/LOGOUT',
+    LOGIN: 'auth/store/LOGIN',
+    LOGOUT: 'auth/store/LOGOUT',
     UPDATE_AUTH: 'auth/store/UPDATE_AUTH',
     UPDATE_PHASE: 'auth/store/UPDATE_PHASE'
   }

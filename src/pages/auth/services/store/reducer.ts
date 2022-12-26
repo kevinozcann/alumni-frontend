@@ -33,12 +33,14 @@ export const reducer = persistReducer(
   (state: IAuthStore = initialAuthState, action: TAuthActionType): IAuthStore => {
     switch (action.type) {
       // LOGIN
-      case authActionTypes.STORE.AUTH_LOGIN: {
+      case authActionTypes.STORE.LOGIN: {
         return { user: null };
       }
       // LOGOUT
-      case authActionTypes.STORE.AUTH_LOGOUT: {
-        return { ...state, user: null, phase: null, error: null };
+      case authActionTypes.STORE.LOGOUT: {
+        const initialState = Object.assign({}, { ...state }, { ...initialAuthState });
+
+        return initialState;
       }
       // UPDATE USER
       case authActionTypes.STORE.UPDATE_AUTH: {

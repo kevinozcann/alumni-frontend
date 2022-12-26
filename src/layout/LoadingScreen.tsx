@@ -12,12 +12,10 @@ const Loading = styled('div')(({ theme }) => ({
   padding: theme.spacing(3)
 }));
 
-export const LoadingScreen: React.FC = () => {
+export const LoadingScreen = () => {
   return (
     <Loading>
-      <Box width='100%'>
-        <CircularProgress />
-      </Box>
+      <CircularProgress />
     </Loading>
   );
 };
