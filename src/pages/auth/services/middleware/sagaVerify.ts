@@ -5,7 +5,11 @@ import { authActions } from '../actions';
 import { authActionTypes, TAuthActionType } from '../types';
 
 export function* sagaVerify({ payload }: TAuthActionType) {
-  yield put(authActions.setPhase('verifying', null));
+  // Update phase
+  yield put({
+    type: authActionTypes.STORE.UPDATE_PHASE,
+    payload: { phase: 'verifying', error: null }
+  });
 
   const { email, code } = payload;
 
@@ -15,18 +19,29 @@ export function* sagaVerify({ payload }: TAuthActionType) {
     if (response === 'SUCCESS') {
       // Update user info
       yield put({
-        type: authActionTypes.STORE.UPDATE_AUTH,
+        type: authActionTypes.STORE.VERIFY,
         payload: {
           userConfirmed: true
         }
       });
 
-      yield put(authActions.setPhase('success', null));
+      // Update phase
+      yield put({
+        type: authActionTypes.STORE.UPDATE_PHASE,
+        payload: { phase: 'success', error: null }
+      });
     } else {
-      yield put(authActions.setPhase('error', 'An error occurred!'));
+      // Update phase
+      yield put({
+        type: authActionTypes.STORE.UPDATE_PHASE,
+        payload: { phase: 'error', error: 'An error occurred!' }
+      });
     }
   } catch (error) {
-    console.log('error', error);
-    yield put(authActions.setPhase('error', error));
+    // Update phase
+    yield put({
+      type: authActionTypes.STORE.UPDATE_PHASE,
+      payload: { phase: 'error', error: error }
+    });
   }
 }

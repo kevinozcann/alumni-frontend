@@ -1,3 +1,4 @@
+import { TPhase } from 'store/store';
 import { IAuthUser } from '../data/account-types';
 import { authActionTypes, TAuthActionType, TUserPassword } from './types';
 
@@ -11,17 +12,11 @@ export const authActions = {
     payload: { email, password }
   }),
   logout: (): TAuthActionType => ({ type: authActionTypes.SAGA.LOGOUT }),
-  register: (
-    email: string,
-    password: string,
-    name: string,
-    lastname: string,
-    phoneNumber: string
-  ): TAuthActionType => ({
+  register: (email: string, password: string, name: string, lastname: string): TAuthActionType => ({
     type: authActionTypes.SAGA.REGISTER,
-    payload: { email, password, name, lastname, phoneNumber }
+    payload: { email, password, name, lastname }
   }),
-  setPhase: (phase: string, error: string): TAuthActionType => ({
+  setPhase: (phase: TPhase, error: string): TAuthActionType => ({
     type: authActionTypes.SAGA.UPDATE_PHASE,
     payload: { phase, error }
   }),
@@ -30,7 +25,7 @@ export const authActions = {
     payload: { user }
   }),
   verify: (email: string, code: string): TAuthActionType => ({
-    type: authActionTypes.SAGA.AUTH_VERIFY,
+    type: authActionTypes.SAGA.VERIFY,
     payload: { email, code }
   })
 };

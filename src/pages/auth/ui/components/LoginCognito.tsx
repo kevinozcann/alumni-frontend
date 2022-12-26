@@ -22,7 +22,7 @@ export const LoginCognito = () => {
   const [showAlert, setShowAlert] = React.useState(false);
 
   // Selectors
-  const user = useSelector(authUserSelector);
+  const authUser = useSelector(authUserSelector);
   const authPhase = useSelector(authPhaseSelector);
   const authError = useSelector(authErrorSelector);
 
@@ -71,12 +71,12 @@ export const LoginCognito = () => {
   }, [authError, authPhase]);
 
   React.useEffect(() => {
-    if (user && authPhase === 'success') {
+    if (authUser && authPhase === 'success') {
       setTimeout(() => {
         navigate('/account/home');
       }, 500);
     }
-  }, [user, authPhase]);
+  }, [authUser, authPhase]);
 
   React.useEffect(() => {
     dispatch(authActions.setPhase(null, null));

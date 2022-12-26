@@ -15,7 +15,7 @@ export function* sagaLogin({ payload }: TAuthActionType) {
     const cognitoUser = yield Auth.signIn(email, password);
 
     yield put({
-      type: authActionTypes.STORE.UPDATE_AUTH,
+      type: authActionTypes.STORE.LOGIN,
       payload: {
         username: cognitoUser.username,
         pool: {

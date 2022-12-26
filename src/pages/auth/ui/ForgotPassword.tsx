@@ -16,7 +16,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPaperPlane, faSpinner } from '@fortawesome/pro-duotone-svg-icons';
 
 import Login from 'components/links/Login';
-import { AppDispatch, RootState } from 'store/store';
+import { AppDispatch, RootState, TPhase } from 'store/store';
 import { authErrorSelector, authPhaseSelector } from 'pages/auth/services/store/auth';
 import { i18nLangSelector } from 'store/i18n';
 import { TLang } from 'utils/shared-types';
@@ -29,7 +29,7 @@ const mapStateToProps = (state: RootState) => ({
   authError: authErrorSelector(state)
 });
 const mapDispatchToProps = (dispatch: AppDispatch) => ({
-  setPhase: (phase: string) => dispatch(authActions.setPhase(phase, null))
+  setPhase: (phase: TPhase) => dispatch(authActions.setPhase(phase, null))
 });
 const connector = connect(mapStateToProps, mapDispatchToProps);
 type PropsFromRedux = ConnectedProps<typeof connector>;

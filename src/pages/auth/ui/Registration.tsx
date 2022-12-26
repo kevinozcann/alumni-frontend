@@ -28,7 +28,6 @@ type FormValues = {
   confirmPassword: string;
   name: string;
   lastname: string;
-  phoneNumber: string;
 };
 
 const Registration = () => {
@@ -74,8 +73,7 @@ const Registration = () => {
         password: '',
         confirmPassword: '',
         name: '',
-        lastname: '',
-        phoneNumber: ''
+        lastname: ''
       },
       validate: (values: FormValues) => validateForm(values),
       onSubmit: (values: FormValues) => submitForm(values)
@@ -131,15 +129,7 @@ const Registration = () => {
   };
 
   const submitForm = (values: FormValues) => {
-    dispatch(
-      authActions.register(
-        values.email,
-        values.password,
-        values.name,
-        values.lastname,
-        values.phoneNumber
-      )
-    );
+    dispatch(authActions.register(values.email, values.password, values.name, values.lastname));
   };
 
   React.useEffect(() => {
@@ -149,7 +139,7 @@ const Registration = () => {
   }, [authError, authPhase]);
 
   React.useEffect(() => {
-    if (auth && !auth.userConfirmed) {
+    if (auth && auth?.userConfirmed === false) {
       setTimeout(() => {
         navigate('/auth/verify');
       }, 5000);
@@ -211,20 +201,6 @@ const Registration = () => {
           value={values.email}
           error={Boolean(touched.email && errors.email)}
           helperText={touched.email && errors.email}
-        />
-
-        <TextField
-          fullWidth
-          name='phoneNumber'
-          disabled={isSubmitting}
-          label={intl.translate({ id: 'user.phone_number' })}
-          margin='normal'
-          variant='outlined'
-          placeholder={intl.translate({ id: 'user.phone_number' })}
-          onChange={handleChange}
-          value={values.phoneNumber}
-          error={Boolean(touched.phoneNumber && errors.phoneNumber)}
-          helperText={touched.phoneNumber && errors.phoneNumber}
         />
 
         <TextField

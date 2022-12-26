@@ -5,43 +5,46 @@ import { authActions } from '../actions';
 import { authActionTypes, TAuthActionType } from '../types';
 
 export function* sagaRegister({ payload }: TAuthActionType) {
-  yield put(authActions.setPhase('adding', null));
+  // Update phase
+  yield put({
+    type: authActionTypes.STORE.UPDATE_PHASE,
+    payload: { phase: 'adding', error: null }
+  });
 
-  const { email, password, name, lastname, phoneNumber } = payload;
+  const { email, password, name, lastname } = payload;
 
   try {
-    const { user, userConfirmed, userSub } = yield Auth.signUp({
+    const { user, userConfirmed } = yield Auth.signUp({
       username: email,
       password,
       attributes: {
         email,
         name,
-        family_name: lastname,
-        phone_number: phoneNumber,
-        'custom:picture': '',
-        'custom:wallpaper': ''
+        family_name: lastname
       }
     });
 
     // Update user info
     yield put({
-      type: authActionTypes.STORE.UPDATE_AUTH,
+      type: authActionTypes.STORE.REGISTER,
       payload: {
-        userSub: userSub,
         userConfirmed: userConfirmed,
         username: user.username,
-        session: user.session,
         client: user.client,
-        signInUserSession: user.signInUserSession,
-        authenticationFlowType: user.authenticationFlowType,
-        keyPrefix: user.keyPrefix,
-        userDataKey: user.userDataKey
+        signInUserSession: user.signInUserSession
       }
     });
 
-    yield put(authActions.setPhase('success', null));
+    // Update phase
+    yield put({
+      type: authActionTypes.STORE.UPDATE_PHASE,
+      payload: { phase: 'success', error: null }
+    });
   } catch (error) {
-    console.log('error', error);
-    yield put(authActions.setPhase('error', error));
+    // Update phase
+    yield put({
+      type: authActionTypes.STORE.UPDATE_PHASE,
+      payload: { phase: 'error', error: error }
+    });
   }
 }

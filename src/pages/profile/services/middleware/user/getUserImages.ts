@@ -20,13 +20,13 @@ export function* getUserImages() {
     wallpaper ? call(getS3File, wallpaper) : toAbsoluteUrl('/media/users/cover.jpeg')
   ]);
 
-  yield put({
-    type: authActionTypes.STORE.UPDATE_AUTH,
-    payload: {
-      attributes: {
-        pictureUrl,
-        wallpaperUrl
-      }
-    }
-  });
+  // yield put({
+  //   type: authActionTypes.STORE.UPDATE_AUTH,
+  //   payload: {
+  //     attributes: {
+  //       pictureUrl,
+  //       wallpaperUrl
+  //     }
+  //   }
+  // });
 }

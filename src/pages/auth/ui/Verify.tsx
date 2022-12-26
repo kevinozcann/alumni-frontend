@@ -52,10 +52,6 @@ const Verify = () => {
     }
   };
 
-  const handleMouseDownPassword = (event: React.MouseEvent) => {
-    event.preventDefault();
-  };
-
   const submitForm = (values: TFormValues) => {
     setSubmitted(true);
     dispatch(authActions.verify(values.email, values.code));
@@ -149,20 +145,20 @@ const Verify = () => {
         </form>
       </>
 
-      {(authPhase === 'error' && (
+      {authPhase === 'error' && (
         <Box sx={{ mt: 2, textAlign: 'center' }}>
           <Alert variant='outlined' severity='error'>
             {intl.formatMessage({ id: 'register.email_verified_not' })}
           </Alert>
         </Box>
-      )) ||
-        (authPhase === 'success' && (
-          <Box sx={{ mt: 2, textAlign: 'center' }}>
-            <Alert variant='outlined' severity='success'>
-              {intl.formatMessage({ id: 'register.email_verified' })}
-            </Alert>
-          </Box>
-        ))}
+      )}
+      {authPhase === 'success' && (
+        <Box sx={{ mt: 2, textAlign: 'center' }}>
+          <Alert variant='outlined' severity='success'>
+            {intl.formatMessage({ id: 'register.email_verified' })}
+          </Alert>
+        </Box>
+      )}
     </Box>
   );
 };

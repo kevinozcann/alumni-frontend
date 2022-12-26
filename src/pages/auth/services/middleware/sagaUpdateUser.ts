@@ -24,42 +24,42 @@ export function* sagaUpdateUser({ payload }: TAuthActionType) {
 
   const authenticatedUser = yield Auth.currentAuthenticatedUser();
 
-  if (user.hasOwnProperty('attributes')) {
-    try {
-      const attributes = user['attributes'];
-      const updateAttributes = {};
+  // if (user.hasOwnProperty('attributes')) {
+  //   try {
+  //     const attributes = user['attributes'];
+  //     const updateAttributes = {};
 
-      attributesList.forEach((attribute) => {
-        if (attributes.hasOwnProperty(attribute)) {
-          updateAttributes[attribute] = attributes[attribute];
-        }
-      });
+  //     attributesList.forEach((attribute) => {
+  //       if (attributes.hasOwnProperty(attribute)) {
+  //         updateAttributes[attribute] = attributes[attribute];
+  //       }
+  //     });
 
-      const result = yield Auth.updateUserAttributes(authenticatedUser, updateAttributes);
+  //     const result = yield Auth.updateUserAttributes(authenticatedUser, updateAttributes);
 
-      if (result === 'SUCCESS') {
-        yield put({
-          type: authActionTypes.STORE.UPDATE_AUTH,
-          payload: {
-            attributes: updateAttributes
-          }
-        });
+  //     if (result === 'SUCCESS') {
+  //       yield put({
+  //         type: authActionTypes.STORE.UPDATE_AUTH,
+  //         payload: {
+  //           attributes: updateAttributes
+  //         }
+  //       });
 
-        // If pictures are updated then get a temp url for them
-        if (
-          attributes.hasOwnProperty('custom:picture') ||
-          attributes.hasOwnProperty('custom:wallpaper')
-        ) {
-          yield call(getUserImages);
-        }
-      } else {
-        yield put(authActions.setPhase('error', 'An error occurred!'));
-      }
+  //       // If pictures are updated then get a temp url for them
+  //       if (
+  //         attributes.hasOwnProperty('custom:picture') ||
+  //         attributes.hasOwnProperty('custom:wallpaper')
+  //       ) {
+  //         yield call(getUserImages);
+  //       }
+  //     } else {
+  //       yield put(authActions.setPhase('error', 'An error occurred!'));
+  //     }
 
-      yield put(authActions.setPhase('success', null));
-    } catch (error) {
-      console.log('error', error);
-      yield put(authActions.setPhase('error', error));
-    }
-  }
+  //     yield put(authActions.setPhase('success', null));
+  //   } catch (error) {
+  //     console.log('error', error);
+  //     yield put(authActions.setPhase('error', error));
+  //   }
+  // }
 }

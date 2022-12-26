@@ -8,7 +8,8 @@ export const initialAuthState: IAuthStore = {
   accessToken: null,
   refreshToken: null,
   user: null,
-  userConfirmed: null,
+  client: null,
+  signInUserSession: null,
   phase: null,
   error: null
 };
@@ -34,16 +35,6 @@ export const reducer = persistReducer(
     switch (action.type) {
       // LOGIN
       case authActionTypes.STORE.LOGIN: {
-        return { user: null };
-      }
-      // LOGOUT
-      case authActionTypes.STORE.LOGOUT: {
-        const initialState = Object.assign({}, { ...state }, { ...initialAuthState });
-
-        return initialState;
-      }
-      // UPDATE USER
-      case authActionTypes.STORE.UPDATE_AUTH: {
         const {
           username,
           pool,
@@ -54,17 +45,6 @@ export const reducer = persistReducer(
           user,
           preferredMFA
         } = action.payload;
-
-        // if (payload.hasOwnProperty('attributes')) {
-        //   const updatedAttributes = Object.assign(
-        //     {},
-        //     user?.attributes || {},
-        //     payload['attributes']
-        //   );
-        //   payload['attributes'] = updatedAttributes;
-        // }
-
-        // const updatedAuth = Object.assign({}, auth, payload);
 
         return {
           ...state,
@@ -77,6 +57,30 @@ export const reducer = persistReducer(
           user,
           preferredMFA
         };
+      }
+      // LOGOUT
+      case authActionTypes.STORE.LOGOUT: {
+        const initialState = Object.assign({}, { ...state }, { ...initialAuthState });
+
+        return initialState;
+      }
+      // REGISTER
+      case authActionTypes.STORE.REGISTER: {
+        const { userConfirmed, username, client, signInUserSession } = action.payload;
+
+        return {
+          ...state,
+          userConfirmed,
+          username,
+          client,
+          signInUserSession
+        };
+      }
+      // VERIFY
+      case authActionTypes.STORE.VERIFY: {
+        const { userConfirmed } = action.payload;
+
+        return { ...state, userConfirmed };
       }
       // UPDATE PHASE
       case authActionTypes.STORE.UPDATE_PHASE: {
