@@ -1,10 +1,10 @@
 import { API } from 'aws-amplify';
-import { call, put } from 'redux-saga/effects';
+import { put } from 'redux-saga/effects';
 
 import { updateUser } from 'graphql/mutations';
-import { authActions } from 'pages/auth/services/actions';
-import { TUserActionType, userActionTypes } from 'pages/profile/services/types';
 import { authActionTypes } from 'pages/auth/services/types';
+import { TUserActionType, userActionTypes } from 'pages/profile/services/types';
+import { prepareUserProfile } from './prepareUserProfile';
 
 export function* sagaUpdateUserProfile({ payload }: TUserActionType) {
   // Update phase
@@ -16,20 +16,7 @@ export function* sagaUpdateUserProfile({ payload }: TUserActionType) {
   try {
     const { authUser, profile, values } = payload;
 
-    const updatedProfile = Object.assign(profile, values);
-
-    // Remove null keys
-    Object.keys(updatedProfile).forEach((key) => {
-      if (updatedProfile[key] == null) {
-        delete updatedProfile[key];
-      }
-    });
-
-    // Remove keys that are not allowed
-    delete updatedProfile['posts'];
-    delete updatedProfile['comments'];
-    delete updatedProfile['createdAt'];
-    delete updatedProfile['updatedAt'];
+    const updatedProfile = prepareUserProfile(profile, values);
 
     // Update user
     const { data } = yield API.graphql({

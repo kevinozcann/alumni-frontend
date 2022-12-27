@@ -13,9 +13,12 @@ export const userActions = {
     type: userActionTypes.SAGA.UPDATE_PROFILE,
     payload: { authUser, profile, values }
   }),
-  updateUserProfileImages: (profile: IUser, values: IUser): TUserActionType => ({
+  updateUserProfileImages: (
+    profile: IUser,
+    imageKeys: Record<string, string>
+  ): TUserActionType => ({
     type: userActionTypes.SAGA.UPDATE_IMAGES,
-    payload: { profile, values }
+    payload: { profile, imageKeys }
   }),
   setPhase: (phase: TPhase, error: string): TUserActionType => ({
     type: userActionTypes.SAGA.UPDATE_PHASE,

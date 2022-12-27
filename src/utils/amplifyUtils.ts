@@ -1,12 +1,8 @@
-import { Amplify, Storage } from 'aws-amplify';
+import { Storage } from 'aws-amplify';
 
-import awsconfig from 'aws-exports';
-
-Amplify.configure(awsconfig);
-
-export function* getS3File(filename: string) {
+export function* getS3File(filename: string, level: any) {
   return yield Storage.get(filename, {
-    level: 'private',
+    level: level || 'public',
     expires: 24 * 60 * 60
   });
 }

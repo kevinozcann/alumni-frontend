@@ -16,15 +16,13 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import useSnackbar from 'hooks/useSnackbar';
 import useTranslation from 'hooks/useTranslation';
-import { IAuthUser } from 'pages/auth/data/account-types';
-import { authPhaseSelector, authUserSelector } from 'pages/auth/services/store/auth';
 import { userActions } from 'pages/profile/services/actions';
 import { userPhaseSelector, userProfileSelector } from 'pages/profile/services/store/selectors';
 
 interface IFormValues {
-  avatarKey: string;
+  avatar: string;
   avatarObject?: any;
-  wallpaperKey: string;
+  wallpaper: string;
   wallpaperObject?: any;
 }
 
@@ -38,9 +36,9 @@ const Images = () => {
   const userPhase = useSelector(userPhaseSelector);
 
   const formInitialValues: IFormValues = {
-    avatarKey: userProfile.avatarKey || '',
+    avatar: userProfile.avatarKey || '',
     avatarObject: null,
-    wallpaperKey: userProfile.wallpaperKey || '',
+    wallpaper: userProfile.wallpaperKey || '',
     wallpaperObject: null
   };
 
@@ -78,31 +76,27 @@ const Images = () => {
     async (values: IFormValues) => {
       setStatus('submitted');
 
-      if (activeField === 'avatarKey') {
+      if (activeField === 'avatar') {
         try {
           const upload = await Storage.put(values.avatarObject['name'], values.avatarObject);
 
           dispatch(
             userActions.updateUserProfileImages(userProfile, {
-              avatarKey: upload.key
+              avatar: upload.key
             })
           );
         } catch (error) {
           console.log('Error uploading file: ', error);
         }
-      } else if (activeField === 'wallpaperKey') {
+      } else if (activeField === 'wallpaper') {
         try {
-          const upload = await Storage.put(values.wallpaperObject['name'], values.wallpaperObject, {
-            level: 'private'
-          });
+          const upload = await Storage.put(values.wallpaperObject['name'], values.wallpaperObject);
 
-          // dispatch(
-          //   authActions.updateUserInfo({
-          //     attributes: {
-          //       'custom:wallpaperKey': upload.key
-          //     }
-          //   })
-          // );
+          dispatch(
+            userActions.updateUserProfileImages(userProfile, {
+              wallpaper: upload.key
+            })
+          );
         } catch (error) {
           console.log('Error uploading file: ', error);
         }
@@ -145,13 +139,11 @@ const Images = () => {
             <Grid container spacing={3}>
               <Grid item xs={12}>
                 <FormControl fullWidth variant='filled'>
-                  <InputLabel htmlFor='avatarKey'>
-                    {intl.translate({ id: 'logo.photo' })}
-                  </InputLabel>
+                  <InputLabel htmlFor='avatar'>{intl.translate({ id: 'logo.photo' })}</InputLabel>
                   <FilledInput
-                    id='avatarKey'
+                    id='avatar'
                     readOnly
-                    value={values.avatarKey}
+                    value={values.avatar}
                     endAdornment={
                       <InputAdornment position='end'>
                         <Button
@@ -165,9 +157,9 @@ const Images = () => {
                             id='avatarObject'
                             type='file'
                             onChange={(event) => {
-                              setActiveField('avatarKey');
+                              setActiveField('avatar');
                               setFieldValue(
-                                'avatarKey',
+                                'avatar',
                                 (event.target as HTMLInputElement).files[0].name
                               );
                               setFieldValue(
@@ -183,19 +175,19 @@ const Images = () => {
                       </InputAdornment>
                     }
                   />
-                  {errors.avatarKey && <FormHelperText>{errors.avatarKey}</FormHelperText>}
+                  {errors.avatar && <FormHelperText>{errors.avatar}</FormHelperText>}
                 </FormControl>
               </Grid>
 
               <Grid item xs={12}>
                 <FormControl fullWidth variant='filled'>
-                  <InputLabel htmlFor='wallpaperKey'>
+                  <InputLabel htmlFor='wallpaper'>
                     {intl.translate({ id: 'user.wallpaper' })}
                   </InputLabel>
                   <FilledInput
-                    id='wallpaperKey'
+                    id='wallpaper'
                     readOnly
-                    value={values.wallpaperKey}
+                    value={values.wallpaper}
                     onChange={handleChange}
                     endAdornment={
                       <InputAdornment position='end'>
@@ -210,9 +202,9 @@ const Images = () => {
                             id='wallpaperObject'
                             type='file'
                             onChange={(event) => {
-                              setActiveField('wallpaperKey');
+                              setActiveField('wallpaper');
                               setFieldValue(
-                                'wallpaperKey',
+                                'wallpaper',
                                 (event.target as HTMLInputElement).files[0].name
                               );
                               setFieldValue(
@@ -228,7 +220,7 @@ const Images = () => {
                       </InputAdornment>
                     }
                   />
-                  {errors.wallpaperKey && <FormHelperText>{errors.wallpaperKey}</FormHelperText>}
+                  {errors.wallpaper && <FormHelperText>{errors.wallpaper}</FormHelperText>}
                 </FormControl>
               </Grid>
             </Grid>

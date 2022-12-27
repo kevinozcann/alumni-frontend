@@ -35,5 +35,6 @@ export type TUserStoreActions = IUserStore & {
   userType?: string;
   authUser?: IAuthUser;
   values?: IUser;
+  imageKeys?: Record<string, string>;
 };
 export type TUserActionType = IAction<Partial<TUserStoreActions>>;

@@ -5,6 +5,8 @@ import { updateUser } from 'graphql/mutations';
 import { authActions } from 'pages/auth/services/actions';
 import { TUserActionType, userActionTypes } from 'pages/profile/services/types';
 import { authActionTypes } from 'pages/auth/services/types';
+import { getUserImage } from './getUserImage';
+import { prepareUserProfile } from './prepareUserProfile';
 
 export function* sagaUpdateUserProfileImages({ payload }: TUserActionType) {
   // Update phase
@@ -14,22 +16,17 @@ export function* sagaUpdateUserProfileImages({ payload }: TUserActionType) {
   });
 
   try {
-    const { authUser, profile, values } = payload;
+    const { profile, imageKeys } = payload;
 
-    const updatedProfile = Object.assign(profile, values);
+    const values = {};
+    const imageUrls = yield call(getUserImage, profile, imageKeys);
 
-    // Remove null keys
-    Object.keys(updatedProfile).forEach((key) => {
-      if (updatedProfile[key] == null) {
-        delete updatedProfile[key];
-      }
+    Object.keys(imageKeys).forEach((key, index) => {
+      values[key + 'Key'] = imageKeys[key];
+      values[key + 'Url'] = imageUrls[index];
     });
 
-    // Remove keys that are not allowed
-    delete updatedProfile['posts'];
-    delete updatedProfile['comments'];
-    delete updatedProfile['createdAt'];
-    delete updatedProfile['updatedAt'];
+    const updatedProfile = prepareUserProfile(profile, values);
 
     // Update user
     const { data } = yield API.graphql({
@@ -51,21 +48,6 @@ export function* sagaUpdateUserProfileImages({ payload }: TUserActionType) {
       yield put({
         type: userActionTypes.STORE.UPDATE_PHASE,
         payload: { phase: 'success', error: null }
-      });
-
-      // Update authUser for the keys changed so that it is kept synced
-      const updatedAuthUser = { ...authUser };
-      const valuesKeys = Object.keys(values);
-
-      Object.keys(updatedAuthUser).forEach((key) => {
-        if (valuesKeys.includes(key) && updatedAuthUser[key] !== values[key]) {
-          updatedAuthUser[key] = values[key];
-        }
-      });
-
-      yield put({
-        type: authActionTypes.SAGA.UPDATE_USER,
-        payload: { user: updatedAuthUser }
       });
     } else {
       // Update error

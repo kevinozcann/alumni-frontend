@@ -1,7 +1,7 @@
 import { Auth } from 'aws-amplify';
 import { call, delay, put } from 'redux-saga/effects';
 
-import { getUserImages } from 'pages/profile/services/middleware/user/getUserImages';
+import { getUserImage } from 'pages/profile/services/middleware/user/getUserImage';
 
 import { authActions } from '../actions';
 import { authActionTypes, TAuthActionType } from '../types';
