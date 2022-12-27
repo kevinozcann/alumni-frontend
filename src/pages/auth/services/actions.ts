@@ -4,7 +4,7 @@ import { authActionTypes, TAuthActionType, TUserPassword } from './types';
 
 export const authActions = {
   changePassword: (userPassword: TUserPassword): TAuthActionType => ({
-    type: authActionTypes.SAGA.UPDATE_USER_PASSWORD,
+    type: authActionTypes.SAGA.UPDATE_PASSWORD,
     payload: { userPassword }
   }),
   login: (email: string, password: string): TAuthActionType => ({
@@ -20,9 +20,9 @@ export const authActions = {
     type: authActionTypes.SAGA.UPDATE_PHASE,
     payload: { phase, error }
   }),
-  updateAuthUser: (user: Partial<IAuthUser>): TAuthActionType => ({
-    type: authActionTypes.SAGA.UPDATE_AUTH_USER,
-    payload: { user }
+  updateAuthUser: (authUser: IAuthUser): TAuthActionType => ({
+    type: authActionTypes.SAGA.UPDATE_USER,
+    payload: { user: authUser }
   }),
   verify: (email: string, code: string): TAuthActionType => ({
     type: authActionTypes.SAGA.VERIFY,

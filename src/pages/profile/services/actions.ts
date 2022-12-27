@@ -6,12 +6,16 @@ import { IUser } from '../data/user-types';
 
 export const userActions = {
   getUserProfile: (authUser: IAuthUser): TUserActionType => ({
-    type: userActionTypes.SAGA.GET_USER_PROFILE,
+    type: userActionTypes.SAGA.GET_PROFILE,
     payload: { authUser }
   }),
   updateUserProfile: (authUser: IAuthUser, profile: IUser, values: IUser): TUserActionType => ({
-    type: userActionTypes.SAGA.UPDATE_USER_PROFILE,
+    type: userActionTypes.SAGA.UPDATE_PROFILE,
     payload: { authUser, profile, values }
+  }),
+  updateUserProfileImages: (profile: IUser, values: IUser): TUserActionType => ({
+    type: userActionTypes.SAGA.UPDATE_IMAGES,
+    payload: { profile, values }
   }),
   setPhase: (phase: TPhase, error: string): TUserActionType => ({
     type: userActionTypes.SAGA.UPDATE_PHASE,

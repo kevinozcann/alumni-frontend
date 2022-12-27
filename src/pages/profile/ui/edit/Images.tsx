@@ -9,7 +9,7 @@ import FormHelperText from '@mui/material/FormHelperText';
 import Grid from '@mui/material/Grid';
 import InputAdornment from '@mui/material/InputAdornment';
 import InputLabel from '@mui/material/InputLabel';
-import { Amplify, Storage } from 'aws-amplify';
+import { Storage } from 'aws-amplify';
 import { useFormik } from 'formik';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -18,15 +18,13 @@ import useSnackbar from 'hooks/useSnackbar';
 import useTranslation from 'hooks/useTranslation';
 import { IAuthUser } from 'pages/auth/data/account-types';
 import { authPhaseSelector, authUserSelector } from 'pages/auth/services/store/auth';
-
-import awsconfig from 'aws-exports';
-
-Amplify.configure(awsconfig);
+import { userActions } from 'pages/profile/services/actions';
+import { userPhaseSelector, userProfileSelector } from 'pages/profile/services/store/selectors';
 
 interface IFormValues {
-  picture: string;
-  pictureObject?: any;
-  wallpaper: string;
+  avatarKey: string;
+  avatarObject?: any;
+  wallpaperKey: string;
   wallpaperObject?: any;
 }
 
@@ -36,15 +34,13 @@ const Images = () => {
   const [activeField, setActiveField] = React.useState<string>();
   const { showSnackbar } = useSnackbar();
 
-  const user = useSelector(authUserSelector);
-  const authPhase = useSelector(authPhaseSelector);
-
-  const userAttributes: IAuthUser = user;
+  const userProfile = useSelector(userProfileSelector);
+  const userPhase = useSelector(userPhaseSelector);
 
   const formInitialValues: IFormValues = {
-    picture: userAttributes['custom:picture'],
-    pictureObject: null,
-    wallpaper: userAttributes['custom:wallpaper'],
+    avatarKey: userProfile.avatarKey || '',
+    avatarObject: null,
+    wallpaperKey: userProfile.wallpaperKey || '',
     wallpaperObject: null
   };
 
@@ -67,7 +63,7 @@ const Images = () => {
 
   const validateForm = (values: Partial<IFormValues>) => {
     const errors = {};
-    const nonEmptyFields = ['picture', 'wallpaper'];
+    const nonEmptyFields = [];
 
     nonEmptyFields.forEach((field) => {
       if (!values[field]) {
@@ -82,23 +78,19 @@ const Images = () => {
     async (values: IFormValues) => {
       setStatus('submitted');
 
-      if (activeField === 'picture') {
+      if (activeField === 'avatarKey') {
         try {
-          const upload = await Storage.put(values.pictureObject['name'], values.pictureObject, {
-            level: 'private'
-          });
+          const upload = await Storage.put(values.avatarObject['name'], values.avatarObject);
 
-          // dispatch(
-          //   authActions.updateUserInfo({
-          //     attributes: {
-          //       'custom:picture': upload.key
-          //     }
-          //   })
-          // );
+          dispatch(
+            userActions.updateUserProfileImages(userProfile, {
+              avatarKey: upload.key
+            })
+          );
         } catch (error) {
           console.log('Error uploading file: ', error);
         }
-      } else if (activeField === 'wallpaper') {
+      } else if (activeField === 'wallpaperKey') {
         try {
           const upload = await Storage.put(values.wallpaperObject['name'], values.wallpaperObject, {
             level: 'private'
@@ -107,7 +99,7 @@ const Images = () => {
           // dispatch(
           //   authActions.updateUserInfo({
           //     attributes: {
-          //       'custom:wallpaper': upload.key
+          //       'custom:wallpaperKey': upload.key
           //     }
           //   })
           // );
@@ -122,7 +114,7 @@ const Images = () => {
   // Auto save the form
   React.useEffect(() => {
     if (
-      values.pictureObject !== initialValues.pictureObject ||
+      values.avatarObject !== initialValues.avatarObject ||
       values.wallpaperObject !== initialValues.wallpaperObject
     ) {
       submitForm(values);
@@ -130,7 +122,7 @@ const Images = () => {
   }, [values, initialValues]);
 
   React.useEffect(() => {
-    if (authPhase === 'success') {
+    if (userPhase === 'success') {
       setSubmitting(false);
 
       if (status === 'submitted') {
@@ -140,7 +132,7 @@ const Images = () => {
         });
       }
     }
-  }, [status, authPhase]);
+  }, [status, userPhase]);
 
   return (
     <React.Fragment>
@@ -153,11 +145,13 @@ const Images = () => {
             <Grid container spacing={3}>
               <Grid item xs={12}>
                 <FormControl fullWidth variant='filled'>
-                  <InputLabel htmlFor='picture'>{intl.translate({ id: 'logo.photo' })}</InputLabel>
+                  <InputLabel htmlFor='avatarKey'>
+                    {intl.translate({ id: 'logo.photo' })}
+                  </InputLabel>
                   <FilledInput
-                    id='picture'
+                    id='avatarKey'
                     readOnly
-                    value={values.picture}
+                    value={values.avatarKey}
                     endAdornment={
                       <InputAdornment position='end'>
                         <Button
@@ -168,40 +162,40 @@ const Images = () => {
                           <input
                             style={{ display: 'none' }}
                             accept='image/*'
-                            id='pictureObject'
+                            id='avatarObject'
                             type='file'
                             onChange={(event) => {
-                              setActiveField('picture');
+                              setActiveField('avatarKey');
                               setFieldValue(
-                                'picture',
+                                'avatarKey',
                                 (event.target as HTMLInputElement).files[0].name
                               );
                               setFieldValue(
-                                'pictureObject',
+                                'avatarObject',
                                 (event.target as HTMLInputElement).files[0]
                               );
                             }}
                           />
                           {intl.formatMessage({
-                            id: userAttributes['custom:picture'] ? 'app.change' : 'app.add'
+                            id: userProfile.avatarKey ? 'app.change' : 'app.add'
                           })}
                         </Button>
                       </InputAdornment>
                     }
                   />
-                  {errors.picture && <FormHelperText>{errors.picture}</FormHelperText>}
+                  {errors.avatarKey && <FormHelperText>{errors.avatarKey}</FormHelperText>}
                 </FormControl>
               </Grid>
 
               <Grid item xs={12}>
                 <FormControl fullWidth variant='filled'>
-                  <InputLabel htmlFor='wallpaper'>
+                  <InputLabel htmlFor='wallpaperKey'>
                     {intl.translate({ id: 'user.wallpaper' })}
                   </InputLabel>
                   <FilledInput
-                    id='wallpaper'
+                    id='wallpaperKey'
                     readOnly
-                    value={values.wallpaper}
+                    value={values.wallpaperKey}
                     onChange={handleChange}
                     endAdornment={
                       <InputAdornment position='end'>
@@ -216,9 +210,9 @@ const Images = () => {
                             id='wallpaperObject'
                             type='file'
                             onChange={(event) => {
-                              setActiveField('wallpaper');
+                              setActiveField('wallpaperKey');
                               setFieldValue(
-                                'wallpaper',
+                                'wallpaperKey',
                                 (event.target as HTMLInputElement).files[0].name
                               );
                               setFieldValue(
@@ -228,13 +222,13 @@ const Images = () => {
                             }}
                           />
                           {intl.formatMessage({
-                            id: userAttributes['custom:wallpaper'] ? 'app.change' : 'app.add'
+                            id: userProfile.wallpaperKey ? 'app.change' : 'app.add'
                           })}
                         </Button>
                       </InputAdornment>
                     }
                   />
-                  {errors.wallpaper && <FormHelperText>{errors.wallpaper}</FormHelperText>}
+                  {errors.wallpaperKey && <FormHelperText>{errors.wallpaperKey}</FormHelperText>}
                 </FormControl>
               </Grid>
             </Grid>

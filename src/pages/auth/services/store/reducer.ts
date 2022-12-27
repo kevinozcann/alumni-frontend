@@ -82,9 +82,16 @@ export const reducer = persistReducer(
 
         return { ...state, userConfirmed };
       }
+      // UPDATE USER
+      case authActionTypes.STORE.UPDATE_USER: {
+        const { user } = action.payload;
+
+        return { ...state, user };
+      }
       // UPDATE PHASE
       case authActionTypes.STORE.UPDATE_PHASE: {
         const { phase, error } = action.payload;
+
         return { ...state, phase, error };
       }
       default:

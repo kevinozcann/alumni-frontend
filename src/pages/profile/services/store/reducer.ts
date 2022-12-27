@@ -16,12 +16,14 @@ export const reducer = persistReducer(
   },
   (state: IUserStore = initialAuthState, action: TUserActionType): IUserStore => {
     switch (action.type) {
-      case userActionTypes.STORE.UPDATE_USER_PROFILE: {
+      case userActionTypes.STORE.UPDATE_PROFILE: {
         const { profile } = action.payload;
+
         return { ...state, profile };
       }
       case userActionTypes.STORE.UPDATE_PHASE: {
         const { phase, error } = action.payload;
+
         return { ...state, phase, error };
       }
       default:

@@ -6,13 +6,15 @@ import { IUser } from '../data/user-types';
 
 export const userActionTypes = {
   SAGA: {
-    GET_USER_PROFILE: 'user/saga/GET_USER_PROFILE',
-    UPDATE_USER_PROFILE: 'user/saga/UPDATE_USER_PROFILE',
-    UPDATE_PHASE: 'user/saga/UPDATE_PHASE'
+    GET_PROFILE: 'user/saga/GET_PROFILE',
+    UPDATE_IMAGES: 'user/saga/UPDATE_IMAGES',
+    UPDATE_PHASE: 'user/saga/UPDATE_PHASE',
+    UPDATE_PROFILE: 'user/saga/UPDATE_PROFILE'
   },
   STORE: {
+    UPDATE_IMAGES: 'user/store/UPDATE_IMAGES',
     UPDATE_PHASE: 'user/store/UPDATE_PHASE',
-    UPDATE_USER_PROFILE: 'user/store/UPDATE_PROFILE'
+    UPDATE_PROFILE: 'user/store/UPDATE_PROFILE'
   }
 };
 

@@ -7,9 +7,9 @@ export const authActionTypes = {
     LOGIN: 'auth/saga/LOGIN',
     LOGOUT: 'auth/saga/LOGOUT',
     REGISTER: 'auth/saga/REGISTER',
-    UPDATE_AUTH_USER: 'auth/saga/UPDATE_USER',
-    UPDATE_USER_PASSWORD: 'auth/UPDATE_USER_PASSWORD',
+    UPDATE_PASSWORD: 'auth/saga/UPDATE_PASSWORD',
     UPDATE_PHASE: 'auth/saga/UPDATE_PHASE',
+    UPDATE_USER: 'auth/saga/UPDATE_USER',
     VERIFY: 'auth/saga/VERIFY'
   },
   STORE: {
@@ -17,6 +17,7 @@ export const authActionTypes = {
     LOGOUT: 'auth/store/LOGOUT',
     REGISTER: 'auth/store/REGISTER',
     UPDATE_PHASE: 'auth/store/UPDATE_PHASE',
+    UPDATE_USER: 'auth/store/UPDATE_USER',
     VERIFY: 'auth/store/VERIFY'
   }
 };

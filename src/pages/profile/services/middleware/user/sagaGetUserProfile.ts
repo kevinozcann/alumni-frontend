@@ -27,7 +27,7 @@ export function* sagaGetUserProfile({ payload }: TUserActionType) {
 
       // Update posts in the store
       yield put({
-        type: userActionTypes.STORE.UPDATE_USER_PROFILE,
+        type: userActionTypes.STORE.UPDATE_PROFILE,
         payload: { profile }
       });
       // Update phase

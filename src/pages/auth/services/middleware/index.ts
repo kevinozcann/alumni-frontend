@@ -6,7 +6,7 @@ import { sagaLogin } from './sagaLogin';
 import { sagaLogout } from './sagaLogout';
 import { sagaRegister } from './sagaRegister';
 import { sagaUpdatePhase } from './sagaUpdatePhase';
-import { sagaUpdateUser } from './sagaUpdateUser';
+import { sagaUpdateAuthUser } from './sagaUpdateAuthUser';
 import { sagaUpdateUserPassword } from './sagaUpdateUserPassword';
 import { sagaVerify } from './sagaVerify';
 
@@ -15,7 +15,7 @@ export function* sagas() {
   yield takeLatest(authActionTypes.SAGA.LOGOUT, sagaLogout);
   yield takeLatest(authActionTypes.SAGA.REGISTER, sagaRegister);
   yield takeLatest(authActionTypes.SAGA.VERIFY, sagaVerify);
-  yield takeLatest(authActionTypes.SAGA.UPDATE_AUTH_USER, sagaUpdateUser);
-  yield takeLatest(authActionTypes.SAGA.UPDATE_USER_PASSWORD, sagaUpdateUserPassword);
+  yield takeLatest(authActionTypes.SAGA.UPDATE_USER, sagaUpdateAuthUser);
+  yield takeLatest(authActionTypes.SAGA.UPDATE_PASSWORD, sagaUpdateUserPassword);
   yield takeLatest(authActionTypes.SAGA.UPDATE_PHASE, sagaUpdatePhase);
 }

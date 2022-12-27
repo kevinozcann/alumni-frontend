@@ -98,7 +98,7 @@ const AccountPopover = () => {
       >
         <Avatar
           alt='user'
-          src={user.avatarUrl}
+          src={user?.avatarUrl}
           sx={{
             height: 32,
             width: 32
@@ -121,7 +121,7 @@ const AccountPopover = () => {
       >
         <Box sx={{ p: 2 }}>
           <Typography color='textPrimary' variant='subtitle2'>
-            {`${user?.name} ${user.family_name}`}
+            {`${user?.name} ${user?.family_name}`}
           </Typography>
           <Typography color='textSecondary' variant='subtitle2'>
             {user?.email}

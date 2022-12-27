@@ -6,7 +6,7 @@ import { authActions } from 'pages/auth/services/actions';
 import { TUserActionType, userActionTypes } from 'pages/profile/services/types';
 import { authActionTypes } from 'pages/auth/services/types';
 
-export function* sagaUpdateUserProfile({ payload }: TUserActionType) {
+export function* sagaUpdateUserProfileImages({ payload }: TUserActionType) {
   // Update phase
   yield put({
     type: userActionTypes.STORE.UPDATE_PHASE,
