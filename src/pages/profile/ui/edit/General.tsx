@@ -14,11 +14,10 @@ import React from 'react';
 import { useIntl } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
 
-// import { loginPhases } from 'store/auth';
-import { IAuthUser } from 'pages/auth/data/account-types';
-import { authPhaseSelector, authUserSelector } from 'pages/auth/services/store/auth';
+import { authUserSelector } from 'pages/auth/services/store/auth';
+import { userActions } from 'pages/profile/services/actions';
+import { userPhaseSelector, userProfileSelector } from 'pages/profile/services/store/selectors';
 import { SaveButton } from 'utils/ActionLinks';
-import { authActions } from 'pages/auth/services/actions';
 
 interface IFormValues {
   name: string;
@@ -31,14 +30,13 @@ const General = () => {
   const [openSnackbar, setOpenSnackbar] = React.useState<boolean>(false);
   const [snackbarMessage, setSnackbarMessage] = React.useState<string>('');
 
-  const user = useSelector(authUserSelector);
-  const phase = useSelector(authPhaseSelector);
-
-  const userAttributes: IAuthUser = user;
+  const authUser = useSelector(authUserSelector);
+  const userProfile = useSelector(userProfileSelector);
+  const userPhase = useSelector(userPhaseSelector);
 
   const formInitialValues: IFormValues = {
-    name: userAttributes.name,
-    lastName: userAttributes.family_name
+    name: userProfile.name,
+    lastName: userProfile.family_name
   };
 
   const {
@@ -71,14 +69,12 @@ const General = () => {
 
   const submitForm = (values: IFormValues) => {
     setStatus('submitted');
-    // dispatch(
-    //   authActions.updateUser({
-    //     attributes: {
-    //       name: values.name,
-    //       family_name: values.lastName
-    //     }
-    //   })
-    // );
+    dispatch(
+      userActions.updateUserProfile(authUser, userProfile, {
+        name: values.name,
+        family_name: values.lastName
+      })
+    );
   };
 
   React.useEffect(() => {
@@ -86,7 +82,7 @@ const General = () => {
   }, [setStatus]);
 
   React.useEffect(() => {
-    if (phase === 'success') {
+    if (userPhase === 'success') {
       setSubmitting(false);
 
       if (status === 'submitted') {
@@ -94,7 +90,7 @@ const General = () => {
         setOpenSnackbar(true);
       }
     }
-  }, [phase]);
+  }, [userPhase]);
 
   return (
     <React.Fragment>
@@ -113,7 +109,7 @@ const General = () => {
                   id='uuid'
                   label={intl.formatMessage({ id: 'user.user_id' })}
                   margin='normal'
-                  value={userAttributes.sub}
+                  value={userProfile.id}
                   variant='filled'
                 />
               </Grid>
@@ -126,7 +122,7 @@ const General = () => {
                   id='email'
                   label={intl.formatMessage({ id: 'email.email' })}
                   margin='normal'
-                  value={userAttributes.email}
+                  value={userProfile.email}
                   variant='filled'
                 />
               </Grid>

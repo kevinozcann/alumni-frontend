@@ -16,7 +16,7 @@ export const reducer = persistReducer(
   },
   (state: IUserStore = initialAuthState, action: TUserActionType): IUserStore => {
     switch (action.type) {
-      case userActionTypes.STORE.UPDATE_PROFILE: {
+      case userActionTypes.STORE.UPDATE_USER_PROFILE: {
         const { profile } = action.payload;
         return { ...state, profile };
       }

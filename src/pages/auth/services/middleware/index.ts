@@ -15,7 +15,7 @@ export function* sagas() {
   yield takeLatest(authActionTypes.SAGA.LOGOUT, sagaLogout);
   yield takeLatest(authActionTypes.SAGA.REGISTER, sagaRegister);
   yield takeLatest(authActionTypes.SAGA.VERIFY, sagaVerify);
-  yield takeLatest(authActionTypes.SAGA.UPDATE_USER, sagaUpdateUser);
+  yield takeLatest(authActionTypes.SAGA.UPDATE_AUTH_USER, sagaUpdateUser);
   yield takeLatest(authActionTypes.SAGA.UPDATE_USER_PASSWORD, sagaUpdateUserPassword);
   yield takeLatest(authActionTypes.SAGA.UPDATE_PHASE, sagaUpdatePhase);
 }

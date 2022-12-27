@@ -21,7 +21,6 @@ import { authErrorSelector, authPhaseSelector } from 'pages/auth/services/store/
 import { i18nLangSelector } from 'store/i18n';
 import { TLang } from 'utils/shared-types';
 import { authActions } from '../services/actions';
-import { actionPhases } from '../services/types';
 
 const mapStateToProps = (state: RootState) => ({
   lang: i18nLangSelector(state),
@@ -83,30 +82,30 @@ const ForgotPassword: React.FC<TForgotPasswordProps> = (props) => {
     }
   }, [isSubmitting]);
 
-  React.useEffect(() => {
-    if (authPhase === actionPhases.PASSWORD_LINK_SENDING_SUCCESSFUL) {
-      setAlert(intl.formatMessage({ id: 'login.forgot_password.link_sent' }));
-      setSubmitting(false);
-    }
-  }, [authPhase]);
+  // React.useEffect(() => {
+  //   if (authPhase === actionPhases.PASSWORD_LINK_SENDING_SUCCESSFUL) {
+  //     setAlert(intl.formatMessage({ id: 'login.forgot_password.link_sent' }));
+  //     setSubmitting(false);
+  //   }
+  // }, [authPhase]);
 
-  React.useEffect(() => {
-    if (authPhase === actionPhases.PASSWORD_LINK_SENDING_ERROR) {
-      const name = intl.formatMessage({ id: 'user.email_address.no_override' });
-      if (authError === 'email_is_empty') {
-        setAlert(intl.formatMessage({ id: 'app.cannot_be_empty_w_name' }, { name: name }));
-      } else if (authError === 'email_not_found') {
-        setAlert(intl.formatMessage({ id: 'login.forgot_password.email_not_found' }));
-      } else {
-        setAlert(intl.formatMessage({ id: 'app.error' }));
-      }
-      setSubmitting(false);
-    }
-    // } else if (authPhase != actionPhases.PASSWORD_LINK_SENDING_ERROR) {
-    //   setPhase(null);
-    //   setAlert(null);
-    // }
-  }, [authPhase]);
+  // React.useEffect(() => {
+  //   if (authPhase === actionPhases.PASSWORD_LINK_SENDING_ERROR) {
+  //     const name = intl.formatMessage({ id: 'user.email_address.no_override' });
+  //     if (authError === 'email_is_empty') {
+  //       setAlert(intl.formatMessage({ id: 'app.cannot_be_empty_w_name' }, { name: name }));
+  //     } else if (authError === 'email_not_found') {
+  //       setAlert(intl.formatMessage({ id: 'login.forgot_password.email_not_found' }));
+  //     } else {
+  //       setAlert(intl.formatMessage({ id: 'app.error' }));
+  //     }
+  //     setSubmitting(false);
+  //   }
+  //   // } else if (authPhase != actionPhases.PASSWORD_LINK_SENDING_ERROR) {
+  //   //   setPhase(null);
+  //   //   setAlert(null);
+  //   // }
+  // }, [authPhase]);
 
   // Set submitting false by default
   React.useEffect(() => {

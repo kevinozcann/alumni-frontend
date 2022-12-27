@@ -193,7 +193,7 @@ const Account = () => {
 
         <Grid container spacing={3}>
           <Grid item xs={12}>
-            {(activePage === 'home' || activePage === 'post') && <AccountHome />}
+            {/* {(activePage === 'home' || activePage === 'post') && <AccountHome />} */}
             {activePage === 'update' && <General />}
             {activePage === 'photos' && <Images />}
             {activePage === 'security' && <ChangePassword showCurrentPassword={true} />}

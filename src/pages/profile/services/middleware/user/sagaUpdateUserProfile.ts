@@ -3,27 +3,42 @@ import { put } from 'redux-saga/effects';
 
 import { TUserActionType, userActionTypes } from 'pages/profile/services/types';
 import { userByEmail } from 'graphql/queries';
+import { updateUser } from 'graphql/mutations';
 
-export function* sagaGetUserProfile({ payload }: TUserActionType) {
+export function* sagaUpdateUserProfile({ payload }: TUserActionType) {
   // Update phase
   yield put({
     type: userActionTypes.STORE.UPDATE_PHASE,
-    payload: { phase: 'loading', error: null }
+    payload: { phase: 'updating', error: null }
   });
 
   try {
-    const { authUser } = payload;
-    const { email } = authUser;
+    const { authUser, profile, values } = payload;
 
-    // Query user by email
+    const updatedProfile = Object.assign(profile, values);
+
+    // Remove null keys
+    Object.keys(updatedProfile).forEach((key) => {
+      if (updatedProfile[key] == null) {
+        delete updatedProfile[key];
+      }
+    });
+
+    // Remove keys that are not allowed
+    delete updatedProfile['posts'];
+    delete updatedProfile['comments'];
+    delete updatedProfile['createdAt'];
+    delete updatedProfile['updatedAt'];
+
+    // Update user
     const { data } = yield API.graphql({
-      query: userByEmail,
-      variables: { email: email },
+      query: updateUser,
+      variables: { input: updatedProfile },
       authMode: 'AMAZON_COGNITO_USER_POOLS'
     });
 
     if (data) {
-      const profile = data.userByEmail.items[0];
+      const profile = data.updateUser;
 
       // Update posts in the store
       yield put({

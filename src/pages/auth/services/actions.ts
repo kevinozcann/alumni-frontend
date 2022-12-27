@@ -20,8 +20,8 @@ export const authActions = {
     type: authActionTypes.SAGA.UPDATE_PHASE,
     payload: { phase, error }
   }),
-  updateUser: (user: Partial<IAuthUser>): TAuthActionType => ({
-    type: authActionTypes.SAGA.UPDATE_USER,
+  updateAuthUser: (user: Partial<IAuthUser>): TAuthActionType => ({
+    type: authActionTypes.SAGA.UPDATE_AUTH_USER,
     payload: { user }
   }),
   verify: (email: string, code: string): TAuthActionType => ({

@@ -7,8 +7,8 @@ export const authActionTypes = {
     LOGIN: 'auth/saga/LOGIN',
     LOGOUT: 'auth/saga/LOGOUT',
     REGISTER: 'auth/saga/REGISTER',
+    UPDATE_AUTH_USER: 'auth/saga/UPDATE_USER',
     UPDATE_USER_PASSWORD: 'auth/UPDATE_USER_PASSWORD',
-    UPDATE_USER: 'auth/saga/UPDATE_USER',
     UPDATE_PHASE: 'auth/saga/UPDATE_PHASE',
     VERIFY: 'auth/saga/VERIFY'
   },
@@ -20,33 +20,6 @@ export const authActionTypes = {
     VERIFY: 'auth/store/VERIFY'
   }
 };
-export const actionPhases = {
-  AUTH_VALIDATING: 'user-validating',
-  AUTH_LOGGING: 'user-logging',
-  AUTH_LOGGING_SUCCESSFUL: 'user-logging-successful',
-  AUTH_LOGGING_ERROR: 'user-logging-error',
-  USER_UPDATING: 'user-updating',
-  USER_UPDATING_SUCCESSFUL: 'user-updating-successful',
-  USER_UPDATING_ERROR: 'user-updating-error',
-  ACTIVE_SCHOOL_UPDATING: 'active-school-updating',
-  ACTIVE_SEASON_UPDATING: 'active-season-updating',
-  PASSWORD_LINK_SENDING: 'password-link-sending',
-  PASSWORD_LINK_SENDING_SUCCESSFUL: 'password-link-sending-successful',
-  PASSWORD_LINK_SENDING_ERROR: 'password-link-sending-error'
-};
-export type loginPhases =
-  | 'credentials-validating'
-  | 'userinfo-pulling'
-  | 'login-successful'
-  | 'login-error'
-  | 'impersonating'
-  | 'impersonate-error'
-  | 'impersonate-successful'
-  | 'updating-userinfo'
-  | 'userinfo-pull-successful'
-  | 'updating-userinfo-error'
-  | 'active-school-updating'
-  | 'active-season-updating';
 
 export type TUserPassword = {
   currentPassword: string;
