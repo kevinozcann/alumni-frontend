@@ -4,6 +4,7 @@ import { put } from 'redux-saga/effects';
 import { authActionTypes, TAuthActionType } from '../types';
 
 export function* sagaLogin({ payload }: TAuthActionType) {
+  // Update phase
   yield put({
     type: authActionTypes.STORE.UPDATE_PHASE,
     payload: { phase: 'validating', error: null }

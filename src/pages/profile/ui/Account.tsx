@@ -51,7 +51,7 @@ const Account = () => {
 
   // Selectors
   const authUser = useSelector(authUserSelector);
-  const user = useSelector(userProfileSelector);
+  const userProfile = useSelector(userProfileSelector);
 
   const handleHomeMenuElClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorHomeMenuEl(event.currentTarget);
@@ -94,24 +94,24 @@ const Account = () => {
         <Grid container spacing={3} style={{ marginBottom: 24 }}>
           <Grid item xs>
             <Card>
-              {(user?.wallpaperUrl && (
+              {(userProfile?.wallpaperUrl && (
                 <CardMedia
                   width='100%'
                   height={300}
                   sx={{ height: 300 }}
                   component='img'
-                  image={user?.wallpaperUrl}
+                  image={userProfile?.wallpaperUrl}
                   title='user wallpaper'
                   alt='user wallpaper'
                 />
               )) || (
                 <Skeleton variant='rectangular' height={300} width='100%' sx={{ height: 300 }} />
               )}
-              {(user && (
+              {(userProfile && (
                 <CardHeader
-                  avatar={<Avatar alt='username' src={user.avatarUrl} />}
-                  title={`${user?.name} ${user?.family_name}`}
-                  subheader={user?.email}
+                  avatar={<Avatar alt='username' src={userProfile.avatarUrl} />}
+                  title={`${userProfile?.name} ${userProfile?.family_name}`}
+                  subheader={userProfile?.email}
                   action={
                     <React.Fragment>
                       <Box sx={{ mt: 1, display: { xs: 'none', md: 'block' } }}>

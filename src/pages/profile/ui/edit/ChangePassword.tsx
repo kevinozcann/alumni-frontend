@@ -19,15 +19,11 @@ import * as Yup from 'yup';
 import zxcvbn, { ZXCVBNResult } from 'zxcvbn';
 
 import useSnackbar from 'hooks/useSnackbar';
+import { authActions } from 'pages/auth/services/actions';
+import { authErrorSelector, authPhaseSelector } from 'pages/auth/services/store/auth';
+import { TUserPassword } from 'pages/auth/services/types';
 import { SaveButton } from 'utils/ActionLinks';
 import { basicList, PasswordMeterColor } from 'utils/Helpers';
-import {
-  authErrorSelector,
-  authPhaseSelector,
-  authUserSelector
-} from 'pages/auth/services/store/auth';
-import { TUserPassword } from 'pages/auth/services/types';
-import { authActions } from 'pages/auth/services/actions';
 
 interface ISecurityProps {
   showCurrentPassword?: boolean;
@@ -47,7 +43,6 @@ const ChangePassword = ({ showCurrentPassword, resetId }: ISecurityProps) => {
   });
 
   // Selectors
-  const user = useSelector(authUserSelector);
   const authError = useSelector(authErrorSelector);
   const authPhase = useSelector(authPhaseSelector);
 
@@ -127,41 +122,37 @@ const ChangePassword = ({ showCurrentPassword, resetId }: ISecurityProps) => {
 
   const submitForm = (values: TUserPassword) => {
     setStatus('submitted');
+
     dispatch(authActions.changePassword(values));
   };
 
   React.useEffect(() => {
-    if (authPhase === 'login-authError' && status === 'submitted') {
-      setSubmitting(false);
+    if (status === 'submitted') {
+      if (authPhase === 'error') {
+        setSubmitting(false);
 
-      const loginError =
-        (authError === 'Invalid credentials.' && 'login.reset_password.password_wrong') ||
-        (authError === 'Geçersiz kimlik bilgileri.' && 'login.reset_password.password_wrong') ||
-        authError;
+        const loginError =
+          (authError === 'Invalid credentials.' && 'login.reset_password.password_wrong') ||
+          authError;
 
-      showSnackbar({
-        message: intl.formatMessage({ id: loginError }),
-        open: true
-      });
-    }
+        showSnackbar({
+          message: intl.formatMessage({ id: loginError }),
+          open: true
+        });
+      }
 
-    if (authPhase === 'reset-error' && status === 'submitted') {
-      setSubmitting(false);
+      if (authPhase === 'success') {
+        setSubmitting(false);
 
-      showSnackbar({
-        message: intl.formatMessage({ id: authError }),
-        open: true
-      });
-    }
-
-    if (authPhase === 'userinfo-pull-successful') {
-      setSubmitting(false);
-
-      if (status === 'submitted') {
         showSnackbar({
           message: intl.formatMessage({ id: 'account.password.changed' }),
           open: true
         });
+
+        // Logout
+        setTimeout(() => {
+          dispatch(authActions.logout());
+        }, 3000);
       }
     }
   }, [authPhase]);

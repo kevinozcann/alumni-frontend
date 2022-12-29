@@ -1,8 +1,10 @@
 import { API } from 'aws-amplify';
 import { put } from 'redux-saga/effects';
 
-import { TUserActionType, userActionTypes } from 'pages/profile/services/types';
 import { userByEmail } from 'graphql/queries';
+import { IUser } from 'pages/profile/data/user-types';
+import { TUserActionType, userActionTypes } from 'pages/profile/services/types';
+import { userActions } from '../../actions';
 
 export function* sagaGetUserProfile({ payload }: TUserActionType) {
   // Update phase
@@ -23,17 +25,27 @@ export function* sagaGetUserProfile({ payload }: TUserActionType) {
     });
 
     if (data) {
-      const profile = data.userByEmail.items[0];
+      const profile: IUser = data.userByEmail.items[0];
 
       // Update posts in the store
       yield put({
         type: userActionTypes.STORE.UPDATE_PROFILE,
         payload: { profile }
       });
+
       // Update phase
       yield put({
         type: userActionTypes.STORE.UPDATE_PHASE,
         payload: { phase: 'success', error: null }
+      });
+
+      // Update profile images
+      yield put({
+        type: userActionTypes.SAGA.UPDATE_IMAGES,
+        payload: {
+          profile,
+          imageKeys: { avatar: profile.avatarKey, wallpaper: profile.wallpaperKey }
+        }
       });
     } else {
       // Update error

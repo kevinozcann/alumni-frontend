@@ -2,9 +2,7 @@ import { API } from 'aws-amplify';
 import { call, put } from 'redux-saga/effects';
 
 import { updateUser } from 'graphql/mutations';
-import { authActions } from 'pages/auth/services/actions';
 import { TUserActionType, userActionTypes } from 'pages/profile/services/types';
-import { authActionTypes } from 'pages/auth/services/types';
 import { getUserImage } from './getUserImage';
 import { prepareUserProfile } from './prepareUserProfile';
 
