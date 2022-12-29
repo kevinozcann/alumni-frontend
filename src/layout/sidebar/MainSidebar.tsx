@@ -1,31 +1,20 @@
-import { faArrowCircleLeft, faFileSearch, faSync } from '@fortawesome/pro-duotone-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-  Box,
-  Divider,
-  Drawer,
-  List,
-  ListItemButton,
-  ListItemIcon,
-  ListItemText,
-  ListSubheader,
-  Typography
-} from '@mui/material';
-import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { useLocation } from 'react-router-dom';
-import 'utils/fontAwesome';
-import { Link as RouterLink } from 'react-router-dom';
+import Box from '@mui/material/Box';
+import Drawer from '@mui/material/Drawer';
+import List from '@mui/material/List';
+import ListItemButton from '@mui/material/ListItemButton';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import ListItemText from '@mui/material/ListItemText';
+import ListSubheader from '@mui/material/ListSubheader';
 import menus, { IMenu } from 'data/menu';
 import useTranslation from 'hooks/useTranslation';
 import Footer from 'layout/Footer';
 import Scrollbar from 'layout/Scrollbar';
-import { authUserSelector } from 'pages/auth/services/store/auth';
+import React from 'react';
+import { useSelector } from 'react-redux';
+import { Link as RouterLink, useLocation } from 'react-router-dom';
 import { i18nLangSelector } from 'store/i18n';
-import { userActions } from 'pages/profile/services/actions';
-import { userPhaseSelector } from 'pages/profile/services/store/user';
-import ActiveMenuItems from './ActiveMenuItems';
-import MainNavItem from './MainNavItem';
+import 'utils/fontAwesome';
 
 type MainSidebarProps = {
   onMobileClose: () => void;
@@ -36,29 +25,18 @@ const MainSidebar = (props: MainSidebarProps) => {
   const { onMobileClose, openMobile } = props;
   const location = useLocation();
   const intl = useTranslation();
-  const dispatch = useDispatch();
 
   // Selectors
-  const user = useSelector(authUserSelector);
-  const userPhase = useSelector(userPhaseSelector);
   const lang = useSelector(i18nLangSelector);
-
-  const handleMainMenuClick = React.useCallback((menu: IMenu) => {
-    // dispatch(userActions.updateActiveMenu(menu));
-  }, []);
 
   const handleMenuClick = React.useCallback(
     (menu: IMenu) => {
-      if ((!menu.children || (menu.children && menu.children.length === 0)) && menu.url) {
+      if (menu.url) {
         onMobileClose();
       }
     },
-    [lang, user, location]
+    [lang, location]
   );
-
-  const handleBackButtonClick = () => {
-    // dispatch(userActions.updateActiveMenu(null));
-  };
 
   React.useEffect(() => {
     if (openMobile && onMobileClose) {
@@ -75,99 +53,51 @@ const MainSidebar = (props: MainSidebarProps) => {
       }}
     >
       <Scrollbar options={{ suppressScrollX: true }}>
-        {(menus?.length > 0 && (
+        <Box
+          sx={{
+            display: 'flex',
+            height: '100%'
+          }}
+        >
           <Box
             sx={{
-              display: 'flex',
-              width: '544px',
-              height: '100%'
+              width: '272px',
+              height: '100%',
+              bgcolor: 'background.paper',
+              marginLeft: 0,
+              transitionProperty: 'margin-left',
+              transitionDuration: '.2s'
             }}
           >
-            <>
-              <Box
-                sx={{
-                  width: '272px',
-                  height: '100%',
-                  bgcolor: 'background.paper',
-                  marginLeft: 0,
-                  transitionProperty: 'margin-left',
-                  transitionDuration: '.2s'
-                }}
-              >
-                <List
-                  sx={{ width: '100%', height: '100%', bgcolor: 'background.paper' }}
-                  component='div'
-                  subheader={
-                    <ListSubheader component='div' disableSticky>
-                      {intl.formatMessage({ id: 'menu.menus' })}
-                      {userPhase?.includes('ing') && (
-                        <FontAwesomeIcon icon={faSync} spin={true} style={{ margin: '0 4px' }} />
-                      )}
-                    </ListSubheader>
-                  }
+            <List
+              sx={{ width: '100%', height: '100%', bgcolor: 'background.paper' }}
+              component='div'
+              subheader={
+                <ListSubheader component='div' disableSticky>
+                  {intl.formatMessage({ id: 'menu.menus' })}
+                </ListSubheader>
+              }
+            >
+              {menus?.map((menu: IMenu) => (
+                <ListItemButton
+                  component={RouterLink}
+                  to={menu.url}
+                  sx={{ px: 2, width: '100%' }}
+                  onClick={() => handleMenuClick(menu)}
                 >
-                  {menus?.map((menu: IMenu) => (
-                    <MainNavItem
-                      key={menu.id}
-                      menu={menu}
-                      isActiveMenu={false}
-                      handleClick={() => handleMainMenuClick(menu)}
+                  <ListItemIcon>
+                    <FontAwesomeIcon
+                      icon={[menu.iconPrefix, menu.icon]}
+                      color='primary.main'
+                      size='sm'
                     />
-                  ))}
-                </List>
-              </Box>
-
-              <Box
-                sx={{
-                  width: '272px',
-                  height: '100%',
-                  bgcolor: 'background.paper'
-                }}
-              >
-                <List>
-                  <ListItemButton sx={{ px: 2 }} onClick={handleBackButtonClick}>
-                    <ListItemIcon>
-                      <Box sx={{ width: '16px' }}>
-                        <FontAwesomeIcon icon={faArrowCircleLeft} color='primary.main' />
-                      </Box>
-                    </ListItemIcon>
-                    <ListItemText primary={intl.formatMessage({ id: 'app.back' })} />
-                  </ListItemButton>
-                </List>
-                <Divider />
-              </Box>
-            </>
+                  </ListItemIcon>
+                  <ListItemText primary={intl.formatMessage({ id: menu.title })} />
+                </ListItemButton>
+              ))}
+            </List>
           </Box>
-        )) || (
-          <Box
-            sx={{
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-              mt: '48px',
-              width: '100%'
-            }}
-          >
-            {
-              <>
-                <FontAwesomeIcon icon={faFileSearch} size='lg' />
-                <Typography variant='body1' sx={{ mt: 1 }}>
-                  {intl.translate({ id: 'register.no_school' })}
-                </Typography>
-                <Typography variant='body1' sx={{ mt: 1, textAlign: 'center' }}>
-                  {intl.translate({ id: 'register.create_or_join_school' })}
-                </Typography>
-                <Typography variant='body1' sx={{ mt: 1, textAlign: 'center' }}>
-                  Coming Soon
-                </Typography>
-
-                {/* <Button onClick={() => updateUserMenus(lang, user, activeSchool)}>
-                  {intl.translate({ id: 'app.try_again' })}
-                </Button> */}
-              </>
-            }
-          </Box>
-        )}
+        </Box>
       </Scrollbar>
       <Footer />
     </Box>

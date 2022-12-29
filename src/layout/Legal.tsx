@@ -1,15 +1,14 @@
-import React from 'react';
-import { useIntl } from 'react-intl';
 import { Box, Link, Theme, Typography, useTheme } from '@mui/material';
 import { SxProps } from '@mui/system';
-import { schoostWebUrl, privacyUrl, termsOfUseUrl } from '../config';
+import { useIntl } from 'react-intl';
+import { privacyUrl, githubUrl, termsOfUseUrl } from '../config';
 
 type TLegalPros = {
   color?: 'regular' | 'contrast';
   sx?: SxProps<Theme>;
 };
 
-const Legal: React.FC<TLegalPros> = ({ color, sx }) => {
+const Legal = ({ color, sx }: TLegalPros) => {
   const theme = useTheme();
   const intl = useIntl();
   const typographyColor =
@@ -40,7 +39,7 @@ const Legal: React.FC<TLegalPros> = ({ color, sx }) => {
         </Typography>
       </Link>
       <Box sx={{ width: 0, mx: 1 }} />
-      <Link href={schoostWebUrl} target='_blank' rel='noopener noreferrer'>
+      <Link href={githubUrl} target='_blank' rel='noopener noreferrer'>
         <Typography color={typographyColor} variant='subtitle1'>
           {intl.formatMessage({ id: 'legal.contact' })}
         </Typography>

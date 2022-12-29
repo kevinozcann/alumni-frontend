@@ -8,22 +8,10 @@ export const THEMES = {
   NATURE: 'NATURE'
 };
 
-export const schoostWebUrl = 'https://www.schoost.com';
-export const privacyUrl = 'https://www.schoost.com/en/privacy';
-export const termsOfUseUrl = 'https://www.schoost.com/en/terms';
-export const smartClassLogo = 'https://schst.in/smartclass';
+export const githubUrl = 'https://github.com/simsek97/alumni-frontend';
+export const privacyUrl = 'https://github.com/simsek97/alumni-frontend/docs/privacy.md';
+export const termsOfUseUrl = 'https://github.com/simsek97/alumni-frontend/docs/terms.md';
 export const defaultLogo = 'https://schst.in/schoost';
-export const SmartClassStartYear = new Date('2004-01-31').getFullYear();
-
-export const firebaseConfig = {
-  apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
-  appId: process.env.REACT_APP_FIREBASE_APP_ID,
-  authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
-  databaseURL: process.env.REACT_APP_FIREBASE_DATABASE_URL,
-  messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGING_SENDER_ID,
-  projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
-  storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET
-};
 
 export const gtmConfig = {
   containerId: process.env.REACT_APP_GTM_CONTAINER_ID
