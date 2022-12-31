@@ -102,6 +102,7 @@ const ChangePassword = ({ showCurrentPassword, resetId }: ISecurityProps) => {
       setPasswordWarning(passwordGuesser.feedback.warning);
       setPasswordSuggestion(passwordGuesser.feedback.suggestions);
     }
+
     return validate.then(
       (_response) => {
         return {};

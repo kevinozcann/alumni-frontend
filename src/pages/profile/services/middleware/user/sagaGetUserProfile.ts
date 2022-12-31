@@ -40,13 +40,19 @@ export function* sagaGetUserProfile({ payload }: TUserActionType) {
       });
 
       // Update profile images
-      yield put({
-        type: userActionTypes.SAGA.UPDATE_IMAGES,
-        payload: {
-          profile,
-          imageKeys: { avatar: profile.avatarKey, wallpaper: profile.wallpaperKey }
-        }
-      });
+      const imageKeys = {};
+      if (profile?.avatarKey) {
+        imageKeys['avatar'] = profile.avatarKey;
+      }
+      if (profile?.wallpaperKey) {
+        imageKeys['wallpaper'] = profile.wallpaperKey;
+      }
+      if (Object.keys(imageKeys).length > 0) {
+        yield put({
+          type: userActionTypes.SAGA.UPDATE_IMAGES,
+          payload: { profile, imageKeys }
+        });
+      }
     } else {
       // Update error
       yield put({

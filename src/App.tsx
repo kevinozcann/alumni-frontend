@@ -64,12 +64,6 @@ const App = () => {
     }
   }, [activeSchool]);
 
-  // React.useEffect(() => {
-  //   if (!activeSchool) {
-  //     pullConfigurationSchool();
-  //   }
-  // }, []);
-
   React.useEffect(() => {
     gtm.initialize(gtmConfig);
   }, []);

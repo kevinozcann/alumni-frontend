@@ -7,6 +7,18 @@ export const authActions = {
     type: authActionTypes.SAGA.UPDATE_PASSWORD,
     payload: { userPassword }
   }),
+  forgotPassword: (email: string): TAuthActionType => ({
+    type: authActionTypes.SAGA.FORGOT_PASSWORD,
+    payload: { email }
+  }),
+  forgotPasswordSubmit: (
+    email: string,
+    code: string,
+    userPassword: TUserPassword
+  ): TAuthActionType => ({
+    type: authActionTypes.SAGA.FORGOT_PASSWORD_SUBMIT,
+    payload: { email, code, userPassword }
+  }),
   login: (email: string, password: string): TAuthActionType => ({
     type: authActionTypes.SAGA.LOGIN,
     payload: { email, password }

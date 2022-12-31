@@ -9,8 +9,12 @@ import { sagaUpdatePhase } from './sagaUpdatePhase';
 import { sagaUpdateAuthUser } from './sagaUpdateAuthUser';
 import { sagaUpdateUserPassword } from './sagaUpdateUserPassword';
 import { sagaVerify } from './sagaVerify';
+import { sagaForgotPassword } from './sagaForgotPassword';
+import { sagaForgotPasswordSubmit } from './sagaForgotPasswordSubmit';
 
 export function* sagas() {
+  yield takeLatest(authActionTypes.SAGA.FORGOT_PASSWORD, sagaForgotPassword);
+  yield takeLatest(authActionTypes.SAGA.FORGOT_PASSWORD_SUBMIT, sagaForgotPasswordSubmit);
   yield takeLatest(authActionTypes.SAGA.LOGIN, sagaLogin);
   yield takeLatest(authActionTypes.SAGA.LOGOUT, sagaLogout);
   yield takeLatest(authActionTypes.SAGA.REGISTER, sagaRegister);

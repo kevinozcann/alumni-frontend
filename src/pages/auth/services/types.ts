@@ -4,6 +4,8 @@ import { IAuthUser } from '../data/account-types';
 
 export const authActionTypes = {
   SAGA: {
+    FORGOT_PASSWORD: 'auth/saga/FORGOT_PASSWORD',
+    FORGOT_PASSWORD_SUBMIT: 'auth/saga/FORGOT_PASSWORD_SUBMIT',
     LOGIN: 'auth/saga/LOGIN',
     LOGOUT: 'auth/saga/LOGOUT',
     REGISTER: 'auth/saga/REGISTER',
@@ -23,7 +25,7 @@ export const authActionTypes = {
 };
 
 export type TUserPassword = {
-  currentPassword: string;
+  currentPassword?: string;
   newPassword: string;
   confirmPassword: string;
 };

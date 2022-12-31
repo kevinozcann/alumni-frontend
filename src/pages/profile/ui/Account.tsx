@@ -12,7 +12,6 @@ import Grid from '@mui/material/Grid';
 import IconButton from '@mui/material/IconButton';
 import MenuItem from '@mui/material/MenuItem';
 import Skeleton from '@mui/material/Skeleton';
-import { Amplify } from 'aws-amplify';
 import React from 'react';
 import { useIntl } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
@@ -22,8 +21,8 @@ import { useSubheader } from 'contexts/SubheaderContext';
 import Page from 'layout/Page';
 import { authUserSelector } from 'pages/auth/services/store/auth';
 import StyledMenu from 'utils/StyledMenu';
-import { userProfileSelector } from '../services/store/selectors';
 import { userActions } from '../services/actions';
+import { userProfileSelector } from '../services/store/selectors';
 
 const AccountHome = loadable(() => import('./AccountHome'));
 const General = loadable(() => import('./edit/General'));
@@ -193,7 +192,7 @@ const Account = () => {
 
         <Grid container spacing={3}>
           <Grid item xs={12}>
-            {/* {(activePage === 'home' || activePage === 'post') && <AccountHome />} */}
+            {(activePage === 'home' || activePage === 'post') && <AccountHome />}
             {activePage === 'update' && <General />}
             {activePage === 'photos' && <Images />}
             {activePage === 'security' && <ChangePassword showCurrentPassword={true} />}

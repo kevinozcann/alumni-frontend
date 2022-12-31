@@ -80,6 +80,7 @@ const MainSidebar = (props: MainSidebarProps) => {
             >
               {menus?.map((menu: IMenu) => (
                 <ListItemButton
+                  key={menu.id}
                   component={RouterLink}
                   to={menu.url}
                   sx={{ px: 2, width: '100%' }}

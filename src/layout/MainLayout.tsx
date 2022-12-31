@@ -11,7 +11,7 @@ const SubNavbar = loadable(() => import('./SubNavbar'));
 
 const IDLE_TIMEOUT =
   (process.env.REACT_APP_IDLE_TIMEOUT && parseInt(process.env.REACT_APP_IDLE_TIMEOUT)) ||
-  1000 * 60 * 30; // 30 minutes
+  1000 * 60 * 60 * 24; // a day
 
 const MainLayoutRoot = styled('div')(({ theme }) => ({
   backgroundColor: theme.palette.background.default,
