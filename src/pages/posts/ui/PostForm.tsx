@@ -32,35 +32,33 @@ import { IFile, TActionType } from 'utils/shared-types';
 
 import { IPost } from '../data/post-types';
 import { postActions } from '../services/actions';
-import { postsAddSelector, postsPhaseSelector } from '../services/posts';
+import { postsDraftSelector, postsPhaseSelector } from '../services/store/selectors';
 
-type NewFeedFormProps = {
+type TPostForm = {
   actionType: TActionType;
   handleClose?: () => void;
 };
 
-const NewFeedForm = (props: NewFeedFormProps) => {
+const PostForm = (props: TPostForm) => {
   const { actionType, handleClose } = props;
   const intl = useTranslation();
   const dispatch = useDispatch();
 
   const user = useSelector(userProfileSelector);
+  const addPost = useSelector(postsDraftSelector);
   const postsPhase = useSelector(postsPhaseSelector);
-  const addFeed = useSelector(postsAddSelector);
-
-  const userAttributes = user;
 
   const transPhoto = intl.translate({ id: 'post.photo' });
   const transDoc = intl.translate({ id: 'post.doc' });
 
   const formValues: IPost = {
     commentsOn: true,
-    content: addFeed ? addFeed.content : '',
-    coverPicture: addFeed ? addFeed.coverPicture : '',
-    files: addFeed ? addFeed.files : [],
-    related: addFeed ? addFeed.related : [],
-    tags: addFeed ? addFeed.tags : [],
-    url: addFeed ? addFeed.url : ''
+    content: addPost ? addPost.content : '',
+    coverPicture: addPost ? addPost.coverPicture : '',
+    files: addPost ? addPost.files : [],
+    related: addPost ? addPost.related : [],
+    tags: addPost ? addPost.tags : [],
+    url: addPost ? addPost.url : ''
   };
 
   const {
@@ -92,8 +90,8 @@ const NewFeedForm = (props: NewFeedFormProps) => {
     return errors;
   };
 
-  const images = values.files.filter((file) => file.mimeType.includes('image/'));
-  const files = values.files.filter((file) => !file.mimeType.includes('image/'));
+  const images = values.files?.filter((file) => file.mimeType.includes('image/'));
+  const files = values.files?.filter((file) => !file.mimeType.includes('image/'));
 
   const handleSelectCallback = (fieldId: string, fieldValue: any) => {
     setFieldValue(fieldId, fieldValue);
@@ -118,9 +116,14 @@ const NewFeedForm = (props: NewFeedFormProps) => {
   };
 
   const submitForm = (values: Partial<IPost>) => {
-    if (values !== initialValues || addFeed) {
+    if (values !== initialValues || addPost) {
       setStatus('submitted');
-      dispatch(postActions.addPost(user, values));
+
+      if (actionType === 'add') {
+        dispatch(postActions.addPost(user, values));
+      } else {
+        dispatch(postActions.updatePost(values));
+      }
     }
   };
 
@@ -148,8 +151,8 @@ const NewFeedForm = (props: NewFeedFormProps) => {
       <Card elevation={0}>
         <CardHeader
           sx={{ padding: 1 }}
-          avatar={<Avatar alt='username' src={userAttributes.avatarUrl} />}
-          title={`${userAttributes.name} ${userAttributes.family_name}`}
+          avatar={<Avatar alt='username' src={user.avatarUrl} />}
+          title={`${user.name} ${user.family_name}`}
           subheader={
             <Chip
               label={intl.translate({ id: 'post.public' })}
@@ -213,10 +216,7 @@ const NewFeedForm = (props: NewFeedFormProps) => {
             autoFocus={true}
             fullWidth={true}
             id='content'
-            label={intl.translate(
-              { id: 'post.whats_in_your_mind.name' },
-              { name: userAttributes.name }
-            )}
+            label={intl.translate({ id: 'post.whats_in_your_mind.name' }, { name: user.name })}
             margin='normal'
             size='small'
             value={values.content}
@@ -231,7 +231,7 @@ const NewFeedForm = (props: NewFeedFormProps) => {
           <FilledInput
             id='coverPicture'
             readOnly
-            value={values.coverPicture}
+            value={values?.coverPicture}
             onChange={handleChange}
             style={{ display: 'none' }}
           />
@@ -327,4 +327,4 @@ const NewFeedForm = (props: NewFeedFormProps) => {
   );
 };
 
-export default NewFeedForm;
+export default PostForm;

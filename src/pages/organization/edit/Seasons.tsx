@@ -18,7 +18,7 @@ import { configActions, configPhaseSelector } from 'store/config';
 import { i18nLangSelector } from 'store/i18n';
 import { TLang } from 'utils/shared-types';
 
-const SchoostDialog = loadable(() => import('components/SchoostDialog'));
+const SchoostDialog = loadable(() => import('components/AppDialog'));
 const DefaultSeason = Loadable(lazy(() => import('pages/organization/edit/DefaultSeason')));
 const CopySeasonData = Loadable(lazy(() => import('pages/organization/edit/CopySeasonData')));
 

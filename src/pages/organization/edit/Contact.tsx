@@ -23,7 +23,7 @@ import { ICity, ICountry, TLang, IState } from 'utils/shared-types';
 import { IAuthUser } from 'pages/auth/data/account-types';
 import { ISchool } from 'pages/organization/organization-types';
 
-const SchoostDialog = loadable(() => import('components/SchoostDialog'));
+const SchoostDialog = loadable(() => import('components/AppDialog'));
 const MapPlaces = loadable(() => import('components/google/MapPlaces'));
 
 type TContactProps = {

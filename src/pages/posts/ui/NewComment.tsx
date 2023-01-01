@@ -15,7 +15,7 @@ type TCommentAddProps = {
   post: IPost;
 };
 
-const CommentAdd = (props: TCommentAddProps) => {
+const NewComment = (props: TCommentAddProps) => {
   const { post } = props;
   const [value, setValue] = React.useState<string>('');
   const enter = useKeyPress('Enter');
@@ -80,4 +80,4 @@ const CommentAdd = (props: TCommentAddProps) => {
   );
 };
 
-export default CommentAdd;
+export default NewComment;

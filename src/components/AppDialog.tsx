@@ -10,7 +10,7 @@ import {
 import DialogBase, { IDialogBaseProps } from '../layout/DialogBase';
 import { TActionType } from '../utils/shared-types';
 
-interface ISchoostDialogProps extends IDialogBaseProps {
+interface IAppDialogProps extends IDialogBaseProps {
   actionType?: TActionType;
   dividers?: boolean;
   handleOk?: any;
@@ -19,7 +19,7 @@ interface ISchoostDialogProps extends IDialogBaseProps {
   phase?: string;
 }
 
-const SchoostDialog = (props: ISchoostDialogProps) => {
+const AppDialog = (props: IAppDialogProps) => {
   const {
     children,
     dividers,
@@ -62,4 +62,4 @@ const SchoostDialog = (props: ISchoostDialogProps) => {
   );
 };
 
-export default SchoostDialog;
+export default AppDialog;

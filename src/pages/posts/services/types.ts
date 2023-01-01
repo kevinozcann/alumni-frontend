@@ -1,4 +1,4 @@
-import { IAuthUser } from 'pages/auth/data/account-types';
+import { IUser } from 'pages/profile/data/user-types';
 import { IAction } from 'store/store';
 import { TActionType, TLang } from 'utils/shared-types';
 
@@ -13,6 +13,7 @@ export const postActionTypes = {
     GET_POSTS: 'posts/saga/GET_POSTS',
     UPDATE_COMMENT: 'posts/saga/UPDATE_COMMENT',
     UPDATE_PHASE: 'posts/saga/UPDATE_PHASE',
+    UPDATE_POST: 'posts/saga/UPDATE_POST',
     UPDATE_POST_IMAGES: 'posts/saga/UPDATE_POST_IMAGES',
     UPSERT_DRAFT: 'posts/saga/UPSERT_DRAFT'
   },
@@ -29,10 +30,8 @@ export interface IPostsStoreState {
   posts: IPostsStore;
 }
 export interface IPostsStore {
-  owned: IPost[];
-  all: IPost[];
-  add: IPost;
-  edit: IPost;
+  posts: IPost[];
+  draft: IPost;
   nextToken: string;
   phase: string;
   error?: string;
@@ -46,7 +45,7 @@ export type TPostsStoreActions = IPostsStore & {
   id?: number;
   lang?: TLang;
   page?: number;
-  user?: IAuthUser;
+  user?: IUser;
 };
 
 export type TPostActionType = IAction<Partial<TPostsStoreActions>>;

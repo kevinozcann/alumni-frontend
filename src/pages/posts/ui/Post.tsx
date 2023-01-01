@@ -3,22 +3,20 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import loadable from '@loadable/component';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
-import {
-  Avatar,
-  Box,
-  Card,
-  CardActionArea,
-  CardHeader,
-  CardMedia,
-  Divider,
-  IconButton,
-  ImageList,
-  ImageListItem,
-  ImageListItemBar,
-  MenuItem,
-  Skeleton,
-  Typography
-} from '@mui/material';
+import Avatar from '@mui/material/Avatar';
+import Box from '@mui/material/Box';
+import Card from '@mui/material/Card';
+import CardActionArea from '@mui/material/CardActionArea';
+import CardHeader from '@mui/material/CardHeader';
+import CardMedia from '@mui/material/CardMedia';
+import Divider from '@mui/material/Divider';
+import IconButton from '@mui/material/IconButton';
+import ImageList from '@mui/material/ImageList';
+import ImageListItem from '@mui/material/ImageListItem';
+import ImageListItemBar from '@mui/material/ImageListItemBar';
+import MenuItem from '@mui/material/MenuItem';
+import Skeleton from '@mui/material/Skeleton';
+import Typography from '@mui/material/Typography';
 import React from 'react';
 import { useInView } from 'react-intersection-observer';
 import { useIntl } from 'react-intl';
@@ -33,7 +31,9 @@ import { userProfileSelector } from 'pages/profile/services/store/selectors';
 import { useDispatch, useSelector } from 'react-redux';
 import { i18nLangSelector } from 'store/i18n';
 import { IPost } from '../data/post-types';
-import { postsPhaseSelector } from '../services/posts';
+import { postsPhaseSelector } from '../services/store/selectors';
+import { IUser } from 'pages/profile/data/user-types';
+import { postActions } from '../services/actions';
 
 const Moment = loadable.lib(() => import('moment'));
 
@@ -44,7 +44,7 @@ const FileViewerDialog = loadable(() => import('components/FileViewerDialog'));
 
 const Reactions = loadable(() => import('./Reactions'));
 const Comment = loadable(() => import('./Comment'));
-const CommentAdd = loadable(() => import('./CommentAdd'));
+const NewComment = loadable(() => import('./NewComment'));
 
 type FeedProps = {
   post: IPost;
@@ -62,20 +62,17 @@ const Post = (props: FeedProps) => {
     threshold: 0
   });
 
-  const user = useSelector(userProfileSelector);
   const lang = useSelector(i18nLangSelector);
+  const userProfile = useSelector(userProfileSelector);
   const postsPhase = useSelector(postsPhaseSelector);
 
-  const isMe = post?.user?.id === user.id;
+  const isMe = post?.user?.id === userProfile.id;
   const images = post.files?.filter((file) => file.mimeType.includes('image/'));
   const files = post.files?.filter((file) => !file.mimeType.includes('image/'));
 
-  const handleSaveFeed = React.useCallback(
-    (user: IAuthUser, post: IPost, actionType: TActionType) => {
-      // dispatch(postActions.addPost(user, post));
-    },
-    []
-  );
+  const handleSaveFeed = React.useCallback((user: IUser, post: IPost) => {
+    // dispatch(postActions.addPost(user, post));
+  }, []);
 
   const handleActionsClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
@@ -92,7 +89,7 @@ const Post = (props: FeedProps) => {
   };
 
   const handleDeleteConfirm = () => {
-    handleSaveFeed(user, post, 'delete');
+    // handleSaveFeed(user, post, 'delete');
   };
 
   const handleCloseConfirm = () => {
@@ -126,11 +123,11 @@ const Post = (props: FeedProps) => {
               </Typography>
             </Box>
           }
-          // title={
-          //   <Typography color='textPrimary'>
-          //     `{post?.owner?.name} {post?.owner?.}`
-          //   </Typography>
-          // }
+          title={
+            <Typography color='textPrimary'>
+              {`${post?.user?.name} ${post?.user?.family_name}`}
+            </Typography>
+          }
           action={
             (isMe && (
               <React.Fragment>
@@ -240,7 +237,7 @@ const Post = (props: FeedProps) => {
           )}
 
           <Box sx={{ marginTop: 2 }}>
-            <Reactions user={user} post={post} handleSaveFeed={handleSaveFeed} />
+            <Reactions user={userProfile} post={post} handleSaveFeed={handleSaveFeed} />
           </Box>
 
           {post?.comments?.length > 0 && (
@@ -252,7 +249,7 @@ const Post = (props: FeedProps) => {
               {post?.comments?.map((comment) => (
                 <Comment
                   key={comment.id}
-                  user={user}
+                  user={userProfile}
                   post={post}
                   phase={postsPhase}
                   comment={comment}
@@ -264,7 +261,7 @@ const Post = (props: FeedProps) => {
 
           <Divider sx={{ marginBottom: 1 }} />
 
-          <CommentAdd post={post} />
+          <NewComment post={post} />
         </Box>
       </Card>
 

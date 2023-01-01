@@ -7,11 +7,14 @@ import { postActionTypes, TPostActionType } from '../../types';
 import { postActions } from '../../actions';
 
 export function* sagaAddPost({ payload }: TPostActionType) {
-  yield put(postActions.setPhase('adding'));
+  // Update phase
+  yield put({
+    type: postActionTypes.STORE.UPDATE_PHASE,
+    payload: { phase: 'adding', error: null }
+  });
 
   const { user, post } = payload;
 
-  console.log(user);
   try {
     const { data } = yield API.graphql({
       query: createPost,
@@ -19,24 +22,41 @@ export function* sagaAddPost({ payload }: TPostActionType) {
         input: {
           type: 'Post',
           content: post.content,
-          userID: user.sub
-          // createdAt: date.toISOString()
+          userID: user.id
         }
       },
       authMode: 'AMAZON_COGNITO_USER_POOLS'
     });
 
-    console.log(data);
     if (data) {
       yield put({
         type: postActionTypes.STORE.UPDATE_POST,
         payload: { post: data.createPost }
       });
-      yield put(postActions.setPhase('success'));
+
+      // Reset draft
+      yield put({
+        type: postActionTypes.STORE.UPSERT_DRAFT,
+        payload: { post: null }
+      });
+
+      // Update phase
+      yield put({
+        type: postActionTypes.STORE.UPDATE_PHASE,
+        payload: { phase: 'success', error: null }
+      });
     } else {
-      yield put(postActions.setPhase('error', 'Error occurred!'));
+      // Update phase
+      yield put({
+        type: postActionTypes.STORE.UPDATE_PHASE,
+        payload: { phase: 'error', error: 'Error occurred!' }
+      });
     }
   } catch (error) {
-    yield put(postActions.setPhase('error', error));
+    // Update phase
+    yield put({
+      type: postActionTypes.STORE.UPDATE_PHASE,
+      payload: { phase: 'error', error: error }
+    });
   }
 }

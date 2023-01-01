@@ -15,7 +15,7 @@ import {
 import { format } from 'date-fns';
 import RowActions from 'components/table/RowActions';
 import ConfirmDialog from 'components/ConfirmDialog';
-import SchoostDialog from 'components/SchoostDialog';
+import AppDialog from 'components/AppDialog';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/pro-duotone-svg-icons';
 import { GridColDef, LicenseInfo, DataGridPro, GridValueGetterParams } from '@mui/x-data-grid-pro';
@@ -226,14 +226,14 @@ const ListPerson: React.FC<TPersonsProps> = (props) => {
       </Box>
 
       {action === 'edit' && (
-        <SchoostDialog
+        <AppDialog
           title={intl.formatMessage({ id: 'app.edit' })}
           isOpen={true}
           dividers={true}
           handleClose={() => navigate('/persons')}
         >
           <PersonForm actionType={action} handleClose={() => navigate('/persons')} />
-        </SchoostDialog>
+        </AppDialog>
       )}
 
       <ConfirmDialog

@@ -74,7 +74,7 @@ type Post
   content: String!
   userID: ID! @index(name: "byUser", sortKeyFields: ["createdAt"])
   user: User @belongsTo(fields: ["userID"])
-  comments: [Comment] @hasMany(indexName: "byPost", fields: ["id"])
+  comments: [Comment] @hasMany
   createdAt: String!
 }
 type Comment

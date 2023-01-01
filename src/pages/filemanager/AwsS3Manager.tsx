@@ -26,7 +26,7 @@ import useTranslation from 'hooks/useTranslation';
 import UploadForm, { TFile } from './forms/UploadForm';
 import DownloadIcon from '@mui/icons-material/Download';
 
-const SchoostDialog = loadable(() => import('components/SchoostDialog'));
+const SchoostDialog = loadable(() => import('components/AppDialog'));
 const ConfirmDialog = loadable(() => import('components/ConfirmDialog'));
 
 const BUCKET_NAME = 'schoost-files';

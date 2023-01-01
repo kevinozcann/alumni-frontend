@@ -1,39 +1,30 @@
-import React from 'react';
-import { useNavigate, useParams } from 'react-router';
-import { connect, ConnectedProps } from 'react-redux';
-import { Box, Card, CardContent, IconButton, Input, Paper } from '@mui/material';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPaperPlane } from '@fortawesome/pro-duotone-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Box, Card, CardContent, IconButton, Input, Paper } from '@mui/material';
+import React from 'react';
+import { useSelector } from 'react-redux';
+import { useNavigate, useParams } from 'react-router';
 
-import { authUserSelector } from 'pages/auth/services/store/auth';
-import { RootState } from 'store/store';
+import AppDialog from 'components/AppDialog';
 import useTranslation from 'hooks/useTranslation';
-import SchoostDialog from 'components/SchoostDialog';
 
-import { postsPhaseSelector } from '../services/posts';
-import AddFeedForm from './NewPostForm';
+import { userProfileSelector } from 'pages/profile/services/store/selectors';
+import { postsPhaseSelector } from '../services/store/selectors';
+import PostForm from './PostForm';
 
-const mapStateToProps = (state: RootState) => ({
-  postsPhase: postsPhaseSelector(state),
-  user: authUserSelector(state)
-});
-const connector = connect(mapStateToProps, null);
-type PropsFromRedux = ConnectedProps<typeof connector>;
-type TNewFeedProps = PropsFromRedux & {
-  handleClose: () => void;
-};
-
-const NewFeed = (props: TNewFeedProps) => {
-  const { postsPhase, handleClose, user } = props;
+const NewFeed = () => {
   const { action } = useParams();
   const [showDialog, setDialog] = React.useState<boolean>(action === 'share');
   const navigate = useNavigate();
   const intl = useTranslation();
 
+  const userProfile = useSelector(userProfileSelector);
+  const postsPhase = useSelector(postsPhaseSelector);
+
   const handleCloseDialog = () => {
     setDialog(false);
 
-    handleClose();
+    navigate('/account/home');
   };
 
   const handleAddClick = () => {
@@ -70,7 +61,7 @@ const NewFeed = (props: TNewFeedProps) => {
                 onClick={handleAddClick}
                 placeholder={intl.translate(
                   { id: 'post.whats_in_your_mind.name' },
-                  { name: user.name }
+                  { name: userProfile?.name }
                 )}
               />
             </Paper>
@@ -81,7 +72,7 @@ const NewFeed = (props: TNewFeedProps) => {
         </CardContent>
       </Card>
 
-      <SchoostDialog
+      <AppDialog
         actionType='add'
         dividers={true}
         handleClose={handleCloseDialog}
@@ -90,10 +81,10 @@ const NewFeed = (props: TNewFeedProps) => {
         title={intl.translate({ id: 'app.share' })}
         width={450}
       >
-        <AddFeedForm actionType='add' handleClose={handleCloseDialog} />
-      </SchoostDialog>
+        <PostForm actionType='add' handleClose={handleCloseDialog} />
+      </AppDialog>
     </React.Fragment>
   );
 };
 
-export default connector(NewFeed);
+export default NewFeed;

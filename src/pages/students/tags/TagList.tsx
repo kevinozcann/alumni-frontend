@@ -20,7 +20,7 @@ import Scrollbar from 'layout/Scrollbar';
 import { useSubheader } from 'contexts/SubheaderContext';
 import { AppDispatch, RootState } from 'store/store';
 import useTranslation from 'hooks/useTranslation';
-import SchoostDialog from 'components/SchoostDialog';
+import AppDialog from 'components/AppDialog';
 import SideForm from 'components/SideForm';
 import ConfirmDialog from 'components/ConfirmDialog';
 import RowActions from 'components/table/RowActions';
@@ -159,14 +159,14 @@ const TagList: React.FC<TStudentTagsProps> = (props) => {
       </Box>
 
       {action === 'edit' && (
-        <SchoostDialog
+        <AppDialog
           title={intl.formatMessage({ id: 'app.edit' })}
           isOpen={true}
           dividers={true}
           handleClose={() => navigate('/student/tags')}
         >
           <StudentTagsForm actionType={action} handleClose={() => navigate('/student/tags')} />
-        </SchoostDialog>
+        </AppDialog>
       )}
 
       <ConfirmDialog

@@ -20,7 +20,7 @@ import { AppDispatch, RootState } from 'store/store';
 import { configActions, configPhaseSelector, gradeLevelsSelector } from 'store/config';
 import useTranslation from 'hooks/useTranslation';
 import { useSubheader } from 'contexts/SubheaderContext';
-import SchoostDialog from 'components/SchoostDialog';
+import AppDialog from 'components/AppDialog';
 import SideForm from 'components/SideForm';
 import ConfirmDialog from 'components/ConfirmDialog';
 import RowActions from 'components/table/RowActions';
@@ -175,7 +175,7 @@ const GradeLevels: React.FC<TGradeLevelsProps> = (props) => {
       />
 
       {action === 'edit' && (
-        <SchoostDialog
+        <AppDialog
           title={intl.translate({ id: 'app.add' })}
           isOpen={true}
           dividers={true}
@@ -185,7 +185,7 @@ const GradeLevels: React.FC<TGradeLevelsProps> = (props) => {
             actionType={action}
             handleClose={() => navigate('/config/grade-levels')}
           />
-        </SchoostDialog>
+        </AppDialog>
       )}
 
       <ConfirmDialog

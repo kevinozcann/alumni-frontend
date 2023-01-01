@@ -22,7 +22,7 @@ import { useSubheader } from 'contexts/SubheaderContext';
 import { AddFabButton } from 'utils/ActionLinks';
 import RowActions from 'components/table/RowActions';
 import ConfirmDialog from 'components/ConfirmDialog';
-import SchoostDialog from 'components/SchoostDialog';
+import AppDialog from 'components/AppDialog';
 
 import { userTypesActions, userTypesSelector, userTypesPhaseSelector } from './_store/user-types';
 import UserTypesForm from './UserTypesForm';
@@ -147,14 +147,14 @@ const TypeList = (props: TUserTypesProps) => {
       <AddFabButton title='ADD' onClick={() => navigate(`/users/types/new`)} />
 
       {action === 'edit' && (
-        <SchoostDialog
+        <AppDialog
           title={intl.formatMessage({ id: 'app.edit' })}
           isOpen={true}
           dividers={true}
           handleClose={() => navigate('/users/types')}
         >
           <UserTypesForm actionType={action} handleClose={() => navigate('/users/types')} />
-        </SchoostDialog>
+        </AppDialog>
       )}
 
       <ConfirmDialog
