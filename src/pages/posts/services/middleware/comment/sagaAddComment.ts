@@ -30,7 +30,7 @@ export function* sagaAddComment({ payload }: TPostActionType) {
 
     if (data) {
       // Add the comment to the post
-      post.comments.unshift(data.createComment);
+      post.comments.items.unshift(data.createComment);
 
       // Update the post
       yield put({

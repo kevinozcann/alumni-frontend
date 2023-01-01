@@ -19,6 +19,10 @@ export const reducer = persistReducer(
       case userActionTypes.STORE.UPDATE_PROFILE: {
         const { profile } = action.payload;
 
+        if (!profile.fullName) {
+          profile.fullName = `${profile.name} ${profile.family_name}`;
+        }
+
         return { ...state, profile };
       }
       case userActionTypes.STORE.UPDATE_PHASE: {

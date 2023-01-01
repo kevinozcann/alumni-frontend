@@ -1,6 +1,7 @@
 import React from 'react';
 import moment from 'moment';
 import { Avatar, Box, Typography, Fab, Tooltip } from '@mui/material';
+import { useSelector } from 'react-redux';
 import DeleteIcon from '@mui/icons-material/Delete';
 
 import useTranslation from 'hooks/useTranslation';
@@ -8,24 +9,25 @@ import InlineEdit from 'components/InlineEdit';
 import ConfirmDialog from 'components/ConfirmDialog';
 import { TActionType } from 'utils/shared-types';
 import { IUser } from 'pages/profile/data/user-types';
-
-import { IPost, IPostComment } from '../data/post-types';
+import { IPost, IComment } from '../data/post-types';
+import { userProfileSelector } from 'pages/profile/services/store/selectors';
+import { postsPhaseSelector } from '../services/store/selectors';
 
 interface TCommentProps {
-  user: IUser;
   post: IPost;
-  phase: string;
-  comment: IPostComment;
-  handleSaveFeed: (user: IUser, post: Partial<IPost>, actionType: TActionType) => void;
+  comment: IComment;
 }
 
 const Comment = (props: TCommentProps) => {
-  const { user, post, phase, comment, handleSaveFeed } = props;
+  const { post, comment } = props;
+  const intl = useTranslation();
   const [showConfirmDialog, setShowConfirmDialog] = React.useState(false);
   const [userComment, setUserComment] = React.useState(comment.content);
-  const intl = useTranslation();
 
-  const isMe = comment.owner.id === user.id;
+  const userProfile = useSelector(userProfileSelector);
+  const postsPhase = useSelector(postsPhaseSelector);
+
+  const isMe = comment.user.id === userProfile.id;
 
   const handleCommentUpdate = (text: string) => {
     setUserComment(text);
@@ -47,7 +49,7 @@ const Comment = (props: TCommentProps) => {
 
   return (
     <Box sx={{ display: 'flex', marginBottom: 1 }}>
-      <Avatar alt='User' src={comment.owner.avatarUrl} />
+      <Avatar alt={comment.user.fullName} src={comment.user.avatarUrl} />
       <Box
         sx={{
           backgroundColor: 'background.default',
@@ -58,7 +60,7 @@ const Comment = (props: TCommentProps) => {
         }}
       >
         <Box sx={{ display: 'flex', alignItems: 'center', mb: 0.5 }}>
-          <Typography color='textPrimary'>{comment.owner.fullName}</Typography>
+          <Typography color='textPrimary'>{`${comment.user.name} ${comment.user.family_name}`}</Typography>
           <Box flexGrow={1} />
           <Typography color='textSecondary' variant='caption'>
             {moment(comment.createdAt).fromNow()}
@@ -100,7 +102,7 @@ const Comment = (props: TCommentProps) => {
         handleClose={handleCloseConfirm}
         handleConfirm={handleDeleteConfirm}
         isOpen={showConfirmDialog}
-        phase={phase}
+        phase={postsPhase}
       />
     </Box>
   );

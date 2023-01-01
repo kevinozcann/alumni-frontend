@@ -34,6 +34,7 @@ import { IPost } from '../data/post-types';
 import { postsPhaseSelector } from '../services/store/selectors';
 import { IUser } from 'pages/profile/data/user-types';
 import { postActions } from '../services/actions';
+import PostComments from './PostComments';
 
 const Moment = loadable.lib(() => import('moment'));
 
@@ -240,32 +241,12 @@ const Post = (props: FeedProps) => {
             <Reactions user={userProfile} post={post} handleSaveFeed={handleSaveFeed} />
           </Box>
 
-          {post?.comments?.length > 0 && (
-            <>
-              <Box sx={{ marginY: 2 }}>
-                <Divider />
-              </Box>
-
-              {post?.comments?.map((comment) => (
-                <Comment
-                  key={comment.id}
-                  user={userProfile}
-                  post={post}
-                  phase={postsPhase}
-                  comment={comment}
-                  handleSaveFeed={handleSaveFeed}
-                />
-              ))}
-            </>
-          )}
-
-          <Divider sx={{ marginBottom: 1 }} />
-
-          <NewComment post={post} />
+          <PostComments post={post} />
         </Box>
       </Card>
 
       {selectedImage && <Lightbox large={selectedImage} onClose={() => setSelectedImage(null)} />}
+
       {selectedFile && (
         <FileViewerDialog
           fileUrl={selectedFile.url}

@@ -6,7 +6,7 @@ import { IAction } from 'store/store';
 import { IPostsStore, postActionTypes, TPostsStoreActions } from '../types';
 
 const initialState: IPostsStore = {
-  posts: null,
+  items: null,
   draft: null,
   nextToken: null,
   phase: null,
@@ -14,16 +14,16 @@ const initialState: IPostsStore = {
 };
 
 export const reducer = persistReducer(
-  { storage, key: 'posts', whitelist: ['posts', 'draft', 'phase'] },
+  { storage, key: 'posts', whitelist: ['items', 'draft', 'phase'] },
   (state: IPostsStore = initialState, action: IAction<TPostsStoreActions>): IPostsStore => {
     switch (action.type) {
       // DELETE POST
       case postActionTypes.STORE.DELETE_POST: {
         const { post } = action.payload;
         return produce(state, (draftState) => {
-          const index = draftState.posts.findIndex((d) => d.id === post.id);
+          const index = draftState.items.findIndex((d) => d.id === post.id);
           if (index !== -1) {
-            draftState.posts.splice(index, 1);
+            draftState.items.splice(index, 1);
           }
         });
       }
@@ -37,17 +37,17 @@ export const reducer = persistReducer(
       // UPDATE POSTS
       case postActionTypes.STORE.UPDATE_POSTS: {
         const { posts, nextToken } = action.payload;
-        return { ...state, posts: posts, nextToken };
+        return { ...state, items: posts, nextToken };
       }
       // UPDATE POST
       case postActionTypes.STORE.UPDATE_POST: {
         const { post } = action.payload;
         return produce(state, (draftState) => {
-          const index = draftState.posts.findIndex((d) => d.id === post.id);
+          const index = draftState.items.findIndex((d) => d.id === post.id);
           if (index > -1) {
-            draftState.posts[index] = post;
+            draftState.items[index] = post;
           } else {
-            draftState.posts.unshift(post);
+            draftState.items.unshift(post);
           }
         });
       }

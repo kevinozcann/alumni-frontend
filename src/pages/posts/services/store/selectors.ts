@@ -4,9 +4,9 @@ import { createSelector } from 'reselect';
 import { IPost } from 'pages/posts/data/post-types';
 import { IPostsStoreState } from '../types';
 
-export const postsPostsSelector = createSelector(
-  (state: IPostsStoreState) => objectPath.get(state, ['posts', 'posts']),
-  (posts: IPost[]) => posts
+export const postsItemsSelector = createSelector(
+  (state: IPostsStoreState) => objectPath.get(state, ['posts', 'items']),
+  (items: IPost[]) => items
 );
 
 export const postsDraftSelector = createSelector(

@@ -25,8 +25,41 @@ export const getUser = /* GraphQL */ `
           type
           content
           userID
+          user {
+            id
+            name
+            family_name
+            email
+            owner
+            avatarUrl
+            avatarKey
+            wallpaperUrl
+            wallpaperKey
+            posts {
+              nextToken
+            }
+            comments {
+              nextToken
+            }
+            createdAt
+            updatedAt
+          }
+          comments {
+            items {
+              id
+              content
+              postID
+              userID
+              createdAt
+              updatedAt
+              userCommentsId
+              owner
+            }
+            nextToken
+          }
           createdAt
           updatedAt
+          userPostsId
           owner
         }
         nextToken
@@ -36,9 +69,55 @@ export const getUser = /* GraphQL */ `
           id
           content
           postID
+          post {
+            id
+            type
+            content
+            userID
+            user {
+              id
+              name
+              family_name
+              email
+              owner
+              avatarUrl
+              avatarKey
+              wallpaperUrl
+              wallpaperKey
+              createdAt
+              updatedAt
+            }
+            comments {
+              nextToken
+            }
+            createdAt
+            updatedAt
+            userPostsId
+            owner
+          }
           userID
+          user {
+            id
+            name
+            family_name
+            email
+            owner
+            avatarUrl
+            avatarKey
+            wallpaperUrl
+            wallpaperKey
+            posts {
+              nextToken
+            }
+            comments {
+              nextToken
+            }
+            createdAt
+            updatedAt
+          }
           createdAt
           updatedAt
+          userCommentsId
           owner
         }
         nextToken
@@ -66,9 +145,68 @@ export const listUsers = /* GraphQL */ `
         wallpaperUrl
         wallpaperKey
         posts {
+          items {
+            id
+            type
+            content
+            userID
+            user {
+              id
+              name
+              family_name
+              email
+              owner
+              avatarUrl
+              avatarKey
+              wallpaperUrl
+              wallpaperKey
+              createdAt
+              updatedAt
+            }
+            comments {
+              nextToken
+            }
+            createdAt
+            updatedAt
+            userPostsId
+            owner
+          }
           nextToken
         }
         comments {
+          items {
+            id
+            content
+            postID
+            post {
+              id
+              type
+              content
+              userID
+              createdAt
+              updatedAt
+              userPostsId
+              owner
+            }
+            userID
+            user {
+              id
+              name
+              family_name
+              email
+              owner
+              avatarUrl
+              avatarKey
+              wallpaperUrl
+              wallpaperKey
+              createdAt
+              updatedAt
+            }
+            createdAt
+            updatedAt
+            userCommentsId
+            owner
+          }
           nextToken
         }
         createdAt
@@ -104,9 +242,68 @@ export const userByEmail = /* GraphQL */ `
         wallpaperUrl
         wallpaperKey
         posts {
+          items {
+            id
+            type
+            content
+            userID
+            user {
+              id
+              name
+              family_name
+              email
+              owner
+              avatarUrl
+              avatarKey
+              wallpaperUrl
+              wallpaperKey
+              createdAt
+              updatedAt
+            }
+            comments {
+              nextToken
+            }
+            createdAt
+            updatedAt
+            userPostsId
+            owner
+          }
           nextToken
         }
         comments {
+          items {
+            id
+            content
+            postID
+            post {
+              id
+              type
+              content
+              userID
+              createdAt
+              updatedAt
+              userPostsId
+              owner
+            }
+            userID
+            user {
+              id
+              name
+              family_name
+              email
+              owner
+              avatarUrl
+              avatarKey
+              wallpaperUrl
+              wallpaperKey
+              createdAt
+              updatedAt
+            }
+            createdAt
+            updatedAt
+            userCommentsId
+            owner
+          }
           nextToken
         }
         createdAt
@@ -197,9 +394,68 @@ export const getPost = /* GraphQL */ `
         wallpaperUrl
         wallpaperKey
         posts {
+          items {
+            id
+            type
+            content
+            userID
+            user {
+              id
+              name
+              family_name
+              email
+              owner
+              avatarUrl
+              avatarKey
+              wallpaperUrl
+              wallpaperKey
+              createdAt
+              updatedAt
+            }
+            comments {
+              nextToken
+            }
+            createdAt
+            updatedAt
+            userPostsId
+            owner
+          }
           nextToken
         }
         comments {
+          items {
+            id
+            content
+            postID
+            post {
+              id
+              type
+              content
+              userID
+              createdAt
+              updatedAt
+              userPostsId
+              owner
+            }
+            userID
+            user {
+              id
+              name
+              family_name
+              email
+              owner
+              avatarUrl
+              avatarKey
+              wallpaperUrl
+              wallpaperKey
+              createdAt
+              updatedAt
+            }
+            createdAt
+            updatedAt
+            userCommentsId
+            owner
+          }
           nextToken
         }
         createdAt
@@ -210,15 +466,62 @@ export const getPost = /* GraphQL */ `
           id
           content
           postID
+          post {
+            id
+            type
+            content
+            userID
+            user {
+              id
+              name
+              family_name
+              email
+              owner
+              avatarUrl
+              avatarKey
+              wallpaperUrl
+              wallpaperKey
+              createdAt
+              updatedAt
+            }
+            comments {
+              nextToken
+            }
+            createdAt
+            updatedAt
+            userPostsId
+            owner
+          }
           userID
+          user {
+            id
+            name
+            family_name
+            email
+            owner
+            avatarUrl
+            avatarKey
+            wallpaperUrl
+            wallpaperKey
+            posts {
+              nextToken
+            }
+            comments {
+              nextToken
+            }
+            createdAt
+            updatedAt
+          }
           createdAt
           updatedAt
+          userCommentsId
           owner
         }
         nextToken
       }
       createdAt
       updatedAt
+      userPostsId
       owner
     }
   }
@@ -245,14 +548,74 @@ export const listPosts = /* GraphQL */ `
           avatarKey
           wallpaperUrl
           wallpaperKey
+          posts {
+            items {
+              id
+              type
+              content
+              userID
+              createdAt
+              updatedAt
+              userPostsId
+              owner
+            }
+            nextToken
+          }
+          comments {
+            items {
+              id
+              content
+              postID
+              userID
+              createdAt
+              updatedAt
+              userCommentsId
+              owner
+            }
+            nextToken
+          }
           createdAt
           updatedAt
         }
         comments {
+          items {
+            id
+            content
+            postID
+            post {
+              id
+              type
+              content
+              userID
+              createdAt
+              updatedAt
+              userPostsId
+              owner
+            }
+            userID
+            user {
+              id
+              name
+              family_name
+              email
+              owner
+              avatarUrl
+              avatarKey
+              wallpaperUrl
+              wallpaperKey
+              createdAt
+              updatedAt
+            }
+            createdAt
+            updatedAt
+            userCommentsId
+            owner
+          }
           nextToken
         }
         createdAt
         updatedAt
+        userPostsId
         owner
       }
       nextToken
@@ -291,14 +654,74 @@ export const postsByDate = /* GraphQL */ `
           avatarKey
           wallpaperUrl
           wallpaperKey
+          posts {
+            items {
+              id
+              type
+              content
+              userID
+              createdAt
+              updatedAt
+              userPostsId
+              owner
+            }
+            nextToken
+          }
+          comments {
+            items {
+              id
+              content
+              postID
+              userID
+              createdAt
+              updatedAt
+              userCommentsId
+              owner
+            }
+            nextToken
+          }
           createdAt
           updatedAt
         }
         comments {
+          items {
+            id
+            content
+            postID
+            post {
+              id
+              type
+              content
+              userID
+              createdAt
+              updatedAt
+              userPostsId
+              owner
+            }
+            userID
+            user {
+              id
+              name
+              family_name
+              email
+              owner
+              avatarUrl
+              avatarKey
+              wallpaperUrl
+              wallpaperKey
+              createdAt
+              updatedAt
+            }
+            createdAt
+            updatedAt
+            userCommentsId
+            owner
+          }
           nextToken
         }
         createdAt
         updatedAt
+        userPostsId
         owner
       }
       nextToken
@@ -337,14 +760,74 @@ export const postsByUserIDAndCreatedAt = /* GraphQL */ `
           avatarKey
           wallpaperUrl
           wallpaperKey
+          posts {
+            items {
+              id
+              type
+              content
+              userID
+              createdAt
+              updatedAt
+              userPostsId
+              owner
+            }
+            nextToken
+          }
+          comments {
+            items {
+              id
+              content
+              postID
+              userID
+              createdAt
+              updatedAt
+              userCommentsId
+              owner
+            }
+            nextToken
+          }
           createdAt
           updatedAt
         }
         comments {
+          items {
+            id
+            content
+            postID
+            post {
+              id
+              type
+              content
+              userID
+              createdAt
+              updatedAt
+              userPostsId
+              owner
+            }
+            userID
+            user {
+              id
+              name
+              family_name
+              email
+              owner
+              avatarUrl
+              avatarKey
+              wallpaperUrl
+              wallpaperKey
+              createdAt
+              updatedAt
+            }
+            createdAt
+            updatedAt
+            userCommentsId
+            owner
+          }
           nextToken
         }
         createdAt
         updatedAt
+        userPostsId
         owner
       }
       nextToken
@@ -372,14 +855,74 @@ export const getComment = /* GraphQL */ `
           avatarKey
           wallpaperUrl
           wallpaperKey
+          posts {
+            items {
+              id
+              type
+              content
+              userID
+              createdAt
+              updatedAt
+              userPostsId
+              owner
+            }
+            nextToken
+          }
+          comments {
+            items {
+              id
+              content
+              postID
+              userID
+              createdAt
+              updatedAt
+              userCommentsId
+              owner
+            }
+            nextToken
+          }
           createdAt
           updatedAt
         }
         comments {
+          items {
+            id
+            content
+            postID
+            post {
+              id
+              type
+              content
+              userID
+              createdAt
+              updatedAt
+              userPostsId
+              owner
+            }
+            userID
+            user {
+              id
+              name
+              family_name
+              email
+              owner
+              avatarUrl
+              avatarKey
+              wallpaperUrl
+              wallpaperKey
+              createdAt
+              updatedAt
+            }
+            createdAt
+            updatedAt
+            userCommentsId
+            owner
+          }
           nextToken
         }
         createdAt
         updatedAt
+        userPostsId
         owner
       }
       userID
@@ -394,9 +937,68 @@ export const getComment = /* GraphQL */ `
         wallpaperUrl
         wallpaperKey
         posts {
+          items {
+            id
+            type
+            content
+            userID
+            user {
+              id
+              name
+              family_name
+              email
+              owner
+              avatarUrl
+              avatarKey
+              wallpaperUrl
+              wallpaperKey
+              createdAt
+              updatedAt
+            }
+            comments {
+              nextToken
+            }
+            createdAt
+            updatedAt
+            userPostsId
+            owner
+          }
           nextToken
         }
         comments {
+          items {
+            id
+            content
+            postID
+            post {
+              id
+              type
+              content
+              userID
+              createdAt
+              updatedAt
+              userPostsId
+              owner
+            }
+            userID
+            user {
+              id
+              name
+              family_name
+              email
+              owner
+              avatarUrl
+              avatarKey
+              wallpaperUrl
+              wallpaperKey
+              createdAt
+              updatedAt
+            }
+            createdAt
+            updatedAt
+            userCommentsId
+            owner
+          }
           nextToken
         }
         createdAt
@@ -404,6 +1006,7 @@ export const getComment = /* GraphQL */ `
       }
       createdAt
       updatedAt
+      userCommentsId
       owner
     }
   }
@@ -424,8 +1027,41 @@ export const listComments = /* GraphQL */ `
           type
           content
           userID
+          user {
+            id
+            name
+            family_name
+            email
+            owner
+            avatarUrl
+            avatarKey
+            wallpaperUrl
+            wallpaperKey
+            posts {
+              nextToken
+            }
+            comments {
+              nextToken
+            }
+            createdAt
+            updatedAt
+          }
+          comments {
+            items {
+              id
+              content
+              postID
+              userID
+              createdAt
+              updatedAt
+              userCommentsId
+              owner
+            }
+            nextToken
+          }
           createdAt
           updatedAt
+          userPostsId
           owner
         }
         userID
@@ -439,11 +1075,38 @@ export const listComments = /* GraphQL */ `
           avatarKey
           wallpaperUrl
           wallpaperKey
+          posts {
+            items {
+              id
+              type
+              content
+              userID
+              createdAt
+              updatedAt
+              userPostsId
+              owner
+            }
+            nextToken
+          }
+          comments {
+            items {
+              id
+              content
+              postID
+              userID
+              createdAt
+              updatedAt
+              userCommentsId
+              owner
+            }
+            nextToken
+          }
           createdAt
           updatedAt
         }
         createdAt
         updatedAt
+        userCommentsId
         owner
       }
       nextToken
@@ -474,8 +1137,41 @@ export const commentsByPostID = /* GraphQL */ `
           type
           content
           userID
+          user {
+            id
+            name
+            family_name
+            email
+            owner
+            avatarUrl
+            avatarKey
+            wallpaperUrl
+            wallpaperKey
+            posts {
+              nextToken
+            }
+            comments {
+              nextToken
+            }
+            createdAt
+            updatedAt
+          }
+          comments {
+            items {
+              id
+              content
+              postID
+              userID
+              createdAt
+              updatedAt
+              userCommentsId
+              owner
+            }
+            nextToken
+          }
           createdAt
           updatedAt
+          userPostsId
           owner
         }
         userID
@@ -489,11 +1185,38 @@ export const commentsByPostID = /* GraphQL */ `
           avatarKey
           wallpaperUrl
           wallpaperKey
+          posts {
+            items {
+              id
+              type
+              content
+              userID
+              createdAt
+              updatedAt
+              userPostsId
+              owner
+            }
+            nextToken
+          }
+          comments {
+            items {
+              id
+              content
+              postID
+              userID
+              createdAt
+              updatedAt
+              userCommentsId
+              owner
+            }
+            nextToken
+          }
           createdAt
           updatedAt
         }
         createdAt
         updatedAt
+        userCommentsId
         owner
       }
       nextToken
@@ -524,8 +1247,41 @@ export const commentsByUserID = /* GraphQL */ `
           type
           content
           userID
+          user {
+            id
+            name
+            family_name
+            email
+            owner
+            avatarUrl
+            avatarKey
+            wallpaperUrl
+            wallpaperKey
+            posts {
+              nextToken
+            }
+            comments {
+              nextToken
+            }
+            createdAt
+            updatedAt
+          }
+          comments {
+            items {
+              id
+              content
+              postID
+              userID
+              createdAt
+              updatedAt
+              userCommentsId
+              owner
+            }
+            nextToken
+          }
           createdAt
           updatedAt
+          userPostsId
           owner
         }
         userID
@@ -539,11 +1295,38 @@ export const commentsByUserID = /* GraphQL */ `
           avatarKey
           wallpaperUrl
           wallpaperKey
+          posts {
+            items {
+              id
+              type
+              content
+              userID
+              createdAt
+              updatedAt
+              userPostsId
+              owner
+            }
+            nextToken
+          }
+          comments {
+            items {
+              id
+              content
+              postID
+              userID
+              createdAt
+              updatedAt
+              userCommentsId
+              owner
+            }
+            nextToken
+          }
           createdAt
           updatedAt
         }
         createdAt
         updatedAt
+        userCommentsId
         owner
       }
       nextToken

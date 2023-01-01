@@ -1,17 +1,6 @@
 import { IUser } from 'pages/profile/data/user-types';
 import { IFile } from 'utils/shared-types';
 
-export interface IPostComment {
-  id?: number;
-  content?: string;
-  owner?: IUser;
-  createdAt?: Date;
-}
-export interface IPostLike {
-  id?: number;
-  createdAt?: Date;
-  createdBy?: IUser;
-}
 export interface IPost {
   id?: string;
   type?: 'Post';
@@ -20,7 +9,7 @@ export interface IPost {
   files?: IFile[];
   likes?: IPostLike[];
   coverPicture?: string;
-  comments?: IPostComment[];
+  comments?: IPostComment;
   commentsOn?: boolean;
   related?: string[];
   tags?: string[];
@@ -29,4 +18,20 @@ export interface IPost {
   createdAt?: Date;
   updatedAt?: Date;
   owner?: string;
+}
+export interface IPostComment {
+  items?: IComment[];
+  nextToken?: string;
+}
+export interface IComment {
+  id?: number;
+  content: string;
+  user?: IUser;
+  updatedAt?: Date;
+  createdAt?: Date;
+}
+export interface IPostLike {
+  id?: number;
+  createdAt?: Date;
+  createdBy?: IUser;
 }

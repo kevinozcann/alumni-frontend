@@ -1,5 +1,5 @@
 import { IAuthUser } from 'pages/auth/data/account-types';
-import { IPost, IPostComment } from 'pages/posts/data/post-types';
+import { IPost, IComment } from 'pages/posts/data/post-types';
 import { IUser } from 'pages/profile/data/user-types';
 import { TPhase } from 'store/store';
 
@@ -10,7 +10,7 @@ export const postActions = {
     type: postActionTypes.SAGA.ADD_POST,
     payload: { user, post }
   }),
-  addComment: (user: IUser, post: IPost, comment: IPostComment): TPostActionType => ({
+  addComment: (user: IUser, post: IPost, comment: IComment): TPostActionType => ({
     type: postActionTypes.SAGA.ADD_COMMENT,
     payload: { user, post, comment }
   }),

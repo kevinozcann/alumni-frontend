@@ -2,7 +2,7 @@ import { IUser } from 'pages/profile/data/user-types';
 import { IAction } from 'store/store';
 import { TActionType, TLang } from 'utils/shared-types';
 
-import { IPost, IPostComment } from '../data/post-types';
+import { IComment, IPost } from '../data/post-types';
 
 export const postActionTypes = {
   SAGA: {
@@ -30,7 +30,7 @@ export interface IPostsStoreState {
   posts: IPostsStore;
 }
 export interface IPostsStore {
-  posts: IPost[];
+  items: IPost[];
   draft: IPost;
   nextToken: string;
   phase: string;
@@ -39,7 +39,7 @@ export interface IPostsStore {
 export type TPostsStoreActions = IPostsStore & {
   actionType?: TActionType;
   post?: Partial<IPost>;
-  comment?: Partial<IPostComment>;
+  comment?: Partial<IComment>;
   posts?: IPost[];
   postType?: string;
   id?: number;

@@ -6,7 +6,7 @@ import { userProfileSelector } from 'pages/profile/services/store/selectors';
 
 import { IPost } from '../data/post-types';
 import { postActions } from '../services/actions';
-import { postsPhaseSelector, postsPostsSelector } from '../services/store/selectors';
+import { postsPhaseSelector, postsItemsSelector } from '../services/store/selectors';
 import Post from './Post';
 import PostsSkeleton from './PostsSkeleton';
 
@@ -15,7 +15,7 @@ const Posts = () => {
   const [page] = React.useState(1);
 
   const user = useSelector(userProfileSelector);
-  const postsPosts = useSelector(postsPostsSelector);
+  const postsPosts = useSelector(postsItemsSelector);
   const postsPhase = useSelector(postsPhaseSelector);
 
   React.useEffect(() => {

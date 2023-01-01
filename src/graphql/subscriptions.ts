@@ -23,8 +23,41 @@ export const onCreateUser = /* GraphQL */ `
           type
           content
           userID
+          user {
+            id
+            name
+            family_name
+            email
+            owner
+            avatarUrl
+            avatarKey
+            wallpaperUrl
+            wallpaperKey
+            posts {
+              nextToken
+            }
+            comments {
+              nextToken
+            }
+            createdAt
+            updatedAt
+          }
+          comments {
+            items {
+              id
+              content
+              postID
+              userID
+              createdAt
+              updatedAt
+              userCommentsId
+              owner
+            }
+            nextToken
+          }
           createdAt
           updatedAt
+          userPostsId
           owner
         }
         nextToken
@@ -34,9 +67,55 @@ export const onCreateUser = /* GraphQL */ `
           id
           content
           postID
+          post {
+            id
+            type
+            content
+            userID
+            user {
+              id
+              name
+              family_name
+              email
+              owner
+              avatarUrl
+              avatarKey
+              wallpaperUrl
+              wallpaperKey
+              createdAt
+              updatedAt
+            }
+            comments {
+              nextToken
+            }
+            createdAt
+            updatedAt
+            userPostsId
+            owner
+          }
           userID
+          user {
+            id
+            name
+            family_name
+            email
+            owner
+            avatarUrl
+            avatarKey
+            wallpaperUrl
+            wallpaperKey
+            posts {
+              nextToken
+            }
+            comments {
+              nextToken
+            }
+            createdAt
+            updatedAt
+          }
           createdAt
           updatedAt
+          userCommentsId
           owner
         }
         nextToken
@@ -67,8 +146,41 @@ export const onUpdateUser = /* GraphQL */ `
           type
           content
           userID
+          user {
+            id
+            name
+            family_name
+            email
+            owner
+            avatarUrl
+            avatarKey
+            wallpaperUrl
+            wallpaperKey
+            posts {
+              nextToken
+            }
+            comments {
+              nextToken
+            }
+            createdAt
+            updatedAt
+          }
+          comments {
+            items {
+              id
+              content
+              postID
+              userID
+              createdAt
+              updatedAt
+              userCommentsId
+              owner
+            }
+            nextToken
+          }
           createdAt
           updatedAt
+          userPostsId
           owner
         }
         nextToken
@@ -78,9 +190,55 @@ export const onUpdateUser = /* GraphQL */ `
           id
           content
           postID
+          post {
+            id
+            type
+            content
+            userID
+            user {
+              id
+              name
+              family_name
+              email
+              owner
+              avatarUrl
+              avatarKey
+              wallpaperUrl
+              wallpaperKey
+              createdAt
+              updatedAt
+            }
+            comments {
+              nextToken
+            }
+            createdAt
+            updatedAt
+            userPostsId
+            owner
+          }
           userID
+          user {
+            id
+            name
+            family_name
+            email
+            owner
+            avatarUrl
+            avatarKey
+            wallpaperUrl
+            wallpaperKey
+            posts {
+              nextToken
+            }
+            comments {
+              nextToken
+            }
+            createdAt
+            updatedAt
+          }
           createdAt
           updatedAt
+          userCommentsId
           owner
         }
         nextToken
@@ -111,8 +269,41 @@ export const onDeleteUser = /* GraphQL */ `
           type
           content
           userID
+          user {
+            id
+            name
+            family_name
+            email
+            owner
+            avatarUrl
+            avatarKey
+            wallpaperUrl
+            wallpaperKey
+            posts {
+              nextToken
+            }
+            comments {
+              nextToken
+            }
+            createdAt
+            updatedAt
+          }
+          comments {
+            items {
+              id
+              content
+              postID
+              userID
+              createdAt
+              updatedAt
+              userCommentsId
+              owner
+            }
+            nextToken
+          }
           createdAt
           updatedAt
+          userPostsId
           owner
         }
         nextToken
@@ -122,9 +313,55 @@ export const onDeleteUser = /* GraphQL */ `
           id
           content
           postID
+          post {
+            id
+            type
+            content
+            userID
+            user {
+              id
+              name
+              family_name
+              email
+              owner
+              avatarUrl
+              avatarKey
+              wallpaperUrl
+              wallpaperKey
+              createdAt
+              updatedAt
+            }
+            comments {
+              nextToken
+            }
+            createdAt
+            updatedAt
+            userPostsId
+            owner
+          }
           userID
+          user {
+            id
+            name
+            family_name
+            email
+            owner
+            avatarUrl
+            avatarKey
+            wallpaperUrl
+            wallpaperKey
+            posts {
+              nextToken
+            }
+            comments {
+              nextToken
+            }
+            createdAt
+            updatedAt
+          }
           createdAt
           updatedAt
+          userCommentsId
           owner
         }
         nextToken
@@ -248,9 +485,68 @@ export const onCreatePost = /* GraphQL */ `
         wallpaperUrl
         wallpaperKey
         posts {
+          items {
+            id
+            type
+            content
+            userID
+            user {
+              id
+              name
+              family_name
+              email
+              owner
+              avatarUrl
+              avatarKey
+              wallpaperUrl
+              wallpaperKey
+              createdAt
+              updatedAt
+            }
+            comments {
+              nextToken
+            }
+            createdAt
+            updatedAt
+            userPostsId
+            owner
+          }
           nextToken
         }
         comments {
+          items {
+            id
+            content
+            postID
+            post {
+              id
+              type
+              content
+              userID
+              createdAt
+              updatedAt
+              userPostsId
+              owner
+            }
+            userID
+            user {
+              id
+              name
+              family_name
+              email
+              owner
+              avatarUrl
+              avatarKey
+              wallpaperUrl
+              wallpaperKey
+              createdAt
+              updatedAt
+            }
+            createdAt
+            updatedAt
+            userCommentsId
+            owner
+          }
           nextToken
         }
         createdAt
@@ -261,15 +557,62 @@ export const onCreatePost = /* GraphQL */ `
           id
           content
           postID
+          post {
+            id
+            type
+            content
+            userID
+            user {
+              id
+              name
+              family_name
+              email
+              owner
+              avatarUrl
+              avatarKey
+              wallpaperUrl
+              wallpaperKey
+              createdAt
+              updatedAt
+            }
+            comments {
+              nextToken
+            }
+            createdAt
+            updatedAt
+            userPostsId
+            owner
+          }
           userID
+          user {
+            id
+            name
+            family_name
+            email
+            owner
+            avatarUrl
+            avatarKey
+            wallpaperUrl
+            wallpaperKey
+            posts {
+              nextToken
+            }
+            comments {
+              nextToken
+            }
+            createdAt
+            updatedAt
+          }
           createdAt
           updatedAt
+          userCommentsId
           owner
         }
         nextToken
       }
       createdAt
       updatedAt
+      userPostsId
       owner
     }
   }
@@ -295,9 +638,68 @@ export const onUpdatePost = /* GraphQL */ `
         wallpaperUrl
         wallpaperKey
         posts {
+          items {
+            id
+            type
+            content
+            userID
+            user {
+              id
+              name
+              family_name
+              email
+              owner
+              avatarUrl
+              avatarKey
+              wallpaperUrl
+              wallpaperKey
+              createdAt
+              updatedAt
+            }
+            comments {
+              nextToken
+            }
+            createdAt
+            updatedAt
+            userPostsId
+            owner
+          }
           nextToken
         }
         comments {
+          items {
+            id
+            content
+            postID
+            post {
+              id
+              type
+              content
+              userID
+              createdAt
+              updatedAt
+              userPostsId
+              owner
+            }
+            userID
+            user {
+              id
+              name
+              family_name
+              email
+              owner
+              avatarUrl
+              avatarKey
+              wallpaperUrl
+              wallpaperKey
+              createdAt
+              updatedAt
+            }
+            createdAt
+            updatedAt
+            userCommentsId
+            owner
+          }
           nextToken
         }
         createdAt
@@ -308,15 +710,62 @@ export const onUpdatePost = /* GraphQL */ `
           id
           content
           postID
+          post {
+            id
+            type
+            content
+            userID
+            user {
+              id
+              name
+              family_name
+              email
+              owner
+              avatarUrl
+              avatarKey
+              wallpaperUrl
+              wallpaperKey
+              createdAt
+              updatedAt
+            }
+            comments {
+              nextToken
+            }
+            createdAt
+            updatedAt
+            userPostsId
+            owner
+          }
           userID
+          user {
+            id
+            name
+            family_name
+            email
+            owner
+            avatarUrl
+            avatarKey
+            wallpaperUrl
+            wallpaperKey
+            posts {
+              nextToken
+            }
+            comments {
+              nextToken
+            }
+            createdAt
+            updatedAt
+          }
           createdAt
           updatedAt
+          userCommentsId
           owner
         }
         nextToken
       }
       createdAt
       updatedAt
+      userPostsId
       owner
     }
   }
@@ -342,9 +791,68 @@ export const onDeletePost = /* GraphQL */ `
         wallpaperUrl
         wallpaperKey
         posts {
+          items {
+            id
+            type
+            content
+            userID
+            user {
+              id
+              name
+              family_name
+              email
+              owner
+              avatarUrl
+              avatarKey
+              wallpaperUrl
+              wallpaperKey
+              createdAt
+              updatedAt
+            }
+            comments {
+              nextToken
+            }
+            createdAt
+            updatedAt
+            userPostsId
+            owner
+          }
           nextToken
         }
         comments {
+          items {
+            id
+            content
+            postID
+            post {
+              id
+              type
+              content
+              userID
+              createdAt
+              updatedAt
+              userPostsId
+              owner
+            }
+            userID
+            user {
+              id
+              name
+              family_name
+              email
+              owner
+              avatarUrl
+              avatarKey
+              wallpaperUrl
+              wallpaperKey
+              createdAt
+              updatedAt
+            }
+            createdAt
+            updatedAt
+            userCommentsId
+            owner
+          }
           nextToken
         }
         createdAt
@@ -355,15 +863,62 @@ export const onDeletePost = /* GraphQL */ `
           id
           content
           postID
+          post {
+            id
+            type
+            content
+            userID
+            user {
+              id
+              name
+              family_name
+              email
+              owner
+              avatarUrl
+              avatarKey
+              wallpaperUrl
+              wallpaperKey
+              createdAt
+              updatedAt
+            }
+            comments {
+              nextToken
+            }
+            createdAt
+            updatedAt
+            userPostsId
+            owner
+          }
           userID
+          user {
+            id
+            name
+            family_name
+            email
+            owner
+            avatarUrl
+            avatarKey
+            wallpaperUrl
+            wallpaperKey
+            posts {
+              nextToken
+            }
+            comments {
+              nextToken
+            }
+            createdAt
+            updatedAt
+          }
           createdAt
           updatedAt
+          userCommentsId
           owner
         }
         nextToken
       }
       createdAt
       updatedAt
+      userPostsId
       owner
     }
   }
@@ -392,14 +947,74 @@ export const onCreateComment = /* GraphQL */ `
           avatarKey
           wallpaperUrl
           wallpaperKey
+          posts {
+            items {
+              id
+              type
+              content
+              userID
+              createdAt
+              updatedAt
+              userPostsId
+              owner
+            }
+            nextToken
+          }
+          comments {
+            items {
+              id
+              content
+              postID
+              userID
+              createdAt
+              updatedAt
+              userCommentsId
+              owner
+            }
+            nextToken
+          }
           createdAt
           updatedAt
         }
         comments {
+          items {
+            id
+            content
+            postID
+            post {
+              id
+              type
+              content
+              userID
+              createdAt
+              updatedAt
+              userPostsId
+              owner
+            }
+            userID
+            user {
+              id
+              name
+              family_name
+              email
+              owner
+              avatarUrl
+              avatarKey
+              wallpaperUrl
+              wallpaperKey
+              createdAt
+              updatedAt
+            }
+            createdAt
+            updatedAt
+            userCommentsId
+            owner
+          }
           nextToken
         }
         createdAt
         updatedAt
+        userPostsId
         owner
       }
       userID
@@ -414,9 +1029,68 @@ export const onCreateComment = /* GraphQL */ `
         wallpaperUrl
         wallpaperKey
         posts {
+          items {
+            id
+            type
+            content
+            userID
+            user {
+              id
+              name
+              family_name
+              email
+              owner
+              avatarUrl
+              avatarKey
+              wallpaperUrl
+              wallpaperKey
+              createdAt
+              updatedAt
+            }
+            comments {
+              nextToken
+            }
+            createdAt
+            updatedAt
+            userPostsId
+            owner
+          }
           nextToken
         }
         comments {
+          items {
+            id
+            content
+            postID
+            post {
+              id
+              type
+              content
+              userID
+              createdAt
+              updatedAt
+              userPostsId
+              owner
+            }
+            userID
+            user {
+              id
+              name
+              family_name
+              email
+              owner
+              avatarUrl
+              avatarKey
+              wallpaperUrl
+              wallpaperKey
+              createdAt
+              updatedAt
+            }
+            createdAt
+            updatedAt
+            userCommentsId
+            owner
+          }
           nextToken
         }
         createdAt
@@ -424,6 +1098,7 @@ export const onCreateComment = /* GraphQL */ `
       }
       createdAt
       updatedAt
+      userCommentsId
       owner
     }
   }
@@ -452,14 +1127,74 @@ export const onUpdateComment = /* GraphQL */ `
           avatarKey
           wallpaperUrl
           wallpaperKey
+          posts {
+            items {
+              id
+              type
+              content
+              userID
+              createdAt
+              updatedAt
+              userPostsId
+              owner
+            }
+            nextToken
+          }
+          comments {
+            items {
+              id
+              content
+              postID
+              userID
+              createdAt
+              updatedAt
+              userCommentsId
+              owner
+            }
+            nextToken
+          }
           createdAt
           updatedAt
         }
         comments {
+          items {
+            id
+            content
+            postID
+            post {
+              id
+              type
+              content
+              userID
+              createdAt
+              updatedAt
+              userPostsId
+              owner
+            }
+            userID
+            user {
+              id
+              name
+              family_name
+              email
+              owner
+              avatarUrl
+              avatarKey
+              wallpaperUrl
+              wallpaperKey
+              createdAt
+              updatedAt
+            }
+            createdAt
+            updatedAt
+            userCommentsId
+            owner
+          }
           nextToken
         }
         createdAt
         updatedAt
+        userPostsId
         owner
       }
       userID
@@ -474,9 +1209,68 @@ export const onUpdateComment = /* GraphQL */ `
         wallpaperUrl
         wallpaperKey
         posts {
+          items {
+            id
+            type
+            content
+            userID
+            user {
+              id
+              name
+              family_name
+              email
+              owner
+              avatarUrl
+              avatarKey
+              wallpaperUrl
+              wallpaperKey
+              createdAt
+              updatedAt
+            }
+            comments {
+              nextToken
+            }
+            createdAt
+            updatedAt
+            userPostsId
+            owner
+          }
           nextToken
         }
         comments {
+          items {
+            id
+            content
+            postID
+            post {
+              id
+              type
+              content
+              userID
+              createdAt
+              updatedAt
+              userPostsId
+              owner
+            }
+            userID
+            user {
+              id
+              name
+              family_name
+              email
+              owner
+              avatarUrl
+              avatarKey
+              wallpaperUrl
+              wallpaperKey
+              createdAt
+              updatedAt
+            }
+            createdAt
+            updatedAt
+            userCommentsId
+            owner
+          }
           nextToken
         }
         createdAt
@@ -484,6 +1278,7 @@ export const onUpdateComment = /* GraphQL */ `
       }
       createdAt
       updatedAt
+      userCommentsId
       owner
     }
   }
@@ -512,14 +1307,74 @@ export const onDeleteComment = /* GraphQL */ `
           avatarKey
           wallpaperUrl
           wallpaperKey
+          posts {
+            items {
+              id
+              type
+              content
+              userID
+              createdAt
+              updatedAt
+              userPostsId
+              owner
+            }
+            nextToken
+          }
+          comments {
+            items {
+              id
+              content
+              postID
+              userID
+              createdAt
+              updatedAt
+              userCommentsId
+              owner
+            }
+            nextToken
+          }
           createdAt
           updatedAt
         }
         comments {
+          items {
+            id
+            content
+            postID
+            post {
+              id
+              type
+              content
+              userID
+              createdAt
+              updatedAt
+              userPostsId
+              owner
+            }
+            userID
+            user {
+              id
+              name
+              family_name
+              email
+              owner
+              avatarUrl
+              avatarKey
+              wallpaperUrl
+              wallpaperKey
+              createdAt
+              updatedAt
+            }
+            createdAt
+            updatedAt
+            userCommentsId
+            owner
+          }
           nextToken
         }
         createdAt
         updatedAt
+        userPostsId
         owner
       }
       userID
@@ -534,9 +1389,68 @@ export const onDeleteComment = /* GraphQL */ `
         wallpaperUrl
         wallpaperKey
         posts {
+          items {
+            id
+            type
+            content
+            userID
+            user {
+              id
+              name
+              family_name
+              email
+              owner
+              avatarUrl
+              avatarKey
+              wallpaperUrl
+              wallpaperKey
+              createdAt
+              updatedAt
+            }
+            comments {
+              nextToken
+            }
+            createdAt
+            updatedAt
+            userPostsId
+            owner
+          }
           nextToken
         }
         comments {
+          items {
+            id
+            content
+            postID
+            post {
+              id
+              type
+              content
+              userID
+              createdAt
+              updatedAt
+              userPostsId
+              owner
+            }
+            userID
+            user {
+              id
+              name
+              family_name
+              email
+              owner
+              avatarUrl
+              avatarKey
+              wallpaperUrl
+              wallpaperKey
+              createdAt
+              updatedAt
+            }
+            createdAt
+            updatedAt
+            userCommentsId
+            owner
+          }
           nextToken
         }
         createdAt
@@ -544,6 +1458,7 @@ export const onDeleteComment = /* GraphQL */ `
       }
       createdAt
       updatedAt
+      userCommentsId
       owner
     }
   }
