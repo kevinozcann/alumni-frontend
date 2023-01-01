@@ -32,7 +32,7 @@ const PersonPage = () => {
   const intl = useTranslation();
   const theme = useTheme();
   const { id, action } = useParams();
-  const transStudents = intl.translate({ id: 'school.students' });
+  const transStudents = intl.translate({ id: 'person.alumni_students' });
 
   const [section, setSection] = React.useState<string>('general');
 

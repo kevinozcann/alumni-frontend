@@ -32,7 +32,7 @@ const menus: IMenu[] = [
   },
   {
     id: 3,
-    title: 'school.students',
+    title: 'person.alumni_students',
     iconPrefix: 'fad',
     icon: 'users',
     url: '/persons',

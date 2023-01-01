@@ -51,7 +51,7 @@ const ListPerson: React.FC<TPersonsProps> = (props) => {
   const { id, action } = useParams();
 
   const mobileDevice = useMediaQuery(theme.breakpoints.down('md'));
-  const transStudents = intl.translate({ id: 'school.students' });
+  const transStudents = intl.translate({ id: 'person.alumni_students' });
 
   const columns: GridColDef[] = [
     {
@@ -183,7 +183,7 @@ const ListPerson: React.FC<TPersonsProps> = (props) => {
 
   React.useEffect(() => {
     const breadcrumbs = [];
-    breadcrumbs.push({ title: 'school.students', url: '/persons' });
+    breadcrumbs.push({ title: 'person.alumni_students', url: '/persons' });
     subheader.setBreadcrumbs(breadcrumbs);
   }, []);
 

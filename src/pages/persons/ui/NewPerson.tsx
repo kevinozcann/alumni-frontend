@@ -13,7 +13,7 @@ const NewPerson = () => {
   const navigate = useNavigate();
   const subheader = useSubheader();
 
-  const transStudents = intl.translate({ id: 'school.students' });
+  const transStudents = intl.translate({ id: 'person.alumni_students' });
   const transAddStudent = intl.translate({ id: 'student.add' });
 
   React.useEffect(() => {
