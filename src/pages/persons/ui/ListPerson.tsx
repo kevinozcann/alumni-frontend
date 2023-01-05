@@ -100,7 +100,7 @@ const ListPerson: React.FC<TPersonsProps> = (props) => {
       renderCell: (params: GridValueGetterParams) =>
         params.row.gender == 'MALE'
           ? intl.translate({ id: 'person.male' })
-          : params.row.gender == 'FEMALE'
+          : params.row.gender == 'FEMAIL'
           ? intl.translate({ id: 'person.female' })
           : params.row.gender == 'OTHER'
           ? intl.translate({ id: 'other' })
@@ -117,8 +117,20 @@ const ListPerson: React.FC<TPersonsProps> = (props) => {
       field: 'graduation_status',
       headerAlign: 'center',
       align: 'center',
-      headerName: intl.translate({ id: 'person.graduation_status' }),
-      flex: 1
+      headerName: intl.translate({ id: 'person.school' }),
+      flex: 2,
+      renderCell: (params: GridValueGetterParams) =>
+        params.row.graduation_status == 'gkv_primary'
+          ? 'GAZİANTEP KOLEJ VAKFI ÖZEL İLKOKULU'
+          : params.row.graduation_status == 'gkv_secondary'
+          ? 'GAZİANTEP KOLEJ VAKFI ÖZEL ORTAOKULU'
+          : params.row.graduation_status == 'gkv_anatolian_high_school'
+          ? 'GAZİANTEP KOLEJ VAKFI ÖZEL ANADOLU LİSESİ'
+          : params.row.graduation_status == 'gkv_science_high_school'
+          ? 'GAZİANTEP KOLEJ VAKFI ÖZEL FEN LİSESİ'
+          : params.row.graduation_status == 'gkv_cemil_alevli_college'
+          ? 'GAZİANTEP KOLEJ VAKFI ÖZEL OKULLARI CEMİL ALEVLİ KOLEJİ'
+          : ''
     },
     {
       field: 'education_status',

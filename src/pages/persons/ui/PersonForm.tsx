@@ -214,18 +214,7 @@ const PersonForm = (props: TFormProps) => {
                   onChange={handleChange}
                 />
               </Grid>
-              <Grid item xs={12} md={4}>
-                <TextField
-                  id='ssnNumber'
-                  disabled={isSubmitting ? true : false}
-                  fullWidth={true}
-                  label={intl.translate({ id: 'id_number' })}
-                  value={values.ssn_number}
-                  variant='outlined'
-                  onChange={handleChange}
-                />
-              </Grid>
-              <Grid item xs={12} md={4}>
+              <Grid item xs={12} md={6}>
                 <DatePicker
                   label={intl.translate({ id: 'date_of_birth' })}
                   value={values.birth_date}
@@ -233,7 +222,7 @@ const PersonForm = (props: TFormProps) => {
                   renderInput={(params) => <TextField id='birth_date' fullWidth {...params} />}
                 />
               </Grid>
-              <Grid item xs={12} md={4}>
+              <Grid item xs={12} md={6}>
                 <TextField
                   id='gender'
                   select={true}
@@ -275,7 +264,7 @@ const PersonForm = (props: TFormProps) => {
                   label={intl.translate({ id: 'person.marital_status' })}
                   value={values.marital_status}
                   variant='outlined'
-                  onChange={(event) => setFieldValue('maritalStatus', event.target.value)}
+                  onChange={(event) => setFieldValue('marital_status', event.target.value)}
                 >
                   <MenuItem key='1' value='SINGLE' dense={true}>
                     {`${intl.translate({ id: 'person.single' })}`}
@@ -294,19 +283,6 @@ const PersonForm = (props: TFormProps) => {
             <Grid container spacing={3}>
               <Grid item xs={12} md={6}>
                 <TextField
-                  id='school_number'
-                  autoFocus
-                  disabled={isSubmitting ? true : false}
-                  fullWidth={true}
-                  label={intl.translate({ id: 'student.no' })}
-                  value={values.school_number}
-                  variant='outlined'
-                  onChange={handleChange}
-                />
-              </Grid>
-
-              <Grid item xs={12} md={6}>
-                <TextField
                   id='graduation_period'
                   disabled={isSubmitting ? true : false}
                   fullWidth={true}
@@ -319,16 +295,33 @@ const PersonForm = (props: TFormProps) => {
               <Grid item xs={12} md={6}>
                 <TextField
                   id='graduation_status'
+                  select={true}
                   disabled={isSubmitting ? true : false}
                   fullWidth={true}
-                  label={intl.translate({ id: 'person.graduation_status' })}
+                  label={intl.translate({ id: 'person.school' })}
                   value={values.graduation_status}
                   variant='outlined'
-                  onChange={handleChange}
-                />
+                  onChange={(event) => setFieldValue('graduation_status', event.target.value)}
+                >
+                  <MenuItem key='1' value='gkv_primary' dense={true}>
+                    {'GAZİANTEP KOLEJ VAKFI ÖZEL İLKOKULU'}
+                  </MenuItem>
+                  <MenuItem key='2' value='gkv_secondary' dense={true}>
+                    {'GAZİANTEP KOLEJ VAKFI ÖZEL ORTAOKULU'}
+                  </MenuItem>
+                  <MenuItem key='3' value='gkv_anatolian_high_school' dense={true}>
+                    {'GAZİANTEP KOLEJ VAKFI ÖZEL ANADOLU LİSESİ'}
+                  </MenuItem>
+                  <MenuItem key='4' value='gkv_science_high_school' dense={true}>
+                    {'GAZİANTEP KOLEJ VAKFI ÖZEL FEN LİSESİ'}
+                  </MenuItem>
+                  <MenuItem key='5' value='gkv_cemil_alevli_college' dense={true}>
+                    {'GAZİANTEP KOLEJ VAKFI ÖZEL OKULLARI CEMİL ALEVLİ KOLEJİ'}
+                  </MenuItem>
+                </TextField>
               </Grid>
 
-              <Grid item xs={12} md={6}>
+              <Grid item xs={12} md={12}>
                 <TextField
                   id='education_status'
                   disabled={isSubmitting ? true : false}

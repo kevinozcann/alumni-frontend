@@ -151,16 +151,7 @@ const PersonPage = () => {
                       variant='outlined'
                     />
                   </Grid>
-                  <Grid item xs={12} md={4}>
-                    <TextField
-                      disabled
-                      fullWidth={true}
-                      label={intl.translate({ id: 'id_number' })}
-                      value={personInfo?.ssn_number}
-                      variant='outlined'
-                    />
-                  </Grid>
-                  <Grid item xs={12} md={4}>
+                  <Grid item xs={12} md={6}>
                     <TextField
                       disabled
                       fullWidth={true}
@@ -173,7 +164,7 @@ const PersonPage = () => {
                       variant='outlined'
                     />
                   </Grid>
-                  <Grid item xs={12} md={4}>
+                  <Grid item xs={12} md={6}>
                     <TextField
                       select={true}
                       disabled
@@ -230,16 +221,6 @@ const PersonPage = () => {
                       <TextField
                         disabled
                         fullWidth={true}
-                        label={intl.translate({ id: 'student.no' })}
-                        value={personInfo?.school_number}
-                        variant='outlined'
-                      />
-                    </Grid>
-
-                    <Grid item xs={12} md={6}>
-                      <TextField
-                        disabled
-                        fullWidth={true}
                         label={intl.translate({ id: 'person.graduation_period' })}
                         value={personInfo?.graduation_period}
                         variant='outlined'
@@ -249,13 +230,25 @@ const PersonPage = () => {
                       <TextField
                         disabled
                         fullWidth={true}
-                        label={intl.translate({ id: 'person.graduation_status' })}
-                        value={personInfo?.graduation_status}
+                        label={intl.translate({ id: 'person.school' })}
+                        value={
+                          personInfo?.graduation_status == 'gkv_primary'
+                            ? 'GAZİANTEP KOLEJ VAKFI ÖZEL İLKOKULU'
+                            : personInfo?.graduation_status == 'gkv_secondary'
+                            ? 'GAZİANTEP KOLEJ VAKFI ÖZEL ORTAOKULU'
+                            : personInfo?.graduation_status == 'gkv_anatolian_high_school'
+                            ? 'GAZİANTEP KOLEJ VAKFI ÖZEL ANADOLU LİSESİ'
+                            : personInfo?.graduation_status == 'gkv_science_high_school'
+                            ? 'GAZİANTEP KOLEJ VAKFI ÖZEL FEN LİSESİ'
+                            : personInfo?.graduation_status == 'gkv_cemil_alevli_college'
+                            ? 'GAZİANTEP KOLEJ VAKFI ÖZEL OKULLARI CEMİL ALEVLİ KOLEJİ'
+                            : ''
+                        }
                         variant='outlined'
                       />
                     </Grid>
 
-                    <Grid item xs={12} md={6}>
+                    <Grid item xs={12} md={12}>
                       <TextField
                         disabled
                         fullWidth={true}
