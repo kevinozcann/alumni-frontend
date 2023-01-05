@@ -18,7 +18,13 @@ import ConfirmDialog from 'components/ConfirmDialog';
 import AppDialog from 'components/AppDialog';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/pro-duotone-svg-icons';
-import { GridColDef, LicenseInfo, DataGridPro, GridValueGetterParams } from '@mui/x-data-grid-pro';
+import {
+  GridColDef,
+  LicenseInfo,
+  DataGridPro,
+  GridValueGetterParams,
+  GridToolbarQuickFilter
+} from '@mui/x-data-grid-pro';
 import useTranslation from 'hooks/useTranslation';
 import Page from 'layout/Page';
 import Scrollbar from 'layout/Scrollbar';
@@ -231,6 +237,13 @@ const ListPerson: React.FC<TPersonsProps> = (props) => {
                 loading={phase === 'loading'}
                 rows={persons}
                 columns={columns}
+                components={{ Toolbar: GridToolbarQuickFilter }}
+                componentsProps={{
+                  toolbar: {
+                    showQuickFilter: true,
+                    quickFilterProps: { debounceMs: 500 }
+                  }
+                }}
               />
             </CardContent>
           </Scrollbar>
