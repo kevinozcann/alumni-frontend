@@ -230,20 +230,8 @@ const PersonPage = () => {
                       <TextField
                         disabled
                         fullWidth={true}
-                        label={intl.translate({ id: 'person.school' })}
-                        value={
-                          personInfo?.graduation_status == 'gkv_primary'
-                            ? 'GAZİANTEP KOLEJ VAKFI ÖZEL İLKOKULU'
-                            : personInfo?.graduation_status == 'gkv_secondary'
-                            ? 'GAZİANTEP KOLEJ VAKFI ÖZEL ORTAOKULU'
-                            : personInfo?.graduation_status == 'gkv_anatolian_high_school'
-                            ? 'GAZİANTEP KOLEJ VAKFI ÖZEL ANADOLU LİSESİ'
-                            : personInfo?.graduation_status == 'gkv_science_high_school'
-                            ? 'GAZİANTEP KOLEJ VAKFI ÖZEL FEN LİSESİ'
-                            : personInfo?.graduation_status == 'gkv_cemil_alevli_college'
-                            ? 'GAZİANTEP KOLEJ VAKFI ÖZEL OKULLARI CEMİL ALEVLİ KOLEJİ'
-                            : ''
-                        }
+                        label={intl.translate({ id: 'person.graduation_status' })}
+                        value={personInfo?.graduation_status}
                         variant='outlined'
                       />
                     </Grid>
@@ -252,8 +240,20 @@ const PersonPage = () => {
                       <TextField
                         disabled
                         fullWidth={true}
-                        label={intl.translate({ id: 'person.education_status' })}
-                        value={personInfo?.education_status}
+                        label={intl.translate({ id: 'person.school' })}
+                        value={
+                          personInfo?.education_status == 'gkv_primary'
+                            ? 'GAZİANTEP KOLEJ VAKFI ÖZEL İLKOKULU'
+                            : personInfo?.education_status == 'gkv_secondary'
+                            ? 'GAZİANTEP KOLEJ VAKFI ÖZEL ORTAOKULU'
+                            : personInfo?.education_status == 'gkv_anatolian_high_school'
+                            ? 'GAZİANTEP KOLEJ VAKFI ÖZEL ANADOLU LİSESİ'
+                            : personInfo?.education_status == 'gkv_science_high_school'
+                            ? 'GAZİANTEP KOLEJ VAKFI ÖZEL FEN LİSESİ'
+                            : personInfo?.education_status == 'gkv_cemil_alevli_college'
+                            ? 'GAZİANTEP KOLEJ VAKFI ÖZEL OKULLARI CEMİL ALEVLİ KOLEJİ'
+                            : ''
+                        }
                         variant='outlined'
                       />
                     </Grid>

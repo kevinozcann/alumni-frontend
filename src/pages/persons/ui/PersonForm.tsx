@@ -295,13 +295,24 @@ const PersonForm = (props: TFormProps) => {
               <Grid item xs={12} md={6}>
                 <TextField
                   id='graduation_status'
+                  disabled={isSubmitting ? true : false}
+                  fullWidth={true}
+                  label={intl.translate({ id: 'person.graduation_status' })}
+                  value={values.graduation_status}
+                  variant='outlined'
+                  onChange={handleChange}
+                />
+              </Grid>
+              <Grid item xs={12} md={12}>
+                <TextField
+                  id='education_status'
                   select={true}
                   disabled={isSubmitting ? true : false}
                   fullWidth={true}
                   label={intl.translate({ id: 'person.school' })}
-                  value={values.graduation_status}
+                  value={values.education_status}
                   variant='outlined'
-                  onChange={(event) => setFieldValue('graduation_status', event.target.value)}
+                  onChange={(event) => setFieldValue('education_status', event.target.value)}
                 >
                   <MenuItem key='1' value='gkv_primary' dense={true}>
                     {'GAZİANTEP KOLEJ VAKFI ÖZEL İLKOKULU'}
@@ -319,18 +330,6 @@ const PersonForm = (props: TFormProps) => {
                     {'GAZİANTEP KOLEJ VAKFI ÖZEL OKULLARI CEMİL ALEVLİ KOLEJİ'}
                   </MenuItem>
                 </TextField>
-              </Grid>
-
-              <Grid item xs={12} md={12}>
-                <TextField
-                  id='education_status'
-                  disabled={isSubmitting ? true : false}
-                  fullWidth={true}
-                  label={intl.translate({ id: 'person.education_status' })}
-                  value={values.education_status}
-                  variant='outlined'
-                  onChange={handleChange}
-                />
               </Grid>
             </Grid>
           )}
