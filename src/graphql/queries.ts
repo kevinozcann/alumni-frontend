@@ -2,11 +2,6 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
-export const getUserPicture = /* GraphQL */ `
-  query GetUserPicture($picture: String) {
-    getUserPicture(picture: $picture)
-  }
-`;
 export const getUser = /* GraphQL */ `
   query GetUser($id: ID!) {
     getUser(id: $id) {

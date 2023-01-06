@@ -94,6 +94,6 @@ type Comment
   user: User! @belongsTo(fields: ["userID"])
 }
 
-type Query {
-  getUserPicture(picture: String): String @function(name: "getUserPicture-${env}")
-}
+# type Query {
+#   getUserPicture(picture: String): String @function(name: "getUserPicture-${env}")
+# }

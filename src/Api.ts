@@ -2157,14 +2157,6 @@ export type DeleteCommentMutation = {
   } | null,
 };
 
-export type GetUserPictureQueryVariables = {
-  picture?: string | null,
-};
-
-export type GetUserPictureQuery = {
-  getUserPicture?: string | null,
-};
-
 export type GetUserQueryVariables = {
   id: string,
 };
