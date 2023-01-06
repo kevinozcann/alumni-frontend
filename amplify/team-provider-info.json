@@ -42,10 +42,6 @@
         "alumnifrontend88c8d6e7PreSignup": {
           "deploymentBucketName": "amplify-amplify86d682d74d534-staging-210516-deployment",
           "s3Key": "amplify-builds/alumnifrontend88c8d6e7PreSignup-59744a513138737a6e2b-build.zip"
-        },
-        "getUserPicture": {
-          "deploymentBucketName": "amplify-amplify86d682d74d534-staging-210516-deployment",
-          "s3Key": "amplify-builds/getUserPicture-7952614f546651334c37-build.zip"
         }
       },
       "storage": {

@@ -8,59 +8,39 @@
           "category": "function",
           "resourceName": "alumnifrontend88c8d6e7PostAuthentication",
           "triggerProvider": "Cognito",
-          "attributes": [
-            "Arn",
-            "Name"
-          ]
+          "attributes": ["Arn", "Name"]
         },
         {
           "category": "function",
           "resourceName": "alumnifrontend88c8d6e7PostConfirmation",
           "triggerProvider": "Cognito",
-          "attributes": [
-            "Arn",
-            "Name"
-          ]
+          "attributes": ["Arn", "Name"]
         },
         {
           "category": "function",
           "resourceName": "alumnifrontend88c8d6e7PreAuthentication",
           "triggerProvider": "Cognito",
-          "attributes": [
-            "Arn",
-            "Name"
-          ]
+          "attributes": ["Arn", "Name"]
         },
         {
           "category": "function",
           "resourceName": "alumnifrontend88c8d6e7PreSignup",
           "triggerProvider": "Cognito",
-          "attributes": [
-            "Arn",
-            "Name"
-          ]
+          "attributes": ["Arn", "Name"]
         }
       ],
       "customAuth": false,
       "frontendAuthConfig": {
         "socialProviders": [],
-        "usernameAttributes": [
-          "EMAIL"
-        ],
-        "signupAttributes": [
-          "EMAIL"
-        ],
+        "usernameAttributes": ["EMAIL"],
+        "signupAttributes": ["EMAIL"],
         "passwordProtectionSettings": {
           "passwordPolicyMinLength": 8,
           "passwordPolicyCharacters": []
         },
         "mfaConfiguration": "OFF",
-        "mfaTypes": [
-          "SMS"
-        ],
-        "verificationMechanisms": [
-          "EMAIL"
-        ]
+        "mfaTypes": ["SMS"],
+        "verificationMechanisms": ["EMAIL"]
       }
     },
     "userPoolGroups": {
@@ -70,12 +50,7 @@
         {
           "category": "auth",
           "resourceName": "alumnifrontend88c8d6e7",
-          "attributes": [
-            "UserPoolId",
-            "AppClientIDWeb",
-            "AppClientID",
-            "IdentityPoolId"
-          ]
+          "attributes": ["UserPoolId", "AppClientIDWeb", "AppClientID", "IdentityPoolId"]
         }
       ]
     }
@@ -94,9 +69,7 @@
         {
           "category": "auth",
           "resourceName": "alumnifrontend88c8d6e7",
-          "attributes": [
-            "UserPoolId"
-          ]
+          "attributes": ["UserPoolId"]
         }
       ]
     },
@@ -108,16 +81,12 @@
         {
           "category": "storage",
           "resourceName": "storage",
-          "attributes": [
-            "BucketName"
-          ]
+          "attributes": ["BucketName"]
         },
         {
           "category": "api",
           "resourceName": "alumnifrontend",
-          "attributes": [
-            "GraphQLAPIIdOutput"
-          ]
+          "attributes": ["GraphQLAPIIdOutput"]
         }
       ]
     },
@@ -129,11 +98,7 @@
         {
           "category": "api",
           "resourceName": "alumnifrontend",
-          "attributes": [
-            "GraphQLAPIIdOutput",
-            "GraphQLAPIEndpointOutput",
-            "GraphQLAPIKeyOutput"
-          ]
+          "attributes": ["GraphQLAPIIdOutput", "GraphQLAPIEndpointOutput", "GraphQLAPIKeyOutput"]
         }
       ]
     },
@@ -146,20 +111,6 @@
       "build": true,
       "providerPlugin": "awscloudformation",
       "service": "Lambda"
-    },
-    "getUserPicture": {
-      "build": true,
-      "providerPlugin": "awscloudformation",
-      "service": "Lambda",
-      "dependsOn": [
-        {
-          "category": "storage",
-          "resourceName": "storage",
-          "attributes": [
-            "BucketName"
-          ]
-        }
-      ]
     }
   },
   "storage": {
@@ -170,11 +121,7 @@
         {
           "category": "function",
           "resourceName": "S3Trigger73b92967",
-          "attributes": [
-            "Name",
-            "Arn",
-            "LambdaExecutionRole"
-          ]
+          "attributes": ["Name", "Arn", "LambdaExecutionRole"]
         }
       ]
     }
@@ -187,9 +134,7 @@
         {
           "category": "auth",
           "resourceName": "alumnifrontend88c8d6e7",
-          "attributes": [
-            "UserPoolId"
-          ]
+          "attributes": ["UserPoolId"]
         }
       ],
       "output": {
@@ -224,17 +169,12 @@
         {
           "category": "auth",
           "resourceName": "alumnifrontend88c8d6e7",
-          "attributes": [
-            "UserPoolId"
-          ]
+          "attributes": ["UserPoolId"]
         },
         {
           "category": "function",
           "resourceName": "AdminQueriesa1643cb4",
-          "attributes": [
-            "Arn",
-            "Name"
-          ]
+          "attributes": ["Arn", "Name"]
         }
       ]
     }
