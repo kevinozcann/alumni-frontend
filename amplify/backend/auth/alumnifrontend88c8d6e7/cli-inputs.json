@@ -50,11 +50,7 @@
     "usernameAttributes": [
       "email"
     ],
-    "triggers": {
-      "PostConfirmation": [
-        "custom"
-      ]
-    },
+    "triggers": {},
     "userPoolGroupList": [
       "User",
       "Admin"
@@ -75,28 +71,17 @@
       ]
     },
     "breakCircularDependency": true,
-    "dependsOn": [
-      {
-        "category": "function",
-        "resourceName": "alumnifrontend88c8d6e7PostConfirmation",
-        "triggerProvider": "Cognito",
-        "attributes": [
-          "Arn",
-          "Name"
-        ]
-      }
-    ],
-    "thirdPartyAuth": false,
+    "dependsOn": [],
     "userPoolGroups": true,
-    "adminQueries": true,
+    "adminQueries": false,
     "hostedUI": false,
     "adminQueryGroup": "Admin",
-    "authProviders": [],
     "parentStack": {
       "Ref": "AWS::StackId"
     },
     "permissions": [],
     "verificationBucketName": "alumnifrontend88c8d6e7verificationbucket",
-    "authTriggerConnections": "[\n  {\n    \"triggerType\": \"PostConfirmation\",\n    \"lambdaFunctionName\": \"alumnifrontend88c8d6e7PostConfirmation\"\n  }\n]"
+    "authProviders": [],
+    "thirdPartyAuth": false
   }
 }
