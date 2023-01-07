@@ -1,40 +1,36 @@
 import { API } from 'aws-amplify';
 import { put } from 'redux-saga/effects';
 
-import { createComment } from 'graphql/mutations';
+import { createComment, updateComment } from 'graphql/mutations';
 
 import { postActionTypes, TPostActionType } from '../../types';
 
-export function* sagaAddComment({ payload }: TPostActionType) {
+export function* sagaUpdateComment({ payload }: TPostActionType) {
   // Update phase
   yield put({
     type: postActionTypes.STORE.UPDATE_PHASE,
-    payload: { phase: 'adding', error: null }
+    payload: { phase: 'updating', error: null }
   });
 
-  const { user, post, comment } = payload;
+  const { post, comment } = payload;
 
   try {
     const { data } = yield API.graphql({
-      query: createComment,
+      query: updateComment,
       variables: {
         input: {
-          content: comment.content,
-          postID: post.id,
-          userID: user.id
+          id: comment.id,
+          content: comment.content
         }
       },
       authMode: 'AMAZON_COGNITO_USER_POOLS'
     });
 
     if (data) {
-      // Add the comment to the post
-      post.comments.items.unshift(data.createComment);
-
       // Update the post
       yield put({
-        type: postActionTypes.STORE.UPDATE_POST,
-        payload: { post: post }
+        type: postActionTypes.STORE.UPDATE_COMMENT,
+        payload: { post: post, comment: comment }
       });
 
       // Update phase

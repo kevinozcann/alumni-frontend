@@ -1,17 +1,16 @@
-import React from 'react';
-import moment from 'moment';
-import { Avatar, Box, Typography, Fab, Tooltip } from '@mui/material';
-import { useSelector } from 'react-redux';
 import DeleteIcon from '@mui/icons-material/Delete';
+import { Avatar, Box, Fab, Tooltip, Typography } from '@mui/material';
+import moment from 'moment';
+import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
-import useTranslation from 'hooks/useTranslation';
-import InlineEdit from 'components/InlineEdit';
 import ConfirmDialog from 'components/ConfirmDialog';
-import { TActionType } from 'utils/shared-types';
-import { IUser } from 'pages/profile/data/user-types';
-import { IPost, IComment } from '../data/post-types';
+import InlineEdit from 'components/InlineEdit';
+import useTranslation from 'hooks/useTranslation';
 import { userProfileSelector } from 'pages/profile/services/store/selectors';
+import { IComment, IPost } from '../data/post-types';
 import { postsPhaseSelector } from '../services/store/selectors';
+import { postActions } from '../services/actions';
 
 interface TCommentProps {
   post: IPost;
@@ -21,6 +20,7 @@ interface TCommentProps {
 const Comment = (props: TCommentProps) => {
   const { post, comment } = props;
   const intl = useTranslation();
+  const dispatch = useDispatch();
   const [showConfirmDialog, setShowConfirmDialog] = React.useState(false);
   const [userComment, setUserComment] = React.useState(comment.content);
 
@@ -32,7 +32,7 @@ const Comment = (props: TCommentProps) => {
   const handleCommentUpdate = (text: string) => {
     setUserComment(text);
 
-    // handleSaveFeed(user, { commentId: comment.id, comment: text }, 'update-comment');
+    dispatch(postActions.updateComment(post, Object.assign({}, comment, { content: text })));
   };
 
   const handleCommentDelete = () => {
@@ -40,7 +40,7 @@ const Comment = (props: TCommentProps) => {
   };
 
   const handleDeleteConfirm = () => {
-    // handleSaveFeed(user, { feedId: post.id, commentId: comment.id }, 'delete-comment');
+    dispatch(postActions.deleteComment(post, comment));
   };
 
   const handleCloseConfirm = () => {
@@ -49,7 +49,10 @@ const Comment = (props: TCommentProps) => {
 
   return (
     <Box sx={{ display: 'flex', marginBottom: 1 }}>
-      <Avatar alt={comment.user.fullName} src={comment.user.avatarUrl} />
+      <Avatar
+        alt={`${comment.user.name} ${comment.user.family_name}`}
+        src={comment.user.avatarUrl}
+      />
       <Box
         sx={{
           backgroundColor: 'background.default',

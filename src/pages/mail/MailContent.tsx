@@ -174,7 +174,9 @@ const MailContent: React.FC<MailContentProps> = (props) => {
                 width: 48
               }}
             >
-              {getInitials(currentMail?.email?.emailToUser?.fullName)}
+              {getInitials(
+                `${currentMail?.email?.emailToUser?.name} ${currentMail?.email?.emailToUser?.family_name}`
+              )}
             </Avatar>
           ) : (
             <Avatar
@@ -184,15 +186,17 @@ const MailContent: React.FC<MailContentProps> = (props) => {
                 width: 48
               }}
             >
-              {getInitials(currentMail?.email?.sender?.fullName)}
+              {getInitials(
+                `${currentMail?.email?.sender?.name} ${currentMail?.email?.sender?.family_name}`
+              )}
             </Avatar>
           )}
 
           <Box sx={{ ml: 2 }}>
             <Typography color='textPrimary' display='inline' variant='subtitle2'>
               {section == 'sent'
-                ? currentMail?.email?.emailToUser?.fullName
-                : currentMail?.email?.sender?.fullName}
+                ? currentMail?.email?.emailToUser?.name
+                : currentMail?.email?.sender?.name}
             </Typography>{' '}
             <Link color='textSecondary' display='inline' variant='body2'>
               {section == 'sent'

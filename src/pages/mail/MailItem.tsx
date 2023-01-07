@@ -168,18 +168,18 @@ const MailItem = (props: MailItemProps) => {
         {section == 'sent' ? (
           <Avatar
             sx={{ backgroundColor: 'primary.main' }}
-            alt={emailToUser?.fullName}
+            alt={emailToUser?.name}
             src={emailToUser?.avatarUrl}
           >
-            {getInitials(emailToUser?.fullName)}
+            {getInitials(`${emailToUser?.name} ${emailToUser?.family_name}`)}
           </Avatar>
         ) : (
           <Avatar
             sx={{ backgroundColor: 'primary.main' }}
-            alt={sender?.fullName || sender?.name}
+            alt={sender?.name}
             src={sender?.avatarUrl}
           >
-            {getInitials(sender?.fullName || sender?.name)}
+            {getInitials(`${sender?.name} ${sender?.family_name}`)}
           </Avatar>
         )}
 
@@ -213,7 +213,7 @@ const MailItem = (props: MailItemProps) => {
               })
             }}
           >
-            {section == 'sent' ? emailToUser?.fullName : sender?.fullName}
+            {section == 'sent' ? emailToUser?.name : sender?.name}
             {isTo && (
               <Chip
                 sx={{

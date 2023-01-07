@@ -6,7 +6,11 @@ import { postActions } from '../../actions';
 import { postActionTypes, TPostActionType } from '../../types';
 
 export function* sagaUpdatePostImages({ payload }: TPostActionType) {
-  yield put(postActions.setPhase('loading'));
+  // Update phase
+  yield put({
+    type: postActionTypes.STORE.UPDATE_PHASE,
+    payload: { phase: 'loading', error: null }
+  });
 
   const { post } = payload;
 

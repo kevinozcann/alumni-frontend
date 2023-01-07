@@ -21,9 +21,24 @@ export const reducer = persistReducer(
       case postActionTypes.STORE.DELETE_POST: {
         const { post } = action.payload;
         return produce(state, (draftState) => {
-          const index = draftState.items.findIndex((d) => d.id === post.id);
-          if (index !== -1) {
-            draftState.items.splice(index, 1);
+          const postIndex = draftState.items.findIndex((d) => d.id === post.id);
+          if (postIndex > -1) {
+            draftState.items.splice(postIndex, 1);
+          }
+        });
+      }
+      // DELETE COMMENT
+      case postActionTypes.STORE.DELETE_COMMENT: {
+        const { post, comment } = action.payload;
+        return produce(state, (draftState) => {
+          const postIndex = draftState.items.findIndex((p) => p.id === post.id);
+          if (postIndex > -1) {
+            const commentIndex = draftState.items[postIndex].comments.items.findIndex(
+              (c) => c.id === comment.id
+            );
+            if (commentIndex > -1) {
+              draftState.items[postIndex].comments.items.splice(commentIndex, 1);
+            }
           }
         });
       }
@@ -32,6 +47,21 @@ export const reducer = persistReducer(
         const { post } = action.payload;
         return produce(state, (draftState) => {
           draftState.draft = post;
+        });
+      }
+      // UPDATE COMMENT
+      case postActionTypes.STORE.UPDATE_COMMENT: {
+        const { post, comment } = action.payload;
+        return produce(state, (draftState) => {
+          const postIndex = draftState.items.findIndex((p) => p.id === post.id);
+          if (postIndex > -1) {
+            const commentIndex = draftState.items[postIndex].comments.items.findIndex(
+              (c) => c.id === comment.id
+            );
+            if (commentIndex > -1) {
+              draftState.items[postIndex].comments.items[commentIndex].content = comment.content;
+            }
+          }
         });
       }
       // UPDATE POSTS
@@ -43,9 +73,9 @@ export const reducer = persistReducer(
       case postActionTypes.STORE.UPDATE_POST: {
         const { post } = action.payload;
         return produce(state, (draftState) => {
-          const index = draftState.items.findIndex((d) => d.id === post.id);
-          if (index > -1) {
-            draftState.items[index] = post;
+          const postIndex = draftState.items.findIndex((p) => p.id === post.id);
+          if (postIndex > -1) {
+            draftState.items[postIndex] = post;
           } else {
             draftState.items.unshift(post);
           }

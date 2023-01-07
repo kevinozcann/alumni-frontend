@@ -21,19 +21,19 @@ type TPostComments = {
 const PostComments = (props: TPostComments) => {
   const { post } = props;
 
-  if (!post?.comments || !post?.comments?.items || post?.comments?.items?.length === 0) {
-    return null;
-  }
-
   return (
     <Box sx={{ paddingX: 3, paddingBottom: 2 }}>
-      <Box sx={{ marginY: 2 }}>
-        <Divider />
-      </Box>
+      {post?.comments && post?.comments?.items && post?.comments?.items?.length > 0 && (
+        <>
+          <Box sx={{ marginY: 2 }}>
+            <Divider />
+          </Box>
 
-      {post?.comments?.items?.map((item) => (
-        <Comment key={item.id} post={post} comment={item} />
-      ))}
+          {post?.comments?.items?.map((item) => (
+            <Comment key={item.id} post={post} comment={item} />
+          ))}
+        </>
+      )}
 
       <Divider sx={{ marginBottom: 1 }} />
 

@@ -19,8 +19,10 @@ export const postActionTypes = {
   },
   STORE: {
     DELETE_POST: 'posts/store/DELETE_POST',
+    DELETE_COMMENT: 'posts/store/DELETE_COMMENT',
     UPDATE_PHASE: 'posts/store/UPDATE_PHASE',
     UPDATE_POST: 'posts/store/UPDATE_POST',
+    UPDATE_COMMENT: 'posts/store/UPDATE_COMMENT',
     UPDATE_POSTS: 'posts/store/UPDATE_POSTS',
     UPSERT_DRAFT: 'posts/store/UPSERT_DRAFT'
   }

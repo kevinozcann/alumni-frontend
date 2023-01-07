@@ -7,7 +7,11 @@ import { postActionTypes, TPostActionType } from '../../types';
 import { postActions } from '../../actions';
 
 export function* sagaDeletePost({ payload }: TPostActionType) {
-  yield put(postActions.setPhase('deleting'));
+  // Update phase
+  yield put({
+    type: postActionTypes.STORE.UPDATE_PHASE,
+    payload: { phase: 'deleting', error: null }
+  });
 
   const { post } = payload;
 
@@ -23,11 +27,24 @@ export function* sagaDeletePost({ payload }: TPostActionType) {
         type: postActionTypes.STORE.DELETE_POST,
         payload: { post: post }
       });
-      yield put(postActions.setPhase('success'));
+
+      // Update phase
+      yield put({
+        type: postActionTypes.STORE.UPDATE_PHASE,
+        payload: { phase: 'success', error: null }
+      });
     } else {
-      yield put(postActions.setPhase('error', 'Error occurred!'));
+      // Update phase
+      yield put({
+        type: postActionTypes.STORE.UPDATE_PHASE,
+        payload: { phase: 'error', error: 'Error occurred!' }
+      });
     }
   } catch (error) {
-    yield put(postActions.setPhase('error', error));
+    // Update phase
+    yield put({
+      type: postActionTypes.STORE.UPDATE_PHASE,
+      payload: { phase: 'error', error: error }
+    });
   }
 }

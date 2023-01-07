@@ -18,6 +18,10 @@ export const postActions = {
     type: postActionTypes.SAGA.DELETE_POST,
     payload: { post }
   }),
+  deleteComment: (post: IPost, comment: IComment): TPostActionType => ({
+    type: postActionTypes.SAGA.DELETE_COMMENT,
+    payload: { post, comment }
+  }),
   getPosts: (user: IAuthUser, page: number): TPostActionType => ({
     type: postActionTypes.SAGA.GET_POSTS,
     payload: { user, page }
@@ -29,6 +33,10 @@ export const postActions = {
   updatePost: (post: IPost): TPostActionType => ({
     type: postActionTypes.SAGA.UPDATE_POST,
     payload: { post }
+  }),
+  updateComment: (post: IPost, comment: IComment): TPostActionType => ({
+    type: postActionTypes.SAGA.UPDATE_COMMENT,
+    payload: { post, comment }
   }),
   upsertDraft: (post: Partial<IPost>): TPostActionType => ({
     type: postActionTypes.SAGA.UPSERT_DRAFT,

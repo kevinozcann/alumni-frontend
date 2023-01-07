@@ -6,7 +6,11 @@ import { postActions } from '../../actions';
 import { postActionTypes, TPostActionType } from '../../types';
 
 export function* sagaGetPosts({ payload }: TPostActionType) {
-  yield put(postActions.setPhase('loading'));
+  // Update phase
+  yield put({
+    type: postActionTypes.STORE.UPDATE_PHASE,
+    payload: { phase: 'loading', error: null }
+  });
 
   const { user, page } = payload;
 
@@ -26,11 +30,24 @@ export function* sagaGetPosts({ payload }: TPostActionType) {
         type: postActionTypes.STORE.UPDATE_POSTS,
         payload: { posts: posts, nextToken }
       });
-      yield put(postActions.setPhase('success'));
+
+      // Update phase
+      yield put({
+        type: postActionTypes.STORE.UPDATE_PHASE,
+        payload: { phase: 'success', error: null }
+      });
     } else {
-      yield put(postActions.setPhase('error', 'Error occurred!'));
+      // Update phase
+      yield put({
+        type: postActionTypes.STORE.UPDATE_PHASE,
+        payload: { phase: 'error', error: 'Error occurred!' }
+      });
     }
   } catch (error) {
-    yield put(postActions.setPhase('error', error));
+    // Update phase
+    yield put({
+      type: postActionTypes.STORE.UPDATE_PHASE,
+      payload: { phase: 'error', error: error }
+    });
   }
 }

@@ -2,7 +2,6 @@ import { IAuthUser } from 'pages/auth/data/account-types';
 
 export interface IUser extends IAuthUser {
   id?: string;
-  fullName?: string;
   avatarUrl?: string;
   avatarKey?: string;
   wallpaperUrl?: string;
