@@ -135,4 +135,4 @@
     "verificationBucketName": "alumnifrontend88c8d6e7verificationbucket",
     "authTriggerConnections": "[\n  {\n    \"triggerType\": \"PostAuthentication\",\n    \"lambdaFunctionName\": \"alumnifrontend88c8d6e7PostAuthentication\"\n  },\n  {\n    \"triggerType\": \"PostConfirmation\",\n    \"lambdaFunctionName\": \"alumnifrontend88c8d6e7PostConfirmation\"\n  },\n  {\n    \"triggerType\": \"PreAuthentication\",\n    \"lambdaFunctionName\": \"alumnifrontend88c8d6e7PreAuthentication\"\n  },\n  {\n    \"triggerType\": \"PreSignUp\",\n    \"lambdaFunctionName\": \"alumnifrontend88c8d6e7PreSignup\"\n  }\n]"
   }
-}
+} 
