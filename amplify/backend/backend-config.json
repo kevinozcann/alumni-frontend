@@ -6,34 +6,7 @@
       "dependsOn": [
         {
           "category": "function",
-          "resourceName": "alumnifrontend88c8d6e7PostAuthentication",
-          "triggerProvider": "Cognito",
-          "attributes": [
-            "Arn",
-            "Name"
-          ]
-        },
-        {
-          "category": "function",
           "resourceName": "alumnifrontend88c8d6e7PostConfirmation",
-          "triggerProvider": "Cognito",
-          "attributes": [
-            "Arn",
-            "Name"
-          ]
-        },
-        {
-          "category": "function",
-          "resourceName": "alumnifrontend88c8d6e7PreAuthentication",
-          "triggerProvider": "Cognito",
-          "attributes": [
-            "Arn",
-            "Name"
-          ]
-        },
-        {
-          "category": "function",
-          "resourceName": "alumnifrontend88c8d6e7PreSignup",
           "triggerProvider": "Cognito",
           "attributes": [
             "Arn",
@@ -100,27 +73,6 @@
         }
       ]
     },
-    "alumnifrontend88c8d6e7PostAuthentication": {
-      "build": true,
-      "providerPlugin": "awscloudformation",
-      "service": "Lambda",
-      "dependsOn": [
-        {
-          "category": "storage",
-          "resourceName": "storage",
-          "attributes": [
-            "BucketName"
-          ]
-        },
-        {
-          "category": "api",
-          "resourceName": "alumnifrontend",
-          "attributes": [
-            "GraphQLAPIIdOutput"
-          ]
-        }
-      ]
-    },
     "alumnifrontend88c8d6e7PostConfirmation": {
       "build": true,
       "providerPlugin": "awscloudformation",
@@ -136,16 +88,6 @@
           ]
         }
       ]
-    },
-    "alumnifrontend88c8d6e7PreAuthentication": {
-      "build": true,
-      "providerPlugin": "awscloudformation",
-      "service": "Lambda"
-    },
-    "alumnifrontend88c8d6e7PreSignup": {
-      "build": true,
-      "providerPlugin": "awscloudformation",
-      "service": "Lambda"
     }
   },
   "storage": {

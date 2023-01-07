@@ -27,25 +27,7 @@ export type AmplifyDependentResourcesAttributes = {
             "Region": "string",
             "LambdaExecutionRole": "string"
         },
-        "alumnifrontend88c8d6e7PostAuthentication": {
-            "Name": "string",
-            "Arn": "string",
-            "LambdaExecutionRole": "string",
-            "Region": "string"
-        },
         "alumnifrontend88c8d6e7PostConfirmation": {
-            "Name": "string",
-            "Arn": "string",
-            "LambdaExecutionRole": "string",
-            "Region": "string"
-        },
-        "alumnifrontend88c8d6e7PreAuthentication": {
-            "Name": "string",
-            "Arn": "string",
-            "LambdaExecutionRole": "string",
-            "Region": "string"
-        },
-        "alumnifrontend88c8d6e7PreSignup": {
             "Name": "string",
             "Arn": "string",
             "LambdaExecutionRole": "string",

@@ -1,6 +1,6 @@
 {
   "AWSTemplateFormatVersion": "2010-09-09",
-  "Description": "{\"createdOn\":\"Mac\",\"createdBy\":\"Amplify\",\"createdWith\":\"10.5.2\",\"stackType\":\"function-Lambda\",\"metadata\":{}}",
+  "Description": "Lambda resource stack creation using Amplify CLI",
   "Parameters": {
     "env": {
       "Type": "String"
@@ -58,7 +58,7 @@
             "ENV": {
               "Ref": "env"
             },
-            "GROUP": "User",
+            "GROUP": "Admin",
             "USERPOOL": {
               "Ref": "authalumnifrontend88c8d6e7UserPoolId"
             }
