@@ -72,7 +72,7 @@
     },
     "breakCircularDependency": true,
     "dependsOn": [],
-    "userPoolGroups": true,
+    "userPoolGroups": false,
     "adminQueries": false,
     "hostedUI": false,
     "adminQueryGroup": "Admin",
