@@ -99,4 +99,4 @@
     "thirdPartyAuth": false,
     "authTriggerConnections": "[\n  {\n    \"triggerType\": \"PostAuthentication\",\n    \"lambdaFunctionName\": \"alumnifrontend88c8d6e7PostAuthentication\"\n  }\n]"
   }
-}
+} 
