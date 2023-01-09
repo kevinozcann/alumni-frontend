@@ -23,6 +23,3 @@ Runs eslint on `src` directory.
 
 Runs prettier on `src` directory.
 
-## Learn More
-
-To learn React, check out the [React documentation](https://reactjs.org/).
