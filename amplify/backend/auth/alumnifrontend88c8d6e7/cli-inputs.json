@@ -50,7 +50,11 @@
     "usernameAttributes": [
       "email"
     ],
-    "triggers": {},
+    "triggers": {
+      "PostAuthentication": [
+        "custom"
+      ]
+    },
     "userPoolGroupList": [
       "User",
       "Admin"
@@ -71,7 +75,17 @@
       ]
     },
     "breakCircularDependency": true,
-    "dependsOn": [],
+    "dependsOn": [
+      {
+        "category": "function",
+        "resourceName": "alumnifrontend88c8d6e7PostAuthentication",
+        "triggerProvider": "Cognito",
+        "attributes": [
+          "Arn",
+          "Name"
+        ]
+      }
+    ],
     "userPoolGroups": false,
     "adminQueries": false,
     "hostedUI": false,
@@ -82,6 +96,7 @@
     "permissions": [],
     "verificationBucketName": "alumnifrontend88c8d6e7verificationbucket",
     "authProviders": [],
-    "thirdPartyAuth": false
+    "thirdPartyAuth": false,
+    "authTriggerConnections": "[\n  {\n    \"triggerType\": \"PostAuthentication\",\n    \"lambdaFunctionName\": \"alumnifrontend88c8d6e7PostAuthentication\"\n  }\n]"
   }
 }
