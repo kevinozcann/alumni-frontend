@@ -13,5 +13,12 @@
   "triggerEventPath": "PostAuthentication.event.json",
   "roleName": "alumnifrontend88c8d6e7PostAuthentication",
   "skipEdit": true,
-  "enableCors": false
+  "enableCors": false,
+  "permissions": {
+    "api": {
+      "alumnifrontend": [
+        "Query"
+      ]
+    }
+  }
 }
